@@ -111,6 +111,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="cpp\main.cpp" />
+    <ClCompile Include="Header Files\Source.cpp" />
+    <ClCompile Include="Resources\Source.cpp" />
+    <ClCompile Include="Shaders\Source.cpp" />
     <ClCompile Include="Source Files\main.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
