@@ -131,10 +131,18 @@
     <ClCompile Include="Resources\Source.cpp" />
     <ClCompile Include="Shaders\Source.cpp" />
     <ClCompile Include="Source Files\main.cpp" />
+    <ClCompile Include="Source Files\OBJloader.cpp" />
+    <ClCompile Include="Source Files\pch.cpp" />
     <ClCompile Include="Source Files\SoundManager.cpp" />
+    <ClCompile Include="Source Files\WICTextureLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Header Files\DirectXHelpers.h" />
+    <ClInclude Include="Header Files\OBJloader.h" />
+    <ClInclude Include="Header Files\pch.h" />
+    <ClInclude Include="Header Files\PlatformHelpers.h" />
     <ClInclude Include="Header Files\SoundManager.h" />
+    <ClInclude Include="Header Files\WICTextureLoader.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
