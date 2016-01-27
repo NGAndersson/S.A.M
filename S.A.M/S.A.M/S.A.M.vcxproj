@@ -77,10 +77,10 @@
     <LibraryPath>C:\Program Files (x86)\FMOD SoundSystem\FMOD Programmers API Windows\api\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\Users\yorkhawke\Desktop\S.A.M\S.A.M\S.A.M\Header Files;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\Sock\Documents\GitHub\S.A.M\S.A.M\S.A.M\Header Files;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>C:\Users\yorkhawke\Desktop\S.A.M\S.A.M\S.A.M\Header Files;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\Sock\Documents\GitHub\S.A.M\S.A.M\S.A.M\Header Files;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -132,6 +132,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Display.cpp" />
     <ClCompile Include="Source Files\Entity.cpp" />
     <ClCompile Include="Source Files\main.cpp" />
     <ClCompile Include="Source Files\OBJloader.cpp" />
@@ -141,6 +142,7 @@
     <ClCompile Include="Source Files\WICTextureLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Display.h" />
     <ClInclude Include="Header Files\DirectXHelpers.h" />
     <ClInclude Include="Header Files\Entity.h" />
     <ClInclude Include="Header Files\OBJloader.h" />
