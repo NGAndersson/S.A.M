@@ -10,7 +10,7 @@ Player::~Player()
 
 }
 
-void Player::Uppdate(int CurrentScreen)
+void Player::Update(int CurrentScreen)
 {
 
 }

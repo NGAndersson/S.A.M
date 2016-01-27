@@ -5,7 +5,7 @@
 #include "SoundManager.h"
 #include "ScreenManager.h"
 #include "Input.h"
-#include "Time.h"
+#include "Timer.h"
 
 class Game
 {
@@ -26,7 +26,7 @@ private:
 	MSG m_winMSG;
 
 public:
-}
+};
 
 #endif 
 

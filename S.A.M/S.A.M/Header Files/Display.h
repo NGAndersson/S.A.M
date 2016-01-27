@@ -3,9 +3,6 @@
 #include <Windows.h>
 #include <windowsx.h>
 
-// include the Direct3D Library file
-#pragma comment (lib, "d3d9.lib")
-
 class Display
 {
 private:

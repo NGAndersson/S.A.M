@@ -4,7 +4,7 @@ Game::Game()
 {
 }
 
-void Game::InitGame(Input * input, Display * disp)
+void Game::InitGame(Input* input, Display* disp)
 {
 	m_input = input;
 	m_display = disp;
@@ -28,6 +28,9 @@ void Game::InitGame(Input * input, Display * disp)
 
 WPARAM Game::MainLoop()
 {
+	Timer _time;
+	_time.StartTime();
+
 	while (TRUE) {
 		// Check to see if any messages are waiting in the queue
 		while (PeekMessage(&m_winMSG, NULL, 0, 0, PM_REMOVE))
@@ -48,7 +51,7 @@ WPARAM Game::MainLoop()
 		//time = Time.GetTime() ?
 
 		//Call update functions
-		Update(time);
+		Update(_time.TimeCheck());
 
 		//Call Render Functions
 		Render();
@@ -64,7 +67,7 @@ void Game::Update(double time)
 
 void Game::Render()
 {
-	m_screenManager->Render()
+	m_screenManager->Render();
 	//if(m_screenManager->GetCurrentScreen() == USERINTERFACE)
 	// Render Entity Manager
 }

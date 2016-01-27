@@ -12,7 +12,7 @@ class  Entity
 	//----------------------------Functions----------------------------------------
 public:
 	//Uppdate screens
-	 virtual void Uppdate(int CurrentScreen) = 0;
+	 virtual void Update(int CurrentScreen) = 0;
 	//Initializing the screen manager
 	 virtual void Initialize() = 0;
 
@@ -26,7 +26,7 @@ private:
 	//Modelhandler
 
 	//SoundManager
-	 SoundManager mSoundManager;
+	 SoundManager* mSoundManager;
 
 	 //Position
 	 int mPosition;
