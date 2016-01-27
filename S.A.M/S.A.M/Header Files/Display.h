@@ -15,7 +15,7 @@ protected:
 public:
 	Display();
 	~Display();
-	Display(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow);
+	Display(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow, int width, int height);
 	HWND GethWnd();
 };
 

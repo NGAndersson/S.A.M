@@ -6,7 +6,7 @@
 // the entry point for any Windows program
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
-	Display display(hInstance, hPrevInstance, lpCmdLine, nCmdShow);
+	Display display(hInstance, hPrevInstance, lpCmdLine, nCmdShow, 1080, 720);
 	HWND hWnd = display.GethWnd();
 	// display the window on the screen
 	ShowWindow(hWnd, nCmdShow);
