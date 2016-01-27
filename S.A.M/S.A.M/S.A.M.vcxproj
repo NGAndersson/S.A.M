@@ -73,8 +73,8 @@
     <LibraryPath>C:\Program Files (x86)\FMOD SoundSystem\FMOD Programmers API Windows\api\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>C:\Users\Andersson\Source\Repos\S.A.M\S.A.M\S.A.M\Source Files;C:\Users\Andersson\Source\Repos\S.A.M\S.A.M\S.A.M\Resources;C:\Program Files (x86)\FMOD SoundSystem\FMOD Programmers API Windows\api\inc;C:\Users\Andersson\Source\Repos\S.A.M\S.A.M\S.A.M\Header Files;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Program Files (x86)\FMOD SoundSystem\FMOD Programmers API Windows\api\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectPath)\Source Files;$(ProjectPath)\Resources;$(ProjectPath)\Header Files;$(ProjectPath)\FMODinc;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectPath)\FMODlib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

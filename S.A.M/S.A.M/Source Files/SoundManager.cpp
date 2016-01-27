@@ -5,8 +5,20 @@
 
 //using namespace FMOD;
 
-SoundManager::SoundManager() {
+SoundManager::SoundManager() 
+{
 	InitFMOD();
+}
+
+SoundManager::~SoundManager()
+{
+	//Release the resources
+	m_system->release();
+	for (int i = 0; i < m_sounds.size(); i++)
+	{
+		for (int j = 0; j < m_sounds[i].size(); j++)
+			m_sounds[i][j]->release();
+	}
 }
 
 void SoundManager::MessageBoxAndShutDown(std::stringstream* _ss) {
@@ -20,7 +32,52 @@ void SoundManager::MessageBoxAndShutDown(std::stringstream* _ss) {
 		MB_ICONERROR | MB_OK);
 	exit(-1);
 }
-void SoundManager::LoadSound(char* fileName, char* soundName, SoundFlags flags)
+
+
+void SoundManager::FindSoundIndex(char* soundName, int &groupIndex, int &soundIndex)
+{
+	bool found = false;
+
+	//Go through EVERY index vector in to find sound name
+	for (int i = 0; i < m_soundGroupIndexes.size() && found == false; i++)
+	{
+		//Check if we're looking for a whole group or a specific sound
+		if (m_soundGroupIndexes[i] == soundName)
+		{
+			found = true;
+			groupIndex = i;
+		}
+
+		//Go through the index vector in the group to find index of correct sound
+		for (int j = 0; j < m_soundIndexes[i].size() && found == false; j++)
+		{
+			if (m_soundIndexes[i][j] == soundName)
+			{
+				found = true;
+				soundIndex = j;
+				groupIndex = i;
+			}
+		}
+	}
+}
+
+int SoundManager::FindGroupIndex(char * groupName)
+{
+	bool found = false;
+
+	//Go through EVERY index vector in to find sound name
+	for (int i = 0; i < m_soundGroupIndexes.size() && found == false; i++)
+	{
+		//Check if we're looking for a whole group or a specific sound
+		if (m_soundGroupIndexes[i] == groupName)
+		{
+			return i;
+		}
+	}
+	return -1;
+}
+
+void SoundManager::LoadSound(char* fileName, char* soundName, char* groupName, SoundFlags flags)
 {
 	FMOD::Sound* audio;
 
@@ -31,41 +88,62 @@ void SoundManager::LoadSound(char* fileName, char* soundName, SoundFlags flags)
 		m_result = m_system->createStream(fileName, FMOD_DEFAULT, 0, &audio);
 	else	//No mode set
 	{
-		MessageBox(NULL, (LPCSTR)L"No Loadmode Set", "Sound Loading Error", MB_ICONERROR | MB_OK);
+		MessageBox(NULL, "No Loadmode Set", "Sound Loading Error", MB_ICONERROR | MB_OK);
 		exit(-1);
 	}
 	
 	FMODErrorCheck(m_result);
 
-	//Add audio and sound name to their vectors
-	m_sounds.push_back(audio);
-	m_soundIndex.push_back(soundName);
+	//Add audio, sound name and channel to their vectors
+	FMOD::Channel* channel;
+	int _groupIndex = FindGroupIndex(groupName);
+
+	if (_groupIndex != -1)
+		m_soundChannels[_groupIndex].push_back(channel);
+		m_sounds.push_back(audio);
+		m_soundIndex.push_back(soundName);
 }
 
-void SoundManager::PlayOneShotSound(char* soundName)
+void SoundManager::PauseSound(char* soundName)
 {
-	int _soundIndex = -1;	//Index of correct sound in the vectors
-	bool found = false;
+	int _soundIndex = FindSoundIndex(soundName);
 
-	//Go through the index vector to find index of correct sound
-	for (int i = 0; i < m_soundIndex.size() && found == false; i++)
+	if (_soundIndex != -1)
 	{
-		if (m_soundIndex[i] == soundName)
-		{
-			found = true;
-			_soundIndex = i;
-		}
+		bool isPaused;
+		m_soundChannels[_soundIndex]->getPaused(&isPaused);
+		m_soundChannels[_soundIndex]->setPaused(!isPaused);
 	}
+	else {
+		MessageBox(NULL, "Couldn't find sound name handle", "Sound Loading Error", MB_ICONERROR | MB_OK);
+		exit(-1);
+	}
+}
 
+//Plays a sound once at a specific volume
+void SoundManager::PlayOneShotSound(char* soundName, float volume)
+{
+	int _groupIndex, _soundIndex;
+	FindSoundIndex(soundName, _groupIndex, _soundIndex);
+	
 	//If the sound was found, play it!
-	if (_soundIndex != -1) 
+	if (_groupIndex != -1 && _soundIndex != -1) 
 	{
-		m_result = m_system->playSound(FMOD_CHANNEL_FREE, m_sounds[_soundIndex], false, 0);
+		m_result = m_system->playSound(FMOD_CHANNEL_FREE, m_sounds[_soundIndex], false, &m_soundChannels[_soundIndex]);
+		m_soundChannels[_soundIndex]->setVolume(volume);
 		FMODErrorCheck(m_result);
 	}
-	
+	else if (_groupIndex != -1) {
+
+	}
+
+	else {
+		MessageBox(NULL, "Couldn't find sound name handle", "Sound Playing Error", MB_ICONERROR | MB_OK);
+		exit(-1);
+	}
 }
 
+//For errorchecking the results of FMOD functions
 void SoundManager::FMODErrorCheck(FMOD_RESULT result)
 {
 	if (result != FMOD_OK)
@@ -77,6 +155,7 @@ void SoundManager::FMODErrorCheck(FMOD_RESULT result)
 	}
 }
 
+//Initializes FMOD and makes the system handle
 void SoundManager::InitFMOD()
 {
 	//Create FMOD Interface Object
