@@ -9,9 +9,8 @@ using namespace DirectX
 //#include "EntityManager.h"
 class  Entity
 {
-	//Destructor and Constructor
-	virtual Entity() = 0;
-	virtual ~Entity() = 0;
+	//----------------------------Functions----------------------------------------
+public:
 	//Uppdate screens
 	 virtual void Uppdate(int CurrentScreen) = 0;
 	//Initializing the screen manager
