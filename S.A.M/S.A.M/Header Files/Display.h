@@ -17,10 +17,6 @@ public:
 	~Display();
 	Display(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow);
 	HWND GethWnd();
-	void InitD3D(HWND hWnd);
-	void CleanD3D(void);
-	void BeginFrame(void);
-	void EndFrame(void);
 };
 
 #endif DISPLAY_H

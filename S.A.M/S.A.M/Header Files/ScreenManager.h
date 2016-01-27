@@ -1,13 +1,7 @@
 #ifndef SCREENMANAGER_H
 #define SCREENMANAGER_H
 
-#define START			0;
-#define USERINTERFACE	1;
-#define HIGHSCORE		2;
-#define OPTION			3;
-#define PAUSE			4;
-#define ENDSCREEN		5;
-
+enum EnumScreens { START, USERINTERFACE, HIGHSCORE, OPTION, PAUSE, ENDSCREEN };
 
 //Includes
 //1.Diff Screens
@@ -17,21 +11,23 @@
 class ScreenManager
 {
 //----------------------------Functions----------------------------------------
-private:
+public:
 	//Destructor and Constructor
 	ScreenManager();
 	~ScreenManager();
 	//Uppdate screens
-	void Uppdate(int CurrentScreen);
+	void Update(double time);
 	//Initializing the screen manager
 	void InitializeScreen();
 	//Rendercall
 	void Render();
+	
+	int GetCurrentScreen() { return m_Current; }
 
 //----------------------------Attributes----------------------------------------
 private:
 	//Current status.
-	int mCurrent;
+	EnumScreens m_Current;
 	//Different screens
 
 

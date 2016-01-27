@@ -2,8 +2,8 @@
 #include "Windows.h"
 #include <sstream>
 #include <iostream>
-
-//using namespace FMOD;
+#include <cstdlib>
+#include <time.h>
 
 SoundManager::SoundManager() 
 {
@@ -36,37 +36,36 @@ void SoundManager::MessageBoxAndShutDown(std::stringstream* _ss) {
 
 void SoundManager::FindSoundIndex(char* soundName, int &groupIndex, int &soundIndex)
 {
-	bool found = false;
-
 	//Go through EVERY index vector in to find sound name
-	for (int i = 0; i < (int)m_soundGroupIndexes.size() && found == false; i++)
+	for (int i = 0; i < (int)m_soundGroupIndexes.size(); i++)
 	{
 		//Check if we're looking for a whole group or a specific sound
 		if (m_soundGroupIndexes[i] == soundName)
 		{
-			found = true;
 			groupIndex = i;
+			soundIndex = -1;
+			return;
 		}
 
 		//Go through the index vector in the group to find index of correct sound
-		for (int j = 0; j < (int)m_soundIndexes[i].size() && found == false; j++)
+		for (int j = 0; j < (int)m_soundIndexes[i].size(); j++)
 		{
 			if (m_soundIndexes[i][j] == soundName)
 			{
-				found = true;
 				soundIndex = j;
 				groupIndex = i;
+				return;
 			}
 		}
 	}
+	groupIndex = -1;
+	soundIndex = -1;
 }
 
 int SoundManager::FindGroupIndex(char * groupName)
 {
-	bool found = false;
-
 	//Go through EVERY index vector in to find sound name
-	for (int i = 0; i < (int)m_soundGroupIndexes.size() && found == false; i++)
+	for (int i = 0; i < (int)m_soundGroupIndexes.size(); i++)
 	{
 		//Check if we're looking for a whole group or a specific sound
 		if (m_soundGroupIndexes[i] == groupName)
@@ -116,6 +115,7 @@ void SoundManager::LoadSound(char* fileName, char* soundName, char* groupName, S
 		m_soundChannels.push_back(_newChannelVec);
 		m_sounds.push_back(_newSoundVec);
 		m_soundIndexes.push_back(_newIndexVec);
+		m_soundGroupIndexes.push_back(groupName);		
 	}
 }
 
@@ -139,7 +139,7 @@ void SoundManager::PauseSound(char* soundName)
 //Plays a sound once at a specific volume
 void SoundManager::PlayOneShotSound(char* soundName, float volume)
 {
-	int _groupIndex, _soundIndex;
+	int _groupIndex = -1, _soundIndex = -1;
 	FindSoundIndex(soundName, _groupIndex, _soundIndex);
 	
 	//If the sound was found, play it!
@@ -151,6 +151,12 @@ void SoundManager::PlayOneShotSound(char* soundName, float volume)
 	}
 	else if (_groupIndex != -1) {
 		//Play random sound from the group
+		srand(time(NULL));
+		int _randomInt = rand() % m_sounds[_groupIndex].size();
+
+		m_result = m_system->playSound(FMOD_CHANNEL_FREE, m_sounds[_groupIndex][_randomInt], false, &m_soundChannels[_groupIndex][_randomInt]);
+		m_soundChannels[_groupIndex][_randomInt]->setVolume(volume);
+		FMODErrorCheck(m_result);
 	}
 
 	else {

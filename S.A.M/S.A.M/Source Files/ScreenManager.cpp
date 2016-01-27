@@ -9,11 +9,11 @@ ScreenManager::~ScreenManager()
 
 }
 
-void ScreenManager::Uppdate(int CurrentScreen)
+void ScreenManager::Update(double time)
 {
 
 	//Checks input depending on what screen the user is in.
-	switch (CurrentScreen)
+	switch (m_Current)
 	{
 	case 0:
 		//Startscreen
@@ -43,9 +43,6 @@ void ScreenManager::Uppdate(int CurrentScreen)
 		break;
 	}
 
-	mCurrent = CurrentScreen;
-
-
 }
 
 void ScreenManager::InitializeScreen()
@@ -53,7 +50,7 @@ void ScreenManager::InitializeScreen()
 	//Starting all the otherClasses etc..
 
 	//Current screen is startscreen
-	mCurrent = 0;
+	m_Current = START;
 
 }
 
