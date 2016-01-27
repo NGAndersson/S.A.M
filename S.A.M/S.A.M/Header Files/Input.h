@@ -8,15 +8,17 @@
 
 enum InputType
 {
+	DEFAULT = 0x000,
 	MOVE_LEFT = 0x001,
 	MOVE_RIGHT = 0x002,
 	MOVE_UP = 0x004,
 	MOVE_DOWN = 0x008,
 	MOUSE_LK = 0x016,
 	MOUSE_RK = 0x032,
+	INPUT_ESC = 0x064
 };
 
-struct MouseKlicked
+struct MouseClicked
 {
 	InputType MouseAct;
 	int Mouse_Position_X;
@@ -37,7 +39,7 @@ public:
 
 	void Initialize(HINSTANCE hInstance, HWND& hwnd,int ScreenWidth,int ScreenHeight);
 	InputType CheckKeyBoardInput(double time);
-	MouseKlicked CheckMouseInput(double time);
+	MouseClicked CheckMouseInput(double time);
 
 	//----------------------------Attributes----------------------------------------
 private:

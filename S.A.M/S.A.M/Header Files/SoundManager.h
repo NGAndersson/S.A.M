@@ -16,7 +16,8 @@ inline SoundFlags operator|(SoundFlags a, SoundFlags b)
 	return static_cast<SoundFlags>(static_cast<int>(a) | static_cast<int>(b));
 }
 
-class SoundManager {
+class SoundManager 
+{
 	//Functions
 	private:
 		void InitFMOD();									//For intializing FMOD stuff
