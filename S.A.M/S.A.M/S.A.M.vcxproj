@@ -76,6 +76,12 @@
     <IncludePath>C:\Users\Andersson\Source\Repos\S.A.M\S.A.M\S.A.M\Source Files;C:\Users\Andersson\Source\Repos\S.A.M\S.A.M\S.A.M\Resources;C:\Program Files (x86)\FMOD SoundSystem\FMOD Programmers API Windows\api\inc;C:\Users\Andersson\Source\Repos\S.A.M\S.A.M\S.A.M\Header Files;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Program Files (x86)\FMOD SoundSystem\FMOD Programmers API Windows\api\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>C:\Users\yorkhawke\Desktop\S.A.M\S.A.M\S.A.M\Header Files;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IncludePath>C:\Users\yorkhawke\Desktop\S.A.M\S.A.M\S.A.M\Header Files;$(IncludePath)</IncludePath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -129,6 +135,7 @@
     <ClCompile Include="Source Files\main.cpp" />
     <ClCompile Include="Source Files\OBJloader.cpp" />
     <ClCompile Include="Source Files\pch.cpp" />
+    <ClCompile Include="Source Files\ScreenManager.cpp" />
     <ClCompile Include="Source Files\SoundManager.cpp" />
     <ClCompile Include="Source Files\WICTextureLoader.cpp" />
   </ItemGroup>
@@ -137,8 +144,15 @@
     <ClInclude Include="Header Files\OBJloader.h" />
     <ClInclude Include="Header Files\pch.h" />
     <ClInclude Include="Header Files\PlatformHelpers.h" />
+    <ClInclude Include="Header Files\ScreenManager.h" />
     <ClInclude Include="Header Files\SoundManager.h" />
     <ClInclude Include="Header Files\WICTextureLoader.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="fmodex.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="Resources\wave.mp3" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
