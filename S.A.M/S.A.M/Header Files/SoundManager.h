@@ -27,7 +27,7 @@ class SoundManager {
 	public:
 		SoundManager();
 		~SoundManager();
-		void LoadSound(char* fileName, char* soundName, SoundFlags flags);	//Loads sound into array 
+		void LoadSound(char* fileName, char* soundName, char* groupName, SoundFlags flags);	//Loads sound into array 
 		void PlayOneShotSound(char* soundName, float volume);				//Plays a sound with a specific name, at volume 0.0-1.0
 		void PauseSound(char* soundName);
 	//Variables
@@ -42,7 +42,7 @@ class SoundManager {
 
 		std::vector<std::vector<FMOD::Sound*>> m_sounds;	//Groups of sounds (for variation of the same kind of sound)
 		std::vector<std::vector<char*>> m_soundIndexes;		//Indexes of groups based on name
-		std::vector<std::vector<FMOD::Channel>> m_soundChannels;	//Channel groups for the sounds
+		std::vector<std::vector<FMOD::Channel*>> m_soundChannels;	//Channel groups for the sounds
 		std::vector<char*> m_soundGroupIndexes;
 };
 

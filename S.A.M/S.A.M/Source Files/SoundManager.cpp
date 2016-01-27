@@ -14,9 +14,9 @@ SoundManager::~SoundManager()
 {
 	//Release the resources
 	m_system->release();
-	for (int i = 0; i < m_sounds.size(); i++)
+	for (int i = 0; i < (int)m_sounds.size(); i++)
 	{
-		for (int j = 0; j < m_sounds[i].size(); j++)
+		for (int j = 0; j < (int)m_sounds[i].size(); j++)
 			m_sounds[i][j]->release();
 	}
 }
@@ -39,7 +39,7 @@ void SoundManager::FindSoundIndex(char* soundName, int &groupIndex, int &soundIn
 	bool found = false;
 
 	//Go through EVERY index vector in to find sound name
-	for (int i = 0; i < m_soundGroupIndexes.size() && found == false; i++)
+	for (int i = 0; i < (int)m_soundGroupIndexes.size() && found == false; i++)
 	{
 		//Check if we're looking for a whole group or a specific sound
 		if (m_soundGroupIndexes[i] == soundName)
@@ -49,7 +49,7 @@ void SoundManager::FindSoundIndex(char* soundName, int &groupIndex, int &soundIn
 		}
 
 		//Go through the index vector in the group to find index of correct sound
-		for (int j = 0; j < m_soundIndexes[i].size() && found == false; j++)
+		for (int j = 0; j < (int)m_soundIndexes[i].size() && found == false; j++)
 		{
 			if (m_soundIndexes[i][j] == soundName)
 			{
@@ -66,7 +66,7 @@ int SoundManager::FindGroupIndex(char * groupName)
 	bool found = false;
 
 	//Go through EVERY index vector in to find sound name
-	for (int i = 0; i < m_soundGroupIndexes.size() && found == false; i++)
+	for (int i = 0; i < (int)m_soundGroupIndexes.size() && found == false; i++)
 	{
 		//Check if we're looking for a whole group or a specific sound
 		if (m_soundGroupIndexes[i] == groupName)
@@ -99,23 +99,39 @@ void SoundManager::LoadSound(char* fileName, char* soundName, char* groupName, S
 	int _groupIndex = FindGroupIndex(groupName);
 
 	if (_groupIndex != -1)
+	{
 		m_soundChannels[_groupIndex].push_back(channel);
-		m_sounds.push_back(audio);
-		m_soundIndex.push_back(soundName);
+		m_sounds[_groupIndex].push_back(audio);
+		m_soundIndexes[_groupIndex].push_back(soundName);
+	}
+	else {
+		std::vector<FMOD::Channel*> _newChannelVec;
+		std::vector<FMOD::Sound*> _newSoundVec;
+		std::vector<char*> _newIndexVec;
+
+		_newChannelVec.push_back(channel);
+		_newSoundVec.push_back(audio);
+		_newIndexVec.push_back(soundName);
+
+		m_soundChannels.push_back(_newChannelVec);
+		m_sounds.push_back(_newSoundVec);
+		m_soundIndexes.push_back(_newIndexVec);
+	}
 }
 
 void SoundManager::PauseSound(char* soundName)
 {
-	int _soundIndex = FindSoundIndex(soundName);
+	int _groupIndex, _soundIndex;
+	FindSoundIndex(soundName, _groupIndex, _soundIndex);
 
-	if (_soundIndex != -1)
+	if (_groupIndex != -1 && _soundIndex != -1)
 	{
 		bool isPaused;
-		m_soundChannels[_soundIndex]->getPaused(&isPaused);
-		m_soundChannels[_soundIndex]->setPaused(!isPaused);
+		m_soundChannels[_groupIndex][_soundIndex]->getPaused(&isPaused);
+		m_soundChannels[_groupIndex][_soundIndex]->setPaused(!isPaused);
 	}
 	else {
-		MessageBox(NULL, "Couldn't find sound name handle", "Sound Loading Error", MB_ICONERROR | MB_OK);
+		MessageBox(NULL, "Couldn't find sound name handle", "Sound Pausing Error", MB_ICONERROR | MB_OK);
 		exit(-1);
 	}
 }
@@ -129,12 +145,12 @@ void SoundManager::PlayOneShotSound(char* soundName, float volume)
 	//If the sound was found, play it!
 	if (_groupIndex != -1 && _soundIndex != -1) 
 	{
-		m_result = m_system->playSound(FMOD_CHANNEL_FREE, m_sounds[_soundIndex], false, &m_soundChannels[_soundIndex]);
-		m_soundChannels[_soundIndex]->setVolume(volume);
+		m_result = m_system->playSound(FMOD_CHANNEL_FREE, m_sounds[_groupIndex][_soundIndex], false, &m_soundChannels[_groupIndex][_soundIndex]);
+		m_soundChannels[_groupIndex][_soundIndex]->setVolume(volume);
 		FMODErrorCheck(m_result);
 	}
 	else if (_groupIndex != -1) {
-
+		//Play random sound from the group
 	}
 
 	else {
