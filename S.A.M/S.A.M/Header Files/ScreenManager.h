@@ -1,5 +1,5 @@
-#ifndef SCREENMANAGER
-#define SCREENMANAGER
+#ifndef SCREENMANAGER_H
+#define SCREENMANAGER_H
 
 #define START			0;
 #define USERINTERFACE	1;

@@ -132,6 +132,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source Files\Entity.cpp" />
     <ClCompile Include="Source Files\main.cpp" />
     <ClCompile Include="Source Files\OBJloader.cpp" />
     <ClCompile Include="Source Files\pch.cpp" />
@@ -141,6 +142,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header Files\DirectXHelpers.h" />
+    <ClInclude Include="Header Files\Entity.h" />
     <ClInclude Include="Header Files\OBJloader.h" />
     <ClInclude Include="Header Files\pch.h" />
     <ClInclude Include="Header Files\PlatformHelpers.h" />
