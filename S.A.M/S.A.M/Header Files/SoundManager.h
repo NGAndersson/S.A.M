@@ -22,10 +22,14 @@ class SoundManager {
 		void InitFMOD();									//For intializing FMOD stuff
 		void FMODErrorCheck(FMOD_RESULT result);			//For checking the results of FMOD functions
 		void MessageBoxAndShutDown(std::stringstream* _ss); //Called if something went wrong so the program needs to shut down
+		void FindSoundIndex(char* soundName, int &groupIndex, int &soundIndex);	//Finds the sound and group index of a sound name
+		int FindGroupIndex(char* groupName);	//Same as FindSoundIndex() but only looks for matching groups
 	public:
 		SoundManager();
+		~SoundManager();
 		void LoadSound(char* fileName, char* soundName, SoundFlags flags);	//Loads sound into array 
-		void PlayOneShotSound(char* soundName);								//Plays a sound with a specific name
+		void PlayOneShotSound(char* soundName, float volume);				//Plays a sound with a specific name, at volume 0.0-1.0
+		void PauseSound(char* soundName);
 	//Variables
 	private:
 		FMOD::System* m_system;				//Core of FMOD
@@ -36,8 +40,10 @@ class SoundManager {
 		FMOD_CAPS m_caps;					//??? Soundcard capabilities ???
 		char m_name[256];					//Name of sound driver
 
-		std::vector<FMOD::Sound*> m_sounds;	//All the sounds
-		std::vector<char*> m_soundIndex;	//Soundnames, where soundname index is the corresponding index of m_sounds
+		std::vector<std::vector<FMOD::Sound*>> m_sounds;	//Groups of sounds (for variation of the same kind of sound)
+		std::vector<std::vector<char*>> m_soundIndexes;		//Indexes of groups based on name
+		std::vector<std::vector<FMOD::Channel>> m_soundChannels;	//Channel groups for the sounds
+		std::vector<char*> m_soundGroupIndexes;
 };
 
 #endif // !_SOUNDMANAGER_H_
