@@ -8,13 +8,13 @@
 
 enum InputType
 {
-	DEFAULT = 0x000,
-	MOVE_LEFT = 0x001,
-	MOVE_RIGHT = 0x002,
-	MOVE_UP = 0x004,
-	MOVE_DOWN = 0x008,
-	MOUSE_LK = 0x016,
-	MOUSE_RK = 0x032,
+	INPUT_DEFAULT = 0x000,
+	INPUT_MOVE_LEFT = 0x001,
+	INPUT_MOVE_RIGHT = 0x002,
+	INPUT_MOVE_UP = 0x004,
+	INPUT_MOVE_DOWN = 0x008,
+	INPUT_MOUSE_LK = 0x016,
+	INPUT_MOUSE_RK = 0x032,
 	INPUT_ESC = 0x064
 };
 
@@ -38,8 +38,8 @@ public:
 	~Input();
 
 	void Initialize(HINSTANCE hInstance, HWND& hwnd,int ScreenWidth,int ScreenHeight);
-	InputType CheckKeyBoardInput(double time);
-	MouseClicked CheckMouseInput(double time);
+	InputType CheckKeyBoardInput();
+	MouseClicked CheckMouseInput();
 
 	//----------------------------Attributes----------------------------------------
 private:
