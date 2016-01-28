@@ -31,6 +31,7 @@ class SoundManager
 		void LoadSound(char* fileName, char* soundName, char* groupName, SoundFlags flags);	//Loads sound into array 
 		void PlayOneShotSound(char* soundName, float volume);				//Plays a sound with a specific name, at volume 0.0-1.0
 		void PauseSound(char* soundName);
+		void Update();
 	//Variables
 	private:
 		FMOD::System* m_system;				//Core of FMOD

@@ -146,6 +146,11 @@ void SoundManager::PauseSound(char* soundName)
 	}
 }
 
+void SoundManager::Update()
+{
+	m_system->update();
+}
+
 //Plays a sound once at a specific volume
 void SoundManager::PlayOneShotSound(char* soundName, float volume)
 {
