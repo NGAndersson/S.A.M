@@ -12,8 +12,8 @@ OBJLoader::~OBJLoader()
 
 bool OBJLoader::ReadFileCounts(int& vertexCount, int& textureCount, int& normalCount, int& faceCount, string fileName)
 {
-	ifstream file;
-	char input;
+	ifstream _file;
+	char _input;
 
 	// Initialize the counts.
 	vertexCount = 0;
@@ -22,57 +22,150 @@ bool OBJLoader::ReadFileCounts(int& vertexCount, int& textureCount, int& normalC
 	faceCount = 0;
 
 	// Open the file.
-	file.open(fileName);
+	_file.open(fileName);
 
 	// Check if it was successful in opening the file.
-	if (file.fail() == true)
+	if (_file.fail() == true)
 	{
 		return false;
 	}
 
 	// Read from the file and continue to read until the end of the file is reached.
-	file.get(input);
-	while (!file.eof())
+	_file.get(_input);
+	while (!_file.eof())
 	{
 		// If the line starts with 'v' then count either the vertex, the texture coordinates, or the normal vector.
-		if (input == 'v')
+		if (_input == 'v')
 		{
-			file.get(input);
-			if (input == ' ') { vertexCount++; }
-			if (input == 't') { textureCount++; }
-			if (input == 'n') { normalCount++; }
-		}
-
-		// If the line starts with 'f' then increment the face count.
-		if (input == 'f')
+			_file.get(_input);
+			if (_input == ' ') 
+			{ 
+				vertexCount++; 
+			}
+			if (_input == 't') 
+			{ 
+				textureCount++; 
+			}
+			if (_input == 'n') 
+			{ 
+				normalCount++; 
+			}
+		}	
+		else if (_input == 'f') // If the line starts with 'f' then increment the face count.
 		{
-			file.get(input);
-			if (input == ' ') { faceCount++; }
+			_file.get(_input);
+			if (_input == ' ') 
+			{ 
+				faceCount++; 
+			}
 		}
 
 		// Otherwise read in the remainder of the line.
-		while (input != '\n')
+		while (_input != '\n')
 		{
-			file.get(input);
+			_file.get(_input);
 		}
 
 		// Start reading the beginning of the next line.
-		file.get(input);
+		_file.get(_input);
 	}
 
 	// Close the file.
-	file.close();
+	_file.close();
 
 	return true;
 }
 
-bool OBJLoader::LoadColour(ID3D11Device* gDevice, ID3D11DeviceContext* gDeviceContext, string fileName, ID3D11ShaderResourceView &ObjTex, XMFLOAT3 RGBDeffuse, XMFLOAT3 RGBAL, XMFLOAT3 Tf, XMFLOAT3 Ni)
+bool OBJLoader::ReadColourCounts(int& kdCount, int& kaCount, int& tfCount, int& niCount, string fileName)
+{
+	ifstream _file;
+	char _input;
+
+	// Initialize the counts.
+	kdCount = 0;
+	kaCount = 0;
+	tfCount = 0;
+	niCount = 0;
+
+	// Open the file.
+	_file.open(fileName);
+
+	// Check if it was successful in opening the file.
+	if (_file.fail() == true)
+	{
+		return false;
+	}
+
+	// Read from the file and continue to read until the end of the file is reached.
+	_file.get(_input);
+	while (!_file.eof())
+	{
+		// If the line starts with 'K' then count either the kd or the ka.
+		if (_input == 'K')
+		{
+			_file.get(_input);
+			if (_input == 'd') 
+			{ 
+				kdCount++; 
+			}
+			if (_input == 'a') 
+			{ 
+				kaCount++; 
+			}
+		}	
+		else if (_input == 'T') // If the line starts with 'T' then increment the tf count.
+		{
+			_file.get(_input);
+			if (_input == 'f') 
+			{ 
+				tfCount++;
+			}
+		}
+		else if (_input == 'N') // If the line starts with 'N' then increment the ni count.
+		{
+			_file.get(_input);
+			if (_input == 'i')
+			{
+				niCount++;
+			}
+		}
+
+		// Otherwise read in the remainder of the line.
+		while (_input != '\n')
+		{
+			_file.get(_input);
+		}
+
+		// Start reading the beginning of the next line.
+		_file.get(_input);
+	}
+
+	// Close the file.
+	_file.close();
+
+	return true;
+}
+
+bool OBJLoader::LoadColour(ID3D11Device* device, ID3D11DeviceContext* deviceContext, string fileName, ID3D11ShaderResourceView *ObjTex, XMFLOAT3 *RGBDeffuse, XMFLOAT3 *RGBAL, XMFLOAT3 *Tf, XMFLOAT3 *Ni)
 {
 	ifstream _fin;
 	char _input;
 	wstring _TexName;
+	int _kdIndex, _kaIndex, _tfIndex, _niIndex;
+
+	// Starts the index at 0
+	_kdIndex = 0;
+	_kaIndex = 0;
+	_tfIndex = 0;
+	_niIndex = 0;
 	
 	_fin.open(fileName);
+
+	// Check if it was successful in opening the file.
+	if (_fin.fail() == true)
+	{
+		return false;
+	}
 
 	_fin.get(_input);
 
@@ -84,33 +177,37 @@ bool OBJLoader::LoadColour(ID3D11Device* gDevice, ID3D11DeviceContext* gDeviceCo
 
 			if (_input == 'd')
 			{
-				_fin >> RGBDeffuse.x >> RGBDeffuse.y >> RGBDeffuse.z;
+				_fin >> RGBDeffuse[_kdIndex].x >> RGBDeffuse[_kdIndex].y >> RGBDeffuse[_kdIndex].z;
+				_kdIndex++;
 			}
 
 			if (_input == 'a')
 			{
-				_fin >> RGBAL.x >> RGBAL.y >> RGBAL.z;
+				_fin >> RGBAL[_kaIndex].x >> RGBAL[_kaIndex].y >> RGBAL[_kaIndex].z;
+				_kaIndex++;
 			}
 		}
-
-		if (_input == 'T')
+		else if (_input == 'T')
 		{
+			_fin.get(_input);
 			if (_input == 'f')
 			{
-				_fin >> Tf.x >> Tf.y >> Tf.z;
+				_fin >> Tf[_tfIndex].x >> Tf[_tfIndex].y >> Tf[_tfIndex].z;
+				_tfIndex++;
 			}
 		}
-
-		if (_input == 'N')
+		else if (_input == 'N')
 		{
+			_fin.get(_input);
 			if (_input == 'i')
 			{
-				_fin >> Ni.x >> Ni.y >> Ni.z;
+				_fin >> Ni[_niIndex].x;
+				_niIndex++;
 			}
 		}
-
-		if (_input == 'm')
+		else if (_input == 'm')
 		{
+			_fin.get(_input);
 			while (_input != '\n' && _input != 'd')
 			{
 				_fin.get(_input);
@@ -126,7 +223,7 @@ bool OBJLoader::LoadColour(ID3D11Device* gDevice, ID3D11DeviceContext* gDeviceCo
 
 			const wchar_t* _name = _TexName.c_str();
 
-			CreateWICTextureFromFile(gDevice, gDeviceContext, _name, nullptr, &ObjTex);
+			CreateWICTextureFromFile(device, deviceContext, _name, nullptr, &ObjTex);
 		}
 
 		while (_input != '\n')
@@ -183,9 +280,7 @@ bool OBJLoader::LoadDataStructures(XMFLOAT3 *vertices, XMFLOAT3 *normals, XMFLOA
 				_normalIndex++;
 			}
 		}
-
-		// Read in the faces.
-		if (_input == 'f')
+		else if (_input == 'f') // Read in the faces.
 		{
 			_fin.get(_input);
 			if (_input == ' ')

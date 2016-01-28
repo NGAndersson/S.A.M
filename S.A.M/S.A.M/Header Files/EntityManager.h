@@ -4,6 +4,7 @@
 #include "Entity.h"
 #include "Player.h"
 #include "Renderer.h"
+#include "ModelHandler.h"
 
 enum HandlerIndex { PLAYER, BULLET1, BULLET2, BULLET3, BULLET4, ENEMY1, ENEMY2, ENEMY3, ENEMY4};
 class EntityManager
