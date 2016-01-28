@@ -45,8 +45,9 @@ void Game::InitGame(Input* input, Display* disp)
 	CreateDirect3DContext(disp->GethWnd());
 
 	//FUN STUFF! REMOVE!
-	m_soundManager->LoadSound("Resources/wave.mp3", "wave", "music", LOAD_STREAM);
-	m_soundManager->LoadSound("Resources/Song.mp3", "gangnam", "music", LOAD_STREAM);
+	//m_soundManager->LoadSound("Resources/wave.mp3", "wave", "music", LOAD_STREAM);
+	//m_soundManager->LoadSound("Resources/Song.mp3", "gangnam", "music", LOAD_STREAM);
+	m_soundManager->LoadSound("Resources/ExitThePremises.mp3", "song", "music", LOAD_STREAM);
 	m_soundManager->PlayOneShotSound("music", 0.5f);
 
 
@@ -56,13 +57,15 @@ void Game::InitGame(Input* input, Display* disp)
 	m_screenManager->InitializeScreen();
 
 	//Create and initialize EntityManager
+	m_entityManager = new EntityManager;
+	m_entityManager->Initialize(m_soundManager, m_input);
 }
 
 WPARAM Game::MainLoop()
 {
 	Timer _time;
 	_time.StartTime();
-
+	_time.TimeCheck();
 	while (TRUE) {
 		// Check to see if any messages are waiting in the queue
 		while (PeekMessage(&m_winMSG, NULL, 0, 0, PM_REMOVE))
@@ -78,14 +81,16 @@ WPARAM Game::MainLoop()
 		if (m_winMSG.message == WM_QUIT)
 			return m_winMSG.wParam;
 
+		//Update FMOD
+		m_soundManager->Update();
 
 		//Get Time
-		//time = Time.GetTime() ?
+		float time = _time.TimeCheck();
 
 		CheckInput();
 
 		//Call update functions
-		Update(_time.TimeCheck());
+		Update(time);
 
 		//Call Render Functions
 		Render();
@@ -97,6 +102,7 @@ void Game::Update(double time)
 	m_screenManager->Update(time);
 	//if(m_screenManager->GetCurrentScreen() == USERINTERFACE)
 	// Update Entity Manager
+	m_entityManager->Update(time);
 }
 
 void Game::Render()
@@ -108,11 +114,10 @@ void Game::Render()
 
 void Game::CheckInput()
 {
-	double haj = 0;
-	InputType _returnInput = m_input->CheckKeyBoardInput(haj);
+	InputType _returnInput = m_input->CheckKeyBoardInput();
 	if (_returnInput & INPUT_ESC)
 		exit(0);
-	m_input->CheckMouseInput(haj);
+	m_input->CheckMouseInput();
 }
 
 void Game::SetViewport()

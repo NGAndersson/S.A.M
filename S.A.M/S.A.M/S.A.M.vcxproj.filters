@@ -36,9 +36,6 @@
     <ClCompile Include="Source Files\Timer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source Files\Entity.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source Files\EntityManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

@@ -5,13 +5,13 @@
 #include <DirectXMath.h>
 #include <DirectXCollision.h>
 
-using namespace DirectX
+using namespace DirectX;
 #include "SoundManager.h"
 
-#define MOVEMENTSPEED 0.05f
+#define MOVEMENTSPEED 0.05f;
 
 //#include "EntityManager.h"
-class  Entity
+class Entity
 {
 	//----------------------------Functions----------------------------------------
 public:

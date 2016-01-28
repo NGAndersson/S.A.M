@@ -4,6 +4,7 @@
 #include "Display.h"
 #include "SoundManager.h"
 #include "ScreenManager.h"
+#include "EntityManager.h"
 #include "Input.h"
 #include "Timer.h"
 
@@ -28,6 +29,7 @@ public:
 private:
 	SoundManager* m_soundManager;
 	ScreenManager* m_screenManager;
+	EntityManager* m_entityManager;
 	Input* m_input;
 	Display* m_display;
 	MSG m_winMSG;

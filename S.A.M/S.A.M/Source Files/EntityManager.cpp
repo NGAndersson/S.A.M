@@ -80,7 +80,8 @@ void EntityManager::Initialize(SoundManager* soundManager, Input* input)
 	m_soundManager = soundManager;
 
 	//Load the sounds for every entity
-	m_soundManager->LoadSound("DefaultBullet1.aiff", "DefaultBullet1", "DefaultBullet", LOAD_MEMORY);
+	m_soundManager->LoadSound("Resources/DefaultBullet1.wav", "DefaultBullet1", "DefaultBullet", LOAD_MEMORY);
+	//m_soundManager->LoadSound("Resources/DefaultBullet2.wav", "DefaultBullet2", "DefaultBullet", LOAD_MEMORY);
 
 	//Set the input class which will be passed down to Player
 	m_input = input;
@@ -96,7 +97,7 @@ void EntityManager::Initialize(SoundManager* soundManager, Input* input)
 	m_modelHandlers[BULLET3] = new ModelHandler;
 	m_modelHandlers[BULLET4] = new ModelHandler;
 
-	ChangeSongData(120);
+	ChangeSongData(128);
 }
 
 void EntityManager::Render()
@@ -129,7 +130,7 @@ void EntityManager::Render()
 
 void EntityManager::Update(double time)
 {
-	m_timeSinceLastBeat += time;
+	m_timeSinceLastBeat += time * 1000;
 	if (m_timeSinceLastBeat >= 60000 / m_currentBPM) {
 		m_timeSinceLastBeat -= 60000 / m_currentBPM;
 		m_soundManager->PlayOneShotSound("DefaultBullet", 0.5f);

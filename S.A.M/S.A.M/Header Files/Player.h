@@ -19,7 +19,7 @@ public:
 	//----------------------------Attributes----------------------------------------
 private:
 	Input* m_input;
-
+	float m_rotAngle = 0;
 };
 
 #endif // ! PLAYER_H

@@ -34,12 +34,12 @@ private:
 	std::vector<Entity*> m_enemy4;
 	Entity* m_player;
 
-	Renderer m_renderer;
+	//Renderer m_renderer;
 	SoundManager* m_soundManager;
 	Input* m_input;
 
 	int m_currentBPM;
-	int m_timeSinceLastBeat;
+	float m_timeSinceLastBeat = 0.0f;
 
 public:
 
