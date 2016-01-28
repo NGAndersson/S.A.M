@@ -17,6 +17,7 @@ void Game::InitGame(Input* input, Display* disp)
 	m_soundManager->LoadSound("Resources/wave.mp3", "wave", "music", LOAD_STREAM);
 	m_soundManager->LoadSound("Resources/Song.mp3", "gangnam", "music", LOAD_STREAM);
 	m_soundManager->PlayOneShotSound("music", 0.5f);
+	m_soundManager->PauseSound("music");
 
 
 	//Create and initialize ScreenManager
@@ -49,9 +50,9 @@ WPARAM Game::MainLoop()
 
 		//Get Time
 		//time = Time.GetTime() ?
-		double haj = 0;
-		m_input->CheckKeyBoardInput(haj);
-		m_input->CheckMouseInput(haj);
+
+		CheckInput();
+
 		//Call update functions
 		Update(_time.TimeCheck());
 
@@ -72,4 +73,13 @@ void Game::Render()
 	m_screenManager->Render();
 	//if(m_screenManager->GetCurrentScreen() == USERINTERFACE)
 	// Render Entity Manager
+}
+
+void Game::CheckInput()
+{
+	double haj = 0;
+	InputType _returnInput = m_input->CheckKeyBoardInput(haj);
+	if (_returnInput & INPUT_ESC)
+		exit(0);
+	m_input->CheckMouseInput(haj);
 }

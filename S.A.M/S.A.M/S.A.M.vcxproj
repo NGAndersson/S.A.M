@@ -139,22 +139,36 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Source Files\Display.cpp" />
+    <ClCompile Include="Source Files\Entity.cpp" />
+    <ClCompile Include="Source Files\EntityManager.cpp" />
     <ClCompile Include="Source Files\Game.cpp" />
     <ClCompile Include="Source Files\Input.cpp" />
     <ClCompile Include="Source Files\main.cpp" />
+    <ClCompile Include="Source Files\OBJloader.cpp" />
+    <ClCompile Include="Source Files\pch.cpp" />
+    <ClCompile Include="Source Files\Player.cpp" />
+    <ClCompile Include="Source Files\Renderer.cpp" />
     <ClCompile Include="Source Files\ScreenManager.cpp" />
     <ClCompile Include="Source Files\SoundManager.cpp" />
     <ClCompile Include="Source Files\Timer.cpp" />
+    <ClCompile Include="Source Files\WICTextureLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header Files\DirectXHelpers.h" />
     <ClInclude Include="Header Files\Display.h" />
+    <ClInclude Include="Header Files\Entity.h" />
+    <ClInclude Include="Header Files\EntityManager.h" />
     <ClInclude Include="Header Files\Game.h" />
     <ClInclude Include="Header Files\Input.h" />
+    <ClInclude Include="Header Files\OBJloader.h" />
+    <ClInclude Include="Header Files\pch.h" />
     <ClInclude Include="Header Files\PlatformHelpers.h" />
+    <ClInclude Include="Header Files\Player.h" />
+    <ClInclude Include="Header Files\Renderer.h" />
     <ClInclude Include="Header Files\ScreenManager.h" />
     <ClInclude Include="Header Files\SoundManager.h" />
     <ClInclude Include="Header Files\Timer.h" />
+    <ClInclude Include="Header Files\WICTextureLoader.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="fmodex.dll" />

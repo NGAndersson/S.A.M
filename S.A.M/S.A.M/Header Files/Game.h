@@ -12,6 +12,7 @@ class Game
 private:
 	void Update(double time);
 	void Render();
+	void CheckInput();
 
 public:
 	Game();

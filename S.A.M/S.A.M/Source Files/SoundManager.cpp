@@ -81,9 +81,9 @@ void SoundManager::LoadSound(char* fileName, char* soundName, char* groupName, S
 	FMOD::Sound* audio;
 
 	//Either load into memory or as a stream
-	if (flags == LOAD_MEMORY)
+	if (flags & LOAD_MEMORY)
 		m_result = m_system->createSound(fileName, FMOD_DEFAULT, 0, &audio);
-	else if (flags == LOAD_STREAM)
+	else if (flags & LOAD_STREAM)
 		m_result = m_system->createStream(fileName, FMOD_DEFAULT, 0, &audio);
 	else	//No mode set
 	{
@@ -129,6 +129,16 @@ void SoundManager::PauseSound(char* soundName)
 		bool isPaused;
 		m_soundChannels[_groupIndex][_soundIndex]->getPaused(&isPaused);
 		m_soundChannels[_groupIndex][_soundIndex]->setPaused(!isPaused);
+	}
+	else if (_groupIndex != -1)
+	{
+		for (int i = 0; i < m_soundChannels[_groupIndex].size(); i++) 
+		{
+			bool _paused;
+			m_soundChannels[_groupIndex][i]->getPaused(&_paused);
+			if (_paused == false)
+				m_soundChannels[_groupIndex][i]->setPaused(true);
+		}
 	}
 	else {
 		MessageBox(NULL, "Couldn't find sound name handle", "Sound Pausing Error", MB_ICONERROR | MB_OK);
