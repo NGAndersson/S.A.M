@@ -142,25 +142,40 @@
     <ClCompile Include="Source Files\Game.cpp" />
     <ClCompile Include="Source Files\Input.cpp" />
     <ClCompile Include="Source Files\main.cpp" />
+    <ClCompile Include="Source Files\ModelHandler.cpp" />
+    <ClCompile Include="Source Files\OBJloader.cpp" />
+    <ClCompile Include="Source Files\pch.cpp" />
     <ClCompile Include="Source Files\ScreenManager.cpp" />
+    <ClCompile Include="Source Files\ShaderHandler.cpp" />
     <ClCompile Include="Source Files\SoundManager.cpp" />
     <ClCompile Include="Source Files\Timer.cpp" />
+    <ClCompile Include="Source Files\WICTextureLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header Files\DirectXHelpers.h" />
     <ClInclude Include="Header Files\Display.h" />
     <ClInclude Include="Header Files\Game.h" />
     <ClInclude Include="Header Files\Input.h" />
+    <ClInclude Include="Header Files\ModelHandler.h" />
+    <ClInclude Include="Header Files\OBJloader.h" />
+    <ClInclude Include="Header Files\pch.h" />
     <ClInclude Include="Header Files\PlatformHelpers.h" />
     <ClInclude Include="Header Files\ScreenManager.h" />
+    <ClInclude Include="Header Files\ShaderHandler.h" />
     <ClInclude Include="Header Files\SoundManager.h" />
     <ClInclude Include="Header Files\Timer.h" />
+    <ClInclude Include="Header Files\WICTextureLoader.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="fmodex.dll" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="Resources\wave.mp3" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Shaders\PlayerGS.hlsl" />
+    <FxCompile Include="Shaders\PlayerPS.hlsl" />
+    <FxCompile Include="Shaders\PlayerVS.hlsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

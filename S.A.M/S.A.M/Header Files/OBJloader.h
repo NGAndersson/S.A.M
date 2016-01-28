@@ -26,13 +26,14 @@ class OBJLoader
 public:
 	OBJLoader();
 	~OBJLoader();
-	bool ReadFileCounts(int&, int&, int&, int&, string);
-	XMFLOAT3* LoadVertices(int, string);
-	XMFLOAT3* LoadNormals(int, string);
-	XMFLOAT2* LoadTexcoords(int, string);
-	FaceType* LoadFace(int, string);
-	bool LoadDataStructures(XMFLOAT3 *, XMFLOAT3 *, XMFLOAT2 *, FaceType *, string);
-	bool LoadColour(ID3D11Device*, ID3D11DeviceContext*, string, ID3D11ShaderResourceView&, XMFLOAT3, XMFLOAT3, XMFLOAT3, XMFLOAT3);
+	bool ReadFileCounts(int& vertexCount, int& textureCount, int& normalCount, int& faceCount, string fileName);
+	bool ReadColourCounts(int& vertexCount, int& textureCount, int& normalCount, int& faceCount, string fileName);
+	XMFLOAT3* LoadVertices(int vertexCount, string fileName);
+	XMFLOAT3* LoadNormals(int textureCount, string fileName);
+	XMFLOAT2* LoadTexcoords(int normalCount, string fileName);
+	FaceType* LoadFace(int faceCount, string fileName);
+	bool LoadDataStructures(XMFLOAT3 *vertices, XMFLOAT3 *normals, XMFLOAT2 *texcoords, FaceType *faces, string fileName);
+	bool LoadColour(ID3D11Device* device, ID3D11DeviceContext* deviceContext, string fileName, ID3D11ShaderResourceView* ObjTex, XMFLOAT3 *RGBDeffuse, XMFLOAT3 *RGBAL, XMFLOAT3 *Tf, XMFLOAT3 *Ni);
 };
 
 #endif
