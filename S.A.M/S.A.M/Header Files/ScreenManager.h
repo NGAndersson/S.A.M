@@ -1,12 +1,10 @@
 #ifndef SCREENMANAGER_H
 #define SCREENMANAGER_H
 
-enum EnumScreens { START, USERINTERFACE, HIGHSCORE, OPTION, PAUSE, ENDSCREEN };
+#include "Input.h"
+#include "ModelHandler.h"
 
-//Includes
-//1.Diff Screens
-//2.input
-//3.modelhandler
+enum EnumScreens { START, USERINTERFACE, HIGHSCORE, OPTION, PAUSE, ENDSCREEN };
 
 class ScreenManager
 {
@@ -18,7 +16,7 @@ public:
 	//Uppdate screens
 	void Update(double time);
 	//Initializing the screen manager
-	void InitializeScreen();
+	void InitializeScreen(Input* input);
 	//Rendercall
 	void Render();
 	
@@ -30,12 +28,17 @@ private:
 	EnumScreens m_Current;
 	//Different screens
 
-
 	//input
-
+	Input* m_input;
 
 	//Modelhandler
 
+	//ModelHandler m_uI;
+	//ModelHandler m_highScore;
+	//ModelHandler m_options;
+	//ModelHandler m_pause;
+	//ModelHandler m_start;
+	//ModelHandler m_endScreen;
 
 };
 

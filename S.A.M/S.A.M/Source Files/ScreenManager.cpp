@@ -43,15 +43,16 @@ void ScreenManager::Update(double time)
 		break;
 	}
 
+
 }
 
-void ScreenManager::InitializeScreen()
+void ScreenManager::InitializeScreen(Input* Input)
 {
 	//Starting all the otherClasses etc..
 
 	//Current screen is startscreen
 	m_Current = START;
-
+	//Create Modelhandlers...
 }
 
 void ScreenManager::Render()
