@@ -81,9 +81,9 @@ WPARAM Game::MainLoop()
 
 		//Get Time
 		//time = Time.GetTime() ?
-		double haj = 0;
-		m_input->CheckKeyBoardInput(haj);
-		m_input->CheckMouseInput(haj);
+
+		CheckInput();
+
 		//Call update functions
 		Update(_time.TimeCheck());
 
