@@ -15,7 +15,7 @@ Input::~Input()
 void Input::Initialize(HINSTANCE hInstance,HWND& hwnd, int ScreenWidth, int ScreenHeight)
 {
 	HRESULT _hr;
-	//Creating the DInput
+	//Creating the DirectInput
 	_hr = DirectInput8Create(hInstance, DIRECTINPUT_VERSION, IID_IDirectInput8, (void**)&m_DirectInput, NULL);
 	//Keyboard
 	_hr = m_DirectInput->CreateDevice(GUID_SysKeyboard, &m_Keyboard,NULL);
@@ -33,39 +33,39 @@ void Input::Initialize(HINSTANCE hInstance,HWND& hwnd, int ScreenWidth, int Scre
 	m_ScreenWidth = ScreenWidth;
 }
 
-InputType Input::CheckKeyBoardInput(double time)
+InputType Input::CheckKeyBoardInput()
 {
 	BYTE _KeyboardState[256];
 	m_Keyboard->Acquire();
-	InputType _ReturnType = DEFAULT;
+	InputType _ReturnType = INPUT_DEFAULT;
 	m_Keyboard->GetDeviceState(sizeof(_KeyboardState), (LPVOID)&_KeyboardState);
 
 	if (_KeyboardState[DIK_ESCAPE] & 0x80)
 		_ReturnType = INPUT_ESC;
 
 	if (_KeyboardState[DIK_LEFT] & 0x80)
-		_ReturnType = MOVE_LEFT;
+		_ReturnType = _ReturnType | INPUT_MOVE_LEFT;
 
 	if (_KeyboardState[DIK_RIGHT] &0x80)
-		_ReturnType = _ReturnType | MOVE_RIGHT;
+		_ReturnType = _ReturnType | INPUT_MOVE_RIGHT;
 
 	if (_KeyboardState[DIK_UP] & 0x80)
-		_ReturnType = _ReturnType | MOVE_UP;
+		_ReturnType = _ReturnType | INPUT_MOVE_UP;
 
 	if (_KeyboardState[DIK_DOWN] & 0x80)
-		_ReturnType = _ReturnType | MOVE_DOWN;
+		_ReturnType = _ReturnType | INPUT_MOVE_DOWN;
 
 	return _ReturnType;
 }
 
-MouseClicked Input::CheckMouseInput(double time)
+MouseClicked Input::CheckMouseInput()
 {
 	m_Mouse->Acquire();
 
 	DIMOUSESTATE _CurrMouse;
 	MouseClicked _ReturnType;
 	m_Mouse->GetDeviceState(sizeof(DIMOUSESTATE), &_CurrMouse);
-	_ReturnType.MouseAct = DEFAULT;
+	_ReturnType.MouseAct = INPUT_DEFAULT;
 
 	POINT p;
 	GetCursorPos(&p);
@@ -73,7 +73,7 @@ MouseClicked Input::CheckMouseInput(double time)
 
 	if (_CurrMouse.rgbButtons[0] & 0x80)
 	{
-		_ReturnType.MouseAct = MOUSE_LK;
+		_ReturnType.MouseAct = INPUT_MOUSE_LK;
 		_ReturnType.Mouse_Position_X = p.x;
 		_ReturnType.Mouse_Position_Y = p.y;
 
