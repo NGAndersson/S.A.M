@@ -28,6 +28,9 @@ Display::Display(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, 
 	// register the window class
 	RegisterClassEx(&_wc);
 
+	RECT rc = { 0, 0, 640, 480 };
+	AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, FALSE);
+
 	// create the window and use the result as the handle
 	m_hWnd = CreateWindowEx(NULL,
 		"WindowClass1",    // name of the window class
@@ -35,8 +38,10 @@ Display::Display(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, 
 		WS_OVERLAPPEDWINDOW,    // window style
 		300,    // x-position of the window
 		300,    // y-position of the window
-		width,    // width of the window
-		height,    // height of the window
+		//width,    // width of the window
+		//height,    // height of the window
+		rc.right - rc.left,
+		rc.bottom - rc.top,
 		NULL,    // we have no parent window, NULL
 		NULL,    // we aren't using menus, NULL
 		hInstance,    // application handle
