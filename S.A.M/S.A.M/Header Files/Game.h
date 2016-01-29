@@ -12,14 +12,13 @@
 
 class Game
 {
-	//Functions
 private:
 	void Update(double time);
 	void Render();
 	void CheckInput();
 	void SetViewport();
 	HRESULT CreateDirect3DContext(HWND wndHandle);
-	void DepthStencilInitialicer();
+	HRESULT DepthStencilInitialicer();
 
 public:
 	Game();
@@ -27,7 +26,6 @@ public:
 	void InitGame(Input* input, Display* disp);
 	WPARAM MainLoop();
 
-	//Variables
 private:
 	SoundManager* m_soundManager;
 	ScreenManager* m_screenManager;
@@ -35,12 +33,12 @@ private:
 	Input* m_input;
 	Display* m_display;
 	MSG m_winMSG;
-	ID3D11DeviceContext* m_deviceContext;
-	ID3D11Device* m_device;
-	IDXGISwapChain* m_swapChain;
-	ID3D11RenderTargetView* m_backbufferRTV;
-	ID3D11DepthStencilView* m_depthStencilView;
-	ID3D11Texture2D* m_depthStencil;
+	ID3D11DeviceContext* m_deviceContext = nullptr;
+	ID3D11Device* m_device = nullptr;
+	IDXGISwapChain* m_swapChain = nullptr;
+	ID3D11RenderTargetView* m_backbufferRTV = nullptr;
+	ID3D11DepthStencilView* m_depthStencilView = nullptr;
+	ID3D11Texture2D* m_depthStencil = nullptr;
 
 public:
 };

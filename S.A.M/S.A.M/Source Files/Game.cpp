@@ -44,6 +44,9 @@ void Game::InitGame(Input* input, Display* disp)
 	//Create and initialize device/devicecontext/swapchain/depthstenciel
 	CreateDirect3DContext(disp->GethWnd());
 
+	//Sets the viewport
+	SetViewport();
+
 	//FUN STUFF! REMOVE!
 	//m_soundManager->LoadSound("Resources/wave.mp3", "wave", "music", LOAD_STREAM);
 	//m_soundManager->LoadSound("Resources/Song.mp3", "gangnam", "music", LOAD_STREAM);
@@ -63,9 +66,9 @@ void Game::InitGame(Input* input, Display* disp)
 
 WPARAM Game::MainLoop()
 {
-	Timer _timer;
-	_timer.StartTime();
-	_timer.TimeCheck();
+	Timer _time;
+	_time.StartTime();
+	_time.TimeCheck();
 	while (TRUE) {
 		// Check to see if any messages are waiting in the queue
 		while (PeekMessage(&m_winMSG, NULL, 0, 0, PM_REMOVE))
@@ -85,15 +88,17 @@ WPARAM Game::MainLoop()
 		m_soundManager->Update();
 
 		//Get Time
-		float _time = _timer.TimeCheck();
+		float time = _time.TimeCheck();
 
 		CheckInput();
 
 		//Call update functions
-		Update(_time);
+		Update(time);
 
 		//Call Render Functions
 		Render();
+
+		m_swapChain->Present(0, 0);
 	}
 }
 
@@ -107,6 +112,11 @@ void Game::Update(double time)
 
 void Game::Render()
 {
+	// clear the back buffer to a deep blue
+	float _clearColor[] = { 0, 0, 1, 1 };
+	m_deviceContext->ClearRenderTargetView(m_backbufferRTV, _clearColor);
+	m_deviceContext->ClearDepthStencilView(m_depthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
+	m_deviceContext->OMSetRenderTargets(1, &m_backbufferRTV, m_depthStencilView);
 	m_screenManager->Render();
 	//if(m_screenManager->GetCurrentScreen() == USERINTERFACE)
 	// Render Entity Manager
@@ -162,17 +172,17 @@ HRESULT Game::CreateDirect3DContext(HWND wndHandle)
 		NULL,
 		&m_deviceContext);
 
-	DepthStencilInitialicer(); //skapar depthstencil/desc 
+	_hr = DepthStencilInitialicer(); //skapar depthstencil/desc 
 
 	if (SUCCEEDED(_hr))
 	{
 		// get the address of the back buffer
-		ID3D11Texture2D* pBackBuffer = nullptr;		//För lokala pointer-variabler, ska det bara börja på p, eller borde vi skriva p_variabelnamn som vi gör för de andra formerna?
-		m_swapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&pBackBuffer);
+		ID3D11Texture2D* _backBuffer = nullptr;
+		m_swapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&_backBuffer);
 
 		// use the back buffer address to create the render target
-		HRESULT hr = m_device->CreateRenderTargetView(pBackBuffer, NULL, &m_backbufferRTV);
-		pBackBuffer->Release();
+		_hr = m_device->CreateRenderTargetView(_backBuffer, NULL, &m_backbufferRTV);
+		_backBuffer->Release();
 
 		// set the render target as the back buffer
 		m_deviceContext->OMSetRenderTargets(1, &m_backbufferRTV, m_depthStencilView);
@@ -180,8 +190,10 @@ HRESULT Game::CreateDirect3DContext(HWND wndHandle)
 	return _hr;
 }
 
-void Game::DepthStencilInitialicer()
+HRESULT Game::DepthStencilInitialicer()
 {
+	HRESULT _hr;
+
 	//create the depth stencil
 	D3D11_TEXTURE2D_DESC _descDepth;
 	_descDepth.Width = 640;
@@ -195,6 +207,10 @@ void Game::DepthStencilInitialicer()
 	_descDepth.BindFlags = D3D11_BIND_DEPTH_STENCIL;
 	_descDepth.CPUAccessFlags = 0;
 	_descDepth.MiscFlags = 0;
-	m_device->CreateTexture2D(&_descDepth, NULL, &m_depthStencil);
-	m_device->CreateDepthStencilView(m_depthStencil, NULL, &m_depthStencilView);
+	_hr = m_device->CreateTexture2D(&_descDepth, NULL, &m_depthStencil);
+	if (SUCCEEDED(_hr))
+	{
+		_hr = m_device->CreateDepthStencilView(m_depthStencil, NULL, &m_depthStencilView);
+	}
+	return _hr;
 }
