@@ -11,18 +11,18 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 {
 	int _width = WIDTH;
 	int _height = HEIGHT;
-	Display display(hInstance, hPrevInstance, lpCmdLine, nCmdShow, _width, _height);
-	HWND hWnd = display.GethWnd();
+	Display _display(hInstance, hPrevInstance, lpCmdLine, nCmdShow, _width, _height);
+	HWND _hWnd = _display.GethWnd();
 	// display the window on the screen
-	ShowWindow(hWnd, nCmdShow);
+	ShowWindow(_hWnd, nCmdShow);
 	
 	//Create and initialize Input
 	Input _input;
-	_input.Initialize(hInstance, hWnd, _width, _height);
+	_input.Initialize(hInstance, _hWnd, _width, _height);
 
 	//Create, initialize and START the game
 	Game _Game;
-	_Game.InitGame(&_input, &display);
+	_Game.InitGame(&_input, &_display);
 	WPARAM test = _Game.MainLoop();
 	return test;
 }

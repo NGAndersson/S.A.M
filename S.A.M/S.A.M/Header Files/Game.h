@@ -12,6 +12,7 @@
 
 class Game
 {
+	//Functions
 private:
 	void Update(double time);
 	void Render();
@@ -26,6 +27,7 @@ public:
 	void InitGame(Input* input, Display* disp);
 	WPARAM MainLoop();
 
+	//Variables
 private:
 	SoundManager* m_soundManager;
 	ScreenManager* m_screenManager;

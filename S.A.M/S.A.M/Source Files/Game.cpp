@@ -63,9 +63,9 @@ void Game::InitGame(Input* input, Display* disp)
 
 WPARAM Game::MainLoop()
 {
-	Timer _time;
-	_time.StartTime();
-	_time.TimeCheck();
+	Timer _timer;
+	_timer.StartTime();
+	_timer.TimeCheck();
 	while (TRUE) {
 		// Check to see if any messages are waiting in the queue
 		while (PeekMessage(&m_winMSG, NULL, 0, 0, PM_REMOVE))
@@ -85,12 +85,12 @@ WPARAM Game::MainLoop()
 		m_soundManager->Update();
 
 		//Get Time
-		float time = _time.TimeCheck();
+		float _time = _timer.TimeCheck();
 
 		CheckInput();
 
 		//Call update functions
-		Update(time);
+		Update(_time);
 
 		//Call Render Functions
 		Render();
@@ -149,7 +149,7 @@ HRESULT Game::CreateDirect3DContext(HWND wndHandle)
 	_swapChainDesc.Windowed = TRUE;                                    // windowed/full-screen mode
 
 															// create a device, device context and swap chain using the information in the scd struct
-	HRESULT hr = D3D11CreateDeviceAndSwapChain(NULL,
+	HRESULT _hr = D3D11CreateDeviceAndSwapChain(NULL,
 		D3D_DRIVER_TYPE_HARDWARE,
 		NULL,
 		D3D11_CREATE_DEVICE_DEBUG,
@@ -164,10 +164,10 @@ HRESULT Game::CreateDirect3DContext(HWND wndHandle)
 
 	DepthStencilInitialicer(); //skapar depthstencil/desc 
 
-	if (SUCCEEDED(hr))
+	if (SUCCEEDED(_hr))
 	{
 		// get the address of the back buffer
-		ID3D11Texture2D* pBackBuffer = nullptr;
+		ID3D11Texture2D* pBackBuffer = nullptr;		//För lokala pointer-variabler, ska det bara börja på p, eller borde vi skriva p_variabelnamn som vi gör för de andra formerna?
 		m_swapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&pBackBuffer);
 
 		// use the back buffer address to create the render target
@@ -177,7 +177,7 @@ HRESULT Game::CreateDirect3DContext(HWND wndHandle)
 		// set the render target as the back buffer
 		m_deviceContext->OMSetRenderTargets(1, &m_backbufferRTV, m_depthStencilView);
 	}
-	return hr;
+	return _hr;
 }
 
 void Game::DepthStencilInitialicer()

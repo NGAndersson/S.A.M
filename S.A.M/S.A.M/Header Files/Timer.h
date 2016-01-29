@@ -30,4 +30,4 @@ private:
 protected:
 public:
 };
-#endif // ! TIMER_H
+#endif // TIMER_H

@@ -11,25 +11,25 @@ Display::Display(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, 
 {
 
 	// this struct holds information for the window class
-	WNDCLASSEX wc;
+	WNDCLASSEX _wc;
 
 	// clear out the window class for use
-	ZeroMemory(&wc, sizeof(WNDCLASSEX));
+	ZeroMemory(&_wc, sizeof(WNDCLASSEX));
 
 	// fill in the struct with the needed information
-	wc.cbSize = sizeof(WNDCLASSEX);
-	wc.style = CS_HREDRAW | CS_VREDRAW;
-	wc.lpfnWndProc = WindowProc;
-	wc.hInstance = hInstance;
-	wc.hCursor = LoadCursor(NULL, IDC_ARROW);
-	wc.hbrBackground = (HBRUSH)COLOR_WINDOW;
-	wc.lpszClassName = "WindowClass1";
+	_wc.cbSize = sizeof(WNDCLASSEX);
+	_wc.style = CS_HREDRAW | CS_VREDRAW;
+	_wc.lpfnWndProc = WindowProc;
+	_wc.hInstance = hInstance;
+	_wc.hCursor = LoadCursor(NULL, IDC_ARROW);
+	_wc.hbrBackground = (HBRUSH)COLOR_WINDOW;
+	_wc.lpszClassName = "WindowClass1";
 
 	// register the window class
-	RegisterClassEx(&wc);
+	RegisterClassEx(&_wc);
 
 	// create the window and use the result as the handle
-	hWnd = CreateWindowEx(NULL,
+	m_hWnd = CreateWindowEx(NULL,
 		"WindowClass1",    // name of the window class
 		"Our First Windowed Program",    // title of the window
 		WS_OVERLAPPEDWINDOW,    // window style
@@ -50,7 +50,7 @@ Display::~Display()
 
 HWND Display::GethWnd()
 {
-	return hWnd;
+	return m_hWnd;
 }
 
 // this is the main message handler for the program

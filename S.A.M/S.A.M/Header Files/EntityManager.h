@@ -10,6 +10,7 @@
 enum HandlerIndex { PLAYER, BULLET1, BULLET2, BULLET3, BULLET4, BULLET5, BULLET6, ENEMY1, ENEMY2, ENEMY3, ENEMY4};
 class EntityManager
 {
+	//Functions
 private:
 	void SpawnEntity(HandlerIndex type);
 
@@ -20,6 +21,7 @@ public:
 	void Update(double time);
 	void ChangeSongData(int bpm);
 
+	//Variables
 private:
 	ModelHandler* m_modelHandlers[9];
 	std::vector<Entity*> m_bullet1;

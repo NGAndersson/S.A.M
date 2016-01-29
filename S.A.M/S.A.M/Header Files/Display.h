@@ -5,15 +5,21 @@
 
 class Display
 {
+	//functions
 private:
-	// the handle for the window, filled by a function
-	HWND hWnd;
 protected:
 public:
 	Display();
 	~Display();
 	Display(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow, int width, int height);
 	HWND GethWnd();
+
+	//variables
+private:
+	// the handle for the window, filled by a function
+	HWND m_hWnd;
+protected:
+public:
 };
 
-#endif DISPLAY_H
+#endif // DISPLAY_H

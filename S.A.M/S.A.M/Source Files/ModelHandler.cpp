@@ -242,9 +242,9 @@ bool ModelHandler::SetShaders(ID3D11DeviceContext* deviceContext)
 
 bool ModelHandler::SetBuffers(ID3D11DeviceContext* deviceContext)
 {
-	UINT32 vertexSize = sizeof(float) * 8;
-	UINT32 offset = 0;
-	deviceContext->IASetVertexBuffers(0, 1, &m_vertexBuffer, &vertexSize, &offset);
+	UINT32 _vertexSize = sizeof(float) * 8;
+	UINT32 _offset = 0;
+	deviceContext->IASetVertexBuffers(0, 1, &m_vertexBuffer, &_vertexSize, &_offset);
 
 	deviceContext->PSSetConstantBuffers(0, 1, &m_OBJColourBuffer);
 	deviceContext->PSSetSamplers(0, 1, &m_sampleState);

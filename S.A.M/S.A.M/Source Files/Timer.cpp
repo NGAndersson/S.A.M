@@ -19,38 +19,38 @@ Timer::~Timer()
 
 void Timer::StartTime()
 {
-	LARGE_INTEGER frequencyCount;
-	QueryPerformanceFrequency(&frequencyCount);
+	LARGE_INTEGER _frequencyCount;
+	QueryPerformanceFrequency(&_frequencyCount);
 
 	//Stores the frequency of counts per second
-	m_countsPerSecond = double(frequencyCount.QuadPart);
+	m_countsPerSecond = double(_frequencyCount.QuadPart);
 
-	QueryPerformanceCounter(&frequencyCount);
+	QueryPerformanceCounter(&_frequencyCount);
 	//stores the current time in counts
-	m_counterStart = frequencyCount.QuadPart;
+	m_counterStart = _frequencyCount.QuadPart;
 }
 
 double Timer::GetTime()
 {
-	LARGE_INTEGER currentTime;
-	QueryPerformanceCounter(&currentTime);
+	LARGE_INTEGER _currentTime;
+	QueryPerformanceCounter(&_currentTime);
 	//me returns the time in seconds that StartTime (with m_counterstart) was called last
-	return double(currentTime.QuadPart - m_counterStart) / m_countsPerSecond;
+	return double(_currentTime.QuadPart - m_counterStart) / m_countsPerSecond;
 }
 
 double Timer::GetFrameTime()
 {
-	LARGE_INTEGER currentTime;
-	__int64 tickCount;
-	QueryPerformanceCounter(&currentTime);
+	LARGE_INTEGER _currentTime;
+	__int64 _tickCount;
+	QueryPerformanceCounter(&_currentTime);
 
-	tickCount = currentTime.QuadPart - m_frameTimeOld;
-	m_frameTimeOld = currentTime.QuadPart;
+	_tickCount = _currentTime.QuadPart - m_frameTimeOld;
+	m_frameTimeOld = _currentTime.QuadPart;
 
-	if (tickCount < 0.0f)
-		tickCount = 0.0f;
+	if (_tickCount < 0.0f)
+		_tickCount = 0.0f;
 	//returns the last time that GetFrameTime() was called to realize how many seconds each fram takes to process
-	return float(tickCount) / m_countsPerSecond;
+	return float(_tickCount) / m_countsPerSecond;
 }
 
 double Timer::TimeCheck()

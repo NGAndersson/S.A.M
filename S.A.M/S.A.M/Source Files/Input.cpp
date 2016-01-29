@@ -67,15 +67,15 @@ MouseClicked Input::CheckMouseInput()
 	m_Mouse->GetDeviceState(sizeof(DIMOUSESTATE), &_CurrMouse);
 	_ReturnType.MouseAct = INPUT_DEFAULT;
 
-	POINT p;
-	GetCursorPos(&p);
-	ScreenToClient(m_Hwnd, &p);
+	POINT _p;
+	GetCursorPos(&_p);
+	ScreenToClient(m_Hwnd, &_p);
 
 	if (_CurrMouse.rgbButtons[0] & 0x80)
 	{
 		_ReturnType.MouseAct = INPUT_MOUSE_LK;
-		_ReturnType.Mouse_Position_X = p.x;
-		_ReturnType.Mouse_Position_Y = p.y;
+		_ReturnType.Mouse_Position_X = _p.x;
+		_ReturnType.Mouse_Position_Y = _p.y;
 
 	}
 	return _ReturnType;
