@@ -1,6 +1,6 @@
 cbuffer CameraViewProject : register(b0)
 {
-	float3 CameraPos;
+	float4 CameraPos;
 	float4x4 ViewProjection;
 };
 

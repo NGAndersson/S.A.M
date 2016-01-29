@@ -120,6 +120,7 @@ void Game::Render()
 	m_screenManager->Render();
 	//if(m_screenManager->GetCurrentScreen() == USERINTERFACE)
 	// Render Entity Manager
+	m_entityManager->Render();
 }
 
 void Game::CheckInput()

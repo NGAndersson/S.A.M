@@ -5,12 +5,13 @@
 #include <d3d11.h>
 
 #include "ModelHandler.h"
+#include "Camera.h"
 
 class Renderer
 {
 	//Cam buffer for GS
 	struct CamStruct {
-		XMFLOAT3 camPos;
+		XMFLOAT4 camPos;
 		XMMATRIX viewProjection;
 	};
 
@@ -36,6 +37,7 @@ private:
 	ID3D11Buffer* m_camBuffer;
 	WorldStruct m_worldStruct;
 	ID3D11Buffer* m_worldBuffer;
+	Camera m_cam;
 public:
 
 };

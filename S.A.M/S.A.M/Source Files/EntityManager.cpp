@@ -111,6 +111,7 @@ void EntityManager::Initialize(SoundManager* soundManager, Input* input, ID3D11D
 
 	//Temp, create player
 	SpawnEntity(PLAYER);
+	//m_player->SetPosition(XMFLOAT3(1.0f, 0.0f, 1.0f));
 
 	ChangeSongData(128);
 }
@@ -119,8 +120,11 @@ void EntityManager::Render()
 {
 	
 	//Render Player
+	XMVECTOR _rotzAxis{ 0,0,1,0 };
+	XMMATRIX m_rotation = XMMatrixRotationAxis(_rotzAxis, 0.0f);
+	m_renderer->Render(m_modelHandlers[PLAYER], XMFLOAT3(1.0f, 0.0f, 1.0f), &m_rotation);
 
-	m_renderer->Render(m_modelHandlers[PLAYER], m_player->GetPosition(), &m_player->GetRotation());
+	//m_renderer->Render(m_modelHandlers[PLAYER], m_player->GetPosition(), &m_player->GetRotation());
 	/*
 	//Render Enemies
 	for (int i = 0; i < m_enemy1.size(); i++)
