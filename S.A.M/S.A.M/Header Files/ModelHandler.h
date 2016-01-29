@@ -32,6 +32,7 @@ public:
 	bool CreateShadersCompute(ID3D11Device* device, string vertexFile, string geometryFile, string pixelFile, string computeFile);
 	bool SetShaders(ID3D11DeviceContext* deviceContext);
 	bool SetBuffers(ID3D11DeviceContext* deviceContext);
+	int GetVertexCount();
 
 private:
 	XMFLOAT3* m_vertices,* m_normals, *m_RGBDeffuse, *m_RGBAL, *m_Tf, *m_Ni;
