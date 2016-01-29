@@ -61,7 +61,7 @@ void Game::InitGame(Input* input, Display* disp)
 
 	//Create and initialize EntityManager
 	m_entityManager = new EntityManager;
-	m_entityManager->Initialize(m_soundManager, m_input);
+	m_entityManager->Initialize(m_soundManager, m_input, m_device, m_deviceContext);
 }
 
 WPARAM Game::MainLoop()

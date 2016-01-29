@@ -74,7 +74,7 @@ void EntityManager::SpawnEntity(HandlerIndex type)
 	*/
 }
 
-void EntityManager::Initialize(SoundManager* soundManager, Input* input)
+void EntityManager::Initialize(SoundManager* soundManager, Input* input, ID3D11Device* device, ID3D11DeviceContext* deviceContext)
 {
 	//Set the soundManager pointer which will be used in every entity
 	m_soundManager = soundManager;
@@ -86,8 +86,18 @@ void EntityManager::Initialize(SoundManager* soundManager, Input* input)
 	//Set the input class which will be passed down to Player
 	m_input = input;
 
+	//Set device and context
+	m_device = device;
+	m_deviceContext = deviceContext;
+
+	//Set the renderer
+	m_renderer = new Renderer(m_deviceContext, m_device);
+
 	//Create model handlers for each entity type
 	m_modelHandlers[PLAYER] = new ModelHandler;
+	m_modelHandlers[PLAYER]->LoadOBJData("Demon.obj", "TestCube.mtl", m_device, m_deviceContext);
+	m_modelHandlers[PLAYER]->CreateBuffers(m_device);
+	m_modelHandlers[PLAYER]->CreateShaders(m_device, "Shaders\\PlayerVS.hlsl", "Shaders\\PlayerGS.hlsl", "Shaders\\PlayerPS.hlsl");
 	m_modelHandlers[ENEMY1] = new ModelHandler;
 	m_modelHandlers[ENEMY2] = new ModelHandler;
 	m_modelHandlers[ENEMY3] = new ModelHandler;
@@ -96,35 +106,85 @@ void EntityManager::Initialize(SoundManager* soundManager, Input* input)
 	m_modelHandlers[BULLET2] = new ModelHandler;
 	m_modelHandlers[BULLET3] = new ModelHandler;
 	m_modelHandlers[BULLET4] = new ModelHandler;
+	m_modelHandlers[BULLET5] = new ModelHandler;
+	m_modelHandlers[BULLET6] = new ModelHandler;
+
+	//Temp, create player
+	SpawnEntity(PLAYER);
 
 	ChangeSongData(128);
 }
 
 void EntityManager::Render()
 {
-	/*
+	
 	//Render Player
-	m_renderer.Render(m_modelHandlers[PLAYER], m_player->GetPosition(), m_player->GetRotation());
 
+	m_renderer->Render(m_modelHandlers[PLAYER], m_player->GetPosition(), &m_player->GetRotation());
+	/*
 	//Render Enemies
 	for (int i = 0; i < m_enemy1.size(); i++)
-		m_renderer.Render(m_modelHandlers[ENEMY1], m_enemy1[i]->GetPosition(), m_enemy1[i]->GetRotation());
+	{
+		m_modelHandlers[ENEMY1]->SetBuffers(m_deviceContext);
+		m_modelHandlers[ENEMY1]->SetShaders(m_deviceContext);
+		m_renderer->Render(m_modelHandlers[ENEMY1], m_enemy1[i]->GetPosition(), m_enemy1[i]->GetRotation());
+	}
 	for (int i = 0; i < m_enemy2.size(); i++)
-		m_renderer.Render(m_modelHandlers[ENEMY2], m_enemy2[i]->GetPosition(), m_enemy2[i]->GetRotation());
-	for (int i = 0; i < m_enemy3.size(); i++)												   
-		m_renderer.Render(m_modelHandlers[ENEMY3], m_enemy3[i]->GetPosition(), m_enemy3[i]->GetRotation());
-	for (int i = 0; i < m_enemy4.size(); i++)												   
-		m_renderer.Render(m_modelHandlers[ENEMY4], m_enemy4[i]->GetPosition(), m_enemy4[i]->GetRotation());
+	{
+		m_modelHandlers[ENEMY2]->SetBuffers(m_deviceContext);
+		m_modelHandlers[ENEMY2]->SetShaders(m_deviceContext);
+		m_renderer->Render(m_modelHandlers[ENEMY2], m_enemy2[i]->GetPosition(), m_enemy2[i]->GetRotation());
+	}
+	for (int i = 0; i < m_enemy3.size(); i++)
+	{
+		m_modelHandlers[ENEMY3]->SetBuffers(m_deviceContext);
+		m_modelHandlers[ENEMY3]->SetShaders(m_deviceContext);
+		m_renderer->Render(m_modelHandlers[ENEMY3], m_enemy3[i]->GetPosition(), m_enemy3[i]->GetRotation());
+	}
+	for (int i = 0; i < m_enemy4.size(); i++)
+	{
+		m_modelHandlers[ENEMY4]->SetBuffers(m_deviceContext);
+		m_modelHandlers[ENEMY4]->SetShaders(m_deviceContext);
+		m_renderer->Render(m_modelHandlers[ENEMY4], m_enemy4[i]->GetPosition(), m_enemy4[i]->GetRotation());
+	}
 
 	//Render Bullets
 	for (int i = 0; i < m_bullet1.size(); i++)
-		m_renderer.Render(m_modelHandlers[BULLET1], m_bullet1[i]->GetPosition(), m_bullet1[i]->GetRotation());
+	{
+		m_modelHandlers[BULLET1]->SetBuffers(m_deviceContext);
+		m_modelHandlers[BULLET1]->SetShaders(m_deviceContext);
+		m_renderer->Render(m_modelHandlers[BULLET1], m_bullet1[i]->GetPosition(), m_bullet1[i]->GetRotation());
+	}
 	for (int i = 0; i < m_bullet2.size(); i++)
-		m_renderer.Render(m_modelHandlers[BULLET2], m_bullet2[i]->GetPosition(), m_bullet2[i]->GetRotation());
+	{
+		m_modelHandlers[BULLET2]->SetBuffers(m_deviceContext);
+		m_modelHandlers[BULLET2]->SetShaders(m_deviceContext);
+		m_renderer->Render(m_modelHandlers[BULLET2], m_bullet2[i]->GetPosition(), m_bullet2[i]->GetRotation());
+	}
 	for (int i = 0; i < m_bullet3.size(); i++)
-		m_renderer.Render(m_modelHandlers[BULLET3], m_bullet3[i]->GetPosition(), m_bullet3[i]->GetRotation());
+	{
+		m_modelHandlers[BULLET3]->SetBuffers(m_deviceContext);
+		m_modelHandlers[BULLET3]->SetShaders(m_deviceContext);
+		m_renderer->Render(m_modelHandlers[BULLET3], m_bullet3[i]->GetPosition(), m_bullet3[i]->GetRotation());
+	}
 	for (int i = 0; i < m_bullet4.size(); i++)
-		m_renderer.Render(m_modelHandlers[BULLET4], m_bullet4[i]->GetPosition(), m_bullet4[i]->GetRotation());
+	{
+		m_modelHandlers[BULLET4]->SetBuffers(m_deviceContext);
+		m_modelHandlers[BULLET4]->SetShaders(m_deviceContext);
+		m_renderer->Render(m_modelHandlers[BULLET4], m_bullet4[i]->GetPosition(), m_bullet4[i]->GetRotation());
+	}
+	for (int i = 0; i < m_bullet5.size(); i++)
+	{
+		m_modelHandlers[BULLET5]->SetBuffers(m_deviceContext);
+		m_modelHandlers[BULLET5]->SetShaders(m_deviceContext);
+		m_renderer->Render(m_modelHandlers[BULLET5], m_bullet4[i]->GetPosition(), m_bullet5[i]->GetRotation());
+	}
+	for (int i = 0; i < m_bullet6.size(); i++)
+	{
+		m_modelHandlers[BULLET6]->SetBuffers(m_deviceContext);
+		m_modelHandlers[BULLET6]->SetShaders(m_deviceContext);
+		m_renderer->Render(m_modelHandlers[BULLET6], m_bullet4[i]->GetPosition(), m_bullet6[i]->GetRotation());
+	}
 	*/
 }
 
