@@ -3,8 +3,8 @@
 #include "SoundManager.h"
 #include "Input.h"
 
-#define WIDTH 1080;
-#define HEIGHT 720;
+#define WIDTH 640;
+#define HEIGHT 480;
 
 // the entry point for any Windows program
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)

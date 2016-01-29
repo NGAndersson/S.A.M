@@ -1,7 +1,7 @@
 cbuffer worldPosition : register(b0)
 {
 	float4x4 World;
-	float4 Position;
+	float3 Position;
 };
 
 struct PlayerVS_IN
@@ -21,7 +21,7 @@ PlayerVS_OUT VS_main(PlayerVS_IN input)
 {
 	PlayerVS_OUT output = (PlayerVS_OUT)0;
 
-	output.PosInW = mul(float4(input.Pos, 1), World) + Position;
+	output.PosInW = mul(float4(input.Pos, 1), World) + float4(Position, 0.0f);
 
 	output.Tex = input.Tex;
 
