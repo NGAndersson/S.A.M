@@ -19,5 +19,6 @@ struct PlayerPS_IN
 float4 PS_main(PlayerPS_IN input) : SV_TARGET
 {
 	float3 pixelOut = ObjTex.Sample(sampAni, input.Tex).xyz;
+	return float4(1.0f, 0.0f, 0.0f, 0.0f);
 	return float4(pixelOut + Deffuse, 1.0);
 }

@@ -51,7 +51,7 @@ bool ShaderHandler::CreateShaders(ID3D11Device* device, string vertexFile, strin
 	ID3DBlob* pVS = nullptr;
 	HRESULT hr = D3DCompileFromFile(vertexVSTemp.c_str(), nullptr, D3D_COMPILE_STANDARD_FILE_INCLUDE, "VS_main", "vs_5_0", 0, NULL, &pVS, nullptr);
 
-	device->CreateVertexShader(pVS->GetBufferPointer(), pVS->GetBufferSize(), nullptr, &m_vertexShader);
+	hr = device->CreateVertexShader(pVS->GetBufferPointer(), pVS->GetBufferSize(), nullptr, &m_vertexShader);
 
 	//create input layout (verified with vertex shader)
 	D3D11_INPUT_ELEMENT_DESC inputDesc[] =
@@ -60,7 +60,7 @@ bool ShaderHandler::CreateShaders(ID3D11Device* device, string vertexFile, strin
 		{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 },
 		{ "NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 20, D3D11_INPUT_PER_VERTEX_DATA, 0 },
 	};
-	device->CreateInputLayout(inputDesc, ARRAYSIZE(inputDesc), pVS->GetBufferPointer(), pVS->GetBufferSize(), &m_vertexLayout);
+	hr = device->CreateInputLayout(inputDesc, ARRAYSIZE(inputDesc), pVS->GetBufferPointer(), pVS->GetBufferSize(), &m_vertexLayout);
 	pVS->Release();
 
 
@@ -69,14 +69,14 @@ bool ShaderHandler::CreateShaders(ID3D11Device* device, string vertexFile, strin
 		//create geometry shader
 		ID3DBlob* pGS = nullptr;
 		D3DCompileFromFile(vertexGSTemp.c_str(), nullptr, D3D_COMPILE_STANDARD_FILE_INCLUDE, "GS_main", "gs_5_0", 0, NULL, &pGS, nullptr);
-		device->CreateGeometryShader(pGS->GetBufferPointer(), pGS->GetBufferSize(), nullptr, &m_geometryShader);
+		hr = device->CreateGeometryShader(pGS->GetBufferPointer(), pGS->GetBufferSize(), nullptr, &m_geometryShader);
 		pGS->Release();
 	}
 
 	//create pixel shader
 	ID3DBlob* pPS = nullptr;
 	D3DCompileFromFile(vertexPSTemp.c_str(), nullptr, D3D_COMPILE_STANDARD_FILE_INCLUDE, "PS_main", "ps_5_0", 0, NULL, &pPS, nullptr);
-	device->CreatePixelShader(pPS->GetBufferPointer(), pPS->GetBufferSize(), nullptr, &m_pixelShader);
+	hr = device->CreatePixelShader(pPS->GetBufferPointer(), pPS->GetBufferSize(), nullptr, &m_pixelShader);
 	pPS->Release();
 
 	return true;
@@ -93,7 +93,7 @@ bool ShaderHandler::CreateShadersCompute(ID3D11Device* device, string vertexFile
 	ID3DBlob* vs = nullptr;
 	D3DCompileFromFile(vertexVSTemp.c_str(), nullptr, D3D_COMPILE_STANDARD_FILE_INCLUDE, "VS_main", "vs_5_0", 0, NULL, &vs, nullptr);
 
-	device->CreateVertexShader(vs->GetBufferPointer(), vs->GetBufferSize(), nullptr, &m_vertexShader);
+	HRESULT hr = device->CreateVertexShader(vs->GetBufferPointer(), vs->GetBufferSize(), nullptr, &m_vertexShader);
 
 	//create input layout (verified with vertex shader)
 	D3D11_INPUT_ELEMENT_DESC inputDesc[] =
@@ -111,20 +111,20 @@ bool ShaderHandler::CreateShadersCompute(ID3D11Device* device, string vertexFile
 		//create geometry shader
 		ID3DBlob* gs = nullptr;
 		D3DCompileFromFile(vertexGSTemp.c_str(), nullptr, D3D_COMPILE_STANDARD_FILE_INCLUDE, "GS_main", "gs_5_0", 0, NULL, &gs, nullptr);
-		device->CreateGeometryShader(gs->GetBufferPointer(), gs->GetBufferSize(), nullptr, &m_geometryShader);
+		hr = device->CreateGeometryShader(gs->GetBufferPointer(), gs->GetBufferSize(), nullptr, &m_geometryShader);
 		gs->Release();
 	}
 
 	//create pixel shader
 	ID3DBlob* ps = nullptr;
 	D3DCompileFromFile(vertexPSTemp.c_str(), nullptr, D3D_COMPILE_STANDARD_FILE_INCLUDE, "PS_main", "ps_5_0", 0, NULL, &ps, nullptr);
-	device->CreatePixelShader(ps->GetBufferPointer(), ps->GetBufferSize(), nullptr, &m_pixelShader);
+	hr = device->CreatePixelShader(ps->GetBufferPointer(), ps->GetBufferSize(), nullptr, &m_pixelShader);
 	ps->Release();
 
 	// Create compute shader
 	ID3DBlob *cs = nullptr;
 	D3DCompileFromFile(vertexCSTemp.c_str(), nullptr, D3D_COMPILE_STANDARD_FILE_INCLUDE, "CS_main", "cs_5_0", 0, NULL, &cs, nullptr);
-	device->CreateComputeShader(cs->GetBufferPointer(), cs->GetBufferSize(), nullptr, &m_computeShader);
+	hr = device->CreateComputeShader(cs->GetBufferPointer(), cs->GetBufferSize(), nullptr, &m_computeShader);
 	cs->Release();
 
 	return true;

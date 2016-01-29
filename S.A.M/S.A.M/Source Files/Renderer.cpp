@@ -7,14 +7,15 @@ void Renderer::Render(ModelHandler * model, XMFLOAT3 position, XMMATRIX* rotatio
 	model->SetShaders(m_deviceContext);
 
 	//Set Worldmatrix and Position(float3) as a Vertexshader constant buffer
-	m_worldStruct.worldMatrix = XMMatrixTranslation(position.x, position.y, position.z) * *rotation;
+	m_worldStruct.worldMatrix = XMMatrixTranspose(XMMatrixTranslation(position.x, position.y, position.z));// **rotation);
 	m_worldStruct.worldPos = position;
 	m_deviceContext->VSSetConstantBuffers(0, 1, &m_worldBuffer);
 
 	//Set CameraPos(float3) and ViewProjectionMatrix as Geometryshader constant buffer
 	XMVECTOR _cameraPosVec = m_cam.GetCameraPos();
 	m_camStruct.camPos = XMFLOAT4(XMVectorGetByIndex(_cameraPosVec, 0), XMVectorGetByIndex(_cameraPosVec, 1), XMVectorGetByIndex(_cameraPosVec, 2), 0);
-	m_camStruct.viewProjection = m_cam.GetViewProjectionMatrix();
+	//m_camStruct.viewProjection = m_cam.GetViewProjectionMatrix();
+	m_camStruct.viewProjection = XMMatrixTranspose(m_cam.GetViewProjectionMatrix());
 	m_deviceContext->GSSetConstantBuffers(0, 1, &m_camBuffer);
 
 	//Draw call
