@@ -138,6 +138,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Source Files\Display.cpp" />
     <ClCompile Include="Source Files\EntityManager.cpp" />
     <ClCompile Include="Source Files\Game.cpp" />
@@ -155,6 +156,7 @@
     <ClCompile Include="Source Files\WICTextureLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="Header Files\DirectXHelpers.h" />
     <ClInclude Include="Header Files\Display.h" />
     <ClInclude Include="Header Files\Entity.h" />
