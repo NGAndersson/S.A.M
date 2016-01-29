@@ -47,11 +47,15 @@ bool ShaderHandler::CreateShaders(ID3D11Device* device, string vertexFile, strin
 	device->CreateInputLayout(inputDesc, ARRAYSIZE(inputDesc), pVS->GetBufferPointer(), pVS->GetBufferSize(), &m_vertexLayout);
 	pVS->Release();
 
-	//create geometry shader
-	ID3DBlob* pGS = nullptr;
-	D3DCompileFromFile((LPCWSTR)geometryFile.c_str(), nullptr, D3D_COMPILE_STANDARD_FILE_INCLUDE, "GS_main", "gs_5_0", 0, NULL, &pGS, nullptr);
-	device->CreateGeometryShader(pGS->GetBufferPointer(), pGS->GetBufferSize(), nullptr, &m_geometryShader);
-	pGS->Release();
+
+	if (geometryFile != "")
+	{
+		//create geometry shader
+		ID3DBlob* pGS = nullptr;
+		D3DCompileFromFile((LPCWSTR)geometryFile.c_str(), nullptr, D3D_COMPILE_STANDARD_FILE_INCLUDE, "GS_main", "gs_5_0", 0, NULL, &pGS, nullptr);
+		device->CreateGeometryShader(pGS->GetBufferPointer(), pGS->GetBufferSize(), nullptr, &m_geometryShader);
+		pGS->Release();
+	}
 
 	//create pixel shader
 	ID3DBlob* pPS = nullptr;
@@ -80,11 +84,15 @@ bool ShaderHandler::CreateShadersCompute(ID3D11Device* device, string vertexFile
 	device->CreateInputLayout(inputDesc, ARRAYSIZE(inputDesc), vs->GetBufferPointer(), vs->GetBufferSize(), &m_vertexLayout);
 	vs->Release();
 
-	//create geometry shader
-	ID3DBlob* gs = nullptr;
-	D3DCompileFromFile((LPCWSTR)geometryFile.c_str(), nullptr, D3D_COMPILE_STANDARD_FILE_INCLUDE, "GS_main", "gs_5_0", 0, NULL, &gs, nullptr);
-	device->CreateGeometryShader(gs->GetBufferPointer(), gs->GetBufferSize(), nullptr, &m_geometryShader);
-	gs->Release();
+
+	if (geometryFile != "")
+	{
+		//create geometry shader
+		ID3DBlob* gs = nullptr;
+		D3DCompileFromFile((LPCWSTR)geometryFile.c_str(), nullptr, D3D_COMPILE_STANDARD_FILE_INCLUDE, "GS_main", "gs_5_0", 0, NULL, &gs, nullptr);
+		device->CreateGeometryShader(gs->GetBufferPointer(), gs->GetBufferSize(), nullptr, &m_geometryShader);
+		gs->Release();
+	}
 
 	//create pixel shader
 	ID3DBlob* ps = nullptr;
@@ -106,7 +114,10 @@ bool ShaderHandler::SetShaders(ID3D11DeviceContext* deviceContext)
 	deviceContext->VSSetShader(m_vertexShader, nullptr, 0);
 	deviceContext->HSSetShader(nullptr, nullptr, 0);
 	deviceContext->DSSetShader(nullptr, nullptr, 0);
-	deviceContext->GSSetShader(m_geometryShader, nullptr, 0);
+	if (m_geometryShader)
+	{
+		deviceContext->GSSetShader(m_geometryShader, nullptr, 0);
+	}
 	deviceContext->PSSetShader(m_pixelShader, nullptr, 0);
 
 	if (m_computeShader)
