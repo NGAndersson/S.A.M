@@ -31,10 +31,30 @@ ModelHandler::~ModelHandler()
 	if (m_texcoords)
 	{
 		delete[] m_texcoords;
-	}	
+	}
+	if (m_RGBDeffuse)
+	{
+		delete[] m_RGBDeffuse;
+	}
+	if (m_RGBAL)
+	{
+		delete[] m_RGBAL;
+	}
+	if (m_Tf)
+	{
+		delete[] m_Tf;
+	}
+	if (m_Ni)
+	{
+		delete[] m_Ni;
+	}
 	if (m_faces)
 	{
 		delete[] m_faces;
+	}
+	if (m_vertexInput)
+	{
+		delete[] m_vertexInput;
 	}
 }
 
@@ -114,11 +134,7 @@ bool ModelHandler::LoadOBJData(string OBJFileName, string colourFileName, ID3D11
 	}
 
 	//Loads the colour data from file
-	_ifOK = m_OBJLoad.LoadColour(device, deviceContext, colourFileName, m_ObjTex, m_RGBDeffuse, m_RGBAL, m_Tf, m_Ni);
-	if (_ifOK == false)
-	{
-		return false;
-	}
+	m_ObjTex = m_OBJLoad.LoadColour(device, deviceContext, colourFileName, m_RGBDeffuse, m_RGBAL, m_Tf, m_Ni);
 	return true;
 }
 
@@ -161,11 +177,7 @@ bool ModelHandler::LoadOBJData2(string OBJFileName, string colourFileName, ID3D1
 	}
 
 	//Loads the colour data from file
-	_ifOK = m_OBJLoad.LoadColour(device, deviceContext, colourFileName, m_ObjTex, m_RGBDeffuse, m_RGBAL, m_Tf, m_Ni);
-	if (_ifOK == false)
-	{
-		return false;
-	}
+	m_ObjTex = m_OBJLoad.LoadColour(device, deviceContext, colourFileName, m_RGBDeffuse, m_RGBAL, m_Tf, m_Ni);
 	return true;
 }
 
@@ -233,20 +245,6 @@ bool ModelHandler::CreateBuffers(ID3D11Device* device)
 	//skapar constant buffer
 	device->CreateBuffer(&_OBJColDesc, &_OBJColourData, &m_OBJColourBuffer);
 
-	// description for sampler
-	D3D11_SAMPLER_DESC samplDesc;
-	ZeroMemory(&samplDesc, sizeof(D3D11_SAMPLER_DESC));
-
-	samplDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
-	samplDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
-	samplDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
-	samplDesc.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
-	samplDesc.MinLOD = 0;
-	samplDesc.MaxLOD = D3D11_FLOAT32_MAX;
-
-	// create the sampler
-	device->CreateSamplerState(&samplDesc, &m_sampleState);
-
 	return true;
 }
 
@@ -297,20 +295,6 @@ bool ModelHandler::CreateBuffers2(ID3D11Device* device)
 	//skapar constant buffer
 	device->CreateBuffer(&_OBJColDesc, &_OBJColourData, &m_OBJColourBuffer);
 
-	// description for sampler
-	D3D11_SAMPLER_DESC samplDesc;
-	ZeroMemory(&samplDesc, sizeof(D3D11_SAMPLER_DESC));
-
-	samplDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
-	samplDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
-	samplDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
-	samplDesc.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
-	samplDesc.MinLOD = 0;
-	samplDesc.MaxLOD = D3D11_FLOAT32_MAX;
-
-	// create the sampler
-	device->CreateSamplerState(&samplDesc, &m_sampleState);
-
 	return true;
 }
 
@@ -357,7 +341,6 @@ bool ModelHandler::SetBuffers(ID3D11DeviceContext* deviceContext)
 	deviceContext->IASetVertexBuffers(0, 1, &m_vertexBuffer, &_vertexSize, &_offset);
 
 	deviceContext->PSSetConstantBuffers(0, 1, &m_OBJColourBuffer);
-	deviceContext->PSSetSamplers(0, 1, &m_sampleState);
 	deviceContext->PSSetShaderResources(0, 1, &m_ObjTex);
 
 	return true;
