@@ -21,11 +21,19 @@ typedef struct
 	int nIndex1, nIndex2, nIndex3;
 }FaceType;
 
+typedef struct
+{
+	XMFLOAT3 position;
+	XMFLOAT2 uv;
+	XMFLOAT3 normal;
+}VertexInputType;
+
 class OBJLoader
 {
 public:
 	OBJLoader();
 	~OBJLoader();
+	VertexInputType* LoadObj(int& vertexCount, int& textureCount, int& normalCount, int& faceCount, string fileName);
 	bool ReadFileCounts(int& vertexCount, int& textureCount, int& normalCount, int& faceCount, string fileName);
 	bool ReadColourCounts(int& vertexCount, int& textureCount, int& normalCount, int& faceCount, string fileName);
 	XMFLOAT3* LoadVertices(int vertexCount, string fileName);

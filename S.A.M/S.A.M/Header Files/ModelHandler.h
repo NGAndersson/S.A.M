@@ -9,13 +9,6 @@
 class ModelHandler
 {
 private:
-	struct VertexInputType
-	{
-		XMFLOAT3 position;
-		XMFLOAT2 uv;
-		XMFLOAT3 normal;
-	};
-
 	struct OBJColourType
 	{
 		XMFLOAT3 Deffuse;
@@ -27,7 +20,9 @@ public:
 	ModelHandler();
 	~ModelHandler();
 	bool LoadOBJData(string OBJFileName, string colourFileName, ID3D11Device* device, ID3D11DeviceContext* deviceContext);
+	bool LoadOBJData2(string OBJFileName, string colourFileName, ID3D11Device* device, ID3D11DeviceContext* deviceContext);
 	bool CreateBuffers(ID3D11Device* device);
+	bool CreateBuffers2(ID3D11Device* device);
 	bool CreateShaders(ID3D11Device* device, string vertexFile, string geometryFile, string pixelFile);
 	bool CreateShadersCompute(ID3D11Device* device, string vertexFile, string geometryFile, string pixelFile, string computeFile);
 	bool SetShaders(ID3D11DeviceContext* deviceContext);
@@ -44,6 +39,7 @@ private:
 	ID3D11Buffer* m_vertexBuffer, *m_OBJColourBuffer;
 	ID3D11ShaderResourceView* m_ObjTex;
 	ID3D11SamplerState* m_sampleState;
+	VertexInputType* m_vertexInput;
 };
 
 #endif

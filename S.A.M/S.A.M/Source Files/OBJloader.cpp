@@ -10,6 +10,115 @@ OBJLoader::~OBJLoader()
 
 }
 
+VertexInputType* OBJLoader::LoadObj(int& vertexCount, int& textureCount, int& normalCount, int& faceCount, string fileName)
+{
+	ifstream fileIn;
+	VertexInputType* vertexInput;
+
+	fileIn.open(fileName, ifstream::in);
+
+	vector<XMFLOAT3> vPos;
+	vector<XMFLOAT3> vNor;
+	vector<XMFLOAT2> vTC;
+
+	vector<UINT> indPos;
+	vector<UINT> indNor;
+	vector<UINT> indTex;
+	bool loop = true;
+	char _input;
+
+	if (fileIn.is_open())
+	{
+		cout << "Open" << endl;
+		while (loop)
+		{
+			_input = fileIn.get();
+
+			switch (_input)
+			{
+
+			case '#':
+				_input = fileIn.get();
+				while (_input != '\n')
+					_input = fileIn.get();
+				break;
+			case 'v':
+				_input = fileIn.get();
+				if (_input == ' ')
+				{
+					float fx, fy, fz;
+					fileIn >> fx >> fy >> fz;
+					vPos.push_back(XMFLOAT3(fx, fy, fz));
+					vertexCount++;
+				}
+				if (_input == 't')
+				{
+					float txx, txz;
+					fileIn >> txx >> txz;
+					vTC.push_back(XMFLOAT2(txx, txz));
+					textureCount++;
+				}
+				if (_input == 'n')
+				{
+					float nx, ny, nz;
+					fileIn >> nx >> ny >> nz;
+					vNor.push_back(XMFLOAT3(nx, ny, nz));
+					normalCount++;
+
+				}
+				break;
+			case 'f':
+				_input = fileIn.get();
+
+				if (_input == ' ')
+				{
+
+					while (_input != '\n')
+					{
+
+						int indP, indT, indN;
+
+						char pop;
+
+						fileIn >> indP >> pop >> indT >> pop >> indN;
+
+						indNor.push_back(indN);
+
+						indTex.push_back(indT);
+
+						indPos.push_back(indP);
+
+						faceCount++;
+
+						_input = fileIn.get();
+
+					}
+				}
+				break;
+			}
+
+			if (fileIn.fail())
+			{
+				loop = false;
+			}
+		}
+
+		vertexInput = new VertexInputType[faceCount * 3];
+		for (int i = 0; i < faceCount; i++)
+		{
+			vertexInput[i].position = vPos[indPos[i] - 1];
+			vertexInput[i].uv = vTC[indTex[i] - 1];
+			vertexInput[i].normal = vNor[indNor[i] - 1];
+		}
+
+		fileIn.close();
+		return vertexInput;
+	}
+
+	return false;
+}
+
+//Rastertek random shit
 bool OBJLoader::ReadFileCounts(int& vertexCount, int& textureCount, int& normalCount, int& faceCount, string fileName)
 {
 	ifstream _file;
@@ -308,6 +417,10 @@ bool OBJLoader::LoadDataStructures(XMFLOAT3 *vertices, XMFLOAT3 *normals, XMFLOA
 	return true;
 }
 
+
+
+
+//Bullshit
 XMFLOAT3* OBJLoader::LoadVertices(int vertexCount, string fileName)
 {
 	// Initialize vertice structure.
