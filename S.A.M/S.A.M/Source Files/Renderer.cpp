@@ -16,6 +16,7 @@ void Renderer::Render(ModelHandler * model, XMFLOAT3 position, XMMATRIX* rotatio
 	m_camStruct.camPos = XMFLOAT4(XMVectorGetByIndex(_cameraPosVec, 0), XMVectorGetByIndex(_cameraPosVec, 1), XMVectorGetByIndex(_cameraPosVec, 2), 0);
 	//m_camStruct.viewProjection = m_cam.GetViewProjectionMatrix();
 	m_camStruct.viewProjection = XMMatrixTranspose(m_cam.GetViewProjectionMatrix());
+	m_deviceContext->UpdateSubresource(m_camBuffer, 0, NULL, &m_camStruct, 0, 0);
 	m_deviceContext->GSSetConstantBuffers(0, 1, &m_camBuffer);
 
 	//Draw call
