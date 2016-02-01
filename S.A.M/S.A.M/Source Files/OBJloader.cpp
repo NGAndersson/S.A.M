@@ -10,6 +10,115 @@ OBJLoader::~OBJLoader()
 
 }
 
+VertexInputType* OBJLoader::LoadObj(int& vertexCount, int& textureCount, int& normalCount, int& faceCount, string fileName)
+{
+	ifstream fileIn;
+	VertexInputType* vertexInput;
+
+	fileIn.open(fileName, ifstream::in);
+
+	vector<XMFLOAT3> vPos;
+	vector<XMFLOAT3> vNor;
+	vector<XMFLOAT2> vTC;
+
+	vector<UINT> indPos;
+	vector<UINT> indNor;
+	vector<UINT> indTex;
+	bool loop = true;
+	char _input;
+
+	if (fileIn.is_open())
+	{
+		cout << "Open" << endl;
+		while (loop)
+		{
+			_input = fileIn.get();
+
+			switch (_input)
+			{
+
+			case '#':
+				_input = fileIn.get();
+				while (_input != '\n')
+					_input = fileIn.get();
+				break;
+			case 'v':
+				_input = fileIn.get();
+				if (_input == ' ')
+				{
+					float fx, fy, fz;
+					fileIn >> fx >> fy >> fz;
+					vPos.push_back(XMFLOAT3(fx, fy, fz));
+					vertexCount++;
+				}
+				if (_input == 't')
+				{
+					float txx, txz;
+					fileIn >> txx >> txz;
+					vTC.push_back(XMFLOAT2(txx, txz));
+					textureCount++;
+				}
+				if (_input == 'n')
+				{
+					float nx, ny, nz;
+					fileIn >> nx >> ny >> nz;
+					vNor.push_back(XMFLOAT3(nx, ny, nz));
+					normalCount++;
+
+				}
+				break;
+			case 'f':
+				_input = fileIn.get();
+
+				if (_input == ' ')
+				{
+
+					while (_input != '\n')
+					{
+
+						int indP, indT, indN;
+
+						char pop;
+
+						fileIn >> indP >> pop >> indT >> pop >> indN;
+
+						indNor.push_back(indN);
+
+						indTex.push_back(indT);
+
+						indPos.push_back(indP);
+
+						faceCount++;
+
+						_input = fileIn.get();
+
+					}
+				}
+				break;
+			}
+
+			if (fileIn.fail())
+			{
+				loop = false;
+			}
+		}
+
+		vertexInput = new VertexInputType[faceCount * 3];
+		for (int i = 0; i < faceCount; i++)
+		{
+			vertexInput[i].position = vPos[indPos[i] - 1];
+			vertexInput[i].uv = vTC[indTex[i] - 1];
+			vertexInput[i].normal = vNor[indNor[i] - 1];
+		}
+
+		fileIn.close();
+		return vertexInput;
+	}
+
+	return false;
+}
+
+//Rastertek random shit
 bool OBJLoader::ReadFileCounts(int& vertexCount, int& textureCount, int& normalCount, int& faceCount, string fileName)
 {
 	ifstream _file;
@@ -42,11 +151,11 @@ bool OBJLoader::ReadFileCounts(int& vertexCount, int& textureCount, int& normalC
 			{ 
 				vertexCount++; 
 			}
-			if (_input == 't') 
+			else if (_input == 't') 
 			{ 
 				textureCount++; 
 			}
-			if (_input == 'n') 
+			else if (_input == 'n') 
 			{ 
 				normalCount++; 
 			}
@@ -108,7 +217,7 @@ bool OBJLoader::ReadColourCounts(int& kdCount, int& kaCount, int& tfCount, int& 
 			{ 
 				kdCount++; 
 			}
-			if (_input == 'a') 
+			else if (_input == 'a') 
 			{ 
 				kaCount++; 
 			}
@@ -146,6 +255,8 @@ bool OBJLoader::ReadColourCounts(int& kdCount, int& kaCount, int& tfCount, int& 
 	return true;
 }
 
+
+//loading color and tex
 bool OBJLoader::LoadColour(ID3D11Device* device, ID3D11DeviceContext* deviceContext, string fileName, ID3D11ShaderResourceView *ObjTex, XMFLOAT3 *RGBDeffuse, XMFLOAT3 *RGBAL, XMFLOAT3 *Tf, XMFLOAT3 *Ni)
 {
 	ifstream _fin;
@@ -263,18 +374,14 @@ bool OBJLoader::LoadDataStructures(XMFLOAT3 *vertices, XMFLOAT3 *normals, XMFLOA
 			{
 				_fin >> vertices[_vertexIndex].x >> vertices[_vertexIndex].y >> vertices[_vertexIndex].z;
 				_vertexIndex++;
-			}
-
-			// Read in the texture uv coordinates.
-			if (_input == 't')
+			}// Read in the texture uv coordinates.
+			else if (_input == 't')
 			{
 				_fin >> texcoords[_texcoordIndex].x >> texcoords[_texcoordIndex].y;
 				texcoords[_texcoordIndex].y = 1 - texcoords[_texcoordIndex].y;
 				_texcoordIndex++;
-			}
-
-			// Read in the normals.
-			if (_input == 'n')
+			}// Read in the normals.
+			else if (_input == 'n')
 			{
 				_fin >> normals[_normalIndex].x >> normals[_normalIndex].y >> normals[_normalIndex].z;
 				_normalIndex++;
@@ -308,6 +415,10 @@ bool OBJLoader::LoadDataStructures(XMFLOAT3 *vertices, XMFLOAT3 *normals, XMFLOA
 	return true;
 }
 
+
+
+
+//Bullshit
 XMFLOAT3* OBJLoader::LoadVertices(int vertexCount, string fileName)
 {
 	// Initialize vertice structure.
