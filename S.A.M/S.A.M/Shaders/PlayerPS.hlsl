@@ -1,4 +1,4 @@
-Texture2D ObjTex : register(t6);
+Texture2D ObjTex : register(t0);
 
 SamplerState sampAni : register(s0);
 
