@@ -36,9 +36,8 @@ private:
 	FaceType* m_faces;
 	OBJLoader m_OBJLoad;
 	ShaderHandler m_shaderLoad;
-	ID3D11Buffer* m_vertexBuffer, *m_OBJColourBuffer;
-	ID3D11ShaderResourceView* m_ObjTex;
-	ID3D11SamplerState* m_sampleState;
+	ID3D11Buffer* m_vertexBuffer = nullptr, *m_OBJColourBuffer = nullptr;
+	ID3D11ShaderResourceView* m_ObjTex = nullptr;
 	VertexInputType* m_vertexInput;
 };
 

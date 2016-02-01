@@ -257,9 +257,10 @@ bool OBJLoader::ReadColourCounts(int& kdCount, int& kaCount, int& tfCount, int& 
 
 
 //loading color and tex
-bool OBJLoader::LoadColour(ID3D11Device* device, ID3D11DeviceContext* deviceContext, string fileName, ID3D11ShaderResourceView *ObjTex, XMFLOAT3 *RGBDeffuse, XMFLOAT3 *RGBAL, XMFLOAT3 *Tf, XMFLOAT3 *Ni)
+ID3D11ShaderResourceView* OBJLoader::LoadColour(ID3D11Device* device, ID3D11DeviceContext* deviceContext, string fileName, XMFLOAT3 *RGBDeffuse, XMFLOAT3 *RGBAL, XMFLOAT3 *Tf, XMFLOAT3 *Ni)
 {
 	ifstream _fin;
+	ID3D11ShaderResourceView *_ObjTex = nullptr;
 	char _input;
 	wstring _TexName;
 	int _kdIndex, _kaIndex, _tfIndex, _niIndex;
@@ -334,7 +335,7 @@ bool OBJLoader::LoadColour(ID3D11Device* device, ID3D11DeviceContext* deviceCont
 
 			const wchar_t* _name = _TexName.c_str();
 
-			CreateWICTextureFromFile(device, deviceContext, _name, nullptr, &ObjTex);
+			CreateWICTextureFromFile(device, deviceContext, _name, nullptr, &_ObjTex);
 		}
 
 		while (_input != '\n')
@@ -344,7 +345,11 @@ bool OBJLoader::LoadColour(ID3D11Device* device, ID3D11DeviceContext* deviceCont
 
 		_fin.get(_input);
 	}
-	return true;
+	if (_ObjTex != nullptr)
+	{
+		return _ObjTex;
+	}
+	return nullptr;
 }
 
 bool OBJLoader::LoadDataStructures(XMFLOAT3 *vertices, XMFLOAT3 *normals, XMFLOAT2 *texcoords, FaceType *faces, string fileName)

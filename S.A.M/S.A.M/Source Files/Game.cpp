@@ -171,10 +171,12 @@ HRESULT Game::CreateDirect3DContext(HWND wndHandle)
 		NULL,
 		&m_deviceContext);
 
-	_hr = DepthStencilInitialicer(); //skapar depthstencil/desc 
+	
 
 	if (SUCCEEDED(_hr))
 	{
+		_hr = DepthStencilInitialicer(); //skapar depthstencil/desc 
+
 		// get the address of the back buffer
 		ID3D11Texture2D* _backBuffer = nullptr;
 		m_swapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&_backBuffer);
@@ -185,6 +187,22 @@ HRESULT Game::CreateDirect3DContext(HWND wndHandle)
 
 		// set the render target as the back buffer
 		m_deviceContext->OMSetRenderTargets(1, &m_backbufferRTV, m_depthStencilView);
+
+		// description for sampler
+		D3D11_SAMPLER_DESC samplDesc;
+		ZeroMemory(&samplDesc, sizeof(D3D11_SAMPLER_DESC));
+
+		samplDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+		samplDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
+		samplDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
+		samplDesc.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
+		samplDesc.MinLOD = 0;
+		samplDesc.MaxLOD = D3D11_FLOAT32_MAX;
+
+		// create the sampler
+		_hr = m_device->CreateSamplerState(&samplDesc, &m_sampleState);
+		//Set the sampler state
+		m_deviceContext->PSSetSamplers(0, 1, &m_sampleState);
 	}
 	return _hr;
 }

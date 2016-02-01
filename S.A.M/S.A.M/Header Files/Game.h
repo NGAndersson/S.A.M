@@ -39,6 +39,7 @@ private:
 	ID3D11RenderTargetView* m_backbufferRTV = nullptr;
 	ID3D11DepthStencilView* m_depthStencilView = nullptr;
 	ID3D11Texture2D* m_depthStencil = nullptr;
+	ID3D11SamplerState* m_sampleState = nullptr;
 
 public:
 };
