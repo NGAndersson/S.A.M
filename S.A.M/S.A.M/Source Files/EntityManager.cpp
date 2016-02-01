@@ -97,7 +97,7 @@ void EntityManager::Initialize(SoundManager* soundManager, Input* input, ID3D11D
 	m_modelHandlers[PLAYER] = new ModelHandler;
 	m_modelHandlers[PLAYER]->LoadOBJData("Resources/Demon.obj", "Resources/TestCube.mtl", m_device, m_deviceContext);
 	m_modelHandlers[PLAYER]->CreateBuffers(m_device);
-	m_modelHandlers[PLAYER]->CreateShaders(m_device, "Shaders\\PlayerVS.hlsl", "Shaders\\PlayerGS.hlsl", "Shaders\\PlayerPS.hlsl");
+	m_modelHandlers[PLAYER]->CreateShaders(m_device, "Shaders\\PlayerVS.hlsl", "", "Shaders\\PlayerPS.hlsl");
 	m_modelHandlers[ENEMY1] = new ModelHandler;
 	m_modelHandlers[ENEMY2] = new ModelHandler;
 	m_modelHandlers[ENEMY3] = new ModelHandler;
@@ -124,7 +124,7 @@ void EntityManager::Render()
 	m_modelHandlers[PLAYER]->SetShaders(m_deviceContext);
 	XMVECTOR _rotzAxis{ 0,0,1,0 };
 	XMMATRIX m_rotation = XMMatrixRotationAxis(_rotzAxis, 0.0f);
-	m_renderer->Render(m_modelHandlers[PLAYER], XMFLOAT3(0.0f, -0.0f, 0.0f), &m_rotation);
+	m_renderer->Render(m_modelHandlers[PLAYER], XMFLOAT3(0.0f, 0.0f, 0.0f), &m_rotation);
 
 	//m_renderer->Render(m_modelHandlers[PLAYER], m_player->GetPosition(), &m_player->GetRotation());
 	/*

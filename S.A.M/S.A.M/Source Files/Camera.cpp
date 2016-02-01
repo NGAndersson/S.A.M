@@ -62,7 +62,7 @@ void Camera::SetViewMatrix()
 
 void Camera::SetProjectionMatrix()
 {
-	m_projection = XMMatrixPerspectiveFovLH(XM_PI *0.45f, 640 / 480, 0.5f, 150);
+	m_projection = XMMatrixPerspectiveFovLH(XM_PI *1.0f, 640 / 480, 0.1f, 150000);
 }
 
 void Camera::SetViewProjectionMatrix()
@@ -110,5 +110,5 @@ void Camera::SetConstantBuffer(ID3D11DeviceContext* gDeviceContext)
 
 	gDeviceContext->Unmap(m_constCameraBuffer, 0);
 
-	gDeviceContext->GSSetConstantBuffers(0, 1, &m_constCameraBuffer);
+	gDeviceContext->VSSetConstantBuffers(1, 1, &m_constCameraBuffer);
 }

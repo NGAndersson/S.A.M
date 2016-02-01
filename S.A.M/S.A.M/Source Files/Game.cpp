@@ -47,14 +47,6 @@ void Game::InitGame(Input* input, Display* disp)
 	//Sets the viewport
 	SetViewport();
 
-	//FUN STUFF! REMOVE!
-	//m_soundManager->LoadSound("Resources/wave.mp3", "wave", "music", LOAD_STREAM);
-	//m_soundManager->LoadSound("Resources/Song.mp3", "gangnam", "music", LOAD_STREAM);
-	m_soundManager->LoadSound("Resources/ExitThePremises.mp3", "song", "music", LOAD_STREAM);
-	m_soundManager->PlayOneShotSound("music", 0.5f);
-
-
-
 	//Create and initialize ScreenManager
 	m_screenManager = new ScreenManager;
 	m_screenManager->InitializeScreen(m_input);
@@ -62,6 +54,12 @@ void Game::InitGame(Input* input, Display* disp)
 	//Create and initialize EntityManager
 	m_entityManager = new EntityManager;
 	m_entityManager->Initialize(m_soundManager, m_input, m_device, m_deviceContext);
+
+	//FUN STUFF! REMOVE!
+	//m_soundManager->LoadSound("Resources/wave.mp3", "wave", "music", LOAD_STREAM);
+	//m_soundManager->LoadSound("Resources/Song.mp3", "gangnam", "music", LOAD_STREAM);
+	m_soundManager->LoadSound("Resources/ExitThePremises.mp3", "song", "music", LOAD_STREAM);
+	m_soundManager->PlayOneShotSound("music", 0.5f);
 }
 
 WPARAM Game::MainLoop()

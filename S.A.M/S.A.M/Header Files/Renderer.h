@@ -38,6 +38,10 @@ private:
 	WorldStruct m_worldStruct;
 	ID3D11Buffer* m_worldBuffer;
 	Camera m_cam;
+
+	ID3D11Buffer* triangleVertBuffer;
+	ID3D11InputLayout* vertLayout;
+
 public:
 
 };

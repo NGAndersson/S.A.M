@@ -126,4 +126,8 @@
   <ItemGroup>
     <Media Include="Resources\wave.mp3" />
   </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Shaders\PlayerPS.hlsl" />
+    <FxCompile Include="Shaders\PlayerVS.hlsl" />
+  </ItemGroup>
 </Project>
