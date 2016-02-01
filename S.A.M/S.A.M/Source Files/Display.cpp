@@ -21,7 +21,7 @@ Display::Display(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, 
 	_wc.style = CS_HREDRAW | CS_VREDRAW;
 	_wc.lpfnWndProc = WindowProc;
 	_wc.hInstance = hInstance;
-	_wc.hCursor = LoadCursor(NULL, IDC_ARROW);
+	_wc.hCursor = (HCURSOR)LoadImage(NULL, IDC_ARROW, IMAGE_CURSOR, 0, 0, LR_SHARED);
 	_wc.hbrBackground = (HBRUSH)COLOR_WINDOW;
 	_wc.lpszClassName = "WindowClass1";
 
@@ -34,7 +34,7 @@ Display::Display(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, 
 	// create the window and use the result as the handle
 	m_hWnd = CreateWindowEx(NULL,
 		"WindowClass1",    // name of the window class
-		"Our First Windowed Program",    // title of the window
+		"S.A.M",    // title of the window
 		WS_OVERLAPPEDWINDOW,    // window style
 		300,    // x-position of the window
 		300,    // y-position of the window
@@ -46,6 +46,8 @@ Display::Display(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, 
 		NULL,    // we aren't using menus, NULL
 		hInstance,    // application handle
 		NULL);    // used with multiple windows, NULL
+
+	ShowCursor(true);
 }
 
 Display::~Display()

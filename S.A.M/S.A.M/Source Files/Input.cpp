@@ -25,7 +25,8 @@ void Input::Initialize(HINSTANCE hInstance,HWND& hwnd, int ScreenWidth, int Scre
 	_hr = m_Keyboard->SetDataFormat(&c_dfDIKeyboard);
 	_hr = m_Keyboard->SetCooperativeLevel(hwnd, DISCL_FOREGROUND | DISCL_NONEXCLUSIVE);
 	_hr = m_Mouse->SetDataFormat(&c_dfDIMouse);
-	_hr = m_Mouse->SetCooperativeLevel(hwnd, DISCL_EXCLUSIVE | DISCL_NOWINKEY | DISCL_FOREGROUND);
+	_hr = m_Mouse->SetCooperativeLevel(hwnd, DISCL_NONEXCLUSIVE | DISCL_NOWINKEY | DISCL_FOREGROUND);
+
 
 	m_Hwnd = hwnd;//HWND KANSKE ÄR BAJS?
 
