@@ -22,15 +22,12 @@ void Renderer::Render(ModelHandler * model, XMFLOAT3 position, XMMATRIX* rotatio
 
 	//Set Worldmatrix and Position(float3) as a Vertexshader constant buffer
 	XMMATRIX Scale = XMMatrixScaling(1.0f, 1.0f, 1.0f);
-	XMMATRIX Translation = XMMatrixTranslation(position.x, position.y, position.z);
-
-	//m_worldStruct.worldMatrix = XMMatrixTranslation(position.x, position.y, position.z);// **rotation);
-	//m_worldStruct.worldPos = position;
-	//m_worldStruct.worldMatrix = XMMatrixIdentity();
+	XMMATRIX Translation = XMMatrixTranslation(0.0f, 0.0f, 0.0f);
 	m_worldStruct.worldMatrix = XMMatrixTranspose(Scale * Translation);
 	
 	m_deviceContext->UpdateSubresource(m_worldBuffer, 0, NULL, &m_worldStruct, 0, 0);
 	m_deviceContext->VSSetConstantBuffers(0, 1, &m_worldBuffer);
+
 
 	//Draw call
 	m_deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
@@ -49,8 +46,8 @@ Renderer::Renderer(ID3D11DeviceContext * deviceContext, ID3D11Device * device)
 	m_device = device;
 	m_deviceContext = deviceContext;
 
-	m_cam.SetCameraPos(XMVectorSet(0.0f, 0.0f, -30.0f, 0.0f));
-	m_cam.SetLookAtVec(XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f));
+	m_cam.SetCameraPos(XMVectorSet(0.0f, 40.0f,  0.0f, 0.0f));
+	m_cam.SetLookAtVec(XMVectorSet(0.0f, -100.0f, 0.0001f, 0.0f));
 	m_cam.SetProjectionMatrix();
 	m_cam.SetViewMatrix();
 	m_cam.SetViewProjectionMatrix();
