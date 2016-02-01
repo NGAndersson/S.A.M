@@ -151,11 +151,11 @@ bool OBJLoader::ReadFileCounts(int& vertexCount, int& textureCount, int& normalC
 			{ 
 				vertexCount++; 
 			}
-			if (_input == 't') 
+			else if (_input == 't') 
 			{ 
 				textureCount++; 
 			}
-			if (_input == 'n') 
+			else if (_input == 'n') 
 			{ 
 				normalCount++; 
 			}
@@ -217,7 +217,7 @@ bool OBJLoader::ReadColourCounts(int& kdCount, int& kaCount, int& tfCount, int& 
 			{ 
 				kdCount++; 
 			}
-			if (_input == 'a') 
+			else if (_input == 'a') 
 			{ 
 				kaCount++; 
 			}
@@ -372,18 +372,14 @@ bool OBJLoader::LoadDataStructures(XMFLOAT3 *vertices, XMFLOAT3 *normals, XMFLOA
 			{
 				_fin >> vertices[_vertexIndex].x >> vertices[_vertexIndex].y >> vertices[_vertexIndex].z;
 				_vertexIndex++;
-			}
-
-			// Read in the texture uv coordinates.
-			if (_input == 't')
+			}// Read in the texture uv coordinates.
+			else if (_input == 't')
 			{
 				_fin >> texcoords[_texcoordIndex].x >> texcoords[_texcoordIndex].y;
 				texcoords[_texcoordIndex].y = 1 - texcoords[_texcoordIndex].y;
 				_texcoordIndex++;
-			}
-
-			// Read in the normals.
-			if (_input == 'n')
+			}// Read in the normals.
+			else if (_input == 'n')
 			{
 				_fin >> normals[_normalIndex].x >> normals[_normalIndex].y >> normals[_normalIndex].z;
 				_normalIndex++;
