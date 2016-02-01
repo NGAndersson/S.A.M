@@ -9,7 +9,7 @@ struct Vertex    //Overloaded Vertex Structure
 	Vertex() {}
 	Vertex(float x, float y, float z) {
 		pos = XMFLOAT3(x, y, z);
-		tex = XMFLOAT2(0.0f, 0.0f);
+		tex = XMFLOAT2(0.5f, 0.5f);
 		normal = XMFLOAT3(0.0f, 0.0f, 0.0f);
 	}
 };
@@ -17,13 +17,17 @@ struct Vertex    //Overloaded Vertex Structure
 void Renderer::Render(ModelHandler * model, XMFLOAT3 position, XMMATRIX* rotation)
 {
 	//Set vertexbuffer, pixel material constant buffer and set the correct shaders
-	//model->SetBuffers(m_deviceContext);
+	model->SetBuffers(m_deviceContext);
 	model->SetShaders(m_deviceContext);
 
 	//Set Worldmatrix and Position(float3) as a Vertexshader constant buffer
-	m_worldStruct.worldMatrix = XMMatrixTranspose(XMMatrixTranslation(position.x, position.y, position.z));// **rotation);
-	m_worldStruct.worldPos = position;
+	XMMATRIX Scale = XMMatrixScaling(5.0f, 1.0f, 5.0f);
+	XMMATRIX Translation = XMMatrixTranslation(0.0f, 10.0f, 0.0f);
+	//m_worldStruct.worldMatrix = XMMatrixTranslation(position.x, position.y, position.z);// **rotation);
+	//m_worldStruct.worldPos = position;
 	//m_worldStruct.worldMatrix = XMMatrixIdentity();
+	m_worldStruct.worldMatrix = Scale * Translation;
+	
 	m_deviceContext->UpdateSubresource(m_worldBuffer, 0, NULL, &m_worldStruct, 0, 0);
 	m_deviceContext->VSSetConstantBuffers(0, 1, &m_worldBuffer);
 
@@ -40,16 +44,18 @@ void Renderer::Render(ModelHandler * model, XMFLOAT3 position, XMMATRIX* rotatio
 
 	//Testy shit
 
+	
+
+	//Draw call
+	m_deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	m_deviceContext->Draw(model->GetVertexCount()/3, 0);
 
 	//Set the vertex buffer
 	UINT stride = sizeof(Vertex);
 	UINT offset = 0;
 	m_deviceContext->IASetVertexBuffers(0, 1, &triangleVertBuffer, &stride, &offset);
-
-	//Draw call
-	m_deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	m_deviceContext->Draw(3, 0);
-	//m_deviceContext->Draw(model->GetVertexCount(), 0);
+
 }
 
 Renderer::Renderer(ID3D11DeviceContext * deviceContext, ID3D11Device * device)
@@ -57,7 +63,7 @@ Renderer::Renderer(ID3D11DeviceContext * deviceContext, ID3D11Device * device)
 	m_device = device;
 	m_deviceContext = deviceContext;
 
-	m_cam.SetCameraPos(XMVectorSet(0.0f, 0.0f, 0.0f, -1.0f));
+	m_cam.SetCameraPos(XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f));
 	m_cam.SetLookAtVec(XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f));
 	m_cam.SetProjectionMatrix();
 	m_cam.SetViewMatrix();

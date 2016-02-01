@@ -31,6 +31,8 @@ PlayerVS_OUT VS_main(PlayerVS_IN input)
 	output.PosInW = mul(float4(input.Pos, 1), World);// +float4(Position, 0.0f);
 	output.Pos = mul(output.PosInW, ViewProjection);
 
+	//output.PosInW = float4(input.Pos, 1.0f);
+	//output.Pos = float4(input.Pos.x, input.Pos.y, input.Pos.z+0.51f, 1.0f);
 	output.Tex = input.Tex;
 
 	return output;

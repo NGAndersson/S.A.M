@@ -62,7 +62,7 @@ void Camera::SetViewMatrix()
 
 void Camera::SetProjectionMatrix()
 {
-	m_projection = XMMatrixPerspectiveFovLH(XM_PI *1.0f, 640 / 480, 0.1f, 150000);
+	m_projection = XMMatrixPerspectiveFovLH(XM_PI * 0.45f, 640 / 480, 0.1f, 1500);
 }
 
 void Camera::SetViewProjectionMatrix()
