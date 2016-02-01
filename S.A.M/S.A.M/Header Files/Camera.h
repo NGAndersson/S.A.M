@@ -15,7 +15,6 @@ private:
 	};
 public:
 	Camera();
-	Camera(XMVECTOR NewCameraPosition, XMVECTOR PositionLookingAt);
 	~Camera();
 	XMVECTOR GetCameraPos();
 	XMVECTOR GetLookAtVec();
@@ -27,7 +26,7 @@ public:
 	void SetViewProjectionMatrix();
 	void SetCameraPos(XMVECTOR NewCameraPosition);
 	void SetLookAtVec(XMVECTOR PositionLookingAt);
-	HRESULT CreateBuffer(ID3D11Device* device);
+
 	void SetConstantBuffer(ID3D11DeviceContext* gDeviceContext);
 
 	
