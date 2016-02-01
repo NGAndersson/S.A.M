@@ -52,7 +52,7 @@ bool ShaderHandler::CreateShaders(ID3D11Device* device, string vertexFile, strin
 	D3DCompileFromFile(vertexVSTemp.c_str(), nullptr, D3D_COMPILE_STANDARD_FILE_INCLUDE, "VS_main", "vs_5_0", 0, NULL, &_vs, nullptr);
 
 	HRESULT _hr = device->CreateVertexShader(_vs->GetBufferPointer(), _vs->GetBufferSize(), nullptr, &m_vertexShader);
-	if (!_hr)
+	if (_hr != S_OK)
 	{
 		_vs->Release();
 		return false;
@@ -67,7 +67,7 @@ bool ShaderHandler::CreateShaders(ID3D11Device* device, string vertexFile, strin
 	};
 	_hr = device->CreateInputLayout(inputDesc, ARRAYSIZE(inputDesc), _vs->GetBufferPointer(), _vs->GetBufferSize(), &m_vertexLayout);
 	_vs->Release();
-	if (!_hr)
+	if (_hr != S_OK)
 	{
 		return false;
 	}
@@ -80,7 +80,7 @@ bool ShaderHandler::CreateShaders(ID3D11Device* device, string vertexFile, strin
 		D3DCompileFromFile(vertexGSTemp.c_str(), nullptr, D3D_COMPILE_STANDARD_FILE_INCLUDE, "GS_main", "gs_5_0", 0, NULL, &_gs, nullptr);
 		_hr = device->CreateGeometryShader(_gs->GetBufferPointer(), _gs->GetBufferSize(), nullptr, &m_geometryShader);
 		_gs->Release();
-		if (!_hr)
+		if (_hr != S_OK)
 		{
 			return false;
 		}
@@ -91,7 +91,7 @@ bool ShaderHandler::CreateShaders(ID3D11Device* device, string vertexFile, strin
 	D3DCompileFromFile(vertexPSTemp.c_str(), nullptr, D3D_COMPILE_STANDARD_FILE_INCLUDE, "PS_main", "ps_5_0", 0, NULL, &_ps, nullptr);
 	_hr = device->CreatePixelShader(_ps->GetBufferPointer(), _ps->GetBufferSize(), nullptr, &m_pixelShader);
 	_ps->Release();
-	if (!_hr)
+	if (_hr != S_OK)
 	{
 		return false;
 	}
