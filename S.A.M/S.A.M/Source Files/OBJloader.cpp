@@ -255,6 +255,8 @@ bool OBJLoader::ReadColourCounts(int& kdCount, int& kaCount, int& tfCount, int& 
 	return true;
 }
 
+
+//loading color and tex
 bool OBJLoader::LoadColour(ID3D11Device* device, ID3D11DeviceContext* deviceContext, string fileName, ID3D11ShaderResourceView *ObjTex, XMFLOAT3 *RGBDeffuse, XMFLOAT3 *RGBAL, XMFLOAT3 *Tf, XMFLOAT3 *Ni)
 {
 	ifstream _fin;
