@@ -9,6 +9,7 @@ void Renderer::Render(ModelHandler * model, XMFLOAT3 position, XMMATRIX* rotatio
 	//Set Worldmatrix and Position(float3) as a Vertexshader constant buffer
 	m_worldStruct.worldMatrix = XMMatrixTranspose(XMMatrixTranslation(position.x, position.y, position.z));// **rotation);
 	m_worldStruct.worldPos = position;
+	m_deviceContext->UpdateSubresource(m_worldBuffer, 0, NULL, &m_worldStruct, 0, 0);
 	m_deviceContext->VSSetConstantBuffers(0, 1, &m_worldBuffer);
 
 	//Set CameraPos(float3) and ViewProjectionMatrix as Geometryshader constant buffer
