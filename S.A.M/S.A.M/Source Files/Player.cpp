@@ -5,6 +5,17 @@ Player::Player()
 
 }
 
+Player::Player(SoundManager* SoundManager, int MapWidth, int MapLenght, Input* input) :Entity(SoundManager, MapWidth, MapLenght)
+{
+	m_input = input;
+	//Loading death sounds FIX LATER :)
+	//m_soundManager->LoadSound("DickbuttSound.mp3", "PlayerDeathSound", "PlayerSound", LOAD_MEMORY);
+
+	XMVECTOR _rotzAxis{ 0,0,1,0 };
+
+	m_rotation = XMMatrixRotationAxis(_rotzAxis, 0.0f);
+}
+
 Player::~Player()
 {
 
@@ -65,25 +76,8 @@ void Player::Update(double time)
 	m_rotation = XMMatrixRotationAxis(_rotzAxis, m_rotAngle);
 }
 
-void Player::Initialize(SoundManager* SoundManager, int MapWidth, int MapLenght,Input* input)
-{
-	m_soundManager = SoundManager;
-	m_input = input;
-
-	m_mapLenght = MapLenght;
-	m_mapWidth = MapWidth;
-
-	//Loading death sounds
-	m_soundManager->LoadSound("DickbuttSound.mp3", "PlayerDeathSound", "PlayerSound", LOAD_MEMORY);
-	
-	XMVECTOR _rotzAxis{ 0,0,1,0 };
-
-	m_rotation = XMMatrixRotationAxis(_rotzAxis, 0.0f);
-
-}
-
 void Player::Destroyed()
 {
-	//Play sound when destoyed..
+	//Play sound when destroyed..
 	m_soundManager->PlayOneShotSound("PlayerDeathSound", 0.5f);
 }
