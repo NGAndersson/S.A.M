@@ -34,13 +34,7 @@ public:
 	OBJLoader();
 	~OBJLoader();
 	VertexInputType* LoadObj(int& vertexCount, int& textureCount, int& normalCount, int& faceCount, string fileName);
-	bool ReadFileCounts(int& vertexCount, int& textureCount, int& normalCount, int& faceCount, string fileName);
 	bool ReadColourCounts(int& vertexCount, int& textureCount, int& normalCount, int& faceCount, string fileName);
-	XMFLOAT3* LoadVertices(int vertexCount, string fileName);
-	XMFLOAT3* LoadNormals(int textureCount, string fileName);
-	XMFLOAT2* LoadTexcoords(int normalCount, string fileName);
-	FaceType* LoadFace(int faceCount, string fileName);
-	bool LoadDataStructures(XMFLOAT3 *vertices, XMFLOAT3 *normals, XMFLOAT2 *texcoords, FaceType *faces, string fileName);
 	ID3D11ShaderResourceView* LoadColour(ID3D11Device* device, ID3D11DeviceContext* deviceContext, string fileName, XMFLOAT3 *RGBDeffuse, XMFLOAT3 *RGBAL, XMFLOAT3 *Tf, XMFLOAT3 *Ni);
 };
 

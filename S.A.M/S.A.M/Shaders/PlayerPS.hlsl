@@ -12,9 +12,8 @@ cbuffer OBJColourType : register(b0)
 
 struct PlayerPS_IN
 {
-	float4 PosW : WORLDPOS;
-	float2 Tex : TEXCOORD;
 	float4 Pos : SV_POSITION;
+	float2 Tex : TEXCOORD;
 };
 
 float4 PS_main(PlayerPS_IN input) : SV_TARGET

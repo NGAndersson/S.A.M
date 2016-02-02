@@ -6,7 +6,7 @@ cbuffer CameraViewProject : register(b0)
 
 struct PlayerGS_IN
 {
-	float4 PosInW : POSINW;
+	float4 PosInW : WORLDPOS;
 	float2 Tex : TEXCOORD;
 };
 
@@ -21,7 +21,7 @@ struct PlayerGS_OUT
 void GS_main(triangle PlayerGS_IN input[3], inout TriangleStream< PlayerGS_OUT > streamOutput)
 {
 	PlayerGS_OUT output = (PlayerGS_OUT)0;
-	/*
+	
 	float3 Vec1 = normalize(input[1].PosInW - input[0].PosInW);
 	float3 Vec2 = normalize(input[2].PosInW - input[0].PosInW);
 	float3 Norm = cross(Vec1, Vec2);
@@ -29,7 +29,7 @@ void GS_main(triangle PlayerGS_IN input[3], inout TriangleStream< PlayerGS_OUT >
 	float dotNP = dot(VnPosCam, Norm);
 
 	if (dotNP <= 0)
-	{*/
+	{
 		for (int i = 0; i < 3; i++)
 		{
 			output.Pos = mul(input[i].PosInW, ViewProjection);
@@ -37,5 +37,5 @@ void GS_main(triangle PlayerGS_IN input[3], inout TriangleStream< PlayerGS_OUT >
 			streamOutput.Append(output);
 		}
 		streamOutput.RestartStrip();
-	//}
+	}
 }
