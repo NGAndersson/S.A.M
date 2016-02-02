@@ -28,6 +28,20 @@ void Renderer::Render(ModelHandler * model, XMFLOAT3 position, XMMATRIX* rotatio
 	m_deviceContext->UpdateSubresource(m_worldBuffer, 0, NULL, &m_worldStruct, 0, 0);
 	m_deviceContext->VSSetConstantBuffers(0, 1, &m_worldBuffer);
 
+	
+	/*
+	//Set CameraPos(float3) and ViewProjectionMatrix as Geometryshader constant buffer
+	XMVECTOR _cameraPosVec = m_cam.GetCameraPos();
+	m_camStruct.camPos = XMFLOAT4(XMVectorGetByIndex(_cameraPosVec, 0), XMVectorGetByIndex(_cameraPosVec, 1), XMVectorGetByIndex(_cameraPosVec, 2), 0);
+	//m_camStruct.viewProjection = m_cam.GetViewProjectionMatrix();
+	m_camStruct.viewProjection = XMMatrixTranspose(m_cam.GetViewProjectionMatrix());
+	m_deviceContext->UpdateSubresource(m_camBuffer, 0, NULL, &m_camStruct, 0, 0);
+	m_deviceContext->VSSetConstantBuffers(1, 1, &m_camBuffer);
+	*/
+
+	//Testy shit
+
+	
 
 	//Draw call
 	m_deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
@@ -46,8 +60,8 @@ Renderer::Renderer(ID3D11DeviceContext * deviceContext, ID3D11Device * device)
 	m_device = device;
 	m_deviceContext = deviceContext;
 
-	m_cam.SetCameraPos(XMVectorSet(0.0f, 40.0f,  0.0f, 0.0f));
-	m_cam.SetLookAtVec(XMVectorSet(0.0f, -100.0f, 0.0001f, 0.0f));
+	m_cam.SetCameraPos(XMVectorSet(0.0f, 0.0f, -30.0f, 0.0f));
+	m_cam.SetLookAtVec(XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f));
 	m_cam.SetProjectionMatrix();
 	m_cam.SetViewMatrix();
 	m_cam.SetViewProjectionMatrix();
