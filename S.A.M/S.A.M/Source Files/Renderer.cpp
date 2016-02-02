@@ -22,7 +22,7 @@ void Renderer::Render(ModelHandler * model, XMFLOAT3 position, XMMATRIX* rotatio
 
 	//Set Worldmatrix and Position(float3) as a Vertexshader constant buffer
 	XMMATRIX Scale = XMMatrixScaling(1.0f, 1.0f, 1.0f);
-	XMMATRIX Translation = XMMatrixTranslation(0.0f, 0.0f, 0.0f);
+	XMMATRIX Translation = XMMatrixTranslation(position.x, position.y, position.z);
 	m_worldStruct.worldMatrix = XMMatrixTranspose(Scale * Translation);
 	
 	m_deviceContext->UpdateSubresource(m_worldBuffer, 0, NULL, &m_worldStruct, 0, 0);
@@ -31,7 +31,7 @@ void Renderer::Render(ModelHandler * model, XMFLOAT3 position, XMMATRIX* rotatio
 
 	//Draw call
 	m_deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	m_deviceContext->Draw(model->GetVertexCount()/3, 0);
+	m_deviceContext->Draw(model->GetVertexCount(), 0);
 
 	//Set the vertex buffer
 	UINT stride = sizeof(Vertex);

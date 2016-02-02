@@ -18,7 +18,6 @@ class Renderer
 	//World buffer for VS
 	struct WorldStruct {
 		XMMATRIX worldMatrix;
-		XMFLOAT3 worldPos;
 	};
 
 //Functions

@@ -201,6 +201,6 @@ bool ModelHandler::SetBuffers(ID3D11DeviceContext* deviceContext)
 
 int ModelHandler::GetVertexCount()
 {
-	return m_faceCount * 3;
+	return m_faceCount;
 }
 
