@@ -14,7 +14,7 @@ struct Vertex    //Overloaded Vertex Structure
 	}
 };
 
-void Renderer::Render(ModelHandler * model, XMFLOAT3 position, XMMATRIX* rotation)
+void Renderer::Render(ModelHandler * model, XMFLOAT3 position, XMMATRIX &rotation)
 {
 	//Set vertexbuffer, pixel material constant buffer and set the correct shaders
 	model->SetBuffers(m_deviceContext);
@@ -23,7 +23,7 @@ void Renderer::Render(ModelHandler * model, XMFLOAT3 position, XMMATRIX* rotatio
 	//Set Worldmatrix and Position(float3) as a Vertexshader constant buffer
 	XMMATRIX Scale = XMMatrixScaling(1.0f, 1.0f, 1.0f);
 	XMMATRIX Translation = XMMatrixTranslation(position.x, position.y, position.z);
-	m_worldStruct.worldMatrix = XMMatrixTranspose(Scale * Translation);
+	m_worldStruct.worldMatrix = XMMatrixTranspose(Scale * rotation * Translation);
 	
 	m_deviceContext->UpdateSubresource(m_worldBuffer, 0, NULL, &m_worldStruct, 0, 0);
 	m_deviceContext->VSSetConstantBuffers(0, 1, &m_worldBuffer);
