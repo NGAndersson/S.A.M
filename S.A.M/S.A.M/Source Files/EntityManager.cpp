@@ -7,7 +7,7 @@ void EntityManager::SpawnEntity(HandlerIndex type)
 	
 	switch (type) {
 	case(PLAYER) :
-		m_player = new Player(m_soundManager, 100, 100, m_input);
+		m_player = new Player(m_soundManager, 100, 100,XMFLOAT3(1.0f, 0.0f, 1.0f), m_input);
 		break;
 	//case(ENEMY1) :
 	//	Enemy1* tempEntity = new Enemy1;
@@ -110,7 +110,6 @@ void EntityManager::Initialize(SoundManager* soundManager, Input* input, ID3D11D
 
 	//Temp, create player
 	SpawnEntity(PLAYER);
-	m_player->SetPosition(XMFLOAT3(1.0f, 0.0f, 1.0f));
 
 	ChangeSongData(128);
 }
@@ -212,7 +211,7 @@ void EntityManager::Update(double time)
 	//for (int i = 0; i < m_bullets.size(); i++)
 	//	m_bullets[i]->Update();
 	//
-	//m_player->Update();
+	m_player->Update(time);
 }
 
 void EntityManager::ChangeSongData(int bpm)
