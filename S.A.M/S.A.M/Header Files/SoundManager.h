@@ -8,7 +8,8 @@
 enum SoundFlags
 {
 	LOAD_MEMORY = 0x01,
-	LOAD_STREAM = 0x02
+	LOAD_STREAM = 0x02,
+	LOAD_SOFTWARE = 0x04
 };
 
 inline SoundFlags operator|(SoundFlags a, SoundFlags b)
@@ -32,6 +33,7 @@ class SoundManager
 		void PlayOneShotSound(char* soundName, float volume);				//Plays a sound with a specific name, at volume 0.0-1.0
 		void PauseSound(char* soundName);
 		void Update();
+		void SpectrumAnalysis(char* soundName);
 	//Variables
 	private:
 		FMOD::System* m_system;				//Core of FMOD
