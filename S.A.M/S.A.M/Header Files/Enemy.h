@@ -2,6 +2,15 @@
 #define ENEMY_H
 #include "Entity.h"
 
+enum EnemyType
+{
+	ENEMY_1,	//Normal
+	ENEMY_2,	//Swarmer?
+	ENEMY_3,	//Slow tank?
+	ENEMY_4		//Quick, swirvy assault?
+	//Other ideas?
+};
+
 class Enemy : Entity
 {
 	//Functions
