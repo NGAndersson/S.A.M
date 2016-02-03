@@ -6,15 +6,14 @@
 #include "SoundManager.h"
 #include <math.h>
 
-class Player : Entity
+class Player : public Entity
 {
 	//----------------------------Functions----------------------------------------
 public:
 	Player();
 	~Player();
-
+	Player(SoundManager* SoundManager, int MapWidth, int MapLength, XMFLOAT3 Position, Input* input);
 	void Update(double time);
-	void Initialize(SoundManager* SoundManager, int MapWidth, int MapLenght,Input* input);
 	void Destroyed();
 	//----------------------------Attributes----------------------------------------
 private:

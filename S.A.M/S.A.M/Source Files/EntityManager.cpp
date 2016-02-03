@@ -4,74 +4,73 @@
 
 void EntityManager::SpawnEntity(HandlerIndex type)
 {
-	/*
+	
 	switch (type) {
 	case(PLAYER) :
-		m_player = new Player;
-		m_player->Initialize(m_soundManager, MAPWIDTH, MAPLENGTH, m_input);
+		m_player = new Player(m_soundManager, 100, 100,XMFLOAT3(1.0f, 0.0f, 1.0f), m_input);
 		break;
-	case(ENEMY1) :
-		Enemy1* tempEntity = new Enemy1;
-		tempEntity->Initialize();
-		m_enemy1.push_back(tempEntity);
-		break;
-	case(ENEMY2) :
-		Enemy2* tempEntity = new Enemy2;
-		tempEntity->Initialize();
-		m_enemy2.push_back(tempEntity);
-		break;
-	case(ENEMY3) :
-		Enemy3* tempEntity = new Enemy3;
-		tempEntity->Initialize();
-		m_enemy3.push_back(tempEntity);
-		break;
-	case(ENEMY4) :
-		Enemy4* tempEntity = new Enemy4;
-		tempEntity->Initialize();
-		m_enemy4.push_back(tempEntity);
-		break;
-	case(BULLET1) :
-		Bullet1* tempEntity = new Bullet1;
-		tempEntity->Initialize();
-		m_bullet1.push_back(tempEntity);
-		//Set infront of player
-		//Spawn correct sound
-		break;
-	case(BULLET2) :
-		Bullet2* tempEntity = new Bullet2;
-		tempEntity->Initialize();
-		m_bullet2.push_back(tempEntity);
-		//Set infront of player
-		//Spawn correct sound
-		break;
-	case(BULLET3) :
-		Bullet3* tempEntity = new Bullet3;
-		tempEntity->Initialize();
-		m_bullet3.push_back(tempEntity);
-		//Set infront of player
-		//Spawn correct sound
-		break;
-	case(BULLET4) :
-		Bullet4* tempEntity = new Bullet4;
-		tempEntity->Initialize();
-		m_bullet4.push_back(tempEntity);
-		break;
-	case(BULLET5) :
-		Bullet5* tempEntity = new Bullet5;
-		tempEntity->Initialize();
-		m_bullet5.push_back(tempEntity);
-		//Set infront of player
-		//Spawn correct sound
-		break;
-	case(BULLET6) :
-		Bullet6* tempEntity = new Bullet6;
-		tempEntity->Initialize();
-		m_bullet6.push_back(tempEntity);
-		//Set infront of ENEMY
+	//case(ENEMY1) :
+	//	Enemy1* tempEntity = new Enemy1;
+	//	tempEntity->Initialize();
+	//	m_enemy1.push_back(tempEntity);
+	//	break;
+	//case(ENEMY2) :
+	//	Enemy2* tempEntity = new Enemy2;
+	//	tempEntity->Initialize();
+	//	m_enemy2.push_back(tempEntity);
+	//	break;
+	//case(ENEMY3) :
+	//	Enemy3* tempEntity = new Enemy3;
+	//	tempEntity->Initialize();
+	//	m_enemy3.push_back(tempEntity);
+	//	break;
+	//case(ENEMY4) :
+	//	Enemy4* tempEntity = new Enemy4;
+	//	tempEntity->Initialize();
+	//	m_enemy4.push_back(tempEntity);
+	//	break;
+	//case(BULLET1) :
+	//	Bullet1* tempEntity = new Bullet1;
+	//	tempEntity->Initialize();
+	//	m_bullet1.push_back(tempEntity);
+	//	//Set infront of player
+	//	//Spawn correct sound
+	//	break;
+	//case(BULLET2) :
+	//	Bullet2* tempEntity = new Bullet2;
+	//	tempEntity->Initialize();
+	//	m_bullet2.push_back(tempEntity);
+	//	//Set infront of player
+	//	//Spawn correct sound
+	//	break;
+	//case(BULLET3) :
+	//	Bullet3* tempEntity = new Bullet3;
+	//	tempEntity->Initialize();
+	//	m_bullet3.push_back(tempEntity);
+	//	//Set infront of player
+	//	//Spawn correct sound
+	//	break;
+	//case(BULLET4) :
+	//	Bullet4* tempEntity = new Bullet4;
+	//	tempEntity->Initialize();
+	//	m_bullet4.push_back(tempEntity);
+	//	break;
+	//case(BULLET5) :
+	//	Bullet5* tempEntity = new Bullet5;
+	//	tempEntity->Initialize();
+	//	m_bullet5.push_back(tempEntity);
+	//	//Set infront of player
+	//	//Spawn correct sound
+	//	break;
+	//case(BULLET6) :
+	//	Bullet6* tempEntity = new Bullet6;
+	//	tempEntity->Initialize();
+	//	m_bullet6.push_back(tempEntity);
+	//	//Set infront of ENEMY
 		//Don't spawn sound for enemy bullets?
 	}
 
-	*/
+	
 }
 
 void EntityManager::Initialize(SoundManager* soundManager, Input* input, ID3D11Device* device, ID3D11DeviceContext* deviceContext)
@@ -111,7 +110,6 @@ void EntityManager::Initialize(SoundManager* soundManager, Input* input, ID3D11D
 
 	//Temp, create player
 	SpawnEntity(PLAYER);
-	//m_player->SetPosition(XMFLOAT3(1.0f, 0.0f, 1.0f));
 
 	ChangeSongData(128);
 }
@@ -122,9 +120,9 @@ void EntityManager::Render()
 	//Render Player
 	m_modelHandlers[PLAYER]->SetBuffers(m_deviceContext);
 	m_modelHandlers[PLAYER]->SetShaders(m_deviceContext);
-	XMVECTOR _rotzAxis{ 0,1,0,0 };
-	XMMATRIX m_rotation = XMMatrixRotationAxis(_rotzAxis, XM_PI / 2);
-	m_renderer->Render(m_modelHandlers[PLAYER], XMFLOAT3(0.0f, 0.0f, 0.0f), m_rotation);
+	XMVECTOR _rotzAxis{ 0,0,1,0 };
+	XMMATRIX m_rotation = XMMatrixRotationAxis(_rotzAxis, 0.0f);
+	m_renderer->Render(m_modelHandlers[PLAYER], m_player->GetPosition(), m_rotation);
 
 	//m_renderer->Render(m_modelHandlers[PLAYER], m_player->GetPosition(), &m_player->GetRotation());
 	/*
@@ -213,7 +211,7 @@ void EntityManager::Update(double time)
 	//for (int i = 0; i < m_bullets.size(); i++)
 	//	m_bullets[i]->Update();
 	//
-	//m_player->Update();
+	m_player->Update(time);
 }
 
 void EntityManager::ChangeSongData(int bpm)

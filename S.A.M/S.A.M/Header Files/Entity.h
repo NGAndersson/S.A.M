@@ -3,8 +3,7 @@
 //Temporary include
 #include <DirectXCollision.h>
 #include <DirectXMath.h>
-#include <DirectXCollision.h>
-
+#include "Input.h"
 using namespace DirectX;
 #include "SoundManager.h"
 
@@ -15,11 +14,21 @@ class Entity
 {
 	//----------------------------Functions----------------------------------------
 public:
-	 virtual void Update(double time) = 0;
+	Entity() {};
+	Entity(SoundManager* SoundManager, int MapWidth, int MapLength, XMFLOAT3 Position)
+	{
+		m_soundManager = SoundManager;
+		m_mapLength = MapLength;
+		m_mapWidth = MapWidth;
+		m_position = Position;
+	}
 
-	 virtual void Initialize(SoundManager& SoundManager, int MapWidth, int MapLenght) = 0;
+	virtual void Update(double time) = 0;
 
-	 virtual void Destoyed() = 0;
+	 virtual void Destroyed()
+	 {
+		 delete m_soundManager;
+	 }
 
 	 //Get set 
 	 virtual XMFLOAT3 GetPosition()
@@ -54,7 +63,7 @@ protected:
 
 	 //BoundingBox
 	 BoundingBox m_entityBox;
-	 int m_mapWidth, m_mapLenght;
+	 int m_mapWidth, m_mapLength;
 };
 #endif // ! ENTITY
 
