@@ -21,7 +21,7 @@ class PartSys
 public:
 	PartSys();
 	~PartSys();
-	bool CreateBuffer(ID3D11Device* device, ID3D11DeviceContext* deviceContext);
+	bool CreateBuffer(ID3D11Device* device, ID3D11DeviceContext* deviceContext, wstring texName);
 	bool CreateShaders(ID3D11Device* device);
 	bool PartRend(ID3D11DeviceContext*);
 	void updatePart(ID3D11DeviceContext* deviceContext, float time, float partSpeed);

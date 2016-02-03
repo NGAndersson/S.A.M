@@ -123,7 +123,8 @@ void EntityManager::Initialize(SoundManager* soundManager, Input* input, ID3D11D
 	SpawnEntity(PLAYER);
 
 	//Temp, creates partsys
-	m_partSys.CreateBuffer(m_device, m_deviceContext);
+	wstring _texName = L"Resources\\star3.jpg";
+	m_partSys.CreateBuffer(m_device, m_deviceContext, _texName);
 	m_partSys.CreateShaders(m_device);
 
 	ChangeSongData(128);
