@@ -5,7 +5,7 @@
 #include <DirectXMath.h>
 #include "Input.h"
 using namespace DirectX;
-#include "SoundManager.h"
+#include "Audio/SoundManager.h"
 
 #define MOVEMENTSPEED 0.05f;
 

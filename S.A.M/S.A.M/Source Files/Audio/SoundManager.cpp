@@ -1,11 +1,11 @@
-#include "SoundManager.h"
+#include "Audio/SoundManager.h"
 #include "Windows.h"
 #include <sstream>
 #include <iostream>
 #include <cstdlib>
 #include <time.h>
 #include <algorithm>
-#pragma warning( disable : 4996 ) //Disable warnings about transform() in SpectrumAnalysis()
+
 SoundManager::SoundManager() 
 {
 	InitFMOD();
@@ -204,6 +204,13 @@ float* SoundManager::SpectrumAnalysis(char* soundName)
 	return _spec;
 }
 
+int SoundManager::GetCurrentMusicTimePCM()
+{
+	unsigned int _pos = 0;
+	m_musicChannel->getPosition(&_pos, FMOD_TIMEUNIT_PCM);
+	return _pos;
+}
+
 //Plays a sound once at a specific volume
 void SoundManager::PlayOneShotSound(char* soundName, float volume)
 {
@@ -231,6 +238,43 @@ void SoundManager::PlayOneShotSound(char* soundName, float volume)
 		MessageBox(NULL, "Couldn't find sound name handle", "Sound Playing Error", MB_ICONERROR | MB_OK);
 		exit(-1);
 	}
+}
+
+void SoundManager::LoadMusic(char * fileName)
+{
+	m_result = m_system->createSound(fileName, FMOD_SOFTWARE, 0, &m_musicSound);
+
+	FMODErrorCheck(m_result);
+	m_musicSound->getLength(&m_musicLength, FMOD_TIMEUNIT_PCM);
+
+	//Weird stuff from french code	https://www.youtube.com/watch?v=jZoQ1S73Bac
+	void* _ptr1;
+	void* _ptr2;
+	unsigned int _length1;
+	unsigned int _length2;
+	m_dataLeftChannel = new int[m_musicLength];
+	m_dataRightChannel = new int[m_musicLength];
+	m_musicSound->lock(0, m_musicLength, &_ptr1, &_ptr2, &_length1, &_length2);
+	for (int i = 0; i < m_musicLength; i++)
+	{
+		m_dataLeftChannel[i] = ((int*)_ptr1)[i] >> 16;
+		m_dataRightChannel[i] = (((int*)_ptr1)[i] << 16) >> 16;
+	}
+
+	m_musicSound->unlock(&_ptr1, &_ptr2, _length1, _length2);
+}
+
+void SoundManager::PlayMusic(float volume)
+{
+	m_result = m_system->playSound(FMOD_CHANNEL_FREE, m_musicSound, false, &m_musicChannel);
+	m_musicChannel->setVolume(volume);
+}
+
+void SoundManager::PauseMusic()
+{
+	bool _paused;
+	m_musicChannel->getPaused(&_paused);
+	m_musicChannel->setPaused(!_paused);
 }
 
 //For errorchecking the results of FMOD functions

@@ -32,8 +32,17 @@ class SoundManager
 		void LoadSound(char* fileName, char* soundName, char* groupName, SoundFlags flags);	//Loads sound into array 
 		void PlayOneShotSound(char* soundName, float volume);				//Plays a sound with a specific name, at volume 0.0-1.0
 		void PauseSound(char* soundName);
+		void LoadMusic(char* fileName);
+		void PlayMusic(float volume);
+		void PauseMusic();
 		void Update();
 		float* SpectrumAnalysis(char* soundName);
+		int* GetLeftData() { return m_dataLeftChannel; }
+		int* GetRightData() { return m_dataRightChannel; }
+		unsigned int GetLength() { return m_musicLength; }
+		int GetCurrentMusicTimePCM();
+
+
 	//Variables
 	private:
 		FMOD::System* m_system;				//Core of FMOD
@@ -48,6 +57,13 @@ class SoundManager
 		std::vector<std::vector<char*>> m_soundIndexes;		//Indexes of groups based on name
 		std::vector<std::vector<FMOD::Channel*>> m_soundChannels;	//Channel groups for the sounds
 		std::vector<char*> m_soundGroupIndexes;
+
+		//Music specific things for beat detection
+		FMOD::Sound* m_musicSound;
+		FMOD::Channel* m_musicChannel;
+		unsigned int m_musicLength;
+		int* m_dataLeftChannel;
+		int* m_dataRightChannel;
 };
 
 #endif // !_SOUNDMANAGER_H_

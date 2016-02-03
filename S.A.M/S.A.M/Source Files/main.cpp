@@ -1,6 +1,6 @@
 #include "Display.h"
 #include "Game.h"
-#include "SoundManager.h"
+#include "Audio/SoundManager.h"
 #include "Input.h"
 
 #define WIDTH 640;
