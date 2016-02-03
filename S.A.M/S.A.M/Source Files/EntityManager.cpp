@@ -88,6 +88,11 @@ void EntityManager::Initialize(SoundManager* soundManager, Input* input, ID3D11D
 {
 	//Set the soundManager pointer which will be used in every entity
 	m_soundManager = soundManager;
+	m_soundManager->LoadMusic("Resources/Ignition.mp3");
+	m_soundManager->PlayMusic(0.5f);
+
+	m_beatDetector = new BeatDetector(m_soundManager);
+	m_beatDetector->AudioProcess();
 
 	//Load the sounds for every entity
 	m_soundManager->LoadSound("Resources/DefaultBullet1.wav", "DefaultBullet1", "DefaultBullet", LOAD_MEMORY);
@@ -127,7 +132,8 @@ void EntityManager::Initialize(SoundManager* soundManager, Input* input, ID3D11D
 	m_partSys.CreateBuffer(m_device, m_deviceContext, _texName);
 	m_partSys.CreateShaders(m_device);
 
-	ChangeSongData(128);
+	ChangeSongData(m_beatDetector->GetTempo());
+	m_doBeatDet = true;
 }
 
 void EntityManager::Render()
@@ -211,13 +217,22 @@ void EntityManager::Render()
 
 void EntityManager::Update(double time)
 {
+	if (m_doBeatDet == false) {
 	m_timeSinceLastBeat += time * 1000;
 	if (m_timeSinceLastBeat >= 60000 / m_currentBPM) {
 		m_timeSinceLastBeat -= 60000 / m_currentBPM;
 		m_soundManager->PlayOneShotSound("DefaultBullet", 0.5f);
 	}
+	}
+	else {
+		//BeatDet test
+		float* _beat = m_beatDetector->GetBeat();
 
+		float _currentPos = m_soundManager->GetCurrentMusicTimePCM() / 1024.f;
 
+		if (_beat[(int)_currentPos] > 0)
+			m_soundManager->PlayOneShotSound("DefaultBullet", 0.05f);
+	}
 	//Do collision checks
 
 
