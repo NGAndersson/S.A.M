@@ -2,6 +2,17 @@
 #define MAPWIDTH 100;	//Change this
 #define MAPLENGTH 100;	//Change this
 
+EntityManager::EntityManager()
+{
+
+}
+
+EntityManager::~EntityManager()
+{
+	delete[] m_modelHandlers;
+	delete m_player;
+}
+
 void EntityManager::SpawnEntity(HandlerIndex type)
 {
 	

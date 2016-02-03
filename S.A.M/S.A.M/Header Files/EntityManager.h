@@ -18,6 +18,8 @@ private:
 
 	//Collision functions needed
 public:
+	EntityManager();
+	~EntityManager();
 	void Initialize(SoundManager* soundManager, Input* input, ID3D11Device* device, ID3D11DeviceContext* deviceContext);
 	void Render();
 	void Update(double time);
