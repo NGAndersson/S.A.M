@@ -124,8 +124,9 @@ void Game::Render()
 void Game::CheckInput()
 {
 	//InputType _returnInput = m_input->CheckKeyBoardInput();
-	//if (_returnInput & INPUT_ESC)  HEY LOOK AT ME I DON'T WORK OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOH HEJ EEEEEEEEEPER
-	//	exit(0);
+	if (m_input->CheckEsc())
+		exit(0);
+
 	m_input->CheckMouseInput();
 }
 

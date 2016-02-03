@@ -152,7 +152,9 @@
     <ClCompile Include="Source Files\Renderer.cpp" />
     <ClCompile Include="Source Files\ScreenManager.cpp" />
     <ClCompile Include="Source Files\ShaderHandler.cpp" />
-    <ClCompile Include="Source Files\SoundManager.cpp" />
+    <ClCompile Include="Source Files\SoundManager.cpp">
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">4996</DisableSpecificWarnings>
+    </ClCompile>
     <ClCompile Include="Source Files\Timer.cpp" />
     <ClCompile Include="Source Files\WICTextureLoader.cpp" />
   </ItemGroup>
