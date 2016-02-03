@@ -41,6 +41,8 @@ void Input::Initialize(HINSTANCE hInstance,HWND& hwnd, int ScreenWidth, int Scre
 InputType Input::CheckKeyBoardInput()
 {
 	BYTE _KeyboardState[256];
+	ZeroMemory(&_KeyboardState, sizeof(_KeyboardState));
+
 	m_Keyboard->Acquire();
 	InputType _ReturnType = INPUT_DEFAULT;
 	m_Keyboard->GetDeviceState(sizeof(_KeyboardState), (LPVOID)&_KeyboardState);
