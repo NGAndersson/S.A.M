@@ -2,6 +2,17 @@
 #define MAPWIDTH 100
 #define MAPLENGTH 100
 
+EntityManager::EntityManager()
+{
+
+}
+
+EntityManager::~EntityManager()
+{
+	delete[] m_modelHandlers;
+	delete m_player;
+}
+
 void EntityManager::SpawnEntity(HandlerIndex type)
 {
 	
@@ -111,11 +122,16 @@ void EntityManager::Initialize(SoundManager* soundManager, Input* input, ID3D11D
 	//Temp, create player
 	SpawnEntity(PLAYER);
 
+	//Temp, creates partsys
+	m_partSys.CreateBuffer(m_device, m_deviceContext);
+	m_partSys.CreateShaders(m_device);
+
 	ChangeSongData(128);
 }
 
 void EntityManager::Render()
 {
+	m_partSys.PartRend(m_deviceContext);
 	
 	//Render Player
 	m_modelHandlers[PLAYER]->SetBuffers(m_deviceContext);
@@ -212,6 +228,7 @@ void EntityManager::Update(double time)
 	//	m_bullets[i]->Update();
 	//
 	m_player->Update(time);
+	m_partSys.updatePart(m_deviceContext, time, 40);
 }
 
 void EntityManager::ChangeSongData(int bpm)
