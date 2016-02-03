@@ -31,37 +31,36 @@ void Player::Update(double time)
 
 	if (_currentInput[0] == INPUT_MOVE_LEFT)
 	{
-		m_position.x -= MOVEMENTSPEED;
+		m_position.x -= MOVEMENTSPEEDX;
 		m_rotAngle += -0.1 * time;
 		_tiltL = true;
 	}
 
 	if (_currentInput[1] == INPUT_MOVE_RIGHT)
 	{
-		m_position.x += MOVEMENTSPEED;
+		m_position.x += MOVEMENTSPEEDX;
 		m_rotAngle += 0.1 * time;
 		_tiltR = true;
 	}
 
 	if (_currentInput[2] == INPUT_MOVE_UP)
-		m_position.z += MOVEMENTSPEED;
+		m_position.z += MOVEMENTSPEEDZ;
 
 	if (_currentInput[3] == INPUT_MOVE_DOWN)
-		m_position.z -= MOVEMENTSPEED;
-
+		m_position.z -= MOVEMENTSPEEDZ;
 
 	//Check position if out of bounds.
-	if (m_position.z > m_MapLength/2)
-		m_position.z = m_MapLength / 2;
+	if (m_position.z > (float)m_mapLength/2)
+		m_position.z = (float)m_mapLength / 2;
 
-	if (m_position.z < -m_MapLength / 2)
-		m_position.z = -m_MapLength / 2;
+	if (m_position.z < (float)-m_mapLength / 2)
+		m_position.z = (float)-m_mapLength / 2;
 
-	if (m_position.x > m_mapWidth / 2)
-		m_position.x = m_mapWidth / 2;
+	if (m_position.x >(float)m_mapWidth / 2)
+		m_position.x = (float)m_mapWidth / 2;
 				   
-	if (m_position.x < -m_mapWidth / 2)
-		m_position.x = -m_mapWidth / 2;
+	if (m_position.x < (float)-m_mapWidth / 2)
+		m_position.x = (float)-m_mapWidth / 2;
 
 	//Checking if rotation should return to original value...
 	if (!_tiltL && m_rotAngle > 0.0f)

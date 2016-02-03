@@ -28,7 +28,7 @@ Display::Display(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, 
 	// register the window class
 	RegisterClassEx(&_wc);
 
-	RECT rc = { 0, 0, 640, 480 };
+	RECT rc = { 0, 0, width, height };
 	AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, FALSE);
 
 	// create the window and use the result as the handle
@@ -36,8 +36,8 @@ Display::Display(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, 
 		"WindowClass1",    // name of the window class
 		"S.A.M",    // title of the window
 		WS_OVERLAPPEDWINDOW,    // window style
-		300,    // x-position of the window
-		300,    // y-position of the window
+		CW_USEDEFAULT,    // x-position of the window
+		CW_USEDEFAULT,    // y-position of the window
 		//width,    // width of the window
 		//height,    // height of the window
 		rc.right - rc.left,
@@ -47,6 +47,7 @@ Display::Display(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, 
 		hInstance,    // application handle
 		NULL);    // used with multiple windows, NULL
 
+	ShowWindow(m_hWnd, nCmdShow);
 	ShowCursor(true);
 }
 

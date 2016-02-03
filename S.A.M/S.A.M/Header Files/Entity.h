@@ -7,9 +7,10 @@
 using namespace DirectX;
 #include "SoundManager.h"
 
-#define MOVEMENTSPEED 0.05f;
+#define MOVEMENTSPEEDX 0.3f / 16.40f // Divided by screen Width Hardcoded MOTHERFUCKER :)
 
-//#include "EntityManager.h"
+#define MOVEMENTSPEEDZ 0.3f / 7.20f // Divided by screen Height Hardcoded
+
 class Entity
 {
 	//----------------------------Functions----------------------------------------

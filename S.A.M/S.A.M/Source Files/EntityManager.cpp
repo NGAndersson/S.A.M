@@ -1,13 +1,13 @@
 #include "EntityManager.h"
-#define MAPWIDTH 100;	//Change this
-#define MAPLENGTH 100;	//Change this
+#define MAPWIDTH 100
+#define MAPLENGTH 100
 
 void EntityManager::SpawnEntity(HandlerIndex type)
 {
 	
 	switch (type) {
 	case(PLAYER) :
-		m_player = new Player(m_soundManager, 100, 100,XMFLOAT3(1.0f, 0.0f, 1.0f), m_input);
+		m_player = new Player(m_soundManager, MAPWIDTH,MAPLENGTH,XMFLOAT3(1.0f, 0.0f, 1.0f), m_input);
 		break;
 	//case(ENEMY1) :
 	//	Enemy1* tempEntity = new Enemy1;
