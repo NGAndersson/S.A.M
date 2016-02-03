@@ -122,7 +122,7 @@ void EntityManager::Render()
 	m_modelHandlers[PLAYER]->SetShaders(m_deviceContext);
 	XMVECTOR _rotzAxis{ 0,0,1,0 };
 	XMMATRIX m_rotation = XMMatrixRotationAxis(_rotzAxis, 0.0f);
-	m_renderer->Render(m_modelHandlers[PLAYER], m_player->GetPosition(), &m_rotation);
+	m_renderer->Render(m_modelHandlers[PLAYER], m_player->GetPosition(), m_rotation);
 
 	//m_renderer->Render(m_modelHandlers[PLAYER], m_player->GetPosition(), &m_player->GetRotation());
 	/*

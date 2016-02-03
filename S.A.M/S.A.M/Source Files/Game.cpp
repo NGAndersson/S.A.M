@@ -58,7 +58,7 @@ void Game::InitGame(Input* input, Display* disp)
 	//FUN STUFF! REMOVE!
 	//m_soundManager->LoadSound("Resources/wave.mp3", "wave", "music", LOAD_STREAM);
 	//m_soundManager->LoadSound("Resources/Song.mp3", "gangnam", "music", LOAD_STREAM);
-	m_soundManager->LoadSound("Resources/ExitThePremises.mp3", "song", "music", LOAD_STREAM);
+	m_soundManager->LoadSound("Resources/ExitThePremises.mp3", "song", "music", LOAD_STREAM | LOAD_SOFTWARE);
 	m_soundManager->PlayOneShotSound("music", 0.5f);
 }
 
@@ -109,7 +109,7 @@ void Game::Update(double time)
 void Game::Render()
 {
 	// clear the back buffer to a deep blue
-	float _clearColor[] = { 0, 0, 1, 1 };
+	float _clearColor[] = { 0, 0, 0, 1 };
 	m_deviceContext->ClearRenderTargetView(m_backbufferRTV, _clearColor);
 	m_deviceContext->ClearDepthStencilView(m_depthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
 	m_deviceContext->OMSetRenderTargets(1, &m_backbufferRTV, m_depthStencilView);

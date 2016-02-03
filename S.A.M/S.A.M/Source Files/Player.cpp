@@ -5,7 +5,7 @@ Player::Player()
 
 }
 
-Player::Player(SoundManager* SoundManager, int MapWidth, int MapLenght,XMFLOAT3 Position, Input* input) : Entity(SoundManager, MapWidth, MapLenght,Position)
+Player::Player(SoundManager* SoundManager, int MapWidth, int MapLength,XMFLOAT3 Position, Input* input) : Entity(SoundManager, MapWidth, MapLength,Position)
 {
 	m_input = input;
 	//Loading death sounds FIX LATER :)
@@ -51,11 +51,11 @@ void Player::Update(double time)
 
 
 	//Check position if out of bounds.
-	if (m_position.z > m_mapLenght/2)
-		m_position.z = m_mapLenght / 2;
+	if (m_position.z > m_MapLength/2)
+		m_position.z = m_MapLength / 2;
 
-	if (m_position.z < -m_mapLenght / 2)
-		m_position.z = -m_mapLenght / 2;
+	if (m_position.z < -m_MapLength / 2)
+		m_position.z = -m_MapLength / 2;
 
 	if (m_position.x > m_mapWidth / 2)
 		m_position.x = m_mapWidth / 2;

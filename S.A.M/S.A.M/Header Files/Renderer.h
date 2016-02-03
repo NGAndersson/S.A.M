@@ -18,14 +18,13 @@ class Renderer
 	//World buffer for VS
 	struct WorldStruct {
 		XMMATRIX worldMatrix;
-		XMFLOAT3 worldPos;
 	};
 
 //Functions
 private:
 
 public:
-	void Render(ModelHandler* model, XMFLOAT3 position, XMMATRIX* rotation);
+	void Render(ModelHandler* model, XMFLOAT3 position, XMMATRIX &rotation);
 	Renderer(ID3D11DeviceContext* deviceContext, ID3D11Device* device);
 
 //Variables
