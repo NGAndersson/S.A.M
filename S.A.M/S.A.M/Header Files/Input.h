@@ -8,14 +8,14 @@
 
 enum InputType
 {
-	INPUT_DEFAULT = 0x000,
-	INPUT_MOVE_LEFT = 0x001,
-	INPUT_MOVE_RIGHT = 0x002,
-	INPUT_MOVE_UP = 0x004,
-	INPUT_MOVE_DOWN = 0x008,
-	INPUT_MOUSE_LK = 0x016,
-	INPUT_MOUSE_RK = 0x032,
-	INPUT_ESC = 0x064
+	INPUT_DEFAULT,
+	INPUT_MOVE_LEFT,
+	INPUT_MOVE_RIGHT,
+	INPUT_MOVE_UP,
+	INPUT_MOVE_DOWN,
+	INPUT_MOUSE_LK,
+	INPUT_MOUSE_RK,
+	INPUT_ESC
 };
 
 struct MouseClicked
@@ -38,8 +38,9 @@ public:
 	~Input();
 
 	void Initialize(HINSTANCE hInstance, HWND& hwnd,int ScreenWidth,int ScreenHeight);
-	InputType CheckKeyBoardInput();
+	void CheckKeyBoardInput(InputType* returnput);
 	MouseClicked CheckMouseInput();
+	bool CheckEsc();
 
 	//----------------------------Attributes----------------------------------------
 private:

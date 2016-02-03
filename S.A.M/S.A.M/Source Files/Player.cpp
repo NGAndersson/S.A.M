@@ -22,28 +22,33 @@ Player::~Player()
 
 void Player::Update(double time)
 {
-	InputType _currentInput = INPUT_DEFAULT;
-	_currentInput = m_input->CheckKeyBoardInput();
-	bool _tiltL =false ,_tiltR = false;
+	InputType _currentInput[4];
+	ZeroMemory(&_currentInput, sizeof(_currentInput));
+	m_input->CheckKeyBoardInput(_currentInput);
+
+	bool _tiltL = false, _tiltR = false;
 	//Check Input and apply Input to positions
-	if (_currentInput & INPUT_MOVE_LEFT)
+
+	if (_currentInput[0] == INPUT_MOVE_LEFT)
 	{
 		m_position.x -= MOVEMENTSPEED;
 		m_rotAngle += -0.1 * time;
 		_tiltL = true;
 	}
-	if (_currentInput & INPUT_MOVE_RIGHT)
+
+	if (_currentInput[1] == INPUT_MOVE_RIGHT)
 	{
 		m_position.x += MOVEMENTSPEED;
 		m_rotAngle += 0.1 * time;
 		_tiltR = true;
 	}
 
-	if (_currentInput & INPUT_MOVE_DOWN)
+	if (_currentInput[2] == INPUT_MOVE_UP)
+		m_position.z += MOVEMENTSPEED;
+
+	if (_currentInput[3] == INPUT_MOVE_DOWN)
 		m_position.z -= MOVEMENTSPEED;
 
-	if (_currentInput & INPUT_MOVE_UP)
-		m_position.z += MOVEMENTSPEED;
 
 	//Check position if out of bounds.
 	if (m_position.z > m_mapLenght/2)
@@ -73,6 +78,7 @@ void Player::Update(double time)
 
 	XMVECTOR _rotzAxis{ 0,0,1,0 };
 	m_rotation = XMMatrixRotationAxis(_rotzAxis, m_rotAngle);
+
 }
 
 void Player::Destroyed()
