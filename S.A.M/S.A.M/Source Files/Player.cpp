@@ -5,14 +5,13 @@ Player::Player()
 
 }
 
-Player::Player(SoundManager* SoundManager, int MapWidth, int MapLenght, Input* input) :Entity(SoundManager, MapWidth, MapLenght)
+Player::Player(SoundManager* SoundManager, int MapWidth, int MapLenght,XMFLOAT3 Position, Input* input) : Entity(SoundManager, MapWidth, MapLenght,Position)
 {
 	m_input = input;
 	//Loading death sounds FIX LATER :)
 	//m_soundManager->LoadSound("DickbuttSound.mp3", "PlayerDeathSound", "PlayerSound", LOAD_MEMORY);
 
 	XMVECTOR _rotzAxis{ 0,0,1,0 };
-
 	m_rotation = XMMatrixRotationAxis(_rotzAxis, 0.0f);
 }
 
@@ -23,9 +22,9 @@ Player::~Player()
 
 void Player::Update(double time)
 {
-	InputType _currentInput;
+	InputType _currentInput = INPUT_DEFAULT;
 	_currentInput = m_input->CheckKeyBoardInput();
-	bool _tiltL,_tiltR = false;
+	bool _tiltL =false ,_tiltR = false;
 	//Check Input and apply Input to positions
 	if (_currentInput & INPUT_MOVE_LEFT)
 	{

@@ -16,11 +16,12 @@ class Entity
 	//----------------------------Functions----------------------------------------
 public:
 	Entity() {};
-	Entity(SoundManager* SoundManager, int MapWidth, int MapLenght) 
+	Entity(SoundManager* SoundManager, int MapWidth, int MapLenght, XMFLOAT3 Position)
 	{
 		m_soundManager = SoundManager;
 		m_mapLenght = MapLenght;
 		m_mapWidth = MapWidth;
+		m_position = Position;
 	}
 
 	virtual void Update(double time) = 0;

@@ -8,8 +8,12 @@ Input::Input()
 Input::~Input()
 {
 	m_DirectInput->Release();
+	m_Mouse->Unacquire();
+	m_Keyboard->Unacquire();
+
 	m_Keyboard->Release();
 	m_Mouse->Release();
+
 }
 
 void Input::Initialize(HINSTANCE hInstance,HWND& hwnd, int ScreenWidth, int ScreenHeight)
@@ -55,6 +59,7 @@ InputType Input::CheckKeyBoardInput()
 
 	if (_KeyboardState[DIK_DOWN] & 0x80)
 		_ReturnType = _ReturnType | INPUT_MOVE_DOWN;
+
 
 	return _ReturnType;
 }
