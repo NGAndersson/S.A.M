@@ -33,7 +33,7 @@ class SoundManager
 		void PlayOneShotSound(char* soundName, float volume);				//Plays a sound with a specific name, at volume 0.0-1.0
 		void PauseSound(char* soundName);
 		void Update();
-		void SpectrumAnalysis(char* soundName);
+		float* SpectrumAnalysis(char* soundName);
 	//Variables
 	private:
 		FMOD::System* m_system;				//Core of FMOD

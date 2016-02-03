@@ -5,7 +5,7 @@
 #include <cstdlib>
 #include <time.h>
 #include <algorithm>
-
+#pragma warning( disable : 4996 ) //Disable warnings about transform() in SpectrumAnalysis()
 SoundManager::SoundManager() 
 {
 	InitFMOD();
@@ -160,39 +160,48 @@ void SoundManager::Update()
 	m_system->update();
 }
 
-void SoundManager::SpectrumAnalysis(char* soundName)
+float* SoundManager::SpectrumAnalysis(char* soundName)
 {
 	int _groupIndex = -1, _soundIndex = -1;
 	FindSoundIndex(soundName, _groupIndex, _soundIndex);
+	//If only groupindex was found, pick a random sound (good for music where there should only be one sound)
+	if (_groupIndex != -1 && _soundIndex == -1) {
+		//Play random sound from the group
+		srand(time(NULL));
+		_soundIndex = rand() % m_sounds[_groupIndex].size();
+	}
+	else if (_groupIndex == -1 && _soundIndex == -1) {
+		MessageBox(NULL, "Couldn't find sound name handle", "Spectrum Analysis Error", MB_ICONERROR | MB_OK);
+		exit(-1);
+	}
 
-	int sampleSize = 64;
+
+	int _sampleSize = 124;
 
 	//Get the volume of the left and right channel (0-1)
-	float *specLeft, *specRight;
-	specLeft = new float[sampleSize];
-	specRight = new float[sampleSize];
-	m_soundChannels[_groupIndex][_soundIndex]->getSpectrum(specLeft, sampleSize, 0, FMOD_DSP_FFT_WINDOW_RECT);
-	m_soundChannels[_groupIndex][_soundIndex]->getSpectrum(specRight, sampleSize, 1, FMOD_DSP_FFT_WINDOW_RECT);
+	float *_specLeft, *_specRight;
+	_specLeft = new float[_sampleSize];
+	_specRight = new float[_sampleSize];
+	m_soundChannels[_groupIndex][_soundIndex]->getSpectrum(_specLeft, _sampleSize, 0, FMOD_DSP_FFT_WINDOW_RECT);
+	m_soundChannels[_groupIndex][_soundIndex]->getSpectrum(_specRight, _sampleSize, 1, FMOD_DSP_FFT_WINDOW_RECT);
 
 	//Take the average of the left and right volume (0-1)
-	float* spec;
-	spec = new float[sampleSize];
-	for (int i = 0; i < sampleSize; i++)
-		spec[i] = (specLeft[i] + specRight[i]) / 2;
+	float* _spec;
+	_spec = new float[_sampleSize];
+	for (int i = 0; i < _sampleSize; i++)
+		_spec[i] = (_specLeft[i] + _specRight[i]) / 2;
 
 	//Find max volume
-	auto maxIterator = std::max_element(&spec[0], &spec[sampleSize]);
-	float maxVol = *maxIterator;
+	auto _maxIterator = std::max_element(&_spec[0], &_spec[_sampleSize]);
+	float _maxVol = *_maxIterator;
 
 	//Normalize
-	if (maxVol != 0)
-		std::transform(&spec[0], &spec[sampleSize], &spec[0], [maxVol](float dB) -> float {return dB / maxVol; });
-
-	//DO FANCY FUN STUFF HERE
-
-	delete[] spec;
-	delete[] specLeft;
-	delete[] specRight;
+	if (_maxVol != 0)
+		std::transform(&_spec[0], &_spec[_sampleSize], &_spec[0], [_maxVol](float dB) -> float {return dB / _maxVol; });
+	
+	delete[] _specLeft;
+	delete[] _specRight;
+	return _spec;
 }
 
 //Plays a sound once at a specific volume
