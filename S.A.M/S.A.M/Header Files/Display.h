@@ -3,6 +3,8 @@
 #include <Windows.h>
 #include <windowsx.h>
 
+
+
 class Display
 {
 	//functions
