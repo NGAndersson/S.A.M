@@ -5,6 +5,7 @@
 #include "Player.h"
 #include "Renderer.h"
 #include "ModelHandler.h"
+#include "ParticleSys.h"
 #include "Input.h"
 #include <d3d11.h>
 
@@ -17,6 +18,8 @@ private:
 
 	//Collision functions needed
 public:
+	EntityManager();
+	~EntityManager();
 	void Initialize(SoundManager* soundManager, Input* input, ID3D11Device* device, ID3D11DeviceContext* deviceContext);
 	void Render();
 	void Update(double time);
@@ -37,6 +40,8 @@ private:
 	std::vector<Entity*> m_enemy3;
 	std::vector<Entity*> m_enemy4;
 	Entity* m_player;
+
+	PartSys m_partSys;
 
 	Renderer* m_renderer;
 	SoundManager* m_soundManager;
