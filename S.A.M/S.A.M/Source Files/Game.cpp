@@ -58,7 +58,7 @@ void Game::InitGame(Input* input, Display* disp)
 	//FUN STUFF! REMOVE!
 	//m_soundManager->LoadSound("Resources/wave.mp3", "wave", "music", LOAD_STREAM);
 	//m_soundManager->LoadSound("Resources/Song.mp3", "gangnam", "music", LOAD_STREAM);
-	m_soundManager->LoadSound("Resources/ExitThePremises.mp3", "song", "music", LOAD_STREAM);
+	m_soundManager->LoadSound("Resources/ExitThePremises.mp3", "song", "music", LOAD_STREAM | LOAD_SOFTWARE);
 	m_soundManager->PlayOneShotSound("music", 0.5f);
 }
 
