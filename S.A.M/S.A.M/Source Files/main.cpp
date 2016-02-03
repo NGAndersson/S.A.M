@@ -15,7 +15,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	HWND _hWnd = _display.GethWnd();
 	// display the window on the screen
 	ShowWindow(_hWnd, nCmdShow);
-	
+
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+	//_CrtSetBreakAlloc(780);
+
 	//Create and initialize Input
 	Input _input;
 	_input.Initialize(hInstance, _hWnd, _width, _height);
