@@ -64,6 +64,9 @@ protected:
 	 //BoundingBox
 	 BoundingBox m_entityBox;
 	 int m_mapWidth, m_mapLength;
+
+	 //When entities are to be deleted
+	 bool m_delete = false;
 };
 #endif // ! ENTITY
 

@@ -11,8 +11,8 @@ public:
 	Enemy();
 	Enemy(SoundManager* SoundManager, int MapWidth, int MapLength, XMFLOAT3 Position) : Entity(SoundManager, MapWidth, MapLength, Position) {}
 	~Enemy();
-	void Update(double time);
-	void Destroyed();
+	virtual void Update(double time) = 0;
+	virtual void Destroyed();
 
 	//Attributes
 private:

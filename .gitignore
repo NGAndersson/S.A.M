@@ -213,3 +213,4 @@ ModelManifest.xml
 *.VC.opendb
 *.vcxproj
 S.A.M/S.A.M/S.A.M.vcxproj
+*.exe

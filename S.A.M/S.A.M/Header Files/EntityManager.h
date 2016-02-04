@@ -8,6 +8,7 @@
 #include "Input.h"
 #include "Audio\BeatDetector.h"
 #include <d3d11.h>
+#include "Entities\Bullets\Bullet_p1.h"
 
 enum HandlerIndex { PLAYER, BULLET1, BULLET2, BULLET3, BULLET4, BULLET5, BULLET6, ENEMY1, ENEMY2, ENEMY3, ENEMY4};
 class EntityManager
@@ -26,7 +27,7 @@ public:
 	//Variables
 private:
 	//Vectors with all the different types of entities
-	ModelHandler* m_modelHandlers[9];
+	ModelHandler* m_modelHandlers[10];
 	std::vector<Entity*> m_bullet1;
 	std::vector<Entity*> m_bullet2;
 	std::vector<Entity*> m_bullet3;

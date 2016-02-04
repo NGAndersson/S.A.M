@@ -1,6 +1,6 @@
 #include "EntityManager.h"
-#define MAPWIDTH 100;	//Change this
-#define MAPLENGTH 100;	//Change this
+#define MAPWIDTH 100	//Change this
+#define MAPLENGTH 100	//Change this
 
 void EntityManager::SpawnEntity(HandlerIndex type)
 {
@@ -30,11 +30,9 @@ void EntityManager::SpawnEntity(HandlerIndex type)
 	//	m_enemy4.push_back(tempEntity);
 	//	break;
 	//case(BULLET1) :
-	//	Bullet1* tempEntity = new Bullet1;
-	//	tempEntity->Initialize();
+	//	Bullet_p1* tempEntity = new Bullet_p1(m_soundManager, MAPWIDTH, MAPLENGTH, m_player->GetPosition());
 	//	m_bullet1.push_back(tempEntity);
-	//	//Set infront of player
-	//	//Spawn correct sound
+		//Spawn correct sound
 	//	break;
 	//case(BULLET2) :
 	//	Bullet2* tempEntity = new Bullet2;
@@ -75,6 +73,7 @@ void EntityManager::SpawnEntity(HandlerIndex type)
 
 void EntityManager::Initialize(SoundManager* soundManager, Input* input, ID3D11Device* device, ID3D11DeviceContext* deviceContext)
 {
+
 	//Set the soundManager pointer which will be used in every entity
 	m_soundManager = soundManager;
 	m_soundManager->LoadMusic("Resources/Ignition.mp3");
@@ -112,7 +111,6 @@ void EntityManager::Initialize(SoundManager* soundManager, Input* input, ID3D11D
 	m_modelHandlers[BULLET4] = new ModelHandler;
 	m_modelHandlers[BULLET5] = new ModelHandler;
 	m_modelHandlers[BULLET6] = new ModelHandler;
-
 	//Temp, create player
 	SpawnEntity(PLAYER);
 
@@ -126,9 +124,7 @@ void EntityManager::Render()
 	//Render Player
 	m_modelHandlers[PLAYER]->SetBuffers(m_deviceContext);
 	m_modelHandlers[PLAYER]->SetShaders(m_deviceContext);
-	XMVECTOR _rotzAxis{ 0,0,1,0 };
-	XMMATRIX m_rotation = XMMatrixRotationAxis(_rotzAxis, 0.0f);
-	m_renderer->Render(m_modelHandlers[PLAYER], m_player->GetPosition(), m_rotation);
+	m_renderer->Render(m_modelHandlers[PLAYER], m_player->GetPosition(), m_player->GetRotation());
 
 	//m_renderer->Render(m_modelHandlers[PLAYER], m_player->GetPosition(), &m_player->GetRotation());
 	/*
@@ -213,20 +209,31 @@ void EntityManager::Update(double time)
 
 		float _currentPos = m_soundManager->GetCurrentMusicTimePCM() / 1024.f;
 
-		if (_beat[(int)_currentPos] > 0)
+		if (_beat[(int)_currentPos] > 0) {
+
+			//BEAT WAS DETECTED
 			m_soundManager->PlayOneShotSound("DefaultBullet", 0.05f);
+
+		}
 	}
 	//Do collision checks
 
 
 	//Update every entity
-	//for (int i = 0; i < m_enemies.size(); i++)
-	//	m_enemies[i]->Update();
-	//
-	//for (int i = 0; i < m_bullets.size(); i++)
-	//	m_bullets[i]->Update();
-	//
+	for (int i = 0; i < m_bullet1.size(); i++)
+		m_bullet1[i]->Update(time);
 	m_player->Update(time);
+	
+
+	//Out of bounds check, remove immediately
+	for (int i = m_bullet1.size(); i > 0; i--) {
+		XMFLOAT3 _tempPos = m_bullet1[i]->GetPosition();
+		if (_tempPos.x > 100 || _tempPos.x < 0 || _tempPos.z > 100 || _tempPos.z < 0) {
+			delete m_bullet1[i];
+			m_bullet1.erase(m_bullet1.begin() + i);
+		}
+	}
+
 }
 
 void EntityManager::ChangeSongData(int bpm)

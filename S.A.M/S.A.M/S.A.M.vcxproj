@@ -141,6 +141,7 @@
     <ClCompile Include="Source Files\Audio\BeatDetector.cpp" />
     <ClCompile Include="Source Files\Camera.cpp" />
     <ClCompile Include="Source Files\Display.cpp" />
+    <ClCompile Include="Source Files\Entities\Bullets\Bullet_p1.cpp" />
     <ClCompile Include="Source Files\EntityManager.cpp" />
     <ClCompile Include="Source Files\Game.cpp" />
     <ClCompile Include="Source Files\Input.cpp" />
@@ -160,6 +161,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header Files\Audio\BeatDetector.h" />
+    <ClInclude Include="Header Files\Entities\Bullets\Bullet.h" />
+    <ClInclude Include="Header Files\Entities\Bullets\Bullet_p1.h" />
     <ClInclude Include="Header Files\Camera.h" />
     <ClInclude Include="Header Files\DirectXHelpers.h" />
     <ClInclude Include="Header Files\Display.h" />
