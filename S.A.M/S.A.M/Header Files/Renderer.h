@@ -24,6 +24,7 @@ class Renderer
 private:
 
 public:
+	~Renderer();
 	void Render(ModelHandler* model, XMFLOAT3 position, XMMATRIX &rotation);
 	Renderer(ID3D11DeviceContext* deviceContext, ID3D11Device* device);
 
@@ -37,9 +38,6 @@ private:
 	WorldStruct m_worldStruct;
 	ID3D11Buffer* m_worldBuffer;
 	Camera m_cam;
-
-	ID3D11Buffer* triangleVertBuffer;
-	ID3D11InputLayout* vertLayout;
 
 public:
 

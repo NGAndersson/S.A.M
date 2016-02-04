@@ -14,13 +14,26 @@ PartSys::PartSys()
 
 PartSys::~PartSys()
 {
-	m_vertexLayout->Release();
-	m_vertexShader->Release();
-	m_geometryShader->Release();
-	m_pixelShader->Release();
+
+	if (m_vertexLayout)
+		m_vertexLayout->Release();
+
+	if(m_vertexBuffer)
+		m_vertexLayout->Release();
+
+	if(m_vertexShader)
+		m_vertexShader->Release();
+
+	if(m_geometryShader)
+		m_geometryShader->Release();
+
+	if(m_pixelShader)
+		m_pixelShader->Release();
+
 	delete[] m_partPos;
-	m_vertexBuffer->Release();
-	m_partTex->Release();
+
+	if(m_partTex)
+		m_partTex->Release();
 }
 
 void PartSys::updatePart(ID3D11DeviceContext* deviceContext, float time, float partSpeed)

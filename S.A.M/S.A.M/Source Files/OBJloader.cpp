@@ -110,6 +110,14 @@ VertexInputType* OBJLoader::LoadObj(int& vertexCount, int& textureCount, int& no
 			vertexInput[i].uv = vTC[indTex[i] - 1];
 			vertexInput[i].normal = vNor[indNor[i] - 1];
 		}
+		//Clearing Memory
+		vector<XMFLOAT3>().swap(vPos);
+		vector<XMFLOAT3>().swap(vNor);
+		vector<XMFLOAT2>().swap(vTC);
+		//Clearing Memory
+		vector<UINT>().swap(indPos);
+		vector<UINT>().swap(indNor);
+		vector<UINT>().swap(indTex);
 
 		fileIn.close();
 		return vertexInput;

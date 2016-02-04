@@ -14,6 +14,22 @@ struct Vertex    //Overloaded Vertex Structure
 	}
 };
 
+Renderer::~Renderer()
+{
+	if (m_device)
+		m_device->Release();
+
+	if (m_deviceContext)
+		m_deviceContext->Release();
+	
+	if (m_camBuffer)
+		m_camBuffer->Release();
+
+	if (m_worldBuffer)
+		m_worldBuffer->Release();
+
+}
+
 void Renderer::Render(ModelHandler * model, XMFLOAT3 position, XMMATRIX &rotation)
 {
 	//Set vertexbuffer, pixel material constant buffer and set the correct shaders
@@ -32,12 +48,6 @@ void Renderer::Render(ModelHandler * model, XMFLOAT3 position, XMMATRIX &rotatio
 	//Draw call
 	m_deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	m_deviceContext->Draw(model->GetVertexCount(), 0);
-
-	//Set the vertex buffer
-	UINT stride = sizeof(Vertex);
-	UINT offset = 0;
-	m_deviceContext->IASetVertexBuffers(0, 1, &triangleVertBuffer, &stride, &offset);
-	m_deviceContext->Draw(3, 0);
 
 }
 
@@ -68,34 +78,4 @@ Renderer::Renderer(ID3D11DeviceContext * deviceContext, ID3D11Device * device)
 	//Create the world constant buffer
 	device->CreateBuffer(&_worldBufferDesc, NULL, &m_worldBuffer);
 		
-	//testy shit
-	Vertex v[] =
-	{
-		Vertex(0.0f, 0.5f, 0.5f),
-		Vertex(0.5f, -0.5f, 0.5f),
-		Vertex(-0.5f, -0.5f, 0.5f),
-	};
-
-	D3D11_BUFFER_DESC vertexBufferDesc;
-	ZeroMemory(&vertexBufferDesc, sizeof(vertexBufferDesc));
-
-	vertexBufferDesc.Usage = D3D11_USAGE_DEFAULT;
-	vertexBufferDesc.ByteWidth = sizeof(Vertex) * 3;
-	vertexBufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-	vertexBufferDesc.CPUAccessFlags = 0;
-	vertexBufferDesc.MiscFlags = 0;
-
-	D3D11_SUBRESOURCE_DATA vertexBufferData;
-
-	ZeroMemory(&vertexBufferData, sizeof(vertexBufferData));
-	vertexBufferData.pSysMem = v;
-	device->CreateBuffer(&vertexBufferDesc, &vertexBufferData, &triangleVertBuffer);
-
-	//Set the vertex buffer
-	UINT stride = sizeof(Vertex);
-	UINT offset = 0;
-	deviceContext->IASetVertexBuffers(0, 1, &triangleVertBuffer, &stride, &offset);
-
-	//Set the Input Layout
-	deviceContext->IASetInputLayout(vertLayout);
 }

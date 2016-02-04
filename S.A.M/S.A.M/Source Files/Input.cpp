@@ -7,11 +7,17 @@ Input::Input()
 
 Input::~Input()
 {
-	m_DirectInput->Release();
+
 	m_Keyboard->Unacquire();
 	m_Mouse->Unacquire();
-	m_Keyboard->Release();
-	m_Mouse->Release();
+
+	if(m_DirectInput)
+		m_DirectInput->Release();
+	
+	if(m_Keyboard)
+		m_Keyboard->Release();
+	if(m_Mouse)
+		m_Mouse->Release();
 
 }
 

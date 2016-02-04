@@ -11,6 +11,25 @@ EntityManager::~EntityManager()
 {
 	delete[] m_modelHandlers;
 	delete m_player;
+
+	if (m_device)
+		m_device->Release();
+
+	if (m_deviceContext)
+		m_deviceContext->Release();
+
+
+	//Clearing Memory
+	std::vector<Entity*>().swap(m_bullet1);
+	std::vector<Entity*>().swap(m_bullet2);
+	std::vector<Entity*>().swap(m_bullet3);
+	std::vector<Entity*>().swap(m_bullet4);
+	std::vector<Entity*>().swap(m_bullet5);
+	std::vector<Entity*>().swap(m_bullet6);
+	std::vector<Entity*>().swap(m_enemy1);
+	std::vector<Entity*>().swap(m_enemy2);
+	std::vector<Entity*>().swap(m_enemy3);
+	std::vector<Entity*>().swap(m_enemy4);
 }
 
 void EntityManager::SpawnEntity(HandlerIndex type)
