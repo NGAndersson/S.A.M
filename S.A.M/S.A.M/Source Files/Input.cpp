@@ -44,7 +44,7 @@ BulletType Input::CheckBullet()
 	m_Keyboard->Acquire();
 	BYTE _KeyboardState[256];
 	
-	BulletType _returnType = INPUT_DEFAULT;
+	BulletType _returnType = INPUT_DEFAULT_BULLET;
 
 	ZeroMemory(&_KeyboardState, sizeof(_KeyboardState));
 	m_Keyboard->GetDeviceState(sizeof(_KeyboardState), (LPVOID)&_KeyboardState);
