@@ -249,5 +249,8 @@
     <FxCompile Include="Shaders\PartVS.hlsl" />
     <FxCompile Include="Shaders\PartPS.hlsl" />
     <FxCompile Include="Shaders\PartGS.hlsl" />
+    <FxCompile Include="Shaders\BulletVS.hlsl" />
+    <FxCompile Include="Shaders\BulletPS.hlsl" />
+    <FxCompile Include="Shaders\BulletGS.hlsl" />
   </ItemGroup>
 </Project>

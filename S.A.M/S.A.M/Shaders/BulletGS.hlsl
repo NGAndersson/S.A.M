@@ -21,7 +21,7 @@ struct GS_OUT
 void GS_main(triangle GS_IN input[3], inout TriangleStream< PlayerGS_OUT > streamOutput)
 {
 	GS_OUT output = (GS_OUT)0;
-	
+
 	float3 Vec1 = normalize(input[1].PosInW - input[0].PosInW);
 	float3 Vec2 = normalize(input[2].PosInW - input[0].PosInW);
 	float3 Norm = cross(Vec1, Vec2);
