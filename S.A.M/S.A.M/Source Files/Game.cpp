@@ -122,17 +122,18 @@ void Game::Render()
 
 void Game::CheckInput()
 {
-	InputType _returnInput = m_input->CheckKeyBoardInput();
-	//if (_returnInput & INPUT_ESC)  HEY LOOK AT ME I DON'T WORK OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOH HEJ EEEEEEEEEPER
-	//	exit(0);
+	//InputType _returnInput = m_input->CheckKeyBoardInput();
+	if (m_input->CheckEsc())
+		exit(0);
+
 	m_input->CheckMouseInput();
 }
 
 void Game::SetViewport()
 {
 	D3D11_VIEWPORT _viewport;
-	_viewport.Width = (float)640;
-	_viewport.Height = (float)480;
+	_viewport.Width = (float)WIDTH;
+	_viewport.Height = (float)HEIGHT;
 	_viewport.MinDepth = 0.0f;
 	_viewport.MaxDepth = 1.0f;
 	_viewport.TopLeftX = 0;
@@ -212,8 +213,8 @@ HRESULT Game::DepthStencilInitialicer()
 
 	//create the depth stencil
 	D3D11_TEXTURE2D_DESC _descDepth;
-	_descDepth.Width = 640;
-	_descDepth.Height = 480;
+	_descDepth.Width = WIDTH;
+	_descDepth.Height = HEIGHT;
 	_descDepth.MipLevels = 1;
 	_descDepth.ArraySize = 1;
 	_descDepth.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;

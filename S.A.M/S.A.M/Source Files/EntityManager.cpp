@@ -1,13 +1,24 @@
 #include "EntityManager.h"
-#define MAPWIDTH 100	//Change this
-#define MAPLENGTH 100	//Change this
+#define MAPWIDTH 100
+#define MAPLENGTH 100
+
+EntityManager::EntityManager()
+{
+
+}
+
+EntityManager::~EntityManager()
+{
+	delete[] m_modelHandlers;
+	delete m_player;
+}
 
 void EntityManager::SpawnEntity(HandlerIndex type)
 {
 	
 	switch (type) {
 	case(PLAYER) :
-		m_player = new Player(m_soundManager, 100, 100,XMFLOAT3(1.0f, 0.0f, 1.0f), m_input);
+		m_player = new Player(m_soundManager, MAPWIDTH,MAPLENGTH,XMFLOAT3(1.0f, 0.0f, 1.0f), m_input);
 		break;
 	//case(ENEMY1) :
 	//	Enemy1* tempEntity = new Enemy1;
@@ -114,12 +125,18 @@ void EntityManager::Initialize(SoundManager* soundManager, Input* input, ID3D11D
 	//Temp, create player
 	SpawnEntity(PLAYER);
 
+	//Temp, creates partsys
+	wstring _texName = L"Resources\\star3.jpg";
+	m_partSys.CreateBuffer(m_device, m_deviceContext, _texName);
+	m_partSys.CreateShaders(m_device);
+
 	ChangeSongData(m_beatDetector->GetTempo());
 	m_doBeatDet = true;
 }
 
 void EntityManager::Render()
 {
+	m_partSys.PartRend(m_deviceContext);
 	
 	//Render Player
 	m_modelHandlers[PLAYER]->SetBuffers(m_deviceContext);
@@ -234,6 +251,8 @@ void EntityManager::Update(double time)
 		}
 	}
 
+	//Update Particle System
+	m_partSys.updatePart(m_deviceContext, time, 40);
 }
 
 void EntityManager::ChangeSongData(int bpm)

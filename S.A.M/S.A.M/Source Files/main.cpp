@@ -3,8 +3,6 @@
 #include "Audio/SoundManager.h"
 #include "Input.h"
 
-#define WIDTH 640;
-#define HEIGHT 480;
 
 // the entry point for any Windows program
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
@@ -12,14 +10,13 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	int _width = WIDTH;
 	int _height = HEIGHT;
 	Display _display(hInstance, hPrevInstance, lpCmdLine, nCmdShow, _width, _height);
-	HWND _hWnd = _display.GethWnd();
-	// display the window on the screen
-	ShowWindow(_hWnd, nCmdShow);
 
+	//FOR DEBUGGING PURPOSE
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 	//_CrtSetBreakAlloc(780);
 
-	//Create and initialize Input
+	//Create and initialize Input	
+	HWND _hWnd = _display.GethWnd();
 	Input _input;
 	_input.Initialize(hInstance, _hWnd, _width, _height);
 

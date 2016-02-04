@@ -32,43 +32,38 @@ void Input::Initialize(HINSTANCE hInstance,HWND& hwnd, int ScreenWidth, int Scre
 	_hr = m_Mouse->SetCooperativeLevel(hwnd, DISCL_NONEXCLUSIVE | DISCL_NOWINKEY | DISCL_FOREGROUND);
 
 
-	m_Hwnd = hwnd;//HWND KANSKE ÄR BAJS?
+	m_Hwnd = hwnd;
 
 	m_ScreenHeight = ScreenHeight;
 	m_ScreenWidth = ScreenWidth;
+	m_Keyboard->Acquire();
+	m_Mouse->Acquire();
 }
 
-InputType Input::CheckKeyBoardInput()
+void Input::CheckKeyBoardInput(InputType* returnput)
 {
 	BYTE _KeyboardState[256];
 	ZeroMemory(&_KeyboardState, sizeof(_KeyboardState));
 
-	m_Keyboard->Acquire();
-	InputType _ReturnType = INPUT_DEFAULT;
 	m_Keyboard->GetDeviceState(sizeof(_KeyboardState), (LPVOID)&_KeyboardState);
 
-	if (_KeyboardState[DIK_ESCAPE] & 0x80)
-		_ReturnType = INPUT_ESC;
-
 	if (_KeyboardState[DIK_LEFT] & 0x80)
-		_ReturnType = _ReturnType | INPUT_MOVE_LEFT;
+		returnput[0] = INPUT_MOVE_LEFT;
 
 	if (_KeyboardState[DIK_RIGHT] &0x80)
-		_ReturnType = _ReturnType | INPUT_MOVE_RIGHT;
+		returnput[1] = INPUT_MOVE_RIGHT;
 
 	if (_KeyboardState[DIK_UP] & 0x80)
-		_ReturnType = _ReturnType | INPUT_MOVE_UP;
+		returnput[2] = INPUT_MOVE_UP;
 
 	if (_KeyboardState[DIK_DOWN] & 0x80)
-		_ReturnType = _ReturnType | INPUT_MOVE_DOWN;
+		returnput[3] = INPUT_MOVE_DOWN;
 
-
-	return _ReturnType;
 }
 
 MouseClicked Input::CheckMouseInput()
 {
-	m_Mouse->Acquire();
+
 
 	DIMOUSESTATE _CurrMouse;
 	MouseClicked _ReturnType;
@@ -87,5 +82,18 @@ MouseClicked Input::CheckMouseInput()
 
 	}
 	return _ReturnType;
+}
+
+bool Input::CheckEsc()
+{
+	BYTE _KeyboardState[256];
+	ZeroMemory(&_KeyboardState, sizeof(_KeyboardState));
+
+	m_Keyboard->GetDeviceState(sizeof(_KeyboardState), (LPVOID)&_KeyboardState);
+
+	if (_KeyboardState[DIK_ESCAPE] & 0x80)
+		return true;
+
+	return false;
 }
 
