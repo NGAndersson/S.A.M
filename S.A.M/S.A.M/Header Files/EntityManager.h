@@ -17,6 +17,7 @@ class EntityManager
 	//Functions
 private:
 	void SpawnEntity(HandlerIndex type);
+	void BeatWasDetected();
 
 	//Collision functions needed
 public:

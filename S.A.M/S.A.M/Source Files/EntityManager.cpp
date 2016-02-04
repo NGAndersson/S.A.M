@@ -40,11 +40,11 @@ void EntityManager::SpawnEntity(HandlerIndex type)
 	//	tempEntity->Initialize();
 	//	m_enemy4.push_back(tempEntity);
 	//	break;
-	//case(BULLET1) :
-	//	Bullet_p1* tempEntity = new Bullet_p1(m_soundManager, MAPWIDTH, MAPLENGTH, m_player->GetPosition());
-	//	m_bullet1.push_back(tempEntity);
-		//Spawn correct sound
-	//	break;
+	case(BULLET1) :
+		Bullet_p1* tempEntity = new Bullet_p1(m_soundManager, MAPWIDTH, MAPLENGTH, m_player->GetPosition());
+		m_bullet1.push_back(tempEntity);
+		m_soundManager->PlayOneShotSound("DefaultBullet", 0.05f);
+		break;
 	//case(BULLET2) :
 	//	Bullet2* tempEntity = new Bullet2;
 	//	tempEntity->Initialize();
@@ -213,11 +213,14 @@ void EntityManager::Render()
 
 void EntityManager::Update(double time)
 {
+		//Regular BPM test
 	if (m_doBeatDet == false) {
 		m_timeSinceLastBeat += time * 1000;
 		if (m_timeSinceLastBeat >= 60000 / m_currentBPM) {
 			m_timeSinceLastBeat -= 60000 / m_currentBPM;
-			m_soundManager->PlayOneShotSound("DefaultBullet", 0.5f);
+
+			//BEAT WAS DETECTED
+			BeatWasDetected();
 		}
 	}
 	else {
@@ -229,7 +232,7 @@ void EntityManager::Update(double time)
 		if (_beat[(int)_currentPos] > 0) {
 
 			//BEAT WAS DETECTED
-			m_soundManager->PlayOneShotSound("DefaultBullet", 0.05f);
+			BeatWasDetected();
 
 		}
 	}
@@ -243,7 +246,7 @@ void EntityManager::Update(double time)
 	
 
 	//Out of bounds check, remove immediately
-	for (int i = m_bullet1.size(); i > 0; i--) {
+	for (int i = m_bullet1.size()-1; i >= 0; i--) {
 		XMFLOAT3 _tempPos = m_bullet1[i]->GetPosition();
 		if (_tempPos.x > 100 || _tempPos.x < 0 || _tempPos.z > 100 || _tempPos.z < 0) {
 			delete m_bullet1[i];
@@ -258,4 +261,10 @@ void EntityManager::Update(double time)
 void EntityManager::ChangeSongData(int bpm)
 {
 	m_currentBPM = bpm;
+}
+
+void EntityManager::BeatWasDetected()
+{
+	//Spawn correct bullet (which plays the sound as well)
+	SpawnEntity(BULLET1);
 }

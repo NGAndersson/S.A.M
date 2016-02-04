@@ -1,4 +1,4 @@
-#include "Bullet_e.h"
+#include "Entities/Bullets/Bullet_e.h"
 
 Bullet_e::Bullet_e()
 {

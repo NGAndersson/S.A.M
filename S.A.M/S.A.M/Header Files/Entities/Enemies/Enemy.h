@@ -8,11 +8,11 @@ class Enemy : public Entity
 private:
 protected:
 public:
-	Enemy();
+	Enemy() {}
 	Enemy(SoundManager* SoundManager, int MapWidth, int MapLength, XMFLOAT3 Position) : Entity(SoundManager, MapWidth, MapLength, Position) {}
-	~Enemy();
+	//~Enemy();
 	virtual void Update(double time) = 0;
-	virtual void Destroyed();
+	virtual void Destroyed() = 0;
 
 	//Attributes
 private:

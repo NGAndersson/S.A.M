@@ -1,7 +1,7 @@
 #ifndef _BEATDETECTOR_H
 #define _BEATDETECTOR_H
 
-#include "SoundManager.h"
+#include "Audio\SoundManager.h"
 
 class BeatDetector
 {

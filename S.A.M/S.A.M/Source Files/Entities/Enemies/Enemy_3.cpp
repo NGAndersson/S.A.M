@@ -1,4 +1,4 @@
-#include "Enemy_3.h"
+#include "Entities/Enemies/Enemy_3.h"
 
 Enemy_3::Enemy_3()
 {

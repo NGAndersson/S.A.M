@@ -1,4 +1,4 @@
-#include "Bullet_p2.h"
+#include "Entities/Bullets/Bullet_p2.h"
 
 Bullet_p2::Bullet_p2()
 {
