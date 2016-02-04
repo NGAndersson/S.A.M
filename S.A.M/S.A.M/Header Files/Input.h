@@ -18,6 +18,15 @@ enum InputType
 	INPUT_ESC
 };
 
+enum BulletType
+{
+	INPUT_DEFAULT,
+	INPUT_BULLET2,
+	INPUT_BULLET3,
+	INPUT_BULLET4,
+	INPUT_BULLET5
+};
+
 struct MouseClicked
 {
 	InputType MouseAct;
@@ -39,6 +48,7 @@ public:
 
 	void Initialize(HINSTANCE hInstance, HWND& hwnd,int ScreenWidth,int ScreenHeight);
 	void CheckKeyBoardInput(InputType* returnput);
+	BulletType CheckBullet();
 	MouseClicked CheckMouseInput();
 	bool CheckEsc();
 

@@ -26,21 +26,18 @@ void Player::Update(double time)
 	ZeroMemory(&_currentInput, sizeof(_currentInput));
 	m_input->CheckKeyBoardInput(_currentInput);
 
-	bool _tiltL = false, _tiltR = false;
 	//Check Input and apply Input to positions
-
+	m_rotAngle = 0.f;
 	if (_currentInput[0] == INPUT_MOVE_LEFT)
 	{
 		m_position.x -= MOVEMENTSPEEDX;
-		m_rotAngle += -0.1 * time;
-		_tiltL = true;
+		m_rotAngle = XM_PI/8;
 	}
 
 	if (_currentInput[1] == INPUT_MOVE_RIGHT)
 	{
 		m_position.x += MOVEMENTSPEEDX;
-		m_rotAngle += 0.1 * time;
-		_tiltR = true;
+		m_rotAngle = -XM_PI / 8;;
 	}
 
 	if (_currentInput[2] == INPUT_MOVE_UP)
@@ -61,19 +58,6 @@ void Player::Update(double time)
 				   
 	if (m_position.x < (float)-m_mapWidth / 2)
 		m_position.x = (float)-m_mapWidth / 2;
-
-	//Checking if rotation should return to original value...
-	if (!_tiltL && m_rotAngle > 0.0f)
-		m_rotAngle += time * 0.1;
-
-	if (!_tiltR && m_rotAngle < 0.0f)
-		m_rotAngle += time * -0.1;
-	//Limiting tilting to max 30 degree  
-	if (m_rotAngle > 30)
-		m_rotAngle = 30;
-
-	if (m_rotAngle < -30)
-		m_rotAngle = -30;
 
 	XMVECTOR _rotzAxis{ 0,0,1,0 };
 	m_rotation = XMMatrixRotationAxis(_rotzAxis, m_rotAngle);
