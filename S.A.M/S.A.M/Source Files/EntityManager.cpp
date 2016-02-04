@@ -276,5 +276,27 @@ void EntityManager::ChangeSongData(int bpm)
 void EntityManager::BeatWasDetected()
 {
 	//Spawn correct bullet (which plays the sound as well)
-	SpawnEntity(BULLET1);
+	BulletType _bullet = m_input->CheckBullet();
+
+	switch (_bullet)
+	{
+	case INPUT_DEFAULT_BULLET:
+		SpawnEntity(BULLET1);
+		break;
+	case INPUT_BULLET2:
+		SpawnEntity(BULLET2);
+		break;
+	case INPUT_BULLET3:
+		SpawnEntity(BULLET3);
+		break;
+	case INPUT_BULLET4:
+		SpawnEntity(BULLET4);
+		break;
+	case INPUT_BULLET5:
+		SpawnEntity(BULLET5);
+		break;
+	default:
+		break;
+	}
+	
 }
