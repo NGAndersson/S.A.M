@@ -18,7 +18,7 @@ struct GS_OUT
 
 
 [maxvertexcount(3)]
-void GS_main(triangle GS_IN input[3], inout TriangleStream< PlayerGS_OUT > streamOutput)
+void GS_main(triangle GS_IN input[3], inout TriangleStream< GS_OUT > streamOutput)
 {
 	GS_OUT output = (GS_OUT)0;
 	
