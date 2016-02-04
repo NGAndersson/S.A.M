@@ -15,7 +15,8 @@ class Entity
 {
 	//----------------------------Functions----------------------------------------
 public:
-	Entity() {};
+	Entity() {}
+	~Entity() {}
 	Entity(SoundManager* SoundManager, int MapWidth, int MapLength, XMFLOAT3 Position)
 	{
 		m_soundManager = SoundManager;

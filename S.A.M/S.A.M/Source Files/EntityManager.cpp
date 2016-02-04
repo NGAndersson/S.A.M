@@ -77,9 +77,7 @@ void EntityManager::SpawnEntity(HandlerIndex type)
 	//	m_bullet6.push_back(tempEntity);
 	//	//Set infront of ENEMY
 		//Don't spawn sound for enemy bullets?
-	}
-
-	
+	}	
 }
 
 void EntityManager::Initialize(SoundManager* soundManager, Input* input, ID3D11Device* device, ID3D11DeviceContext* deviceContext)
@@ -87,14 +85,14 @@ void EntityManager::Initialize(SoundManager* soundManager, Input* input, ID3D11D
 
 	//Set the soundManager pointer which will be used in every entity
 	m_soundManager = soundManager;
-	m_soundManager->LoadMusic("Resources/Ignition.mp3");
+	m_soundManager->LoadMusic("Resources/Sound/Ignition.mp3");
 	m_soundManager->PlayMusic(0.5f);
 
 	m_beatDetector = new BeatDetector(m_soundManager);
 	m_beatDetector->AudioProcess();
 
 	//Load the sounds for every entity
-	m_soundManager->LoadSound("Resources/DefaultBullet1.wav", "DefaultBullet1", "DefaultBullet", LOAD_MEMORY);
+	m_soundManager->LoadSound("Resources/Sound/DefaultBullet1.wav", "DefaultBullet1", "DefaultBullet", LOAD_MEMORY);
 	//m_soundManager->LoadSound("Resources/DefaultBullet2.wav", "DefaultBullet2", "DefaultBullet", LOAD_MEMORY);
 
 	//Set the input class which will be passed down to Player
@@ -109,7 +107,7 @@ void EntityManager::Initialize(SoundManager* soundManager, Input* input, ID3D11D
 
 	//Create model handlers for each entity type
 	m_modelHandlers[PLAYER] = new ModelHandler;
-	m_modelHandlers[PLAYER]->LoadOBJData("Resources/TestCube.obj", "Resources/TestCube.mtl", m_device, m_deviceContext);
+	m_modelHandlers[PLAYER]->LoadOBJData("Resources/Models/TestCube.obj", "Resources/Models/TestCube.mtl", m_device, m_deviceContext);
 	m_modelHandlers[PLAYER]->CreateBuffers(m_device);
 	m_modelHandlers[PLAYER]->CreateShaders(m_device, "Shaders\\PlayerVS.hlsl", "Shaders\\PlayerGS.hlsl", "Shaders\\PlayerPS.hlsl");
 	m_modelHandlers[ENEMY1] = new ModelHandler;
@@ -117,6 +115,9 @@ void EntityManager::Initialize(SoundManager* soundManager, Input* input, ID3D11D
 	m_modelHandlers[ENEMY3] = new ModelHandler;
 	m_modelHandlers[ENEMY4] = new ModelHandler;
 	m_modelHandlers[BULLET1] = new ModelHandler;
+//	m_modelHandlers[BULLET1]->LoadOBJData("Resources/Models/Bullet1.obj", "Resources/Models/Bullet1.mtl", m_device, m_deviceContext);
+//	m_modelHandlers[BULLET1]->CreateBuffers(m_device);
+//	m_modelHandlers[BULLET1]->CreateShaders(m_device, "Shaders\\BulletVS.hlsl", "Shaders\\BulletGS.hlsl", "Shaders\\BulletPS.hlsl");
 	m_modelHandlers[BULLET2] = new ModelHandler;
 	m_modelHandlers[BULLET3] = new ModelHandler;
 	m_modelHandlers[BULLET4] = new ModelHandler;
@@ -126,7 +127,7 @@ void EntityManager::Initialize(SoundManager* soundManager, Input* input, ID3D11D
 	SpawnEntity(PLAYER);
 
 	//Temp, creates partsys
-	wstring _texName = L"Resources\\star3.jpg";
+	wstring _texName = L"Resources\\Models\\star3.jpg";
 	m_partSys.CreateBuffer(m_device, m_deviceContext, _texName);
 	m_partSys.CreateShaders(m_device);
 
@@ -266,12 +267,12 @@ void EntityManager::ChangeSongData(int bpm)
 void EntityManager::BeatWasDetected()
 {
 	//Spawn correct bullet (which plays the sound as well)
-	BulletType _bullet = m_input->CheckBullet;
+	BulletType _bullet = m_input->CheckBullet();
 
 	switch (_bullet)
 	{
 	case INPUT_DEFAULT_BULLET:
-		SpawnEntity(BULLET1);
+		SpawnEntity(BULLET1); //Default bullet
 		break;
 	case INPUT_BULLET2:
 		SpawnEntity(BULLET2);
