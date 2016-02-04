@@ -2,7 +2,8 @@
 
 Enemy_2::Enemy_2()
 {
-
+	XMVECTOR _rotzAxis{ 0,0,1,0 };
+	m_rotation = XMMatrixRotationAxis(_rotzAxis, 0.0f);
 }
 
 Enemy_2::~Enemy_2()

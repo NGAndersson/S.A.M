@@ -137,6 +137,7 @@ void EntityManager::Initialize(SoundManager* soundManager, Input* input, ID3D11D
 	m_modelHandlers[BULLET1] = new ModelHandler;
 	m_modelHandlers[BULLET1]->LoadOBJData("Resources/Models/Bullet1.obj", "Resources/Models/Bullet1.mtl", m_device, m_deviceContext);
 	m_modelHandlers[BULLET1]->CreateBuffers(m_device);
+	m_modelHandlers[BULLET1]->CreateShaders(m_device, "Shaders\\PlayerVS.hlsl", "Shaders\\PlayerGS.hlsl", "Shaders\\PlayerPS.hlsl");
 //	m_modelHandlers[BULLET1]->CreateShaders(m_device, "Shaders\\BulletVS.hlsl", "Shaders\\BulletGS.hlsl", "Shaders\\BulletPS.hlsl");
 	m_modelHandlers[BULLET2] = new ModelHandler;
 	m_modelHandlers[BULLET3] = new ModelHandler;
@@ -193,13 +194,13 @@ void EntityManager::Render()
 		m_renderer->Render(m_modelHandlers[ENEMY4], m_enemy4[i]->GetPosition(), m_enemy4[i]->GetRotation(), m_enemy4[i]->GetScale());
 	}
 
-	//Render Bullets
+	//Render Bullets*/
 	for (int i = 0; i < m_bullet1.size(); i++)
 	{
 		m_modelHandlers[BULLET1]->SetBuffers(m_deviceContext);
 		m_modelHandlers[BULLET1]->SetShaders(m_deviceContext);
 		m_renderer->Render(m_modelHandlers[BULLET1], m_bullet1[i]->GetPosition(), m_bullet1[i]->GetRotation(), m_bullet1[i]->GetScale());
-	}
+	}/*
 	for (int i = 0; i < m_bullet2.size(); i++)
 	{
 		m_modelHandlers[BULLET2]->SetBuffers(m_deviceContext);
@@ -276,7 +277,7 @@ void EntityManager::Update(double time)
 	vector<Entity*> _tempVec = m_bullet1;			//Can't use the member variable for some reason
 	for (int i = 0; i < _tempVec.size() && removed == false; i++) {			//REMOVE REMOVED == FALSE AND MAKE LISTS!
 		XMFLOAT3 _tempPos = _tempVec[i]->GetPosition();
-		if (_tempPos.x > 50 || _tempPos.x < -50 || _tempPos.z > 50 || _tempPos.z < -50) {
+		if (_tempPos.x > 60 || _tempPos.x < -60 || _tempPos.z > 60 || _tempPos.z < -60) {
 			delete _tempVec[i];
 			_tempVec.erase(_tempVec.begin() + i);
 			removed = true;
