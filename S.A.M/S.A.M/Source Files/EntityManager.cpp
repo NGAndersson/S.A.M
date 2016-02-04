@@ -38,7 +38,7 @@ void EntityManager::SpawnEntity(HandlerIndex type)
 	
 	switch (type) {
 	case(PLAYER) :
-		m_player = new Player(m_soundManager, MAPWIDTH,MAPLENGTH,XMFLOAT3(1.0f, 0.0f, 1.0f), m_input);
+		m_player = new Player(m_soundManager, MAPWIDTH,MAPLENGTH,XMFLOAT3(1.0f, 0.0f, 1.0f), XMFLOAT3(0.5f, 0.5f, 0.5f), m_input);
 		break;
 	//case(ENEMY1) :
 	//	Enemy1* tempEntity = new Enemy1;
@@ -61,7 +61,7 @@ void EntityManager::SpawnEntity(HandlerIndex type)
 	//	m_enemy4.push_back(tempEntity);
 	//	break;
 	case(BULLET1) :
-		Bullet_p1* tempEntity = new Bullet_p1(m_soundManager, MAPWIDTH, MAPLENGTH, m_player->GetPosition());
+		Bullet_p1* tempEntity = new Bullet_p1(m_soundManager, MAPWIDTH, MAPLENGTH, m_player->GetPosition(), XMFLOAT3(1, 1, 1));
 		m_bullet1.push_back(tempEntity);
 		m_soundManager->PlayOneShotSound("DefaultBullet", 0.5f);
 		break;
@@ -135,8 +135,8 @@ void EntityManager::Initialize(SoundManager* soundManager, Input* input, ID3D11D
 	m_modelHandlers[ENEMY3] = new ModelHandler;
 	m_modelHandlers[ENEMY4] = new ModelHandler;
 	m_modelHandlers[BULLET1] = new ModelHandler;
-//	m_modelHandlers[BULLET1]->LoadOBJData("Resources/Models/Bullet1.obj", "Resources/Models/Bullet1.mtl", m_device, m_deviceContext);
-//	m_modelHandlers[BULLET1]->CreateBuffers(m_device);
+	m_modelHandlers[BULLET1]->LoadOBJData("Resources/Models/Bullet1.obj", "Resources/Models/Bullet1.mtl", m_device, m_deviceContext);
+	m_modelHandlers[BULLET1]->CreateBuffers(m_device);
 //	m_modelHandlers[BULLET1]->CreateShaders(m_device, "Shaders\\BulletVS.hlsl", "Shaders\\BulletGS.hlsl", "Shaders\\BulletPS.hlsl");
 	m_modelHandlers[BULLET2] = new ModelHandler;
 	m_modelHandlers[BULLET3] = new ModelHandler;
@@ -163,7 +163,7 @@ void EntityManager::Render()
 	//Render Player
 	m_modelHandlers[PLAYER]->SetBuffers(m_deviceContext);
 	m_modelHandlers[PLAYER]->SetShaders(m_deviceContext);
-	m_renderer->Render(m_modelHandlers[PLAYER], m_player->GetPosition(), m_player->GetRotation());
+	m_renderer->Render(m_modelHandlers[PLAYER], m_player->GetPosition(), m_player->GetRotation(), m_player->GetScale());
 
 	//m_renderer->Render(m_modelHandlers[PLAYER], m_player->GetPosition(), &m_player->GetRotation());
 	/*
@@ -172,25 +172,25 @@ void EntityManager::Render()
 	{
 		m_modelHandlers[ENEMY1]->SetBuffers(m_deviceContext);
 		m_modelHandlers[ENEMY1]->SetShaders(m_deviceContext);
-		m_renderer->Render(m_modelHandlers[ENEMY1], m_enemy1[i]->GetPosition(), m_enemy1[i]->GetRotation());
+		m_renderer->Render(m_modelHandlers[ENEMY1], m_enemy1[i]->GetPosition(), m_enemy1[i]->GetRotation(), m_enemy1[i]->GetScale());
 	}
 	for (int i = 0; i < m_enemy2.size(); i++)
 	{
 		m_modelHandlers[ENEMY2]->SetBuffers(m_deviceContext);
 		m_modelHandlers[ENEMY2]->SetShaders(m_deviceContext);
-		m_renderer->Render(m_modelHandlers[ENEMY2], m_enemy2[i]->GetPosition(), m_enemy2[i]->GetRotation());
+		m_renderer->Render(m_modelHandlers[ENEMY2], m_enemy2[i]->GetPosition(), m_enemy2[i]->GetRotation(), m_enemy2[i]->GetScale());
 	}
 	for (int i = 0; i < m_enemy3.size(); i++)
 	{
 		m_modelHandlers[ENEMY3]->SetBuffers(m_deviceContext);
 		m_modelHandlers[ENEMY3]->SetShaders(m_deviceContext);
-		m_renderer->Render(m_modelHandlers[ENEMY3], m_enemy3[i]->GetPosition(), m_enemy3[i]->GetRotation());
+		m_renderer->Render(m_modelHandlers[ENEMY3], m_enemy3[i]->GetPosition(), m_enemy3[i]->GetRotation(), m_enemy3[i]->GetScale());
 	}
 	for (int i = 0; i < m_enemy4.size(); i++)
 	{
 		m_modelHandlers[ENEMY4]->SetBuffers(m_deviceContext);
 		m_modelHandlers[ENEMY4]->SetShaders(m_deviceContext);
-		m_renderer->Render(m_modelHandlers[ENEMY4], m_enemy4[i]->GetPosition(), m_enemy4[i]->GetRotation());
+		m_renderer->Render(m_modelHandlers[ENEMY4], m_enemy4[i]->GetPosition(), m_enemy4[i]->GetRotation(), m_enemy4[i]->GetScale());
 	}
 
 	//Render Bullets
@@ -198,37 +198,37 @@ void EntityManager::Render()
 	{
 		m_modelHandlers[BULLET1]->SetBuffers(m_deviceContext);
 		m_modelHandlers[BULLET1]->SetShaders(m_deviceContext);
-		m_renderer->Render(m_modelHandlers[BULLET1], m_bullet1[i]->GetPosition(), m_bullet1[i]->GetRotation());
+		m_renderer->Render(m_modelHandlers[BULLET1], m_bullet1[i]->GetPosition(), m_bullet1[i]->GetRotation(), m_bullet1[i]->GetScale());
 	}
 	for (int i = 0; i < m_bullet2.size(); i++)
 	{
 		m_modelHandlers[BULLET2]->SetBuffers(m_deviceContext);
 		m_modelHandlers[BULLET2]->SetShaders(m_deviceContext);
-		m_renderer->Render(m_modelHandlers[BULLET2], m_bullet2[i]->GetPosition(), m_bullet2[i]->GetRotation());
+		m_renderer->Render(m_modelHandlers[BULLET2], m_bullet2[i]->GetPosition(), m_bullet2[i]->GetRotation(), m_bullet2[i]->GetScale());
 	}
 	for (int i = 0; i < m_bullet3.size(); i++)
 	{
 		m_modelHandlers[BULLET3]->SetBuffers(m_deviceContext);
 		m_modelHandlers[BULLET3]->SetShaders(m_deviceContext);
-		m_renderer->Render(m_modelHandlers[BULLET3], m_bullet3[i]->GetPosition(), m_bullet3[i]->GetRotation());
+		m_renderer->Render(m_modelHandlers[BULLET3], m_bullet3[i]->GetPosition(), m_bullet3[i]->GetRotation(), m_bullet3[i]->GetScale());
 	}
 	for (int i = 0; i < m_bullet4.size(); i++)
 	{
 		m_modelHandlers[BULLET4]->SetBuffers(m_deviceContext);
 		m_modelHandlers[BULLET4]->SetShaders(m_deviceContext);
-		m_renderer->Render(m_modelHandlers[BULLET4], m_bullet4[i]->GetPosition(), m_bullet4[i]->GetRotation());
+		m_renderer->Render(m_modelHandlers[BULLET4], m_bullet4[i]->GetPosition(), m_bullet4[i]->GetRotation(), m_bullet4[i]->GetScale());
 	}
 	for (int i = 0; i < m_bullet5.size(); i++)
 	{
 		m_modelHandlers[BULLET5]->SetBuffers(m_deviceContext);
 		m_modelHandlers[BULLET5]->SetShaders(m_deviceContext);
-		m_renderer->Render(m_modelHandlers[BULLET5], m_bullet4[i]->GetPosition(), m_bullet5[i]->GetRotation());
+		m_renderer->Render(m_modelHandlers[BULLET5], m_bullet4[i]->GetPosition(), m_bullet5[i]->GetRotation(), m_bullet5[i]->GetScale());
 	}
 	for (int i = 0; i < m_bullet6.size(); i++)
 	{
 		m_modelHandlers[BULLET6]->SetBuffers(m_deviceContext);
 		m_modelHandlers[BULLET6]->SetShaders(m_deviceContext);
-		m_renderer->Render(m_modelHandlers[BULLET6], m_bullet4[i]->GetPosition(), m_bullet6[i]->GetRotation());
+		m_renderer->Render(m_modelHandlers[BULLET6], m_bullet4[i]->GetPosition(), m_bullet6[i]->GetRotation(), m_bullet6[i]->GetScale());
 	}
 	*/
 }

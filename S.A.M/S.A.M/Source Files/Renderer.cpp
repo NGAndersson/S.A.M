@@ -30,14 +30,14 @@ Renderer::~Renderer()
 
 }
 
-void Renderer::Render(ModelHandler * model, XMFLOAT3 position, XMMATRIX &rotation)
+void Renderer::Render(ModelHandler * model, XMFLOAT3 position, XMMATRIX &rotation, XMFLOAT3 scale)
 {
 	//Set vertexbuffer, pixel material constant buffer and set the correct shaders
 	model->SetBuffers(m_deviceContext);
 	model->SetShaders(m_deviceContext);
 
 	//Set Worldmatrix and Position(float3) as a Vertexshader constant buffer
-	XMMATRIX Scale = XMMatrixScaling(1.0f, 1.0f, 1.0f);
+	XMMATRIX Scale = XMMatrixScaling(scale.x, scale.y, scale.z);
 	XMMATRIX Translation = XMMatrixTranslation(position.x, position.y, position.z);
 	m_worldStruct.worldMatrix = XMMatrixTranspose(Scale * rotation * Translation);
 	

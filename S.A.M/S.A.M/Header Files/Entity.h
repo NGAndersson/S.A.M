@@ -17,12 +17,13 @@ class Entity
 public:
 	Entity() {}
 	~Entity() {}
-	Entity(SoundManager* SoundManager, int MapWidth, int MapLength, XMFLOAT3 Position)
+	Entity(SoundManager* SoundManager, int MapWidth, int MapLength, XMFLOAT3 Position, XMFLOAT3 Scale)
 	{
 		m_soundManager = SoundManager;
 		m_mapLength = MapLength;
 		m_mapWidth = MapWidth;
 		m_position = Position;
+		m_scale = Scale;
 	}
 
 	virtual void Update(double time) = 0;
@@ -38,14 +39,24 @@ public:
 		 return m_position;
 	 }
 
-	 virtual void SetPosition(XMFLOAT3 NewPos)
+	 virtual void SetPosition(XMFLOAT3 newPos)
 	 {
-		 m_position = NewPos;
+		 m_position = newPos;
 	 }
 
 	 virtual XMMATRIX GetRotation()
 	 {
 		 return m_rotation;
+	 }
+
+	 virtual XMFLOAT3 GetScale()
+	 {
+		 return m_scale;
+	 }
+
+	 virtual void SetScale(XMFLOAT3 newScale)
+	 {
+		 m_scale = newScale;
 	 }
 
 	 virtual BoundingBox GetBoundingBox()
@@ -62,6 +73,7 @@ protected:
 	 //Position // Rotation
 	 XMFLOAT3 m_position;
 	 XMMATRIX m_rotation;
+	 XMFLOAT3 m_scale;
 
 	 //BoundingBox
 	 BoundingBox m_entityBox;

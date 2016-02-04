@@ -9,7 +9,7 @@ private:
 protected:
 public:
 	Enemy() {}
-	Enemy(SoundManager* SoundManager, int MapWidth, int MapLength, XMFLOAT3 Position) : Entity(SoundManager, MapWidth, MapLength, Position) {}
+	Enemy(SoundManager* SoundManager, int MapWidth, int MapLength, XMFLOAT3 Position, XMFLOAT3 Scale) : Entity(SoundManager, MapWidth, MapLength, Position, Scale) {}
 	//~Enemy();
 	virtual void Update(double time) = 0;
 	virtual void Destroyed() = 0;
