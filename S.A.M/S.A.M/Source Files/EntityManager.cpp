@@ -1,4 +1,5 @@
 #include "EntityManager.h"
+#include <iostream>
 #define MAPWIDTH 100
 #define MAPLENGTH 100
 
@@ -62,7 +63,7 @@ void EntityManager::SpawnEntity(HandlerIndex type)
 	case(BULLET1) :
 		Bullet_p1* tempEntity = new Bullet_p1(m_soundManager, MAPWIDTH, MAPLENGTH, m_player->GetPosition());
 		m_bullet1.push_back(tempEntity);
-		m_soundManager->PlayOneShotSound("DefaultBullet", 0.05f);
+		m_soundManager->PlayOneShotSound("DefaultBullet", 0.5f);
 		break;
 	//case(BULLET2) :
 	//	Bullet2* tempEntity = new Bullet2;
@@ -152,6 +153,7 @@ void EntityManager::Initialize(SoundManager* soundManager, Input* input, ID3D11D
 
 	ChangeSongData(m_beatDetector->GetTempo());
 	m_doBeatDet = true;
+	m_beat = m_beatDetector->GetBeat();
 }
 
 void EntityManager::Render()
@@ -234,9 +236,11 @@ void EntityManager::Render()
 void EntityManager::Update(double time)
 {
 		//Regular BPM test
-	if (m_doBeatDet == false) {
+	if (m_doBeatDet == false) 
+	{
 		m_timeSinceLastBeat += time * 1000;
-		if (m_timeSinceLastBeat >= 60000 / m_currentBPM) {
+		if (m_timeSinceLastBeat >= 60000 / m_currentBPM) 
+		{
 			m_timeSinceLastBeat -= 60000 / m_currentBPM;
 
 			//BEAT WAS DETECTED
@@ -245,15 +249,17 @@ void EntityManager::Update(double time)
 	}
 	else {
 		//BeatDet test
-		float* _beat = m_beatDetector->GetBeat();
-
 		float _currentPos = m_soundManager->GetCurrentMusicTimePCM() / 1024.f;
 
-		if (_beat[(int)_currentPos] > 0) {
-
+		if (m_beat[(int)_currentPos] > 0.0f && m_timeSinceLastBeat > 0.5)		//Small time buffer to prevent it from going off 50 times per beat 
+		{
 			//BEAT WAS DETECTED
+			OutputDebugStringA("Update in game");
 			BeatWasDetected();
-
+			m_timeSinceLastBeat = 0;
+		}
+		else {
+			m_timeSinceLastBeat += time;
 		}
 	}
 	//Do collision checks
@@ -264,15 +270,19 @@ void EntityManager::Update(double time)
 		m_bullet1[i]->Update(time);
 	m_player->Update(time);
 	
-
+	
 	//Out of bounds check, remove immediately
-	for (int i = m_bullet1.size()-1; i >= 0; i--) {
-		XMFLOAT3 _tempPos = m_bullet1[i]->GetPosition();
-		if (_tempPos.x > 100 || _tempPos.x < 0 || _tempPos.z > 100 || _tempPos.z < 0) {
+	bool removed = false;
+	vector<Entity*> _tempVec = m_bullet1;			//Can't use the member variable for some reason
+	for (int i = 0; i < _tempVec.size() && removed == false; i++) {			//REMOVE REMOVED == FALSE AND MAKE LISTS!
+		XMFLOAT3 _tempPos = _tempVec[i]->GetPosition();
+		if (_tempPos.x > 50 || _tempPos.x < -50 || _tempPos.z > 50 || _tempPos.z < -50) {
 			delete m_bullet1[i];
-			m_bullet1.erase(m_bullet1.begin() + i);
+			_tempVec.erase(_tempVec.begin());
+			removed = true;
 		}
 	}
+	m_bullet1 = _tempVec;
 
 	//Update Particle System
 	m_partSys.updatePart(m_deviceContext, time, 40);
