@@ -257,7 +257,7 @@ void EntityManager::Update(double time)
 	for (int i = 0; i < _tempVec.size() && removed == false; i++) {			//REMOVE REMOVED == FALSE AND MAKE LISTS!
 		XMFLOAT3 _tempPos = _tempVec[i]->GetPosition();
 		if (_tempPos.x > 50 || _tempPos.x < -50 || _tempPos.z > 50 || _tempPos.z < -50) {
-			//delete m_bullet1[i];
+			delete m_bullet1[i];
 			_tempVec.erase(_tempVec.begin());
 			removed = true;
 		}
