@@ -46,7 +46,7 @@ void PartSys::updatePart(ID3D11DeviceContext* deviceContext, float time, float p
 
 }
 
-bool PartSys::CreateBuffer(ID3D11Device* device, ID3D11DeviceContext* deviceContext)
+bool PartSys::CreateBuffer(ID3D11Device* device, ID3D11DeviceContext* deviceContext, wstring texName)
 {
 	D3D11_BUFFER_DESC _OBJvertexBufferDesc;
 
@@ -61,9 +61,10 @@ bool PartSys::CreateBuffer(ID3D11Device* device, ID3D11DeviceContext* deviceCont
 	// Skapar vertex buffern
 	device->CreateBuffer(&_OBJvertexBufferDesc, NULL, &m_vertexBuffer);
 
-	CreateWICTextureFromFile(device, deviceContext, L"Resources\\star2.jpeg", nullptr, &m_partTex);
+	const wchar_t* _name = texName.c_str();
 
-	int i = 0;
+	CreateWICTextureFromFile(device, deviceContext, _name, nullptr, &m_partTex);
+
 	return true;
 }
 

@@ -5,7 +5,7 @@
 #include <DirectXMath.h>
 #include "Input.h"
 using namespace DirectX;
-#include "SoundManager.h"
+#include "Audio/SoundManager.h"
 
 #define MOVEMENTSPEEDX 0.3f / 16.40f // Divided by screen Width Hardcoded MOTHERFUCKER :)
 
@@ -65,6 +65,9 @@ protected:
 	 //BoundingBox
 	 BoundingBox m_entityBox;
 	 int m_mapWidth, m_mapLength;
+
+	 //When entities are to be deleted
+	 bool m_delete = false;
 };
 #endif // ! ENTITY
 

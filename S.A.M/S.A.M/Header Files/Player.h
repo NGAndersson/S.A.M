@@ -3,7 +3,7 @@
 
 #include "Entity.h"
 #include "Input.h"
-#include "SoundManager.h"
+#include "Audio/SoundManager.h"
 #include <math.h>
 
 class Player : public Entity

@@ -2,7 +2,7 @@
 #define _GAME_H_
 
 #include "Display.h"
-#include "SoundManager.h"
+#include "Audio/SoundManager.h"
 #include "ScreenManager.h"
 #include "EntityManager.h"
 #include "Input.h"

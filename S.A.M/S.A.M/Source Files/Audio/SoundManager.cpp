@@ -1,4 +1,4 @@
-#include "SoundManager.h"
+#include "Audio/SoundManager.h"
 #include "Windows.h"
 #include <sstream>
 #include <iostream>
@@ -160,39 +160,55 @@ void SoundManager::Update()
 	m_system->update();
 }
 
-void SoundManager::SpectrumAnalysis(char* soundName)
+float* SoundManager::SpectrumAnalysis(char* soundName)
 {
 	int _groupIndex = -1, _soundIndex = -1;
 	FindSoundIndex(soundName, _groupIndex, _soundIndex);
+	//If only groupindex was found, pick a random sound (good for music where there should only be one sound)
+	if (_groupIndex != -1 && _soundIndex == -1) {
+		//Play random sound from the group
+		srand(time(NULL));
+		_soundIndex = rand() % m_sounds[_groupIndex].size();
+	}
+	else if (_groupIndex == -1 && _soundIndex == -1) {
+		MessageBox(NULL, "Couldn't find sound name handle", "Spectrum Analysis Error", MB_ICONERROR | MB_OK);
+		exit(-1);
+	}
 
-	int sampleSize = 64;
+
+	int _sampleSize = 124;
 
 	//Get the volume of the left and right channel (0-1)
-	float *specLeft, *specRight;
-	specLeft = new float[sampleSize];
-	specRight = new float[sampleSize];
-	m_soundChannels[_groupIndex][_soundIndex]->getSpectrum(specLeft, sampleSize, 0, FMOD_DSP_FFT_WINDOW_RECT);
-	m_soundChannels[_groupIndex][_soundIndex]->getSpectrum(specRight, sampleSize, 1, FMOD_DSP_FFT_WINDOW_RECT);
+	float *_specLeft, *_specRight;
+	_specLeft = new float[_sampleSize];
+	_specRight = new float[_sampleSize];
+	m_soundChannels[_groupIndex][_soundIndex]->getSpectrum(_specLeft, _sampleSize, 0, FMOD_DSP_FFT_WINDOW_RECT);
+	m_soundChannels[_groupIndex][_soundIndex]->getSpectrum(_specRight, _sampleSize, 1, FMOD_DSP_FFT_WINDOW_RECT);
 
 	//Take the average of the left and right volume (0-1)
-	float* spec;
-	spec = new float[sampleSize];
-	for (int i = 0; i < sampleSize; i++)
-		spec[i] = (specLeft[i] + specRight[i]) / 2;
+	float* _spec;
+	_spec = new float[_sampleSize];
+	for (int i = 0; i < _sampleSize; i++)
+		_spec[i] = (_specLeft[i] + _specRight[i]) / 2;
 
 	//Find max volume
-	auto maxIterator = std::max_element(&spec[0], &spec[sampleSize]);
-	float maxVol = *maxIterator;
+	auto _maxIterator = std::max_element(&_spec[0], &_spec[_sampleSize]);
+	float _maxVol = *_maxIterator;
 
 	//Normalize
-	if (maxVol != 0)
-		std::transform(&spec[0], &spec[sampleSize], &spec[0], [maxVol](float dB) -> float {return dB / maxVol; });
+	if (_maxVol != 0)
+		std::transform(&_spec[0], &_spec[_sampleSize], &_spec[0], [_maxVol](float dB) -> float {return dB / _maxVol; });
+	
+	delete[] _specLeft;
+	delete[] _specRight;
+	return _spec;
+}
 
-	//DO FANCY FUN STUFF HERE
-
-	delete[] spec;
-	delete[] specLeft;
-	delete[] specRight;
+int SoundManager::GetCurrentMusicTimePCM()
+{
+	unsigned int _pos = 0;
+	m_musicChannel->getPosition(&_pos, FMOD_TIMEUNIT_PCM);
+	return _pos;
 }
 
 //Plays a sound once at a specific volume
@@ -222,6 +238,43 @@ void SoundManager::PlayOneShotSound(char* soundName, float volume)
 		MessageBox(NULL, "Couldn't find sound name handle", "Sound Playing Error", MB_ICONERROR | MB_OK);
 		exit(-1);
 	}
+}
+
+void SoundManager::LoadMusic(char * fileName)
+{
+	m_result = m_system->createSound(fileName, FMOD_SOFTWARE, 0, &m_musicSound);
+
+	FMODErrorCheck(m_result);
+	m_musicSound->getLength(&m_musicLength, FMOD_TIMEUNIT_PCM);
+
+	//Weird stuff from french code	https://www.youtube.com/watch?v=jZoQ1S73Bac
+	void* _ptr1;
+	void* _ptr2;
+	unsigned int _length1;
+	unsigned int _length2;
+	m_dataLeftChannel = new int[m_musicLength];
+	m_dataRightChannel = new int[m_musicLength];
+	m_musicSound->lock(0, m_musicLength, &_ptr1, &_ptr2, &_length1, &_length2);
+	for (int i = 0; i < m_musicLength; i++)
+	{
+		m_dataLeftChannel[i] = ((int*)_ptr1)[i] >> 16;
+		m_dataRightChannel[i] = (((int*)_ptr1)[i] << 16) >> 16;
+	}
+
+	m_musicSound->unlock(&_ptr1, &_ptr2, _length1, _length2);
+}
+
+void SoundManager::PlayMusic(float volume)
+{
+	m_result = m_system->playSound(FMOD_CHANNEL_FREE, m_musicSound, false, &m_musicChannel);
+	m_musicChannel->setVolume(volume);
+}
+
+void SoundManager::PauseMusic()
+{
+	bool _paused;
+	m_musicChannel->getPaused(&_paused);
+	m_musicChannel->setPaused(!_paused);
 }
 
 //For errorchecking the results of FMOD functions
