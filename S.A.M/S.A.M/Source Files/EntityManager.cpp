@@ -166,17 +166,6 @@ void EntityManager::Render()
 	m_modelHandlers[PLAYER]->SetShaders(m_deviceContext);
 	m_renderer->Render(m_modelHandlers[PLAYER], m_player->GetPosition(), m_player->GetRotation(), m_player->GetScale());
 
-
-	vector<XMFLOAT3> bulletpos;
-	bulletpos.push_back(XMFLOAT3(4, 0, 5));
-	bulletpos.push_back(XMFLOAT3(6, 0, 9));
-	bulletpos.push_back(XMFLOAT3(-9, 0, 20));
-	bulletpos.push_back(XMFLOAT3(30, 0, 0));
-
-	m_modelHandlers[BULLET1]->SetBuffers(m_deviceContext);
-	m_modelHandlers[BULLET1]->SetShaders(m_deviceContext);
-	m_renderer->RenderInstanced(m_modelHandlers[BULLET1], bulletpos, m_player->GetRotation(), 4, XMFLOAT3(1, 1, 1));
-
 	//m_renderer->Render(m_modelHandlers[PLAYER], m_player->GetPosition(), &m_player->GetRotation());
 	/*
 	//Render Enemies
@@ -206,12 +195,18 @@ void EntityManager::Render()
 	}
 
 	//Render Bullets*/
-	for (int i = 0; i < m_bullet1.size(); i++)
+	if (m_bullet1.size() > 0)
 	{
+		vector<XMFLOAT3> _bulletPosition;
+		for (int i = 0; i < m_bullet1.size(); i++)
+		{
+			_bulletPosition.push_back(m_bullet1[i]->GetPosition());
+		}
 		m_modelHandlers[BULLET1]->SetBuffers(m_deviceContext);
 		m_modelHandlers[BULLET1]->SetShaders(m_deviceContext);
-		m_renderer->Render(m_modelHandlers[BULLET1], m_bullet1[i]->GetPosition(), m_bullet1[i]->GetRotation(), m_bullet1[i]->GetScale());
-	}/*
+		m_renderer->RenderInstanced(m_modelHandlers[BULLET1], _bulletPosition, m_bullet1[0]->GetRotation(), m_bullet1.size(), m_bullet1[0]->GetScale());
+	}
+	/*
 	for (int i = 0; i < m_bullet2.size(); i++)
 	{
 		m_modelHandlers[BULLET2]->SetBuffers(m_deviceContext);

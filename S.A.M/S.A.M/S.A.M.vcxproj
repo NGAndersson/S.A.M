@@ -77,12 +77,12 @@
     <LibraryPath>$(ProjectPath)\FMODlib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\Users\yorkhawke\Desktop\S.A.M\S.A.M\S.A.M\Source Files;C:\Users\yorkhawke\Desktop\S.A.M\S.A.M\S.A.M\FMODinc;C:\Users\yorkhawke\Desktop\S.A.M\S.A.M\S.A.M\Header Files;$(IncludePath);C:\Users\Sock\Documents\GitHub\S.A.M\S.A.M\S.A.M\FMODinc;C:\Users\Sock\Documents\GitHub\S.A.M\S.A.M\S.A.M\Header Files</IncludePath>
-    <LibraryPath>C:\Users\yorkhawke\Desktop\S.A.M\S.A.M\S.A.M\FMODlib;$(LibraryPath);C:\Users\Sock\Documents\GitHub\S.A.M\S.A.M\S.A.M\FMODlib;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\yorkhawke\Desktop\S.A.M\S.A.M\S.A.M\Source Files;C:\Users\yorkhawke\Desktop\S.A.M\S.A.M\S.A.M\FMODinc;C:\Users\yorkhawke\Desktop\S.A.M\S.A.M\S.A.M\Header Files;$(IncludePath);C:\Users\Sock\Documents\GitHub\S.A.M\S.A.M\S.A.M\FMODinc;C:\Users\Sock\Documents\GitHub\S.A.M\S.A.M\S.A.M\Header Files;C:\Users\Sock\Documents\GitHub\S.A.M\S.A.M\S.A.M\Header Files;C:\Users\Sock\Documents\GitHub\S.A.M\S.A.M\S.A.M\FMODinc</IncludePath>
+    <LibraryPath>C:\Users\yorkhawke\Desktop\S.A.M\S.A.M\S.A.M\FMODlib;$(LibraryPath);C:\Users\Sock\Documents\GitHub\S.A.M\S.A.M\S.A.M\FMODlib;$(LibraryPath);C:\Users\Sock\Documents\GitHub\S.A.M\S.A.M\S.A.M\FMODlib</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>C:\Users\Sock\Documents\GitHub\S.A.M\S.A.M\S.A.M\Header Files;$(IncludePath);C:\Users\Sock\Documents\GitHub\S.A.M\S.A.M\S.A.M\FMODinc;C:\Users\Sock\Documents\GitHub\S.A.M\S.A.M\S.A.M\Header Files</IncludePath>
-    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64;C:\Users\Sock\Documents\GitHub\S.A.M\S.A.M\S.A.M\FMODlib;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\Sock\Documents\GitHub\S.A.M\S.A.M\S.A.M\Header Files;$(IncludePath);C:\Users\Sock\Documents\GitHub\S.A.M\S.A.M\S.A.M\FMODinc;C:\Users\Sock\Documents\GitHub\S.A.M\S.A.M\S.A.M\Header Files;C:\Users\Sock\Documents\GitHub\S.A.M\S.A.M\S.A.M\Header Files;C:\Users\Sock\Documents\GitHub\S.A.M\S.A.M\S.A.M\FMODinc</IncludePath>
+    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64;C:\Users\Sock\Documents\GitHub\S.A.M\S.A.M\S.A.M\FMODlib;$(LibraryPath);C:\Users\Sock\Documents\GitHub\S.A.M\S.A.M\S.A.M\FMODlib</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -173,21 +173,10 @@
   <ItemGroup>
     <ClInclude Include="Header Files\Audio\BeatDetector.h" />
     <ClInclude Include="Header Files\Audio\SoundManager.h" />
-    <ClInclude Include="Header Files\Bullet.h" />
     <ClInclude Include="Header Files\Bullet_e.h" />
-    <ClInclude Include="Header Files\Bullet_p1.h" />
-    <ClInclude Include="Header Files\Bullet_p2.h" />
-    <ClInclude Include="Header Files\Bullet_p3.h" />
-    <ClInclude Include="Header Files\Bullet_p4.h" />
-    <ClInclude Include="Header Files\Bullet_p5.h" />
     <ClInclude Include="Header Files\Camera.h" />
     <ClInclude Include="Header Files\DirectXHelpers.h" />
     <ClInclude Include="Header Files\Display.h" />
-    <ClInclude Include="Header Files\Enemy.h" />
-    <ClInclude Include="Header Files\Enemy_1.h" />
-    <ClInclude Include="Header Files\Enemy_2.h" />
-    <ClInclude Include="Header Files\Enemy_3.h" />
-    <ClInclude Include="Header Files\Enemy_4.h" />
     <ClInclude Include="Header Files\Entities\Bullets\Bullet.h" />
     <ClInclude Include="Header Files\Entities\Bullets\Bullet_e.h" />
     <ClInclude Include="Header Files\Entities\Bullets\Bullet_p1.h" />
