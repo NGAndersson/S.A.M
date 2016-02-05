@@ -214,3 +214,5 @@ ModelManifest.xml
 *.vcxproj
 S.A.M/S.A.M/S.A.M.vcxproj
 *.exe
+*.vcxproj
+*.vcxproj
