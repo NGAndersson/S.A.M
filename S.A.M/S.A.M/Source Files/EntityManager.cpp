@@ -205,7 +205,7 @@ void EntityManager::Render()
 			_instanceScale.push_back(m_bullet1[i]->GetScale());
 			_instanceRotation.push_back(m_bullet1[i]->GetRotation());
 		}
-		m_renderer->RenderInstanced(m_modelHandlers[BULLET1], _instancePosition, m_bullet1[0]->GetRotation(), m_bullet1.size(), m_bullet1[0]->GetScale());
+		m_renderer->RenderInstanced(m_modelHandlers[BULLET1], _instancePosition, _instanceRotation, m_bullet1.size(), _instanceScale);
 	}
 	/*
 	for (int i = 0; i < m_bullet2.size(); i++)
