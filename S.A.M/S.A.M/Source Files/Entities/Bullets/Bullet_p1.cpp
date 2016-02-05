@@ -25,5 +25,5 @@ void Bullet_p1::Destroyed()
 
 void Bullet_p1::Update(double time)
 {
-	m_position.z += 50 * time;
+	m_position.z += 100 * time;
 }
