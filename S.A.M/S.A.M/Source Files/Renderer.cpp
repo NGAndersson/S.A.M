@@ -51,22 +51,22 @@ void Renderer::Render(ModelHandler * model, XMFLOAT3 position, XMMATRIX &rotatio
 
 }
 
-void Renderer::RenderInstanced(ModelHandler * model, XMFLOAT3 *position, XMMATRIX &rotation, int amountOfBullets)
+void Renderer::RenderInstanced(ModelHandler * model, vector<XMFLOAT3> position, XMMATRIX &rotation, int amountOfBullets, XMFLOAT3 scale)
 {
 	//Set vertexbuffer, pixel material constant buffer and set the correct shaders
 	model->SetBuffers(m_deviceContext);
 	model->SetShaders(m_deviceContext);
 	XMMATRIX Translation;
 	//Set Worldmatrix and Position(float3) as a Vertexshader constant buffer
-	XMMATRIX Scale = XMMatrixScaling(1.0f, 1.0f, 1.0f);
+	XMMATRIX Scale = XMMatrixScaling(scale.x, scale.y, scale.z);
 
-	XMFLOAT4X4 Test;
+	XMFLOAT4X4 _worldInstance;
 
-	XMFLOAT3 bulletpos[4];
+	/*XMFLOAT3 bulletpos[4];
 	bulletpos[0] = XMFLOAT3(4, 0, 5);
 	bulletpos[1] = XMFLOAT3(6, 0, 9);
-	bulletpos[2] = XMFLOAT3(-9, 0, 78);
-	bulletpos[3] = XMFLOAT3(56, 0, 0);
+	bulletpos[2] = XMFLOAT3(-9, 0, 20);
+	bulletpos[3] = XMFLOAT3(28, 0, 0);*/
 
 	D3D11_MAPPED_SUBRESOURCE _mappedResource;
 
@@ -74,9 +74,9 @@ void Renderer::RenderInstanced(ModelHandler * model, XMFLOAT3 *position, XMMATRI
 
 	for (int i = 0; i < amountOfBullets; i++)
 	{
-		Translation = XMMatrixTranslation(bulletpos[i].x, bulletpos[i].y, bulletpos[i].z);
-		XMStoreFloat4x4(&Test, XMMatrixTranspose(Scale * rotation * Translation));
-		m_worldStructInstanced.worldMatrix[i] = Test;
+		Translation = XMMatrixTranslation(position[i].x, position[i].y, position[i].z);
+		XMStoreFloat4x4(&_worldInstance, XMMatrixTranspose(Scale * rotation * Translation));
+		m_worldStructInstanced.worldMatrix[i] = _worldInstance;
 	}
 
 	memcpy(_mappedResource.pData, &m_worldStructInstanced, sizeof(WorldStructInstanced));
@@ -128,35 +128,4 @@ Renderer::Renderer(ID3D11DeviceContext * deviceContext, ID3D11Device * device)
 
 	//Create the world constant buffer
 	device->CreateBuffer(&_worldBufferInstanceDesc, NULL, &m_worldBufferInstance);
-
-	//testy shit
-	Vertex v[] =
-	{
-		Vertex(0.0f, 0.5f, 0.5f),
-		Vertex(0.5f, -0.5f, 0.5f),
-		Vertex(-0.5f, -0.5f, 0.5f),
-	};
-
-	D3D11_BUFFER_DESC vertexBufferDesc;
-	ZeroMemory(&vertexBufferDesc, sizeof(vertexBufferDesc));
-
-	vertexBufferDesc.Usage = D3D11_USAGE_DEFAULT;
-	vertexBufferDesc.ByteWidth = sizeof(Vertex) * 3;
-	vertexBufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-	vertexBufferDesc.CPUAccessFlags = 0;
-	vertexBufferDesc.MiscFlags = 0;
-
-	D3D11_SUBRESOURCE_DATA vertexBufferData;
-
-	ZeroMemory(&vertexBufferData, sizeof(vertexBufferData));
-	vertexBufferData.pSysMem = v;
-	device->CreateBuffer(&vertexBufferDesc, &vertexBufferData, &triangleVertBuffer);
-
-	//Set the vertex buffer
-	UINT stride = sizeof(Vertex);
-	UINT offset = 0;
-	deviceContext->IASetVertexBuffers(0, 1, &triangleVertBuffer, &stride, &offset);
-
-	//Set the Input Layout
-	deviceContext->IASetInputLayout(vertLayout);
 }

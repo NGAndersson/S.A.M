@@ -137,8 +137,8 @@ void EntityManager::Initialize(SoundManager* soundManager, Input* input, ID3D11D
 	m_modelHandlers[BULLET1] = new ModelHandler;
 	m_modelHandlers[BULLET1]->LoadOBJData("Resources/Models/Bullet1.obj", "Resources/Models/Bullet1.mtl", m_device, m_deviceContext);
 	m_modelHandlers[BULLET1]->CreateBuffers(m_device);
-	m_modelHandlers[BULLET1]->CreateShaders(m_device, "Shaders\\PlayerVS.hlsl", "Shaders\\PlayerGS.hlsl", "Shaders\\PlayerPS.hlsl");
-//	m_modelHandlers[BULLET1]->CreateShaders(m_device, "Shaders\\BulletVS.hlsl", "Shaders\\BulletGS.hlsl", "Shaders\\BulletPS.hlsl");
+	//m_modelHandlers[BULLET1]->CreateShaders(m_device, "Shaders\\PlayerVS.hlsl", "Shaders\\PlayerGS.hlsl", "Shaders\\PlayerPS.hlsl");
+	m_modelHandlers[BULLET1]->CreateShaders(m_device, "Shaders\\BulletVS.hlsl", "Shaders\\BulletGS.hlsl", "Shaders\\BulletPS.hlsl");
 	m_modelHandlers[BULLET2] = new ModelHandler;
 	m_modelHandlers[BULLET3] = new ModelHandler;
 	m_modelHandlers[BULLET4] = new ModelHandler;
@@ -167,15 +167,15 @@ void EntityManager::Render()
 	m_renderer->Render(m_modelHandlers[PLAYER], m_player->GetPosition(), m_player->GetRotation(), m_player->GetScale());
 
 
-	XMFLOAT3 bulletpos[4];
-	bulletpos[0] = XMFLOAT3(4, 0, 5);
-	bulletpos[1] = XMFLOAT3(6, 0, 9);
-	bulletpos[2] = XMFLOAT3(-9, 0, 78);
-	bulletpos[3] = XMFLOAT3(56, 0, 0);
+	vector<XMFLOAT3> bulletpos;
+	bulletpos.push_back(XMFLOAT3(4, 0, 5));
+	bulletpos.push_back(XMFLOAT3(6, 0, 9));
+	bulletpos.push_back(XMFLOAT3(-9, 0, 20));
+	bulletpos.push_back(XMFLOAT3(30, 0, 0));
 
 	m_modelHandlers[BULLET1]->SetBuffers(m_deviceContext);
 	m_modelHandlers[BULLET1]->SetShaders(m_deviceContext);
-	m_renderer->RenderInstanced(m_modelHandlers[BULLET1], bulletpos, m_player->GetRotation(), 4);
+	m_renderer->RenderInstanced(m_modelHandlers[BULLET1], bulletpos, m_player->GetRotation(), 4, XMFLOAT3(1, 1, 1));
 
 	//m_renderer->Render(m_modelHandlers[PLAYER], m_player->GetPosition(), &m_player->GetRotation());
 	/*
