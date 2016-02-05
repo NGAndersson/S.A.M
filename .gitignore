@@ -210,6 +210,9 @@ GeneratedArtifacts/
 _Pvt_Extensions/
 ModelManifest.xml
 
+S.A.M.vcxproj
+S.A.M.vcxproj.filters
+
 *.VC.opendb
 *.vcxproj
 S.A.M/S.A.M/S.A.M.vcxproj
