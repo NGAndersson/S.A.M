@@ -162,11 +162,11 @@ void EntityManager::Render()
 	m_partSys.PartRend(m_deviceContext);
 	
 	//Render Player
-	m_modelHandlers[PLAYER]->SetBuffers(m_deviceContext);
-	m_modelHandlers[PLAYER]->SetShaders(m_deviceContext);
 	m_renderer->Render(m_modelHandlers[PLAYER], m_player->GetPosition(), m_player->GetRotation(), m_player->GetScale());
 
-	//m_renderer->Render(m_modelHandlers[PLAYER], m_player->GetPosition(), &m_player->GetRotation());
+	vector<XMFLOAT3> _instancePosition;
+	vector<XMMATRIX> _instanceRotation;
+	vector<XMFLOAT3> _instanceScale;
 	/*
 	//Render Enemies
 	for (int i = 0; i < m_enemy1.size(); i++)
@@ -195,16 +195,17 @@ void EntityManager::Render()
 	}
 
 	//Render Bullets*/
+	_instancePosition.clear();
+	_instanceScale.clear();
+	_instanceRotation.clear();
 	if (m_bullet1.size() > 0)
 	{
-		vector<XMFLOAT3> _bulletPosition;
-		for (int i = 0; i < m_bullet1.size(); i++)
-		{
-			_bulletPosition.push_back(m_bullet1[i]->GetPosition());
+		for (int i = 0; i < m_bullet1.size(); i++) {
+			_instancePosition.push_back(m_bullet1[i]->GetPosition());
+			_instanceScale.push_back(m_bullet1[i]->GetScale());
+			_instanceRotation.push_back(m_bullet1[i]->GetRotation());
 		}
-		m_modelHandlers[BULLET1]->SetBuffers(m_deviceContext);
-		m_modelHandlers[BULLET1]->SetShaders(m_deviceContext);
-		m_renderer->RenderInstanced(m_modelHandlers[BULLET1], _bulletPosition, m_bullet1[0]->GetRotation(), m_bullet1.size(), m_bullet1[0]->GetScale());
+		m_renderer->RenderInstanced(m_modelHandlers[BULLET1], _instancePosition, m_bullet1[0]->GetRotation(), m_bullet1.size(), m_bullet1[0]->GetScale());
 	}
 	/*
 	for (int i = 0; i < m_bullet2.size(); i++)

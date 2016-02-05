@@ -51,14 +51,14 @@ void Renderer::Render(ModelHandler * model, XMFLOAT3 position, XMMATRIX &rotatio
 
 }
 
-void Renderer::RenderInstanced(ModelHandler * model, vector<XMFLOAT3> position, XMMATRIX &rotation, int amountOfBullets, XMFLOAT3 scale)
+void Renderer::RenderInstanced(ModelHandler * model, vector<XMFLOAT3> position, vector<XMMATRIX> &rotation, int amountOfBullets, vector<XMFLOAT3> scale)
 {
 	//Set vertexbuffer, pixel material constant buffer and set the correct shaders
 	model->SetBuffers(m_deviceContext);
 	model->SetShaders(m_deviceContext);
 	XMMATRIX Translation;
+	XMMATRIX Scale;
 	//Set Worldmatrix and Position(float3) as a Vertexshader constant buffer
-	XMMATRIX Scale = XMMatrixScaling(scale.x, scale.y, scale.z);
 
 	XMFLOAT4X4 _worldInstance;
 
@@ -69,7 +69,8 @@ void Renderer::RenderInstanced(ModelHandler * model, vector<XMFLOAT3> position, 
 	for (int i = 0; i < amountOfBullets; i++)
 	{
 		Translation = XMMatrixTranslation(position[i].x, position[i].y, position[i].z);
-		XMStoreFloat4x4(&_worldInstance, XMMatrixTranspose(Scale * rotation * Translation));
+		Scale = XMMatrixScaling(scale[i].x, scale[i].y, scale[i].z);
+		XMStoreFloat4x4(&_worldInstance, XMMatrixTranspose(Scale * rotation[i] * Translation));
 		m_worldStructInstanced.worldMatrix[i] = _worldInstance;
 	}
 
