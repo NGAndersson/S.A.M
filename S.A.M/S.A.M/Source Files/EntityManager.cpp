@@ -1,6 +1,6 @@
 #include "EntityManager.h"
 #include <iostream>
-#define MAPWIDTH 100
+#define MAPWIDTH 107
 #define MAPLENGTH 100
 
 EntityManager::EntityManager()
