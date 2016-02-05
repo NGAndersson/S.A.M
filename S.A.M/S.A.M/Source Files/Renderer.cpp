@@ -69,13 +69,11 @@ void Renderer::RenderInstanced(ModelHandler * model, XMFLOAT3 *position, XMMATRI
 		m_worldStructInstanced.worldMatrix[i] = Test;
 	}
 
-	memcpy(_mappedResource.pData, &m_worldStructInstanced, sizeof(WorldStructInstanced) * 100);
+	memcpy(_mappedResource.pData, &m_worldStructInstanced, sizeof(WorldStructInstanced));
 
 	m_deviceContext->Unmap(m_worldBufferInstance, 0);
 
 	m_deviceContext->VSSetConstantBuffers(0, 1, &m_worldBufferInstance);
-	m_deviceContext->VSSetConstantBuffers(0, 1, &m_worldBuffer);
-
 
 	//Draw call
 	m_deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
@@ -112,10 +110,10 @@ Renderer::Renderer(ID3D11DeviceContext * deviceContext, ID3D11Device * device)
 	//Create world constant buffer desc
 	ZeroMemory(&_worldBufferInstanceDesc, sizeof(D3D11_BUFFER_DESC));
 
-	_worldBufferInstanceDesc.Usage = D3D11_USAGE_DEFAULT;
+	_worldBufferInstanceDesc.Usage = D3D11_USAGE_DYNAMIC;
 	_worldBufferInstanceDesc.ByteWidth = sizeof(WorldStructInstanced);
 	_worldBufferInstanceDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-	_worldBufferInstanceDesc.CPUAccessFlags = 0;
+	_worldBufferInstanceDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 	_worldBufferInstanceDesc.MiscFlags = 0;
 
 	//Create the world constant buffer
