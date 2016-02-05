@@ -62,12 +62,6 @@ void Renderer::RenderInstanced(ModelHandler * model, vector<XMFLOAT3> position, 
 
 	XMFLOAT4X4 _worldInstance;
 
-	/*XMFLOAT3 bulletpos[4];
-	bulletpos[0] = XMFLOAT3(4, 0, 5);
-	bulletpos[1] = XMFLOAT3(6, 0, 9);
-	bulletpos[2] = XMFLOAT3(-9, 0, 20);
-	bulletpos[3] = XMFLOAT3(28, 0, 0);*/
-
 	D3D11_MAPPED_SUBRESOURCE _mappedResource;
 
 	HRESULT hr = m_deviceContext->Map(m_worldBufferInstance, 0, D3D11_MAP_WRITE_DISCARD, 0, &_mappedResource);
