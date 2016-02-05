@@ -30,6 +30,9 @@ Game::~Game()
 	{
 		m_depthStencil->Release();
 	}
+	if (m_sampleState)
+		m_sampleState->Release();
+
 }
 
 void Game::InitGame(Input* input, Display* disp)

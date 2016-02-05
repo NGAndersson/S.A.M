@@ -56,7 +56,8 @@ private:
 	int m_currentBPM;
 	double m_timeSinceLastBeat = 0.0f;
 
-	bool m_doBeatDet = false;
+	bool m_doBeatDet;
+	float* m_beat;
 
 public:
 

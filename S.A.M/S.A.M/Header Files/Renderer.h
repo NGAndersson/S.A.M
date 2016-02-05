@@ -25,15 +25,17 @@ class Renderer
 		XMFLOAT4X4 worldMatrix[100];
 	};
 
-	//Functions
+//Functions
 private:
 
 public:
+	~Renderer();
+	void Render(ModelHandler* model, XMFLOAT3 position, XMMATRIX &rotation, XMFLOAT3 scale);
 	void Render(ModelHandler* model, XMFLOAT3 position, XMMATRIX &rotation);
 	void RenderInstanced(ModelHandler * model, XMFLOAT3 *position, XMMATRIX &rotation, int amountOfBullets);
 	Renderer(ID3D11DeviceContext* deviceContext, ID3D11Device* device);
 
-	//Variables
+//Variables
 private:
 	ID3D11DeviceContext* m_deviceContext;
 	ID3D11Device* m_device;
@@ -44,9 +46,6 @@ private:
 	WorldStructInstanced m_worldStructInstanced;
 	ID3D11Buffer* m_worldBuffer, *m_worldBufferInstance;
 	Camera m_cam;
-
-	ID3D11Buffer* triangleVertBuffer;
-	ID3D11InputLayout* vertLayout;
 
 public:
 

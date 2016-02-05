@@ -14,17 +14,33 @@ struct Vertex    //Overloaded Vertex Structure
 	}
 };
 
-void Renderer::Render(ModelHandler * model, XMFLOAT3 position, XMMATRIX &rotation)
+Renderer::~Renderer()
+{
+	if (m_device)
+		m_device->Release();
+
+	if (m_deviceContext)
+		m_deviceContext->Release();
+	
+	if (m_camBuffer)
+		m_camBuffer->Release();
+
+	if (m_worldBuffer)
+		m_worldBuffer->Release();
+
+}
+
+void Renderer::Render(ModelHandler * model, XMFLOAT3 position, XMMATRIX &rotation, XMFLOAT3 scale)
 {
 	//Set vertexbuffer, pixel material constant buffer and set the correct shaders
 	model->SetBuffers(m_deviceContext);
 	model->SetShaders(m_deviceContext);
 
 	//Set Worldmatrix and Position(float3) as a Vertexshader constant buffer
-	XMMATRIX Scale = XMMatrixScaling(1.0f, 1.0f, 1.0f);
+	XMMATRIX Scale = XMMatrixScaling(scale.x, scale.y, scale.z);
 	XMMATRIX Translation = XMMatrixTranslation(position.x, position.y, position.z);
 	m_worldStruct.worldMatrix = XMMatrixTranspose(Scale * rotation * Translation);
-
+	
 	m_deviceContext->UpdateSubresource(m_worldBuffer, 0, NULL, &m_worldStruct, 0, 0);
 	m_deviceContext->VSSetConstantBuffers(0, 1, &m_worldBuffer);
 
@@ -32,12 +48,6 @@ void Renderer::Render(ModelHandler * model, XMFLOAT3 position, XMMATRIX &rotatio
 	//Draw call
 	m_deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	m_deviceContext->Draw(model->GetVertexCount(), 0);
-
-	//Set the vertex buffer
-	UINT stride = sizeof(Vertex);
-	UINT offset = 0;
-	m_deviceContext->IASetVertexBuffers(0, 1, &triangleVertBuffer, &stride, &offset);
-	m_deviceContext->Draw(3, 0);
 
 }
 
@@ -85,7 +95,7 @@ Renderer::Renderer(ID3D11DeviceContext * deviceContext, ID3D11Device * device)
 	m_device = device;
 	m_deviceContext = deviceContext;
 
-	m_cam.SetCameraPos(XMVectorSet(0.0f, 65.0f, 0.0f, 0.0f));
+	m_cam.SetCameraPos(XMVectorSet(0.0f, 65.0f,  0.0f, 0.0f));
 	m_cam.SetLookAtVec(XMVectorSet(0.0f, -100.0f, 0.0001f, 0.0f));
 	m_cam.SetProjectionMatrix();
 	m_cam.SetViewMatrix();
@@ -94,7 +104,7 @@ Renderer::Renderer(ID3D11DeviceContext * deviceContext, ID3D11Device * device)
 	m_cam.SetConstantBuffer(deviceContext);
 
 	D3D11_BUFFER_DESC _worldBufferDesc, _worldBufferInstanceDesc;
-
+	
 	//Create world constant buffer desc
 	ZeroMemory(&_worldBufferDesc, sizeof(D3D11_BUFFER_DESC));
 
@@ -106,7 +116,7 @@ Renderer::Renderer(ID3D11DeviceContext * deviceContext, ID3D11Device * device)
 
 	//Create the world constant buffer
 	device->CreateBuffer(&_worldBufferDesc, NULL, &m_worldBuffer);
-
+		
 	//Create world constant buffer desc
 	ZeroMemory(&_worldBufferInstanceDesc, sizeof(D3D11_BUFFER_DESC));
 

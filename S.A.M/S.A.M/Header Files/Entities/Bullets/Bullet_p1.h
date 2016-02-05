@@ -9,7 +9,7 @@ private:
 protected:
 public:
 	Bullet_p1();
-	Bullet_p1(SoundManager* SoundManager, int MapWidth, int MapLength, XMFLOAT3 Position) : Bullet(SoundManager, MapWidth, MapLength, Position) {}
+	Bullet_p1(SoundManager* SoundManager, int MapWidth, int MapLength, XMFLOAT3 Position, XMFLOAT3 Scale);
 	~Bullet_p1();
 	void Update(double time);
 	void Destroyed();
