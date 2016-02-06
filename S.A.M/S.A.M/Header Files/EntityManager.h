@@ -10,6 +10,8 @@
 #include "Audio\BeatDetector.h"
 #include <d3d11.h>
 #include "Entities\Bullets\Bullet_p1.h"
+#include "Entities\Bullets\Bullet_p2.h"
+#include "Entities\Bullets\Bullet_p5.h"
 
 enum HandlerIndex { PLAYER, BULLET1, BULLET2, BULLET3, BULLET4, BULLET5, BULLET6, ENEMY1, ENEMY2, ENEMY3, ENEMY4};
 class EntityManager
@@ -18,6 +20,8 @@ class EntityManager
 private:
 	void SpawnEntity(HandlerIndex type);
 	void BeatWasDetected();
+	vector<Entity*> CheckOutOfBounds(std::vector<Entity*> bullet);
+	void RenderBullets();
 
 	//Collision functions needed
 public:
