@@ -19,7 +19,7 @@
 #include <random>
 #include "Collision.h"
 
-enum HandlerIndex { PLAYER, BULLET1, BULLET2, BULLET3, BULLET4, BULLET5, BULLET6, ENEMY1, ENEMY2, ENEMY3, ENEMY4};
+
 class EntityManager
 {
 	//Functions

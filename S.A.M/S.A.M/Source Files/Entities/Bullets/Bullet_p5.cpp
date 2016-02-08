@@ -11,6 +11,7 @@ Bullet_p5::Bullet_p5(SoundManager * SoundManager, int MapWidth, int MapLength, X
 	m_rotation = XMMatrixRotationAxis(_rotzAxis, 0.0f);
 	m_scale = Scale;
 	m_position = Position;
+	m_entityBox.Extents = XMFLOAT3(5, 0, 100);
 }
 
 Bullet_p5::~Bullet_p5()
@@ -25,6 +26,9 @@ void Bullet_p5::Update(double time)
 	{
 		m_delete = true;
 	}
+
+	m_entityBox.Center = m_position;
+
 }
 
 void Bullet_p5::Destroyed()

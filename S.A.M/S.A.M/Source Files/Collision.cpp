@@ -18,7 +18,7 @@ bool Collision::CheckCollision(BoundingBox Entitiy1, BoundingBox Entity2)
 	return false;
 }
 
-void Collision::CheckCollisionEntity(vector<Entity*>* Entity_1, vector<Entity*>* Entity_2)
+void Collision::CheckCollisionEntity(vector<Entity*>* Entity_1, vector<Entity*>* Entity_2, HandlerIndex BulletType)
 {
 
 	for (auto i = 0; i < Entity_1->size(); i++)
@@ -27,7 +27,9 @@ void Collision::CheckCollisionEntity(vector<Entity*>* Entity_1, vector<Entity*>*
 		{
 			if (CheckCollision((*Entity_1)[i]->GetBoundingBox(), (*Entity_2)[j]->GetBoundingBox()))
 			{
-				Entity_1 = RemoveEntity(i, Entity_1);
+				if (BulletType != BULLET5)
+					Entity_1 = RemoveEntity(i, Entity_1);
+
 				Entity_2 = RemoveEntity(j, Entity_2);
 				break;
 			}

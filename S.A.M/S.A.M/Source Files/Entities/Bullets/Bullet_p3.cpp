@@ -25,6 +25,9 @@ void Bullet_p3::Update(double time)
 	XMVECTOR _rotzAxis{ 0,0,1,0 };
 	m_rotationValue += time;
 	m_rotation = XMMatrixRotationAxis(_rotzAxis, XM_PI * m_rotationValue);
+
+
+	m_entityBox.Center = m_position;
 }
 
 void Bullet_p3::Destroyed()

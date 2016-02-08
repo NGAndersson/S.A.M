@@ -242,37 +242,37 @@ void EntityManager::Update(double time)
 	//Do collision checks
 
 	//Check Bullet1 agains Enemies
-	m_collision.CheckCollisionEntity(&m_bullet1, &m_enemy1);
-	m_collision.CheckCollisionEntity(&m_bullet1, &m_enemy2);
-	m_collision.CheckCollisionEntity(&m_bullet1, &m_enemy3);
-	m_collision.CheckCollisionEntity(&m_bullet1, &m_enemy4);
+	m_collision.CheckCollisionEntity(&m_bullet1, &m_enemy1,BULLET1);
+	m_collision.CheckCollisionEntity(&m_bullet1, &m_enemy2,BULLET1);
+	m_collision.CheckCollisionEntity(&m_bullet1, &m_enemy3,BULLET1);
+	m_collision.CheckCollisionEntity(&m_bullet1, &m_enemy4,BULLET1);
 
 
 	//Check Bullet1 agains Enemies
-	m_collision.CheckCollisionEntity(&m_bullet2, &m_enemy1);
-	m_collision.CheckCollisionEntity(&m_bullet2, &m_enemy2);
-	m_collision.CheckCollisionEntity(&m_bullet2, &m_enemy3);
-	m_collision.CheckCollisionEntity(&m_bullet2, &m_enemy4);
+	m_collision.CheckCollisionEntity(&m_bullet2, &m_enemy1,BULLET2);
+	m_collision.CheckCollisionEntity(&m_bullet2, &m_enemy2,BULLET2);
+	m_collision.CheckCollisionEntity(&m_bullet2, &m_enemy3,BULLET2);
+	m_collision.CheckCollisionEntity(&m_bullet2, &m_enemy4,BULLET2);
 
 
 	//Check Bullet1 agains Enemies
-	m_collision.CheckCollisionEntity(&m_bullet3, &m_enemy1);
-	m_collision.CheckCollisionEntity(&m_bullet3, &m_enemy2);
-	m_collision.CheckCollisionEntity(&m_bullet3, &m_enemy3);
-	m_collision.CheckCollisionEntity(&m_bullet3, &m_enemy4);
+	m_collision.CheckCollisionEntity(&m_bullet3, &m_enemy1,BULLET3);
+	m_collision.CheckCollisionEntity(&m_bullet3, &m_enemy2,BULLET3);
+	m_collision.CheckCollisionEntity(&m_bullet3, &m_enemy3,BULLET3);
+	m_collision.CheckCollisionEntity(&m_bullet3, &m_enemy4,BULLET3);
 
 
 	//Check Bullet1 agains Enemies
-	m_collision.CheckCollisionEntity(&m_bullet4, &m_enemy1);
-	m_collision.CheckCollisionEntity(&m_bullet4, &m_enemy2);
-	m_collision.CheckCollisionEntity(&m_bullet4, &m_enemy3);
-	m_collision.CheckCollisionEntity(&m_bullet4, &m_enemy4);
+	m_collision.CheckCollisionEntity(&m_bullet4, &m_enemy1,BULLET4);
+	m_collision.CheckCollisionEntity(&m_bullet4, &m_enemy2,BULLET4);
+	m_collision.CheckCollisionEntity(&m_bullet4, &m_enemy3,BULLET4);
+	m_collision.CheckCollisionEntity(&m_bullet4, &m_enemy4,BULLET4);
 
 	//Check Bullet1 agains Enemies
-	m_collision.CheckCollisionEntity(&m_bullet5, &m_enemy1);
-	m_collision.CheckCollisionEntity(&m_bullet5, &m_enemy2);
-	m_collision.CheckCollisionEntity(&m_bullet5, &m_enemy3);
-	m_collision.CheckCollisionEntity(&m_bullet5, &m_enemy4);
+	m_collision.CheckCollisionEntity(&m_bullet5, &m_enemy1,BULLET5);
+	m_collision.CheckCollisionEntity(&m_bullet5, &m_enemy2,BULLET5);
+	m_collision.CheckCollisionEntity(&m_bullet5, &m_enemy3,BULLET5);
+	m_collision.CheckCollisionEntity(&m_bullet5, &m_enemy4,BULLET5);
 
 	//Enemies
 	for (auto i = 0; i < m_enemy1.size(); i++)
