@@ -160,6 +160,9 @@ void EntityManager::Initialize(SoundManager* soundManager, Input* input, ID3D11D
 	m_modelHandlers[BULLET5]->CreateBuffers(m_device);
 	m_modelHandlers[BULLET5]->CreateShaders(m_device, "Shaders\\BulletVS.hlsl", "Shaders\\BulletGS.hlsl", "Shaders\\BulletPS.hlsl");
 	m_modelHandlers[BULLET6] = new ModelHandler;
+	m_modelHandlers[BULLET6]->LoadOBJData("Resources/Models/EnemyBullet.obj", "Resources/Models/EnemyBullet.mtl", m_device, m_deviceContext);
+	m_modelHandlers[BULLET6]->CreateBuffers(m_device);
+	m_modelHandlers[BULLET6]->CreateShaders(m_device, "Shaders\\BulletVS.hlsl", "Shaders\\BulletGS.hlsl", "Shaders\\BulletPS.hlsl");
 	//Temp, create player
 	SpawnEntity(PLAYER);
 	//Temp, creates partsys
@@ -266,6 +269,10 @@ void EntityManager::Update(double time)
 		//Enemies
 	for (auto i = 0; i < m_enemy1.size(); i++)
 		m_enemy1[i]->Update(time);
+
+
+
+
 
 	//for (auto i = 0; i < m_enemy1.size(); i++)
 	//	m_enemy2[i]->Update(time);
