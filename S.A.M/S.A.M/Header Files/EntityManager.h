@@ -28,7 +28,6 @@ private:
 	void BeatWasDetected();
 	vector<Entity*> CheckOutOfBounds(std::vector<Entity*> bullet);
 	void RenderBullets();
-	vector<Entity*> RemoveEntity(int RemoveId, vector<Entity*> RemoveType);
 	//Collision functions needed
 public:
 	EntityManager();
