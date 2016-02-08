@@ -29,7 +29,9 @@ private:
 	vector<Entity*> CheckOutOfBounds(std::vector<Entity*> bullet);
 	vector<Entity*> CheckIfAlive(std::vector<Entity*> bullet);
 	void RenderBullets();
-	//Collision functions needed
+	vector<Entity*> RemoveEntity(int RemoveId, vector<Entity*> RemoveType);
+	void InitMusic(std::string filename);
+
 public:
 	EntityManager();
 	~EntityManager();
@@ -66,10 +68,13 @@ private:
 
 	int m_currentBPM;
 	double m_timeSinceLastBeat = 0.0f;
-
+	int m_offset = 0;				//Beats to skip in the beginning (for intros without music etc)
+	int m_offsetCount = 0;			//If greater than m_offset, do stuff on the beat
+									//ADD ENDING OFFSETS
 	bool m_doBeatDet;
 	float* m_beat;
 	int m_level;
+
 public:
 
 };
