@@ -37,7 +37,8 @@ void EntityManager::SpawnEntity(HandlerIndex type)
 {
 	Bullet* tempEntity;
 	Enemy* tempEntity1;
-	float _tempX = rand() % 51 - 50;
+	float _tempX = rand() % 101 - 50;
+
 	switch (type) {
 	case(PLAYER) :
 		m_player = new Player(m_soundManager, MAPWIDTH,MAPLENGTH,XMFLOAT3(1.0f, 0.0f, 1.0f), XMFLOAT3(0.5f, 0.5f, 0.5f), m_input);
@@ -253,36 +254,36 @@ void EntityManager::Update(double time)
 
 	//Check Bullet1 agains Enemies
 	m_collision.CheckCollisionEntity(&m_bullet1, &m_enemy1,BULLET1);
-	m_collision.CheckCollisionEntity(&m_bullet1, &m_enemy2,BULLET1);
-	m_collision.CheckCollisionEntity(&m_bullet1, &m_enemy3,BULLET1);
-	m_collision.CheckCollisionEntity(&m_bullet1, &m_enemy4,BULLET1);
+	//m_collision.CheckCollisionEntity(&m_bullet1, &m_enemy2,BULLET1);
+	//m_collision.CheckCollisionEntity(&m_bullet1, &m_enemy3,BULLET1);
+	//m_collision.CheckCollisionEntity(&m_bullet1, &m_enemy4,BULLET1);
 
 
 	//Check Bullet1 agains Enemies
 	m_collision.CheckCollisionEntity(&m_bullet2, &m_enemy1,BULLET2);
-	m_collision.CheckCollisionEntity(&m_bullet2, &m_enemy2,BULLET2);
-	m_collision.CheckCollisionEntity(&m_bullet2, &m_enemy3,BULLET2);
-	m_collision.CheckCollisionEntity(&m_bullet2, &m_enemy4,BULLET2);
+	//m_collision.CheckCollisionEntity(&m_bullet2, &m_enemy2,BULLET2);
+	//m_collision.CheckCollisionEntity(&m_bullet2, &m_enemy3,BULLET2);
+	//m_collision.CheckCollisionEntity(&m_bullet2, &m_enemy4,BULLET2);
 
 
 	//Check Bullet1 agains Enemies
 	m_collision.CheckCollisionEntity(&m_bullet3, &m_enemy1,BULLET3);
-	m_collision.CheckCollisionEntity(&m_bullet3, &m_enemy2,BULLET3);
-	m_collision.CheckCollisionEntity(&m_bullet3, &m_enemy3,BULLET3);
-	m_collision.CheckCollisionEntity(&m_bullet3, &m_enemy4,BULLET3);
+	//m_collision.CheckCollisionEntity(&m_bullet3, &m_enemy2,BULLET3);
+	//m_collision.CheckCollisionEntity(&m_bullet3, &m_enemy3,BULLET3);
+	//m_collision.CheckCollisionEntity(&m_bullet3, &m_enemy4,BULLET3);
 
 
 	//Check Bullet1 agains Enemies
 	m_collision.CheckCollisionEntity(&m_bullet4, &m_enemy1,BULLET4);
-	m_collision.CheckCollisionEntity(&m_bullet4, &m_enemy2,BULLET4);
-	m_collision.CheckCollisionEntity(&m_bullet4, &m_enemy3,BULLET4);
-	m_collision.CheckCollisionEntity(&m_bullet4, &m_enemy4,BULLET4);
+	//m_collision.CheckCollisionEntity(&m_bullet4, &m_enemy2,BULLET4);
+	//m_collision.CheckCollisionEntity(&m_bullet4, &m_enemy3,BULLET4);
+	//m_collision.CheckCollisionEntity(&m_bullet4, &m_enemy4,BULLET4);
 
 	//Check Bullet1 agains Enemies
 	m_collision.CheckCollisionEntity(&m_bullet5, &m_enemy1,BULLET5);
-	m_collision.CheckCollisionEntity(&m_bullet5, &m_enemy2,BULLET5);
-	m_collision.CheckCollisionEntity(&m_bullet5, &m_enemy3,BULLET5);
-	m_collision.CheckCollisionEntity(&m_bullet5, &m_enemy4,BULLET5);
+	//m_collision.CheckCollisionEntity(&m_bullet5, &m_enemy2,BULLET5);
+	//m_collision.CheckCollisionEntity(&m_bullet5, &m_enemy3,BULLET5);
+	//m_collision.CheckCollisionEntity(&m_bullet5, &m_enemy4,BULLET5);
 
 	//Enemies
 	for (auto i = 0; i < m_enemy1.size(); i++)
@@ -315,12 +316,20 @@ void EntityManager::Update(double time)
 		m_bullet5[i]->Update(time);
 	m_player->Update(time);
 	
+	//CheckEnemies Out Of BOUNDS
+	m_enemy1 = CheckOutOfBounds(m_enemy1);
+	m_enemy2 = CheckOutOfBounds(m_enemy2);
+	m_enemy3 = CheckOutOfBounds(m_enemy3);
+	m_enemy4 = CheckOutOfBounds(m_enemy4);
 	//Out of bounds check, remove immediately
+	
 	m_bullet1 = CheckOutOfBounds(m_bullet1);
 	m_bullet2 = CheckOutOfBounds(m_bullet2);
 	m_bullet3 = CheckOutOfBounds(m_bullet3);
 	m_bullet4 = CheckOutOfBounds(m_bullet4);
 	m_bullet5 = CheckIfAlive(m_bullet5);
+
+
 
 	//Update Particle System
 	m_partSys.updatePart(m_deviceContext, time, 40);

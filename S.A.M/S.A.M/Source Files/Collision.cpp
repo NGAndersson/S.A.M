@@ -25,14 +25,16 @@ void Collision::CheckCollisionEntity(vector<Entity*>* Entity_1, vector<Entity*>*
 	{
 		for (auto j = 0; j < Entity_2->size(); j++)
 		{
-			if (CheckCollision((*Entity_1)[i]->GetBoundingBox(), (*Entity_2)[j]->GetBoundingBox()))
-			{
-				if (BulletType != BULLET5)
-					Entity_1 = RemoveEntity(i, Entity_1);
 
-				Entity_2 = RemoveEntity(j, Entity_2);
-				break;
-			}
+				if (CheckCollision((*Entity_1)[i]->GetBoundingBox(), (*Entity_2)[j]->GetBoundingBox()))
+				{
+					if (BulletType != BULLET5)
+						Entity_1 = RemoveEntity(i, Entity_1);
+
+					Entity_2 = RemoveEntity(j, Entity_2);
+					break;
+				}
+			
 		}
 	}
 }
