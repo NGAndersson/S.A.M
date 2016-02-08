@@ -104,7 +104,6 @@ void EntityManager::Initialize(SoundManager* soundManager, Input* input, ID3D11D
 
 	//Set the soundManager pointer which will be used in every entity
 	m_soundManager = soundManager;
-	//m_soundManager->LoadMusic("Resources/Sound/PixieTrust.mp3");
 	InitMusic("Resources/Sound/PixieTrust.txt");
 
 	m_beatDetector = new BeatDetector(m_soundManager);
