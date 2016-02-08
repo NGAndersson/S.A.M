@@ -3,7 +3,7 @@
 //Temporary include
 #include <DirectXCollision.h>
 #include <DirectXMath.h>
-#include "Input.h"
+#include "Gamelogic\Input.h"
 using namespace DirectX;
 #include "Audio/SoundManager.h"
 
