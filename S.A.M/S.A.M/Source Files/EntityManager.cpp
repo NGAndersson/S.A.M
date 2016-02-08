@@ -105,18 +105,12 @@ void EntityManager::Initialize(SoundManager* soundManager, Input* input, ID3D11D
 
 	//Set the soundManager pointer which will be used in every entity
 	m_soundManager = soundManager;
-	m_soundManager->LoadMusic("Resources/Sound/PixieTrust.mp3");
-	
+	InitMusic("Resources/Sound/PixieTrust.txt");
 
 	m_beatDetector = new BeatDetector(m_soundManager);
 	m_beatDetector->AudioProcess();
 
-	//Load the sounds for every entity
-	m_soundManager->LoadSound("Resources/Sound/DefaultSoundBullet1.wav", "DefaultBullet1", "DefaultBullet", LOAD_MEMORY);
-	m_soundManager->LoadSound("Resources/Sound/DefaultSoundBullet2.wav", "BulletQ", "Bullet_Q", LOAD_MEMORY);
-	m_soundManager->LoadSound("Resources/Sound/DefaultSoundBullet3.wav", "BulletW", "Bullet_W", LOAD_MEMORY);
-	m_soundManager->LoadSound("Resources/Sound/DefaultSoundBullet4.wav", "BulletE", "Bullet_E", LOAD_MEMORY);
-	m_soundManager->LoadSound("Resources/Sound/DefaultSoundBullet5.wav", "LaserR", "Laser_R", LOAD_MEMORY);
+
 
 	//Set the input class which will be passed down to Player
 	m_input = input;
@@ -161,6 +155,9 @@ void EntityManager::Initialize(SoundManager* soundManager, Input* input, ID3D11D
 	m_modelHandlers[BULLET5]->CreateBuffers(m_device);
 	m_modelHandlers[BULLET5]->CreateShaders(m_device, "Shaders\\BulletVS.hlsl", "Shaders\\BulletGS.hlsl", "Shaders\\BulletPS.hlsl");
 	m_modelHandlers[BULLET6] = new ModelHandler;
+	m_modelHandlers[BULLET6]->LoadOBJData("Resources/Models/EnemyBullet.obj", "Resources/Models/EnemyBullet.mtl", m_device, m_deviceContext);
+	m_modelHandlers[BULLET6]->CreateBuffers(m_device);
+	m_modelHandlers[BULLET6]->CreateShaders(m_device, "Shaders\\BulletVS.hlsl", "Shaders\\BulletGS.hlsl", "Shaders\\BulletPS.hlsl");
 	//Temp, create player
 	SpawnEntity(PLAYER);
 	//Temp, creates partsys
@@ -289,6 +286,10 @@ void EntityManager::Update(double time)
 	for (auto i = 0; i < m_enemy1.size(); i++)
 		m_enemy1[i]->Update(time);
 
+
+
+
+
 	//for (auto i = 0; i < m_enemy1.size(); i++)
 	//	m_enemy2[i]->Update(time);
 
@@ -344,8 +345,33 @@ void EntityManager::InitMusic(std::string filename)
 {
 	ifstream _file;
 	_file.open(filename);
+	char _field[100];
+	char _value[100];
+	std::string _tempLine;
+	while (getline(_file, _tempLine))
+	{
 
+		std::istringstream _ss(_tempLine);
 
+		_ss.get(_field, 1000, '=');		//Get field name
+		_ss.ignore();
+		_ss.get(_value, 1000, '=');		//Get value
+		
+		if (std::string(_field) == "music")
+			m_soundManager->LoadMusic(_value);		//Load music
+		else if (std::string(_field) == "offset")
+			m_offset = atoi(_value);				//Load beginning offset
+		else if (std::string(_field) == "bulletD")
+			m_soundManager->LoadSound(_value, _value, "DefaultBullet", LOAD_MEMORY);
+		else if (std::string(_field) == "bulletQ")
+			m_soundManager->LoadSound(_value, _value, "Bullet_Q", LOAD_MEMORY);
+		else if (std::string(_field) == "bulletW")
+			m_soundManager->LoadSound(_value, _value, "Bullet_W", LOAD_MEMORY);
+		else if (std::string(_field) == "bulletE")
+			m_soundManager->LoadSound(_value, _value, "Bullet_E", LOAD_MEMORY);
+		else if (std::string(_field) == "bulletR")
+			m_soundManager->LoadSound(_value, _value, "Laser_R", LOAD_MEMORY);
+	}
 }
 
 void EntityManager::BeatWasDetected()
