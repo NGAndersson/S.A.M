@@ -27,6 +27,7 @@ private:
 	void SpawnEntity(HandlerIndex type);
 	void BeatWasDetected();
 	vector<Entity*> CheckOutOfBounds(std::vector<Entity*> bullet);
+	vector<Entity*> CheckIfAlive(std::vector<Entity*> bullet);
 	void RenderBullets();
 	//Collision functions needed
 public:
