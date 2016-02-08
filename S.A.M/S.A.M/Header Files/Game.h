@@ -1,12 +1,12 @@
 #ifndef _GAME_H_
 #define _GAME_H_
 
-#include "Display.h"
+#include "Graphics\Display.h"
 #include "Audio/SoundManager.h"
 #include "ScreenManager.h"
 #include "EntityManager.h"
-#include "Input.h"
-#include "Timer.h"
+#include "Gamelogic\Input.h"
+#include "Gamelogic\Timer.h"
 
 #include <d3d11.h>	//temp
 

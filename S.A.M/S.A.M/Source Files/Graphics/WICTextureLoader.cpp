@@ -28,7 +28,7 @@
 // We could load multi-frame images (TIFF/GIF) into a texture array.
 // For now, we just load the first frame (note: DirectXTex supports multi-frame images)
 
-#include "pch.h"
+#include "Graphics/pch.h"
 
 // VS 2010's stdint.h conflicts with intsafe.h
 #pragma warning(push)
@@ -36,7 +36,7 @@
 #include <wincodec.h>
 #pragma warning(pop)
 
-#include "WICTextureLoader.h"
+#include "Graphics/WICTextureLoader.h"
 
 #include "DirectXHelpers.h"
 #include "PlatformHelpers.h"

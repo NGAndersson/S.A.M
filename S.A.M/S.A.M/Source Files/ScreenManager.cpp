@@ -51,13 +51,44 @@ void ScreenManager::InitializeScreen(Input* Input)
 	//Starting all the otherClasses etc..
 
 	//Current screen is startscreen
-	m_Current = START;
+	m_Current = GAME;
+	//m_Current = USERINTERFACE;
 	//Create Modelhandlers...
 }
 
 void ScreenManager::Render()
 {
-	//Doing the rendering.....
+	//Renders different things depending on what screen the user is in.
+	switch (m_Current)
+	{
+	case 0:
+		//Startscreen
 
+		break;
+	case 1:
+		//Userinterface
+
+		break;
+	case 2:
+		//HighScore
+
+		break;
+	case 3:
+		//Options
+
+		break;
+	case 4:
+		//Pause
+
+		break;
+	case 5:
+		//Endscreen
+
+		break;
+	default:
+		break;
+	}
 }
+
+
 

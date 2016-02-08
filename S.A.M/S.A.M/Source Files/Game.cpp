@@ -103,9 +103,11 @@ WPARAM Game::MainLoop()
 void Game::Update(double time)
 {
 	m_screenManager->Update(time);
+	if (m_screenManager->GetCurrentScreen() == GAME)
+		m_entityManager->Update(time);
+	
 	//if(m_screenManager->GetCurrentScreen() == USERINTERFACE)
 	// Update Entity Manager
-	m_entityManager->Update(time);
 }
 
 void Game::Render()
@@ -118,7 +120,8 @@ void Game::Render()
 	m_screenManager->Render();
 	//if(m_screenManager->GetCurrentScreen() == USERINTERFACE)
 	// Render Entity Manager
-	m_entityManager->Render();
+	if (m_screenManager->GetCurrentScreen() == GAME)
+		m_entityManager->Render();
 
 	m_swapChain->Present(0, 0);
 }

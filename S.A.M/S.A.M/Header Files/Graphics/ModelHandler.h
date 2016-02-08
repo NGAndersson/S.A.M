@@ -1,8 +1,8 @@
 #ifndef _MODELHANDLER_H_
 #define _MODELHANDLER_H_
 
-#include "OBJloader.h"
-#include "ShaderHandler.h"
+#include "Graphics\OBJloader.h"
+#include "Graphics\ShaderHandler.h"
 
 
 
