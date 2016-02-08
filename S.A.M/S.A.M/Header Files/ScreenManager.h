@@ -4,7 +4,7 @@
 #include "Input.h"
 #include "ModelHandler.h"
 
-enum EnumScreens { START, USERINTERFACE, HIGHSCORE, OPTION, PAUSE, ENDSCREEN };
+enum EnumScreens { MENU, GAME, HIGHSCORE, OPTION, PAUSE, ENDSCREEN };
 
 class ScreenManager
 {
@@ -20,7 +20,8 @@ public:
 	//Rendercall
 	void Render();
 	
-	int GetCurrentScreen() { return m_Current; }
+	//Returns the current screen
+	EnumScreens GetCurrentScreen() { return m_Current; }
 
 //----------------------------Attributes----------------------------------------
 private:
