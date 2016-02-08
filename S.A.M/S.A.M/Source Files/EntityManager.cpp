@@ -37,12 +37,13 @@ void EntityManager::SpawnEntity(HandlerIndex type)
 {
 	Bullet* tempEntity;
 	Enemy* tempEntity1;
+	float _tempX = rand() % 51 - 50;
 	switch (type) {
 	case(PLAYER) :
 		m_player = new Player(m_soundManager, MAPWIDTH,MAPLENGTH,XMFLOAT3(1.0f, 0.0f, 1.0f), XMFLOAT3(0.5f, 0.5f, 0.5f), m_input);
 		break;
 	case(ENEMY1) :
-		tempEntity1 = new Enemy_1(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(30.0f, 0.0f, 70.0f),XMFLOAT3(0.5f,0.5f,0.5f));
+		tempEntity1 = new Enemy_1(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(_tempX, 0.0f, 70.0f),XMFLOAT3(0.5f,0.5f,0.5f));
 		m_enemy1.push_back(tempEntity1);
 		break;
 	//case(ENEMY2) :
@@ -161,9 +162,6 @@ void EntityManager::Initialize(SoundManager* soundManager, Input* input, ID3D11D
 	m_modelHandlers[BULLET6] = new ModelHandler;
 	//Temp, create player
 	SpawnEntity(PLAYER);
-	
-	//Temp enemy
-	SpawnEntity(ENEMY1);
 	//Temp, creates partsys
 	wstring _texName = L"Resources\\Models\\star3.jpg";
 	m_partSys.CreateBuffer(m_device, m_deviceContext, _texName);
@@ -251,15 +249,24 @@ void EntityManager::Update(double time)
 			if (m_collision.CheckCollision(m_bullet1[i]->GetBoundingBox(), m_enemy1[j]->GetBoundingBox()))
 			{
 				m_bullet1 = RemoveEntity(i, m_bullet1);
-				m_enemy1 = RemoveEntity(j, m_enemy1); //Temporary Enemy Change 0 to j. or somthing
+				m_enemy1 = RemoveEntity(j, m_enemy1);
+				break;
 			}
 		}
 	}
 		//Enemies
 	for (auto i = 0; i < m_enemy1.size(); i++)
-	{
 		m_enemy1[i]->Update(time);
-	}
+
+	//for (auto i = 0; i < m_enemy1.size(); i++)
+	//	m_enemy2[i]->Update(time);
+
+	//for (auto i = 0; i < m_enemy1.size(); i++)
+	//	m_enemy3[i]->Update(time);
+
+	//for (auto i = 0; i < m_enemy1.size(); i++)
+	//	m_enemy4[i]->Update(time);
+
 
 	//Update every entity of Bullet1
 	for (int i = 0; i < m_bullet1.size(); i++)
@@ -298,7 +305,7 @@ void EntityManager::BeatWasDetected()
 {
 	//Spawn correct bullet (which plays the sound as well)
 	BulletType _bullet = m_input->CheckBullet();
-
+	static int _randOffset;
 	switch (_bullet)
 	{
 	case INPUT_DEFAULT_BULLET:
@@ -319,7 +326,19 @@ void EntityManager::BeatWasDetected()
 	default:
 		break;
 	}
-	
+
+	m_level = 3;
+	auto _rand = rand() % 100 + 1;
+	if (_rand > 80/m_level)
+	{
+		SpawnEntity(ENEMY1);
+		_randOffset = 0;
+	}
+	else
+	{
+		_randOffset++;
+	}
+
 }
 
 vector<Entity*> EntityManager::CheckOutOfBounds(std::vector<Entity*> bullet)
