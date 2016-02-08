@@ -1,5 +1,5 @@
 #ifndef _COLLISION_
-#define _COLLISION_
+#define _COLLISION_ //Pointless class but hey cool name :)
 
 #include <stdio.h>
 #include <DirectXCollision.h>
@@ -14,7 +14,6 @@ public:
 	Collision();
 	~Collision();
 	bool CheckCollision(BoundingBox Entitiy1, BoundingBox Entity2);
-
 
 private:
 public:

@@ -18,5 +18,5 @@ void Enemy_1::Update(double time)
 
 void Enemy_1::Destroyed()
 {
-
+	//PlaySound of DEATH
 }

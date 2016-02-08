@@ -148,7 +148,7 @@ void EntityManager::Initialize(SoundManager* soundManager, Input* input, ID3D11D
 	m_modelHandlers[BULLET6] = new ModelHandler;
 	//Temp, create player
 	SpawnEntity(PLAYER);
-
+	
 	//Temp, creates partsys
 	wstring _texName = L"Resources\\Models\\star3.jpg";
 	m_partSys.CreateBuffer(m_device, m_deviceContext, _texName);
@@ -224,6 +224,7 @@ void EntityManager::Update(double time)
 		}
 	}
 	//Do collision checks
+
 
 
 	//Update every entity of Bullet1
