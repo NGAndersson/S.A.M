@@ -1,6 +1,6 @@
 #ifndef BULLET_P2_H
 #define BULLET_P2_H
-#include "Bullet.h"
+#include "Entities\Bullets\Bullet.h"
 
 class Bullet_p2 : public Bullet
 {
