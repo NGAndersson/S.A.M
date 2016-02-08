@@ -29,21 +29,21 @@ void Player::Update(double time)
 	m_rotAngle = 0.f;
 	if (_currentInput[0] == INPUT_MOVE_LEFT)
 	{
-		m_position.x -= MOVEMENTSPEEDX;
+		m_position.x -= MOVEMENTSPEEDX*(time*1500);
 		m_rotAngle = XM_PI/8;
 	}
 
 	if (_currentInput[1] == INPUT_MOVE_RIGHT)
 	{
-		m_position.x += MOVEMENTSPEEDX;
-		m_rotAngle = -XM_PI / 8;;
+		m_position.x += MOVEMENTSPEEDX*(time * 1500);
+		m_rotAngle = -XM_PI / 8;
 	}
 
 	if (_currentInput[2] == INPUT_MOVE_UP)
-		m_position.z += MOVEMENTSPEEDZ;
+		m_position.z += MOVEMENTSPEEDZ*(time * 1500);
 
 	if (_currentInput[3] == INPUT_MOVE_DOWN)
-		m_position.z -= MOVEMENTSPEEDZ;
+		m_position.z -= MOVEMENTSPEEDZ*(time * 1500);
 
 	//Check position if out of bounds.
 	if (m_position.z > (float)m_mapLength/2)
@@ -57,9 +57,6 @@ void Player::Update(double time)
 				   
 	if (m_position.x < (float)-m_mapWidth / 2)
 		m_position.x = (float)-m_mapWidth / 2;
-
-	XMVECTOR _rotzAxis{ 0,0,1,0 };
-	m_rotation = XMMatrixRotationAxis(_rotzAxis, m_rotAngle);
 
 }
 

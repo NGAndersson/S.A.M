@@ -24,6 +24,11 @@ public:
 		m_mapWidth = MapWidth;
 		m_position = Position;
 		m_scale = Scale;
+		m_entityWidth = 5.0f;
+
+
+		m_entityBox.Center = Position;
+		m_entityBox.Extents = XMFLOAT3(5.0f, 5.0f, 5.0f);
 	}
 
 	virtual void Update(double time) = 0;
@@ -83,6 +88,7 @@ protected:
 	 //BoundingBox
 	 BoundingBox m_entityBox;
 	 int m_mapWidth, m_mapLength;
+	 float m_entityWidth;
 
 	 //When entities are to be deleted
 	 bool m_delete = false;

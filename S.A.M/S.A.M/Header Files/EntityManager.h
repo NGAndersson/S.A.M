@@ -14,6 +14,10 @@
 #include "Entities\Bullets\Bullet_p3.h"
 #include "Entities\Bullets\Bullet_p4.h"
 #include "Entities\Bullets\Bullet_p5.h"
+#include "Entities\Enemies\Enemy.h"
+#include "Entities\Enemies\Enemy_1.h"
+#include <random>
+#include "Collision.h"
 
 enum HandlerIndex { PLAYER, BULLET1, BULLET2, BULLET3, BULLET4, BULLET5, BULLET6, ENEMY1, ENEMY2, ENEMY3, ENEMY4};
 class EntityManager
@@ -25,7 +29,7 @@ private:
 	vector<Entity*> CheckOutOfBounds(std::vector<Entity*> bullet);
 	vector<Entity*> CheckIfAlive(std::vector<Entity*> bullet);
 	void RenderBullets();
-
+	vector<Entity*> RemoveEntity(int RemoveId, vector<Entity*> RemoveType);
 	//Collision functions needed
 public:
 	EntityManager();
@@ -52,6 +56,7 @@ private:
 	Entity* m_player;
 
 	PartSys m_partSys;
+	Collision m_collision;
 
 	Renderer* m_renderer;
 	SoundManager* m_soundManager;
@@ -65,7 +70,7 @@ private:
 
 	bool m_doBeatDet;
 	float* m_beat;
-
+	int m_level;
 public:
 
 };
