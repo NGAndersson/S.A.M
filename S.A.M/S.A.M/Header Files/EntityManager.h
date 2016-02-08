@@ -14,10 +14,12 @@
 #include "Entities\Bullets\Bullet_p3.h"
 #include "Entities\Bullets\Bullet_p4.h"
 #include "Entities\Bullets\Bullet_p5.h"
+#include "Entities\Bullets\Bullet_e.h"
 #include "Entities\Enemies\Enemy.h"
 #include "Entities\Enemies\Enemy_1.h"
 #include <random>
 #include "Collision.h"
+
 
 
 class EntityManager
@@ -31,6 +33,7 @@ private:
 	void RenderBullets();
 	vector<Entity*> RemoveEntity(int RemoveId, vector<Entity*> RemoveType);
 	void InitMusic(std::string filename);
+	void EnemyFire();
 
 public:
 	EntityManager();
