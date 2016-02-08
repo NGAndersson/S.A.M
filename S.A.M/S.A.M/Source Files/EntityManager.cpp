@@ -167,6 +167,7 @@ void EntityManager::Render()
 	vector<XMFLOAT3> _instancePosition;
 	vector<XMMATRIX> _instanceRotation;
 	vector<XMFLOAT3> _instanceScale;
+
 	/*
 	//Render Enemies
 	for (int i = 0; i < m_enemy1.size(); i++)
@@ -207,6 +208,7 @@ void EntityManager::Render()
 		}
 		m_renderer->RenderInstanced(m_modelHandlers[BULLET1], _instancePosition, _instanceRotation, m_bullet1.size(), _instanceScale);
 	}
+
 	/*
 	for (int i = 0; i < m_bullet2.size(); i++)
 	{
