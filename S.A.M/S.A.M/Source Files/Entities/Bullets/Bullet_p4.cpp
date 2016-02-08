@@ -21,6 +21,9 @@ Bullet_p4::~Bullet_p4()
 void Bullet_p4::Update(double time)
 {
 	m_position.z += 100 * time;
+
+
+	m_entityBox.Center = m_position;
 }
 
 void Bullet_p4::Destroyed()

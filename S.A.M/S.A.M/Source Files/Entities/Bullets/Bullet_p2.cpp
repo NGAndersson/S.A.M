@@ -21,6 +21,9 @@ Bullet_p2::~Bullet_p2()
 void Bullet_p2::Update(double time)
 {
 	m_position.z += 100 * time;
+
+
+	m_entityBox.Center = m_position;
 }
 
 void Bullet_p2::Destroyed()

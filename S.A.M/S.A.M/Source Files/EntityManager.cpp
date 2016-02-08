@@ -254,19 +254,40 @@ void EntityManager::Update(double time)
 	}
 	//Do collision checks
 
-	for (auto i = 0; i < m_bullet1.size();i++)
-	{ 
-		for (auto j = 0; j < m_enemy1.size(); j++)
-		{
-			if (m_collision.CheckCollision(m_bullet1[i]->GetBoundingBox(), m_enemy1[j]->GetBoundingBox()))
-			{
-				m_bullet1 = RemoveEntity(i, m_bullet1);
-				m_enemy1 = RemoveEntity(j, m_enemy1);
-				break;
-			}
-		}
-	}
-		//Enemies
+	//Check Bullet1 agains Enemies
+	m_collision.CheckCollisionEntity(&m_bullet1, &m_enemy1,BULLET1);
+	m_collision.CheckCollisionEntity(&m_bullet1, &m_enemy2,BULLET1);
+	m_collision.CheckCollisionEntity(&m_bullet1, &m_enemy3,BULLET1);
+	m_collision.CheckCollisionEntity(&m_bullet1, &m_enemy4,BULLET1);
+
+
+	//Check Bullet1 agains Enemies
+	m_collision.CheckCollisionEntity(&m_bullet2, &m_enemy1,BULLET2);
+	m_collision.CheckCollisionEntity(&m_bullet2, &m_enemy2,BULLET2);
+	m_collision.CheckCollisionEntity(&m_bullet2, &m_enemy3,BULLET2);
+	m_collision.CheckCollisionEntity(&m_bullet2, &m_enemy4,BULLET2);
+
+
+	//Check Bullet1 agains Enemies
+	m_collision.CheckCollisionEntity(&m_bullet3, &m_enemy1,BULLET3);
+	m_collision.CheckCollisionEntity(&m_bullet3, &m_enemy2,BULLET3);
+	m_collision.CheckCollisionEntity(&m_bullet3, &m_enemy3,BULLET3);
+	m_collision.CheckCollisionEntity(&m_bullet3, &m_enemy4,BULLET3);
+
+
+	//Check Bullet1 agains Enemies
+	m_collision.CheckCollisionEntity(&m_bullet4, &m_enemy1,BULLET4);
+	m_collision.CheckCollisionEntity(&m_bullet4, &m_enemy2,BULLET4);
+	m_collision.CheckCollisionEntity(&m_bullet4, &m_enemy3,BULLET4);
+	m_collision.CheckCollisionEntity(&m_bullet4, &m_enemy4,BULLET4);
+
+	//Check Bullet1 agains Enemies
+	m_collision.CheckCollisionEntity(&m_bullet5, &m_enemy1,BULLET5);
+	m_collision.CheckCollisionEntity(&m_bullet5, &m_enemy2,BULLET5);
+	m_collision.CheckCollisionEntity(&m_bullet5, &m_enemy3,BULLET5);
+	m_collision.CheckCollisionEntity(&m_bullet5, &m_enemy4,BULLET5);
+
+	//Enemies
 	for (auto i = 0; i < m_enemy1.size(); i++)
 		m_enemy1[i]->Update(time);
 
@@ -380,19 +401,7 @@ vector<Entity*> EntityManager::CheckOutOfBounds(std::vector<Entity*> bullet)
 	}
 	return _tempVec;
 }
-	
-vector<Entity*> EntityManager::RemoveEntity(int RemoveId, vector<Entity*> RemoveType)
-{
-	vector<Entity*> _tempVec = RemoveType;
 
-	//Play DeathSound?
-
-	//
-	delete _tempVec[RemoveId];
-	_tempVec.erase(_tempVec.begin() + RemoveId);
-
-	return _tempVec;
-}
 	
 void EntityManager::RenderBullets()
 {
