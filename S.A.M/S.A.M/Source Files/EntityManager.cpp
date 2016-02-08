@@ -222,7 +222,8 @@ void EntityManager::Update(double time)
 	else {
 		//BeatDet test
 		float _currentPos = m_soundManager->GetCurrentMusicTimePCM() / 1024.f;
-		if (m_beat[(int)_currentPos] > 0.0f && m_timeSinceLastBeat > 0.5)		//Small time buffer to prevent it from going off 50 times per beat 
+
+		if (m_beat[(int)_currentPos] > 0.0f && m_timeSinceLastBeat > 0.1)		//Small time buffer to prevent it from going off 50 times per beat 
 		{
 			//BEAT WAS DETECTED
 			OutputDebugStringA("Update in game");
@@ -312,7 +313,7 @@ vector<Entity*> EntityManager::CheckOutOfBounds(std::vector<Entity*> bullet)
 	}
 	return _tempVec;
 }
-
+	
 void EntityManager::RenderBullets()
 {
 	vector<XMFLOAT3> _instancePosition;

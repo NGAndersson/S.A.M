@@ -4,8 +4,8 @@
 #include <DirectXMath.h>
 #include <d3d11.h>
 
-#include "ModelHandler.h"
-#include "Camera.h"
+#include "Graphics\ModelHandler.h"
+#include "Graphics\Camera.h"
 
 class Renderer
 {
