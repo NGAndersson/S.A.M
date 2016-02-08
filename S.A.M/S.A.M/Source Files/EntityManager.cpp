@@ -514,7 +514,7 @@ void EntityManager::EnemyFire()
 {
 	for (auto i = 0; i < m_enemy1.size(); i++)
 	{
-		Bullet* tempEntity = new Bullet_e(m_soundManager, MAPWIDTH, MAPLENGTH, m_enemy1[i]->GetPosition(), XMFLOAT3(1, 1, 1));
+		Bullet* tempEntity = new Bullet_e(m_soundManager, MAPWIDTH, MAPLENGTH, m_enemy1[i]->GetPosition(), XMFLOAT3(0.5, 0.5, 0.5));
 		m_bullet6.push_back(tempEntity);
 	}
 }

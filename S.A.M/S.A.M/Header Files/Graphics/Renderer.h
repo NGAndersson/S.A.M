@@ -22,7 +22,7 @@ class Renderer
 
 	//World buffer for VS
 	struct WorldStructInstanced {
-		XMFLOAT4X4 worldMatrix[100];
+		XMFLOAT4X4 worldMatrix[800];
 	};
 
 //Functions

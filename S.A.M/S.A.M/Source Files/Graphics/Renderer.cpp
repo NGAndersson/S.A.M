@@ -74,6 +74,16 @@ void Renderer::RenderInstanced(ModelHandler * model, vector<XMFLOAT3> position, 
 		m_worldStructInstanced.worldMatrix[i] = _worldInstance;
 	}
 
+	if (amountOfBullets > 100)
+	{
+		if (amountOfBullets > 400)
+		{
+			if (amountOfBullets > 800)
+			{
+				int i = 87;
+			}
+		}
+	}
 	memcpy(_mappedResource.pData, &m_worldStructInstanced, sizeof(WorldStructInstanced));
 
 	m_deviceContext->Unmap(m_worldBufferInstance, 0);
