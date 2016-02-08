@@ -391,14 +391,15 @@ void EntityManager::BeatWasDetected()
 vector<Entity*> EntityManager::CheckOutOfBounds(std::vector<Entity*> bullet)
 {
 	//Out of bounds check, remove immediately
-	bool removed = false;
+	//bool removed = false;
 	vector<Entity*> _tempVec = bullet;			//Can't use the member variable for some reason
-	for (int i = 0; i < _tempVec.size() && removed == false; i++) {			//REMOVE REMOVED == FALSE AND MAKE LISTS!
+	for (int i = 0; i < _tempVec.size() /*&& removed == false*/; i++) {			//REMOVE REMOVED == FALSE AND MAKE LISTS!
 		XMFLOAT3 _tempPos = _tempVec[i]->GetPosition();
 		if (_tempPos.x > 80 || _tempPos.x < -80 || _tempPos.z > 80 || _tempPos.z < -80) {
 			delete _tempVec[i];
 			_tempVec.erase(_tempVec.begin() + i);
-			removed = true;
+			i--;
+			//removed = true;
 		}
 	}
 	return _tempVec;
