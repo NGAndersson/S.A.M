@@ -36,15 +36,15 @@ EntityManager::~EntityManager()
 void EntityManager::SpawnEntity(HandlerIndex type)
 {
 	Bullet* tempEntity;
+	Enemy* tempEntity1;
 	switch (type) {
 	case(PLAYER) :
 		m_player = new Player(m_soundManager, MAPWIDTH,MAPLENGTH,XMFLOAT3(1.0f, 0.0f, 1.0f), XMFLOAT3(0.5f, 0.5f, 0.5f), m_input);
 		break;
-	//case(ENEMY1) :
-	//	Enemy1* tempEntity = new Enemy1;
-	//	tempEntity->Initialize();
-	//	m_enemy1.push_back(tempEntity);
-	//	break;
+	case(ENEMY1) :
+		tempEntity1 = new Enemy_1(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(30.0f, 0.0f, 70.0f),XMFLOAT3(0.5f,0.5f,0.5f));
+		m_enemy1.push_back(tempEntity1);
+		break;
 	//case(ENEMY2) :
 	//	Enemy2* tempEntity = new Enemy2;
 	//	tempEntity->Initialize();
@@ -128,6 +128,9 @@ void EntityManager::Initialize(SoundManager* soundManager, Input* input, ID3D11D
 	m_modelHandlers[PLAYER]->CreateBuffers(m_device);
 	m_modelHandlers[PLAYER]->CreateShaders(m_device, "Shaders\\PlayerVS.hlsl", "Shaders\\PlayerGS.hlsl", "Shaders\\PlayerPS.hlsl");
 	m_modelHandlers[ENEMY1] = new ModelHandler;
+	m_modelHandlers[ENEMY1]->LoadOBJData("Resources/Models/TestCube.obj", "Resources/Models/TestCube.mtl", m_device, m_deviceContext);
+	m_modelHandlers[ENEMY1]->CreateBuffers(m_device);
+	m_modelHandlers[ENEMY1]->CreateShaders(m_device, "Shaders\\PlayerVS.hlsl", "Shaders\\PlayerGS.hlsl", "Shaders\\PlayerPS.hlsl");
 	m_modelHandlers[ENEMY2] = new ModelHandler;
 	m_modelHandlers[ENEMY3] = new ModelHandler;
 	m_modelHandlers[ENEMY4] = new ModelHandler;
@@ -149,6 +152,8 @@ void EntityManager::Initialize(SoundManager* soundManager, Input* input, ID3D11D
 	//Temp, create player
 	SpawnEntity(PLAYER);
 	
+	//Temp enemy
+	SpawnEntity(ENEMY1);
 	//Temp, creates partsys
 	wstring _texName = L"Resources\\Models\\star3.jpg";
 	m_partSys.CreateBuffer(m_device, m_deviceContext, _texName);
@@ -166,14 +171,17 @@ void EntityManager::Render()
 	//Render Player
 	m_renderer->Render(m_modelHandlers[PLAYER], m_player->GetPosition(), m_player->GetRotation(), m_player->GetScale());
 	RenderBullets();
-	/*
+
 	//Render Enemies
 	for (int i = 0; i < m_enemy1.size(); i++)
 	{
-		m_modelHandlers[ENEMY1]->SetBuffers(m_deviceContext);
-		m_modelHandlers[ENEMY1]->SetShaders(m_deviceContext);
+		bool test;
+		test = m_modelHandlers[ENEMY1]->SetBuffers(m_deviceContext);
+		test = m_modelHandlers[ENEMY1]->SetShaders(m_deviceContext);
 		m_renderer->Render(m_modelHandlers[ENEMY1], m_enemy1[i]->GetPosition(), m_enemy1[i]->GetRotation(), m_enemy1[i]->GetScale());
 	}
+
+	/*
 	for (int i = 0; i < m_enemy2.size(); i++)
 	{
 		m_modelHandlers[ENEMY2]->SetBuffers(m_deviceContext);
@@ -216,7 +224,7 @@ void EntityManager::Update(double time)
 		if (m_beat[(int)_currentPos] > 0.0f && m_timeSinceLastBeat > 0.1)		//Small time buffer to prevent it from going off 50 times per beat 
 		{
 			//BEAT WAS DETECTED
-			OutputDebugStringA("Update in game");
+
 			BeatWasDetected();
 			m_timeSinceLastBeat = 0;
 		}
@@ -226,7 +234,22 @@ void EntityManager::Update(double time)
 	}
 	//Do collision checks
 
-
+	for (auto i = 0; i < m_bullet1.size();i++)
+	{ 
+		for (auto j = 0; j < m_enemy1.size(); j++)
+		{
+			if (m_collision.CheckCollision(m_bullet1[i]->GetBoundingBox(), m_enemy1[j]->GetBoundingBox()))
+			{
+				m_bullet1 = RemoveEntity(i, m_bullet1);
+				m_enemy1 = RemoveEntity(j, m_enemy1); //Temporary Enemy Change 0 to j. or somthing
+			}
+		}
+	}
+		//Enemies
+	for (auto i = 0; i < m_enemy1.size(); i++)
+	{
+		m_enemy1[i]->Update(time);
+	}
 
 	//Update every entity of Bullet1
 	for (int i = 0; i < m_bullet1.size(); i++)
@@ -288,12 +311,25 @@ vector<Entity*> EntityManager::CheckOutOfBounds(std::vector<Entity*> bullet)
 	vector<Entity*> _tempVec = bullet;			//Can't use the member variable for some reason
 	for (int i = 0; i < _tempVec.size() && removed == false; i++) {			//REMOVE REMOVED == FALSE AND MAKE LISTS!
 		XMFLOAT3 _tempPos = _tempVec[i]->GetPosition();
-		if (_tempPos.x > 60 || _tempPos.x < -60 || _tempPos.z > 60 || _tempPos.z < -60) {
+		if (_tempPos.x > 80 || _tempPos.x < -80 || _tempPos.z > 80 || _tempPos.z < -80) {
 			delete _tempVec[i];
 			_tempVec.erase(_tempVec.begin() + i);
 			removed = true;
 		}
 	}
+	return _tempVec;
+}
+
+vector<Entity*> EntityManager::RemoveEntity(int RemoveId, vector<Entity*> RemoveType)
+{
+	vector<Entity*> _tempVec = RemoveType;
+
+	//Play DeathSound?
+
+	//
+	delete _tempVec[RemoveId];
+	_tempVec.erase(_tempVec.begin() + RemoveId);
+
 	return _tempVec;
 }
 	

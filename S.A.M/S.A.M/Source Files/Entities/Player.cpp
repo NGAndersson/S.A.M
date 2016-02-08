@@ -58,9 +58,6 @@ void Player::Update(double time)
 	if (m_position.x < (float)-m_mapWidth / 2)
 		m_position.x = (float)-m_mapWidth / 2;
 
-	XMVECTOR _rotzAxis{ 0,0,1,0 };
-	m_rotation = XMMatrixRotationAxis(_rotzAxis, m_rotAngle);
-
 }
 
 void Player::Destroyed()

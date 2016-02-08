@@ -2,8 +2,6 @@
 
 Enemy_1::Enemy_1()
 {
-	XMVECTOR _rotzAxis{ 0,0,1,0 };
-	m_rotation = XMMatrixRotationAxis(_rotzAxis, 0.0f);
 }
 
 Enemy_1::~Enemy_1()
@@ -13,7 +11,9 @@ Enemy_1::~Enemy_1()
 
 void Enemy_1::Update(double time)
 {
+	m_position.z -= MOVEMENTSPEEDZ/6;
 
+	m_entityBox.Center = m_position;
 }
 
 void Enemy_1::Destroyed()
