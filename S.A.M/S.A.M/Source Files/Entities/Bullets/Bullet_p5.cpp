@@ -20,7 +20,11 @@ Bullet_p5::~Bullet_p5()
 
 void Bullet_p5::Update(double time)
 {
-	m_position.z += 100 * time;
+	m_timeToLive -= time;
+	if (m_timeToLive < 0)
+	{
+		m_delete = true;
+	}
 }
 
 void Bullet_p5::Destroyed()

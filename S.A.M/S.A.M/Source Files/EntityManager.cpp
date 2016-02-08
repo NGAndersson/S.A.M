@@ -86,7 +86,7 @@ void EntityManager::SpawnEntity(HandlerIndex type)
 		m_soundManager->PlayOneShotSound("Bullet_E", 0.5f);
 		break;
 	case(BULLET5) :
-		tempEntity = new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, m_player->GetPosition(), XMFLOAT3(1, 1, 1));
+		tempEntity = new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z + 60), XMFLOAT3(1, 1, 20));
 		m_bullet5.push_back(tempEntity);
 		m_soundManager->PlayOneShotSound("Laser_R", 0.5f);
 		break;
@@ -299,7 +299,7 @@ void EntityManager::Update(double time)
 	m_bullet2 = CheckOutOfBounds(m_bullet2);
 	m_bullet3 = CheckOutOfBounds(m_bullet3);
 	m_bullet4 = CheckOutOfBounds(m_bullet4);
-	m_bullet5 = CheckOutOfBounds(m_bullet5);
+	m_bullet5 = CheckIfAlive(m_bullet5);
 
 	//Update Particle System
 	m_partSys.updatePart(m_deviceContext, time, 40);
@@ -457,4 +457,26 @@ void EntityManager::RenderBullets()
 		_instanceScale.clear();
 		_instanceRotation.clear();
 	}
+}
+
+vector<Entity*> EntityManager::CheckIfAlive(std::vector<Entity*> bullet)
+{
+	//If Alive check, remove immediately
+	bool removed = false;
+	vector<Entity*> _tempVec = bullet;			//Can't use the member variable for some reason
+	for (int i = 0; i < _tempVec.size() && removed == false; i++) 
+	{			//REMOVE REMOVED == FALSE AND MAKE LISTS!
+		bool _temp = _tempVec[i]->GetDelete();
+		if (_temp == true) 
+		{
+			delete _tempVec[i];
+			_tempVec.erase(_tempVec.begin() + i);
+			removed = true;
+		}
+		else
+		{
+			_tempVec[i]->SetPosition(XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z + 60));
+		}
+	}
+	return _tempVec;
 }
