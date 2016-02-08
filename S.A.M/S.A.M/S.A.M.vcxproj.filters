@@ -99,10 +99,10 @@
     <ClCompile Include="Source Files\Graphics\Camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source Files\Collision.cpp">
+    <ClCompile Include="Source Files\Gamelogic\Score.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source Files\Gamelogic\Score.cpp">
+    <ClCompile Include="Source Files\Collision.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
