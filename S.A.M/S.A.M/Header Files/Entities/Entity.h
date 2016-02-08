@@ -64,6 +64,11 @@ public:
 		 return m_entityBox;
 	 }
 
+	 virtual bool GetDelete()
+	 {
+		 return m_delete;
+	 }
+
 	//----------------------------Attributes----------------------------------------
 protected:
 	//Modelhandler
