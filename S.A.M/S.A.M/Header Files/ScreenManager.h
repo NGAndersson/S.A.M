@@ -1,8 +1,8 @@
 #ifndef SCREENMANAGER_H
 #define SCREENMANAGER_H
 
-#include "Input.h"
-#include "ModelHandler.h"
+#include "Gamelogic\Input.h"
+#include "Graphics\ModelHandler.h"
 
 enum EnumScreens { START, USERINTERFACE, HIGHSCORE, OPTION, PAUSE, ENDSCREEN };
 

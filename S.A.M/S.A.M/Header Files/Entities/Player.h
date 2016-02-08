@@ -1,8 +1,8 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include "Entity.h"
-#include "Input.h"
+#include "Entities/Entity.h"
+#include "Gamelogic/Input.h"
 #include "Audio/SoundManager.h"
 #include <math.h>
 

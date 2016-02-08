@@ -1,6 +1,6 @@
 #ifndef ENEMY_2_H
 #define ENEMY_2_H
-#include "Enemy.h"
+#include "Entities\Enemies\Enemy.h"
 
 class Enemy_2 : public Enemy
 {

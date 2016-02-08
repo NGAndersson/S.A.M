@@ -1,4 +1,4 @@
-#include "ParticleSys.h"
+#include "Graphics/ParticleSys.h"
 
 PartSys::PartSys()
 {

@@ -1,7 +1,7 @@
-#include "Display.h"
+#include "Graphics/Display.h"
 #include "Game.h"
 #include "Audio/SoundManager.h"
-#include "Input.h"
+#include "Gamelogic/Input.h"
 
 
 // the entry point for any Windows program

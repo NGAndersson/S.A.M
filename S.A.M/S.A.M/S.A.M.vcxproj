@@ -193,7 +193,7 @@
     <ClInclude Include="Header Files\EntityManager.h" />
     <ClInclude Include="Header Files\Game.h" />
     <ClInclude Include="Header Files\Gamelogic\Input.h" />
-    <ClInclude Include="Header Files\ModelHandler.h" />
+    <ClInclude Include="Header Files\Graphics\ModelHandler.h" />
     <ClInclude Include="Header Files\Graphics\OBJloader.h" />
     <ClInclude Include="Header Files\Graphics\ParticleSys.h" />
     <ClInclude Include="Header Files\Graphics\pch.h" />
