@@ -19,6 +19,7 @@
 #include "Entities\Enemies\Enemy_1.h"
 #include <random>
 #include "Collision.h"
+#include "Gamelogic\Score.h"
 
 
 

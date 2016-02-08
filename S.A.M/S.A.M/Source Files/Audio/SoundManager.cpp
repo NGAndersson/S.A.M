@@ -226,7 +226,6 @@ void SoundManager::PlayOneShotSound(char* soundName, float volume)
 	}
 	else if (_groupIndex != -1) {
 		//Play random sound from the group
-		srand(time(NULL));
 		int _randomInt = rand() % m_sounds[_groupIndex].size();
 
 		m_result = m_system->playSound(FMOD_CHANNEL_FREE, m_sounds[_groupIndex][_randomInt], false, &m_soundChannels[_groupIndex][_randomInt]);

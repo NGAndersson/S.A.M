@@ -37,7 +37,8 @@ void EntityManager::SpawnEntity(HandlerIndex type)
 {
 	Bullet* tempEntity;
 	Enemy* tempEntity1;
-	float _tempX = rand() % 51 - 50;
+	float _tempX = rand() % 101 - 50;
+
 	switch (type) {
 	case(PLAYER) :
 		m_player = new Player(m_soundManager, MAPWIDTH,MAPLENGTH,XMFLOAT3(1.0f, 0.0f, 1.0f), XMFLOAT3(0.5f, 0.5f, 0.5f), m_input);
@@ -98,18 +99,12 @@ void EntityManager::Initialize(SoundManager* soundManager, Input* input, ID3D11D
 
 	//Set the soundManager pointer which will be used in every entity
 	m_soundManager = soundManager;
-	m_soundManager->LoadMusic("Resources/Sound/PixieTrust.mp3");
-	
+	InitMusic("Resources/Sound/PixieTrust.txt");
 
 	m_beatDetector = new BeatDetector(m_soundManager);
 	m_beatDetector->AudioProcess();
 
-	//Load the sounds for every entity
-	m_soundManager->LoadSound("Resources/Sound/DefaultSoundBullet1.wav", "DefaultBullet1", "DefaultBullet", LOAD_MEMORY);
-	m_soundManager->LoadSound("Resources/Sound/DefaultSoundBullet2.wav", "BulletQ", "Bullet_Q", LOAD_MEMORY);
-	m_soundManager->LoadSound("Resources/Sound/DefaultSoundBullet3.wav", "BulletW", "Bullet_W", LOAD_MEMORY);
-	m_soundManager->LoadSound("Resources/Sound/DefaultSoundBullet4.wav", "BulletE", "Bullet_E", LOAD_MEMORY);
-	m_soundManager->LoadSound("Resources/Sound/DefaultSoundBullet5.wav", "LaserR", "Laser_R", LOAD_MEMORY);
+
 
 	//Set the input class which will be passed down to Player
 	m_input = input;
@@ -254,36 +249,36 @@ void EntityManager::Update(double time)
 
 	//Check Bullet1 agains Enemies
 	m_collision.CheckCollisionEntity(&m_bullet1, &m_enemy1,BULLET1);
-	m_collision.CheckCollisionEntity(&m_bullet1, &m_enemy2,BULLET1);
-	m_collision.CheckCollisionEntity(&m_bullet1, &m_enemy3,BULLET1);
-	m_collision.CheckCollisionEntity(&m_bullet1, &m_enemy4,BULLET1);
+	//m_collision.CheckCollisionEntity(&m_bullet1, &m_enemy2,BULLET1);
+	//m_collision.CheckCollisionEntity(&m_bullet1, &m_enemy3,BULLET1);
+	//m_collision.CheckCollisionEntity(&m_bullet1, &m_enemy4,BULLET1);
 
 
 	//Check Bullet1 agains Enemies
 	m_collision.CheckCollisionEntity(&m_bullet2, &m_enemy1,BULLET2);
-	m_collision.CheckCollisionEntity(&m_bullet2, &m_enemy2,BULLET2);
-	m_collision.CheckCollisionEntity(&m_bullet2, &m_enemy3,BULLET2);
-	m_collision.CheckCollisionEntity(&m_bullet2, &m_enemy4,BULLET2);
+	//m_collision.CheckCollisionEntity(&m_bullet2, &m_enemy2,BULLET2);
+	//m_collision.CheckCollisionEntity(&m_bullet2, &m_enemy3,BULLET2);
+	//m_collision.CheckCollisionEntity(&m_bullet2, &m_enemy4,BULLET2);
 
 
 	//Check Bullet1 agains Enemies
 	m_collision.CheckCollisionEntity(&m_bullet3, &m_enemy1,BULLET3);
-	m_collision.CheckCollisionEntity(&m_bullet3, &m_enemy2,BULLET3);
-	m_collision.CheckCollisionEntity(&m_bullet3, &m_enemy3,BULLET3);
-	m_collision.CheckCollisionEntity(&m_bullet3, &m_enemy4,BULLET3);
+	//m_collision.CheckCollisionEntity(&m_bullet3, &m_enemy2,BULLET3);
+	//m_collision.CheckCollisionEntity(&m_bullet3, &m_enemy3,BULLET3);
+	//m_collision.CheckCollisionEntity(&m_bullet3, &m_enemy4,BULLET3);
 
 
 	//Check Bullet1 agains Enemies
 	m_collision.CheckCollisionEntity(&m_bullet4, &m_enemy1,BULLET4);
-	m_collision.CheckCollisionEntity(&m_bullet4, &m_enemy2,BULLET4);
-	m_collision.CheckCollisionEntity(&m_bullet4, &m_enemy3,BULLET4);
-	m_collision.CheckCollisionEntity(&m_bullet4, &m_enemy4,BULLET4);
+	//m_collision.CheckCollisionEntity(&m_bullet4, &m_enemy2,BULLET4);
+	//m_collision.CheckCollisionEntity(&m_bullet4, &m_enemy3,BULLET4);
+	//m_collision.CheckCollisionEntity(&m_bullet4, &m_enemy4,BULLET4);
 
 	//Check Bullet1 agains Enemies
 	m_collision.CheckCollisionEntity(&m_bullet5, &m_enemy1,BULLET5);
-	m_collision.CheckCollisionEntity(&m_bullet5, &m_enemy2,BULLET5);
-	m_collision.CheckCollisionEntity(&m_bullet5, &m_enemy3,BULLET5);
-	m_collision.CheckCollisionEntity(&m_bullet5, &m_enemy4,BULLET5);
+	//m_collision.CheckCollisionEntity(&m_bullet5, &m_enemy2,BULLET5);
+	//m_collision.CheckCollisionEntity(&m_bullet5, &m_enemy3,BULLET5);
+	//m_collision.CheckCollisionEntity(&m_bullet5, &m_enemy4,BULLET5);
 
 	//Enemies
 	for (auto i = 0; i < m_enemy1.size(); i++)
@@ -323,13 +318,21 @@ void EntityManager::Update(double time)
 		m_bullet6[i]->Update(time);
 	m_player->Update(time);
 	
+	//CheckEnemies Out Of BOUNDS
+	m_enemy1 = CheckOutOfBounds(m_enemy1);
+	m_enemy2 = CheckOutOfBounds(m_enemy2);
+	m_enemy3 = CheckOutOfBounds(m_enemy3);
+	m_enemy4 = CheckOutOfBounds(m_enemy4);
 	//Out of bounds check, remove immediately
+	
 	m_bullet1 = CheckOutOfBounds(m_bullet1);
 	m_bullet2 = CheckOutOfBounds(m_bullet2);
 	m_bullet3 = CheckOutOfBounds(m_bullet3);
 	m_bullet4 = CheckOutOfBounds(m_bullet4);
 	m_bullet5 = CheckIfAlive(m_bullet5);
 	m_bullet6 = CheckOutOfBounds(m_bullet6);
+
+
 
 	//Update Particle System
 	m_partSys.updatePart(m_deviceContext, time, 40);
@@ -344,8 +347,33 @@ void EntityManager::InitMusic(std::string filename)
 {
 	ifstream _file;
 	_file.open(filename);
+	char _field[100];
+	char _value[100];
+	std::string _tempLine;
+	while (getline(_file, _tempLine))
+	{
 
+		std::istringstream _ss(_tempLine);
 
+		_ss.get(_field, 1000, '=');		//Get field name
+		_ss.ignore();
+		_ss.get(_value, 1000, '=');		//Get value
+		
+		if (std::string(_field) == "music")
+			m_soundManager->LoadMusic(_value);		//Load music
+		else if (std::string(_field) == "offset")
+			m_offset = atoi(_value);				//Load beginning offset
+		else if (std::string(_field) == "bulletD")
+			m_soundManager->LoadSound(_value, _value, "DefaultBullet", LOAD_MEMORY);
+		else if (std::string(_field) == "bulletQ")
+			m_soundManager->LoadSound(_value, _value, "Bullet_Q", LOAD_MEMORY);
+		else if (std::string(_field) == "bulletW")
+			m_soundManager->LoadSound(_value, _value, "Bullet_W", LOAD_MEMORY);
+		else if (std::string(_field) == "bulletE")
+			m_soundManager->LoadSound(_value, _value, "Bullet_E", LOAD_MEMORY);
+		else if (std::string(_field) == "bulletR")
+			m_soundManager->LoadSound(_value, _value, "Laser_R", LOAD_MEMORY);
+	}
 }
 
 void EntityManager::BeatWasDetected()
