@@ -16,6 +16,7 @@ public:
 
 	//Variables
 private:
+	float m_rotationValue;
 protected:
 public:
 

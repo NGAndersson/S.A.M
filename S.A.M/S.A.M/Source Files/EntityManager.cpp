@@ -70,13 +70,11 @@ void EntityManager::SpawnEntity(HandlerIndex type)
 		m_bullet2.push_back(tempEntity);
 		m_soundManager->PlayOneShotSound("Bullet_Q", 0.5f);
 		break;
-	//case(BULLET3) :
-	//	Bullet3* tempEntity = new Bullet3;
-	//	tempEntity->Initialize();
-	//	m_bullet3.push_back(tempEntity);
-	//	//Set infront of player
-	//	//Spawn correct sound
-	//	break;
+	case(BULLET3) :
+		tempEntity = new Bullet_p3(m_soundManager, MAPWIDTH, MAPLENGTH, m_player->GetPosition(), XMFLOAT3(1, 1, 1));
+		m_bullet3.push_back(tempEntity);
+		m_soundManager->PlayOneShotSound("Bullet_W", 0.5f);
+		break;
 	//case(BULLET4) :
 	//	Bullet4* tempEntity = new Bullet4;
 	//	tempEntity->Initialize();
@@ -108,9 +106,10 @@ void EntityManager::Initialize(SoundManager* soundManager, Input* input, ID3D11D
 	m_beatDetector->AudioProcess();
 
 	//Load the sounds for every entity
-	m_soundManager->LoadSound("Resources/Sound/DefaultBullet1.wav", "DefaultBullet1", "DefaultBullet", LOAD_MEMORY);
-	m_soundManager->LoadSound("Resources/Sound/DefaultBullet2.wav", "BulletQ", "Bullet_Q", LOAD_MEMORY);
-	m_soundManager->LoadSound("Resources/Sound/DefaultBullet5.wav", "LaserR", "Laser_R", LOAD_MEMORY);
+	m_soundManager->LoadSound("Resources/Sound/DefaultSoundBullet1.wav", "DefaultBullet1", "DefaultBullet", LOAD_MEMORY);
+	m_soundManager->LoadSound("Resources/Sound/DefaultSoundBullet2.wav", "BulletQ", "Bullet_Q", LOAD_MEMORY);
+	m_soundManager->LoadSound("Resources/Sound/DefaultSoundBullet3.wav", "BulletQ", "Bullet_W", LOAD_MEMORY);
+	m_soundManager->LoadSound("Resources/Sound/DefaultSoundBullet5.wav", "LaserR", "Laser_R", LOAD_MEMORY);
 
 	//Set the input class which will be passed down to Player
 	m_input = input;
@@ -140,6 +139,9 @@ void EntityManager::Initialize(SoundManager* soundManager, Input* input, ID3D11D
 	m_modelHandlers[BULLET2]->CreateBuffers(m_device);
 	m_modelHandlers[BULLET2]->CreateShaders(m_device, "Shaders\\BulletVS.hlsl", "Shaders\\BulletGS.hlsl", "Shaders\\BulletPS.hlsl");
 	m_modelHandlers[BULLET3] = new ModelHandler;
+	m_modelHandlers[BULLET3]->LoadOBJData("Resources/Models/Bullet3.obj", "Resources/Models/Bullet3.mtl", m_device, m_deviceContext);
+	m_modelHandlers[BULLET3]->CreateBuffers(m_device);
+	m_modelHandlers[BULLET3]->CreateShaders(m_device, "Shaders\\BulletVS.hlsl", "Shaders\\BulletGS.hlsl", "Shaders\\BulletPS.hlsl");
 	m_modelHandlers[BULLET4] = new ModelHandler;
 	m_modelHandlers[BULLET5] = new ModelHandler;
 	m_modelHandlers[BULLET5]->LoadOBJData("Resources/Models/Laser1.obj", "Resources/Models/Laser1.mtl", m_device, m_deviceContext);
@@ -232,6 +234,9 @@ void EntityManager::Update(double time)
 	//Update every entity of Bullet2
 	for (int i = 0; i < m_bullet2.size(); i++)
 		m_bullet2[i]->Update(time);
+	//Update every entity of Bullet3
+	for (int i = 0; i < m_bullet3.size(); i++)
+		m_bullet3[i]->Update(time);
 	//Update every entity of Bullet5
 	for (int i = 0; i < m_bullet5.size(); i++)
 		m_bullet5[i]->Update(time);
@@ -240,6 +245,7 @@ void EntityManager::Update(double time)
 	//Out of bounds check, remove immediately
 	m_bullet1 = CheckOutOfBounds(m_bullet1);
 	m_bullet2 = CheckOutOfBounds(m_bullet2);
+	m_bullet3 = CheckOutOfBounds(m_bullet3);
 	m_bullet5 = CheckOutOfBounds(m_bullet5);
 
 	//Update Particle System
@@ -325,6 +331,18 @@ void EntityManager::RenderBullets()
 			_instanceRotation.push_back(m_bullet2[i]->GetRotation());
 		}
 		m_renderer->RenderInstanced(m_modelHandlers[BULLET2], _instancePosition, _instanceRotation, m_bullet2.size(), _instanceScale);
+		_instancePosition.clear();
+		_instanceScale.clear();
+		_instanceRotation.clear();
+	}
+	if (m_bullet3.size() > 0)
+	{
+		for (int i = 0; i < m_bullet3.size(); i++) {
+			_instancePosition.push_back(m_bullet3[i]->GetPosition());
+			_instanceScale.push_back(m_bullet3[i]->GetScale());
+			_instanceRotation.push_back(m_bullet3[i]->GetRotation());
+		}
+		m_renderer->RenderInstanced(m_modelHandlers[BULLET3], _instancePosition, _instanceRotation, m_bullet3.size(), _instanceScale);
 		_instancePosition.clear();
 		_instanceScale.clear();
 		_instanceRotation.clear();
