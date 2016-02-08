@@ -35,7 +35,7 @@ EntityManager::~EntityManager()
 
 void EntityManager::SpawnEntity(HandlerIndex type)
 {
-	
+	Bullet* tempEntity;
 	switch (type) {
 	case(PLAYER) :
 		m_player = new Player(m_soundManager, MAPWIDTH,MAPLENGTH,XMFLOAT3(1.0f, 0.0f, 1.0f), XMFLOAT3(0.5f, 0.5f, 0.5f), m_input);
@@ -61,17 +61,15 @@ void EntityManager::SpawnEntity(HandlerIndex type)
 	//	m_enemy4.push_back(tempEntity);
 	//	break;
 	case(BULLET1) :
-		Bullet_p1* tempEntity = new Bullet_p1(m_soundManager, MAPWIDTH, MAPLENGTH, m_player->GetPosition(), XMFLOAT3(1, 1, 1));
+		tempEntity = new Bullet_p1(m_soundManager, MAPWIDTH, MAPLENGTH, m_player->GetPosition(), XMFLOAT3(1, 1, 1));
 		m_bullet1.push_back(tempEntity);
 		m_soundManager->PlayOneShotSound("DefaultBullet", 0.5f);
 		break;
-	//case(BULLET2) :
-	//	Bullet2* tempEntity = new Bullet2;
-	//	tempEntity->Initialize();
-	//	m_bullet2.push_back(tempEntity);
-	//	//Set infront of player
-	//	//Spawn correct sound
-	//	break;
+	case(BULLET2) :
+		tempEntity = new Bullet_p2(m_soundManager, MAPWIDTH, MAPLENGTH, m_player->GetPosition(), XMFLOAT3(1, 1, 1));
+		m_bullet2.push_back(tempEntity);
+		m_soundManager->PlayOneShotSound("Bullet_Q", 0.5f);
+		break;
 	//case(BULLET3) :
 	//	Bullet3* tempEntity = new Bullet3;
 	//	tempEntity->Initialize();
@@ -84,13 +82,11 @@ void EntityManager::SpawnEntity(HandlerIndex type)
 	//	tempEntity->Initialize();
 	//	m_bullet4.push_back(tempEntity);
 	//	break;
-	//case(BULLET5) :
-	//	Bullet5* tempEntity = new Bullet5;
-	//	tempEntity->Initialize();
-	//	m_bullet5.push_back(tempEntity);
-	//	//Set infront of player
-	//	//Spawn correct sound
-	//	break;
+	case(BULLET5) :
+		tempEntity = new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, m_player->GetPosition(), XMFLOAT3(1, 1, 1));
+		m_bullet5.push_back(tempEntity);
+		m_soundManager->PlayOneShotSound("Laser_R", 0.5f);
+		break;
 	//case(BULLET6) :
 	//	Bullet6* tempEntity = new Bullet6;
 	//	tempEntity->Initialize();
@@ -113,7 +109,8 @@ void EntityManager::Initialize(SoundManager* soundManager, Input* input, ID3D11D
 
 	//Load the sounds for every entity
 	m_soundManager->LoadSound("Resources/Sound/DefaultBullet1.wav", "DefaultBullet1", "DefaultBullet", LOAD_MEMORY);
-	//m_soundManager->LoadSound("Resources/DefaultBullet2.wav", "DefaultBullet2", "DefaultBullet", LOAD_MEMORY);
+	m_soundManager->LoadSound("Resources/Sound/DefaultBullet2.wav", "BulletQ", "Bullet_Q", LOAD_MEMORY);
+	m_soundManager->LoadSound("Resources/Sound/DefaultBullet5.wav", "LaserR", "Laser_R", LOAD_MEMORY);
 
 	//Set the input class which will be passed down to Player
 	m_input = input;
@@ -137,12 +134,17 @@ void EntityManager::Initialize(SoundManager* soundManager, Input* input, ID3D11D
 	m_modelHandlers[BULLET1] = new ModelHandler;
 	m_modelHandlers[BULLET1]->LoadOBJData("Resources/Models/Bullet1.obj", "Resources/Models/Bullet1.mtl", m_device, m_deviceContext);
 	m_modelHandlers[BULLET1]->CreateBuffers(m_device);
-	//m_modelHandlers[BULLET1]->CreateShaders(m_device, "Shaders\\PlayerVS.hlsl", "Shaders\\PlayerGS.hlsl", "Shaders\\PlayerPS.hlsl");
 	m_modelHandlers[BULLET1]->CreateShaders(m_device, "Shaders\\BulletVS.hlsl", "Shaders\\BulletGS.hlsl", "Shaders\\BulletPS.hlsl");
 	m_modelHandlers[BULLET2] = new ModelHandler;
+	m_modelHandlers[BULLET2]->LoadOBJData("Resources/Models/Bullet2.obj", "Resources/Models/Bullet2.mtl", m_device, m_deviceContext);
+	m_modelHandlers[BULLET2]->CreateBuffers(m_device);
+	m_modelHandlers[BULLET2]->CreateShaders(m_device, "Shaders\\BulletVS.hlsl", "Shaders\\BulletGS.hlsl", "Shaders\\BulletPS.hlsl");
 	m_modelHandlers[BULLET3] = new ModelHandler;
 	m_modelHandlers[BULLET4] = new ModelHandler;
 	m_modelHandlers[BULLET5] = new ModelHandler;
+	m_modelHandlers[BULLET5]->LoadOBJData("Resources/Models/Laser1.obj", "Resources/Models/Laser1.mtl", m_device, m_deviceContext);
+	m_modelHandlers[BULLET5]->CreateBuffers(m_device);
+	m_modelHandlers[BULLET5]->CreateShaders(m_device, "Shaders\\BulletVS.hlsl", "Shaders\\BulletGS.hlsl", "Shaders\\BulletPS.hlsl");
 	m_modelHandlers[BULLET6] = new ModelHandler;
 	//Temp, create player
 	SpawnEntity(PLAYER);
@@ -163,11 +165,7 @@ void EntityManager::Render()
 	
 	//Render Player
 	m_renderer->Render(m_modelHandlers[PLAYER], m_player->GetPosition(), m_player->GetRotation(), m_player->GetScale());
-
-	vector<XMFLOAT3> _instancePosition;
-	vector<XMMATRIX> _instanceRotation;
-	vector<XMFLOAT3> _instanceScale;
-
+	RenderBullets();
 	/*
 	//Render Enemies
 	for (int i = 0; i < m_enemy1.size(); i++)
@@ -194,52 +192,6 @@ void EntityManager::Render()
 		m_modelHandlers[ENEMY4]->SetShaders(m_deviceContext);
 		m_renderer->Render(m_modelHandlers[ENEMY4], m_enemy4[i]->GetPosition(), m_enemy4[i]->GetRotation(), m_enemy4[i]->GetScale());
 	}
-
-	//Render Bullets*/
-	_instancePosition.clear();
-	_instanceScale.clear();
-	_instanceRotation.clear();
-	if (m_bullet1.size() > 0)
-	{
-		for (int i = 0; i < m_bullet1.size(); i++) {
-			_instancePosition.push_back(m_bullet1[i]->GetPosition());
-			_instanceScale.push_back(m_bullet1[i]->GetScale());
-			_instanceRotation.push_back(m_bullet1[i]->GetRotation());
-		}
-		m_renderer->RenderInstanced(m_modelHandlers[BULLET1], _instancePosition, _instanceRotation, m_bullet1.size(), _instanceScale);
-	}
-
-	/*
-	for (int i = 0; i < m_bullet2.size(); i++)
-	{
-		m_modelHandlers[BULLET2]->SetBuffers(m_deviceContext);
-		m_modelHandlers[BULLET2]->SetShaders(m_deviceContext);
-		m_renderer->Render(m_modelHandlers[BULLET2], m_bullet2[i]->GetPosition(), m_bullet2[i]->GetRotation(), m_bullet2[i]->GetScale());
-	}
-	for (int i = 0; i < m_bullet3.size(); i++)
-	{
-		m_modelHandlers[BULLET3]->SetBuffers(m_deviceContext);
-		m_modelHandlers[BULLET3]->SetShaders(m_deviceContext);
-		m_renderer->Render(m_modelHandlers[BULLET3], m_bullet3[i]->GetPosition(), m_bullet3[i]->GetRotation(), m_bullet3[i]->GetScale());
-	}
-	for (int i = 0; i < m_bullet4.size(); i++)
-	{
-		m_modelHandlers[BULLET4]->SetBuffers(m_deviceContext);
-		m_modelHandlers[BULLET4]->SetShaders(m_deviceContext);
-		m_renderer->Render(m_modelHandlers[BULLET4], m_bullet4[i]->GetPosition(), m_bullet4[i]->GetRotation(), m_bullet4[i]->GetScale());
-	}
-	for (int i = 0; i < m_bullet5.size(); i++)
-	{
-		m_modelHandlers[BULLET5]->SetBuffers(m_deviceContext);
-		m_modelHandlers[BULLET5]->SetShaders(m_deviceContext);
-		m_renderer->Render(m_modelHandlers[BULLET5], m_bullet4[i]->GetPosition(), m_bullet5[i]->GetRotation(), m_bullet5[i]->GetScale());
-	}
-	for (int i = 0; i < m_bullet6.size(); i++)
-	{
-		m_modelHandlers[BULLET6]->SetBuffers(m_deviceContext);
-		m_modelHandlers[BULLET6]->SetShaders(m_deviceContext);
-		m_renderer->Render(m_modelHandlers[BULLET6], m_bullet4[i]->GetPosition(), m_bullet6[i]->GetRotation(), m_bullet6[i]->GetScale());
-	}
 	*/
 }
 
@@ -260,7 +212,6 @@ void EntityManager::Update(double time)
 	else {
 		//BeatDet test
 		float _currentPos = m_soundManager->GetCurrentMusicTimePCM() / 1024.f;
-
 		if (m_beat[(int)_currentPos] > 0.0f && m_timeSinceLastBeat > 0.5)		//Small time buffer to prevent it from going off 50 times per beat 
 		{
 			//BEAT WAS DETECTED
@@ -275,24 +226,21 @@ void EntityManager::Update(double time)
 	//Do collision checks
 
 
-	//Update every entity
+	//Update every entity of Bullet1
 	for (int i = 0; i < m_bullet1.size(); i++)
 		m_bullet1[i]->Update(time);
+	//Update every entity of Bullet2
+	for (int i = 0; i < m_bullet2.size(); i++)
+		m_bullet2[i]->Update(time);
+	//Update every entity of Bullet5
+	for (int i = 0; i < m_bullet5.size(); i++)
+		m_bullet5[i]->Update(time);
 	m_player->Update(time);
 	
-
 	//Out of bounds check, remove immediately
-	bool removed = false;
-	vector<Entity*> _tempVec = m_bullet1;			//Can't use the member variable for some reason
-	for (int i = 0; i < _tempVec.size() && removed == false; i++) {			//REMOVE REMOVED == FALSE AND MAKE LISTS!
-		XMFLOAT3 _tempPos = _tempVec[i]->GetPosition();
-		if (_tempPos.x > 60 || _tempPos.x < -60 || _tempPos.z > 60 || _tempPos.z < -60) {
-			delete _tempVec[i];
-			_tempVec.erase(_tempVec.begin() + i);
-			removed = true;
-		}
-	}
-	m_bullet1 = _tempVec;
+	m_bullet1 = CheckOutOfBounds(m_bullet1);
+	m_bullet2 = CheckOutOfBounds(m_bullet2);
+	m_bullet5 = CheckOutOfBounds(m_bullet5);
 
 	//Update Particle System
 	m_partSys.updatePart(m_deviceContext, time, 40);
@@ -329,4 +277,68 @@ void EntityManager::BeatWasDetected()
 		break;
 	}
 	
+}
+
+vector<Entity*> EntityManager::CheckOutOfBounds(std::vector<Entity*> bullet)
+{
+	//Out of bounds check, remove immediately
+	bool removed = false;
+	vector<Entity*> _tempVec = bullet;			//Can't use the member variable for some reason
+	for (int i = 0; i < _tempVec.size() && removed == false; i++) {			//REMOVE REMOVED == FALSE AND MAKE LISTS!
+		XMFLOAT3 _tempPos = _tempVec[i]->GetPosition();
+		if (_tempPos.x > 60 || _tempPos.x < -60 || _tempPos.z > 60 || _tempPos.z < -60) {
+			delete _tempVec[i];
+			_tempVec.erase(_tempVec.begin() + i);
+			removed = true;
+		}
+	}
+	return _tempVec;
+}
+	
+void EntityManager::RenderBullets()
+{
+	vector<XMFLOAT3> _instancePosition;
+	vector<XMMATRIX> _instanceRotation;
+	vector<XMFLOAT3> _instanceScale;
+
+	_instancePosition.clear();
+	_instanceScale.clear();
+	_instanceRotation.clear();
+
+	if (m_bullet1.size() > 0)
+	{
+		for (int i = 0; i < m_bullet1.size(); i++) {
+			_instancePosition.push_back(m_bullet1[i]->GetPosition());
+			_instanceScale.push_back(m_bullet1[i]->GetScale());
+			_instanceRotation.push_back(m_bullet1[i]->GetRotation());
+		}
+		m_renderer->RenderInstanced(m_modelHandlers[BULLET1], _instancePosition, _instanceRotation, m_bullet1.size(), _instanceScale);
+		_instancePosition.clear();
+		_instanceScale.clear();
+		_instanceRotation.clear();
+	}
+	if (m_bullet2.size() > 0)
+	{
+		for (int i = 0; i < m_bullet2.size(); i++) {
+			_instancePosition.push_back(m_bullet2[i]->GetPosition());
+			_instanceScale.push_back(m_bullet2[i]->GetScale());
+			_instanceRotation.push_back(m_bullet2[i]->GetRotation());
+		}
+		m_renderer->RenderInstanced(m_modelHandlers[BULLET2], _instancePosition, _instanceRotation, m_bullet2.size(), _instanceScale);
+		_instancePosition.clear();
+		_instanceScale.clear();
+		_instanceRotation.clear();
+	}
+	if (m_bullet5.size() > 0)
+	{
+		for (int i = 0; i < m_bullet5.size(); i++) {
+			_instancePosition.push_back(m_bullet5[i]->GetPosition());
+			_instanceScale.push_back(m_bullet5[i]->GetScale());
+			_instanceRotation.push_back(m_bullet5[i]->GetRotation());
+		}
+		m_renderer->RenderInstanced(m_modelHandlers[BULLET5], _instancePosition, _instanceRotation, m_bullet5.size(), _instanceScale);
+		_instancePosition.clear();
+		_instanceScale.clear();
+		_instanceRotation.clear();
+	}
 }
