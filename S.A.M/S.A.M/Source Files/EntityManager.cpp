@@ -103,7 +103,7 @@ void EntityManager::Initialize(SoundManager* soundManager, Input* input, ID3D11D
 
 	//Set the soundManager pointer which will be used in every entity
 	m_soundManager = soundManager;
-	m_soundManager->LoadMusic("Resources/Sound/Ignition.mp3");
+	m_soundManager->LoadMusic("Resources/Sound/PixieTrust.mp3");
 	m_soundManager->PlayMusic(0.5f);
 
 	m_beatDetector = new BeatDetector(m_soundManager);
@@ -226,7 +226,6 @@ void EntityManager::Update(double time)
 		if (m_beat[(int)_currentPos] > 0.0f && m_timeSinceLastBeat > 0.1)		//Small time buffer to prevent it from going off 50 times per beat 
 		{
 			//BEAT WAS DETECTED
-			OutputDebugStringA("Update in game");
 			BeatWasDetected();
 			m_timeSinceLastBeat = 0;
 		}
