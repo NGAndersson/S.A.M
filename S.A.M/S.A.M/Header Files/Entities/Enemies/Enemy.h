@@ -9,7 +9,7 @@ private:
 protected:
 public:
 	Enemy() {}
-	Enemy(SoundManager* SoundManager, int MapWidth, int MapLength, XMFLOAT3 Position, XMFLOAT3 Scale) : Entity(SoundManager, MapWidth, MapLength, Position, Scale) {
+	Enemy(SoundManager* SoundManager, int MapWidth, int MapLength, XMFLOAT3 Position, XMFLOAT3 Scale, int Health) : Entity(SoundManager, MapWidth, MapLength, Position, Scale, Health) {
 		XMVECTOR _rotzAxis{ 0,0,1,0 };
 		m_rotation = XMMatrixRotationAxis(_rotzAxis, 0.0f);
 	}

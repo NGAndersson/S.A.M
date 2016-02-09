@@ -17,7 +17,7 @@ class Entity
 public:
 	Entity() {}
 	~Entity() {}
-	Entity(SoundManager* SoundManager, int MapWidth, int MapLength, XMFLOAT3 Position, XMFLOAT3 Scale)
+	Entity(SoundManager* SoundManager, int MapWidth, int MapLength, XMFLOAT3 Position, XMFLOAT3 Scale, int Health)
 	{
 		m_soundManager = SoundManager;
 		m_mapLength = MapLength;
@@ -26,7 +26,7 @@ public:
 		m_scale = Scale;
 		m_entityWidth = 5.0f;
 
-
+		m_health = Health;
 		m_entityBox.Center = Position;
 		m_entityBox.Extents = XMFLOAT3(5.0f, 5.0f, 5.0f);
 	}
@@ -92,6 +92,8 @@ protected:
 
 	 //When entities are to be deleted
 	 bool m_delete = false;
+
+	 int m_health;
 };
 #endif // ! ENTITY
 

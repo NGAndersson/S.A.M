@@ -12,7 +12,7 @@ class Player : public Entity
 public:
 	Player();
 	~Player();
-	Player(SoundManager* SoundManager, int MapWidth, int MapLength, XMFLOAT3 Position, XMFLOAT3 Scale, Input* input);
+	Player(SoundManager* SoundManager, int MapWidth, int MapLength, XMFLOAT3 Position, XMFLOAT3 Scale, int Health, Input* input);
 	void Update(double time);
 	void Destroyed();
 	//----------------------------Attributes----------------------------------------

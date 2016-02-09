@@ -5,7 +5,7 @@ Player::Player()
 
 }
 
-Player::Player(SoundManager* SoundManager, int MapWidth, int MapLength,XMFLOAT3 Position, XMFLOAT3 Scale, Input* input) : Entity(SoundManager, MapWidth, MapLength, Position, Scale)
+Player::Player(SoundManager* SoundManager, int MapWidth, int MapLength,XMFLOAT3 Position, XMFLOAT3 Scale, int Health, Input* input) : Entity(SoundManager, MapWidth, MapLength, Position, Scale, Health)
 {
 	m_input = input;
 	//Loading death sounds FIX LATER :)

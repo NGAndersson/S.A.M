@@ -41,10 +41,10 @@ void EntityManager::SpawnEntity(HandlerIndex type)
 
 	switch (type) {
 	case(PLAYER) :
-		m_player = new Player(m_soundManager, MAPWIDTH,MAPLENGTH,XMFLOAT3(1.0f, 0.0f, 1.0f), XMFLOAT3(0.5f, 0.5f, 0.5f), m_input);
+		m_player = new Player(m_soundManager, MAPWIDTH,MAPLENGTH,XMFLOAT3(1.0f, 0.0f, 1.0f), XMFLOAT3(0.5f, 0.5f, 0.5f), 1, m_input);
 		break;
 	case(ENEMY1) :
-		tempEntity1 = new Enemy_1(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(_tempX, 0.0f, 70.0f),XMFLOAT3(0.5f,0.5f,0.5f));
+		tempEntity1 = new Enemy_1(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(_tempX, 0.0f, 70.0f),XMFLOAT3(0.5f,0.5f,0.5f), 2);
 		m_enemy1.push_back(tempEntity1);
 		break;
 	//case(ENEMY2) :
@@ -63,31 +63,31 @@ void EntityManager::SpawnEntity(HandlerIndex type)
 	//	m_enemy4.push_back(tempEntity);
 	//	break;
 	case(BULLET1) :
-		tempEntity = new Bullet_p1(m_soundManager, MAPWIDTH, MAPLENGTH, m_player->GetPosition(), XMFLOAT3(1, 1, 1));
+		tempEntity = new Bullet_p1(m_soundManager, MAPWIDTH, MAPLENGTH, m_player->GetPosition(), XMFLOAT3(1, 1, 1), 1);
 		m_bullet1.push_back(tempEntity);
 		m_soundManager->PlayOneShotSound("DefaultBullet", 0.5f);
 		break;
 	case(BULLET2) :
-		tempEntity = new Bullet_p2(m_soundManager, MAPWIDTH, MAPLENGTH, m_player->GetPosition(), XMFLOAT3(1, 1, 1));
+		tempEntity = new Bullet_p2(m_soundManager, MAPWIDTH, MAPLENGTH, m_player->GetPosition(), XMFLOAT3(1, 1, 1), 1);
 		m_bullet2.push_back(tempEntity);
 		m_soundManager->PlayOneShotSound("Bullet_Q", 0.5f);
 		break;
 	case(BULLET3) :
-		tempEntity = new Bullet_p3(m_soundManager, MAPWIDTH, MAPLENGTH, m_player->GetPosition(), XMFLOAT3(1, 1, 1));
+		tempEntity = new Bullet_p3(m_soundManager, MAPWIDTH, MAPLENGTH, m_player->GetPosition(), XMFLOAT3(1, 1, 1), 1);
 		m_bullet3.push_back(tempEntity);
 		m_soundManager->PlayOneShotSound("Bullet_W", 0.5f);
 		break;
 	case(BULLET4) :
-		tempEntity = new Bullet_p4(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x - 1, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(0.5, 0.5, 0.5));
+		tempEntity = new Bullet_p4(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x - 1, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(0.5, 0.5, 0.5), 1);
 		m_bullet4.push_back(tempEntity);
-		tempEntity = new Bullet_p4(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(0.5, 0.5, 0.5));
+		tempEntity = new Bullet_p4(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(0.5, 0.5, 0.5), 1);
 		m_bullet4.push_back(tempEntity);
-		tempEntity = new Bullet_p4(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x + 1, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(0.5, 0.5, 0.5));
+		tempEntity = new Bullet_p4(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x + 1, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(0.5, 0.5, 0.5), 1);
 		m_bullet4.push_back(tempEntity);
 		m_soundManager->PlayOneShotSound("Bullet_E", 0.5f);
 		break;
 	case(BULLET5) :
-		tempEntity = new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z + 60), XMFLOAT3(1, 1, 20));
+		tempEntity = new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z + 60), XMFLOAT3(1, 1, 20), 1);
 		m_bullet5.push_back(tempEntity);
 		m_soundManager->PlayOneShotSound("Laser_R", 0.5f);
 		break;
@@ -245,6 +245,7 @@ void EntityManager::Update(double time)
 			m_timeSinceLastBeat += time;
 		}
 	}
+
 	//Do collision checks
 
 	//Check Bullet1 agains Enemies
@@ -254,27 +255,27 @@ void EntityManager::Update(double time)
 	//m_collision.CheckCollisionEntity(&m_bullet1, &m_enemy4,BULLET1);
 
 
-	//Check Bullet1 agains Enemies
+	//Check Bullet2 agains Enemies
 	m_collision.CheckCollisionEntity(&m_bullet2, &m_enemy1,BULLET2);
 	//m_collision.CheckCollisionEntity(&m_bullet2, &m_enemy2,BULLET2);
 	//m_collision.CheckCollisionEntity(&m_bullet2, &m_enemy3,BULLET2);
 	//m_collision.CheckCollisionEntity(&m_bullet2, &m_enemy4,BULLET2);
 
 
-	//Check Bullet1 agains Enemies
+	//Check Bullet3 agains Enemies
 	m_collision.CheckCollisionEntity(&m_bullet3, &m_enemy1,BULLET3);
 	//m_collision.CheckCollisionEntity(&m_bullet3, &m_enemy2,BULLET3);
 	//m_collision.CheckCollisionEntity(&m_bullet3, &m_enemy3,BULLET3);
 	//m_collision.CheckCollisionEntity(&m_bullet3, &m_enemy4,BULLET3);
 
 
-	//Check Bullet1 agains Enemies
+	//Check Bullet4 agains Enemies
 	m_collision.CheckCollisionEntity(&m_bullet4, &m_enemy1,BULLET4);
 	//m_collision.CheckCollisionEntity(&m_bullet4, &m_enemy2,BULLET4);
 	//m_collision.CheckCollisionEntity(&m_bullet4, &m_enemy3,BULLET4);
 	//m_collision.CheckCollisionEntity(&m_bullet4, &m_enemy4,BULLET4);
 
-	//Check Bullet1 agains Enemies
+	//Check Bullet5 agains Enemies
 	m_collision.CheckCollisionEntity(&m_bullet5, &m_enemy1,BULLET5);
 	//m_collision.CheckCollisionEntity(&m_bullet5, &m_enemy2,BULLET5);
 	//m_collision.CheckCollisionEntity(&m_bullet5, &m_enemy3,BULLET5);
@@ -288,13 +289,13 @@ void EntityManager::Update(double time)
 
 
 
-	//for (auto i = 0; i < m_enemy1.size(); i++)
+	//for (auto i = 0; i < m_enemy2.size(); i++)
 	//	m_enemy2[i]->Update(time);
 
-	//for (auto i = 0; i < m_enemy1.size(); i++)
+	//for (auto i = 0; i < m_enemy3.size(); i++)
 	//	m_enemy3[i]->Update(time);
 
-	//for (auto i = 0; i < m_enemy1.size(); i++)
+	//for (auto i = 0; i < m_enemy4.size(); i++)
 	//	m_enemy4[i]->Update(time);
 
 
@@ -523,7 +524,7 @@ vector<Entity*> EntityManager::CheckIfAlive(std::vector<Entity*> bullet)
 	bool removed = false;
 	vector<Entity*> _tempVec = bullet;			//Can't use the member variable for some reason
 	for (int i = 0; i < _tempVec.size() && removed == false; i++) 
-	{			//REMOVE REMOVED == FALSE AND MAKE LISTS!
+	{
 		bool _temp = _tempVec[i]->GetDelete();
 		if (_temp == true) 
 		{
@@ -543,7 +544,7 @@ void EntityManager::EnemyFire()
 {
 	for (auto i = 0; i < m_enemy1.size(); i++)
 	{
-		Bullet* tempEntity = new Bullet_e(m_soundManager, MAPWIDTH, MAPLENGTH, m_enemy1[i]->GetPosition(), XMFLOAT3(0.5, 0.5, 0.5));
+		Bullet* tempEntity = new Bullet_e(m_soundManager, MAPWIDTH, MAPLENGTH, m_enemy1[i]->GetPosition(), XMFLOAT3(0.5, 0.5, 0.5), 1);
 		m_bullet6.push_back(tempEntity);
 	}
 }
