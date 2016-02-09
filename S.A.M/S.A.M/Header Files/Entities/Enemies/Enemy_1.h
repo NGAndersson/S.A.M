@@ -9,7 +9,9 @@ private:
 protected:
 public:
 	Enemy_1();
-	Enemy_1(SoundManager* SoundManager, int MapWidth, int MapLength, XMFLOAT3 Position, XMFLOAT3 Scale, int Health) : Enemy(SoundManager, MapWidth, MapLength, Position, Scale, Health) {}
+	Enemy_1(SoundManager* SoundManager, int MapWidth, int MapLength, XMFLOAT3 Position, XMFLOAT3 Scale, int Health) : Enemy(SoundManager, MapWidth, MapLength, Position, Scale, Health) {
+		m_score = 1000;
+	}
 	~Enemy_1();
 	void Update(double time);
 	void Destroyed(double time);

@@ -18,9 +18,9 @@ bool Collision::CheckCollision(BoundingBox Entitiy1, BoundingBox Entity2)
 	return false;
 }
 
-void Collision::CheckCollisionEntity(vector<Entity*>* Entity_1, vector<Entity*>* Entity_2, HandlerIndex EntityType1, HandlerIndex EntityType2)
+int Collision::CheckCollisionEntity(vector<Entity*>* Entity_1, vector<Entity*>* Entity_2, HandlerIndex EntityType1, HandlerIndex EntityType2)
 {
-
+	int _returnScore = 0;
 	for (auto i = 0; i < Entity_1->size(); i++)
 	{
 		for (auto j = 0; j < Entity_2->size(); j++)
@@ -35,13 +35,15 @@ void Collision::CheckCollisionEntity(vector<Entity*>* Entity_1, vector<Entity*>*
 							Entity_1 = RemoveEntity(i, Entity_1);
 					}
 					(*Entity_2)[j]->AddHealth(-2);
-					if((*Entity_2)[j]->GetHealth() <= 0 && EntityType2 != PLAYER)
+					if ((*Entity_2)[j]->GetHealth() <= 0 && EntityType2 != PLAYER)
+						_returnScore += (*Entity_2)[j]->GetScore();
 						Entity_2 = RemoveEntity(j, Entity_2);
 					break;
 				}
 			
 		}
 	}
+	return _returnScore;
 }
 
 

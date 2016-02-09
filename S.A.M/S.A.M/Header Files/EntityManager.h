@@ -39,7 +39,7 @@ private:
 public:
 	EntityManager();
 	~EntityManager();
-	void Initialize(SoundManager* soundManager, Input* input, ID3D11Device* device, ID3D11DeviceContext* deviceContext);
+	void Initialize(SoundManager* soundManager, Input* input, ID3D11Device* device, ID3D11DeviceContext* deviceContext, Score* scoreManager);
 	void Render();
 	void Update(double time);
 	void ChangeSongData(int bpm);
@@ -62,6 +62,8 @@ private:
 
 	PartSys m_partSys;
 	Collision m_collision;
+
+	Score* m_scoreManager;
 
 	Renderer* m_renderer;
 	SoundManager* m_soundManager;

@@ -177,6 +177,7 @@
     <ClInclude Include="Header Files\Audio\SoundManager.h" />
     <ClInclude Include="Header Files\Bullet_e.h" />
     <ClInclude Include="Header Files\Collision.h" />
+    <ClInclude Include="Header Files\Gamelogic\Score.h" />
     <ClInclude Include="Header Files\Graphics\Camera.h" />
     <ClInclude Include="Header Files\DirectXHelpers.h" />
     <ClInclude Include="Header Files\Graphics\Display.h" />

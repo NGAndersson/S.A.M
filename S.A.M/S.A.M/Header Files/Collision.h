@@ -17,7 +17,7 @@ private:
 public:
 	Collision();
 	~Collision();
-	void CheckCollisionEntity(vector<Entity*>* Entity_1, vector<Entity*>* Entity_2, HandlerIndex EntityType1, HandlerIndex EntityType2);
+	int CheckCollisionEntity(vector<Entity*>* Entity_1, vector<Entity*>* Entity_2, HandlerIndex EntityType1, HandlerIndex EntityType2);
 private:
 public:
 

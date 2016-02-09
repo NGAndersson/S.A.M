@@ -26,6 +26,7 @@ public:
 		m_scale = Scale;
 		m_entityWidth = 5.0f;
 
+		m_score = 0;
 		m_health = Health;
 		m_entityBox.Center = Position;
 		m_entityBox.Extents = XMFLOAT3(5.0f, 5.0f, 5.0f);
@@ -56,6 +57,8 @@ public:
 
 	 virtual void AddHealth(int change){ m_health += change;}
 
+	 virtual int GetScore() { return m_score; }
+
 	//----------------------------Attributes----------------------------------------
 protected:
 	//Modelhandler
@@ -76,6 +79,6 @@ protected:
 	 bool m_delete = false;
 
 	 int m_health;
+	 int m_score;
 };
 #endif // ! ENTITY
-

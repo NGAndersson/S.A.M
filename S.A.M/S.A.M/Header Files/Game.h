@@ -7,6 +7,7 @@
 #include "EntityManager.h"
 #include "Gamelogic\Input.h"
 #include "Gamelogic\Timer.h"
+#include "Gamelogic\Score.h"
 
 #include <d3d11.h>	//temp
 
@@ -33,6 +34,7 @@ private:
 	SoundManager* m_soundManager;
 	ScreenManager* m_screenManager;
 	EntityManager* m_entityManager;
+	Score* m_scoreManager;
 	Input* m_input;
 	Display* m_display;
 	MSG m_winMSG;

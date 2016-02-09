@@ -32,6 +32,8 @@ Game::~Game()
 	}
 	if (m_sampleState)
 		m_sampleState->Release();
+	
+	delete m_scoreManager;
 
 }
 
@@ -56,7 +58,7 @@ void Game::InitGame(Input* input, Display* disp)
 
 	//Create and initialize EntityManager
 	m_entityManager = new EntityManager;
-	m_entityManager->Initialize(m_soundManager, m_input, m_device, m_deviceContext);
+	m_entityManager->Initialize(m_soundManager, m_input, m_device, m_deviceContext, m_scoreManager);
 
 	//FUN STUFF! REMOVE!
 	//m_soundManager->LoadSound("Resources/wave.mp3", "wave", "music", LOAD_STREAM);
