@@ -106,10 +106,12 @@ WPARAM Game::MainLoop()
 
 void Game::Update(double time)
 {
+	m_screenManager->Update(time);
 	if (m_screenManager->GetCurrentScreen() == GAME)
 		m_entityManager->Update(time);
-	else
-		m_screenManager->Update(time);
+	
+	//if(m_screenManager->GetCurrentScreen() == USERINTERFACE)
+	// Update Entity Manager
 }
 
 void Game::Render()
@@ -119,7 +121,8 @@ void Game::Render()
 	m_deviceContext->ClearRenderTargetView(m_backbufferRTV, _clearColor);
 	m_deviceContext->ClearDepthStencilView(m_depthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
 	m_deviceContext->OMSetRenderTargets(1, &m_backbufferRTV, m_depthStencilView);
-
+	m_screenManager->Render();
+	//if(m_screenManager->GetCurrentScreen() == USERINTERFACE)
 	// Render Entity Manager
 	if (m_screenManager->GetCurrentScreen() == GAME)
 	{
@@ -131,8 +134,6 @@ void Game::Render()
 		m_deferredBuffer.SetShaderResource(m_deviceContext);
 		m_deferredRender.Render(m_deviceContext);
 	}
-	else
-		m_screenManager->Render(m_device, m_deviceContext);
 
 	m_swapChain->Present(0, 0);
 }
