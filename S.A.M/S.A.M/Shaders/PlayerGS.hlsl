@@ -37,7 +37,7 @@ void GS_main(triangle GS_IN input[3], inout TriangleStream< GS_OUT > streamOutpu
 		{
 			output.Pos = mul(input[i].PosInW, ViewProjection);
 			output.PosInW = input[i].PosInW;
-			output.NormalInW = input[i].NormalInW;
+			output.NormalInW = float4(Norm, 1.0f);
 			output.Tex = input[i].Tex;
 			streamOutput.Append(output);
 		}

@@ -4,25 +4,25 @@ LightHandler::LightHandler()
 {
 	m_nummberOfLights = 5;
 
-	m_lightPos[0] = XMFLOAT4(0, -50, 0, 0);
-	m_lightColor[0] = XMFLOAT4(0.3, 0.3, 0.3, 0);
-	m_lightRange[0] = XMFLOAT4(500, float(m_nummberOfLights), 1, 0);
+	m_lightPos[0] = XMFLOAT4(0, -10, 0, 0);
+	m_lightColor[0] = XMFLOAT4(0.4, 0.4, 0.4, 0);
+	m_lightRange[0] = XMFLOAT4(5000, float(m_nummberOfLights), 1, 0);
 
 	m_lightPos[1] = XMFLOAT4(50, 0, 0, 0);
-	m_lightColor[1] = XMFLOAT4(0.3, 0.3, 0.3, 0);
-	m_lightRange[1] = XMFLOAT4(500, float(m_nummberOfLights), 1, 0);
+	m_lightColor[1] = XMFLOAT4(0.2, 0.2, 0.2, 0);
+	m_lightRange[1] = XMFLOAT4(5000, float(m_nummberOfLights), 1, 0);
 
 	m_lightPos[2] = XMFLOAT4(0, 0, 50, 0);
-	m_lightColor[2] = XMFLOAT4(0.3, 0.3, 0.3, 0);
-	m_lightRange[2] = XMFLOAT4(500, float(m_nummberOfLights), 1, 0);
+	m_lightColor[2] = XMFLOAT4(0.2, 0.2, 0.2, 0);
+	m_lightRange[2] = XMFLOAT4(5000, float(m_nummberOfLights), 1, 0);
 
 	m_lightPos[3] = XMFLOAT4(0, 0, -50, 0);
-	m_lightColor[3] = XMFLOAT4(0.3, 0.3, 0.3, 0);
-	m_lightRange[3] = XMFLOAT4(500, float(m_nummberOfLights), 1, 0);
+	m_lightColor[3] = XMFLOAT4(0.2, 0.2, 0.2, 0);
+	m_lightRange[3] = XMFLOAT4(5000, float(m_nummberOfLights), 1, 0);
 
 	m_lightPos[4] = XMFLOAT4(-50, 0, 0, 0);
-	m_lightColor[4] = XMFLOAT4(0.3, 0.3, 0.3, 0);
-	m_lightRange[4] = XMFLOAT4(500, float(m_nummberOfLights), 1, 0);
+	m_lightColor[4] = XMFLOAT4(0.2, 0.2, 0.2, 0);
+	m_lightRange[4] = XMFLOAT4(5000, float(m_nummberOfLights), 1, 0);
 }
 
 LightHandler::~LightHandler()
