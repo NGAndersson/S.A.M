@@ -46,6 +46,8 @@ void Game::InitGame(Input* input, Display* disp)
 	//Create and initialize SoundManager
 	m_soundManager = new SoundManager;  //Initializes in constructor
 
+	m_scoreManager = new Score;
+
 	//Create and initialize device/devicecontext/swapchain/depthstenciel
 	CreateDirect3DContext(disp->GethWnd());
 
@@ -59,11 +61,6 @@ void Game::InitGame(Input* input, Display* disp)
 	//Create and initialize EntityManager
 	m_entityManager = new EntityManager;
 	m_entityManager->Initialize(m_soundManager, m_input, m_device, m_deviceContext, m_scoreManager);
-
-	//FUN STUFF! REMOVE!
-	//m_soundManager->LoadSound("Resources/wave.mp3", "wave", "music", LOAD_STREAM);
-	//m_soundManager->LoadSound("Resources/Song.mp3", "gangnam", "music", LOAD_STREAM);
-
 }
 
 WPARAM Game::MainLoop()
@@ -100,6 +97,7 @@ WPARAM Game::MainLoop()
 		//Call Render Functions
 		Render();
 	}
+
 }
 
 void Game::Update(double time)
@@ -131,9 +129,10 @@ void Game::Render()
 void Game::CheckInput()
 {
 	//InputType _returnInput = m_input->CheckKeyBoardInput();
-	if (m_input->CheckEsc())
+	if (m_input->CheckEsc()) {
+		m_scoreManager->SaveScore("PixieTrust.txt", "SomeNoob");
 		exit(0);
-
+	}
 	m_input->CheckMouseInput();
 }
 

@@ -36,8 +36,10 @@ int Collision::CheckCollisionEntity(vector<Entity*>* Entity_1, vector<Entity*>* 
 					}
 					(*Entity_2)[j]->AddHealth(-2);
 					if ((*Entity_2)[j]->GetHealth() <= 0 && EntityType2 != PLAYER)
+					{
 						_returnScore += (*Entity_2)[j]->GetScore();
 						Entity_2 = RemoveEntity(j, Entity_2);
+					}
 					break;
 				}
 			

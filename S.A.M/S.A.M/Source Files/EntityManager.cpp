@@ -99,12 +99,14 @@ void EntityManager::Initialize(SoundManager* soundManager, Input* input, ID3D11D
 
 	//Set the soundManager pointer which will be used in every entity
 	m_soundManager = soundManager;
+
+	m_scoreManager = scoreManager;
+
 	InitMusic("Resources/PixieTrust.txt");
 
 	m_beatDetector = new BeatDetector(m_soundManager);
 	m_beatDetector->AudioProcess();
 
-	m_scoreManager = scoreManager;
 
 	//Set the input class which will be passed down to Player
 	m_input = input;
@@ -385,6 +387,8 @@ void EntityManager::InitMusic(std::string filename)
 			m_soundManager->LoadSound(_value, _value, "Bullet_E", LOAD_MEMORY);
 		else if (std::string(_key) == "bulletR")
 			m_soundManager->LoadSound(_value, _value, "Laser_R", LOAD_MEMORY);
+		else if (std::string(_key) == "score")
+			m_scoreManager->LoadScore(_value);
 	}
 }
 
