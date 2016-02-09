@@ -32,6 +32,7 @@ private:
 	void RenderBullets();
 	vector<Entity*> RemoveEntity(int RemoveId, vector<Entity*> RemoveType);
 	void InitMusic(std::string filename);
+	void RenderEnemies();
 
 public:
 	EntityManager();

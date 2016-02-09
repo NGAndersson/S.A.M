@@ -430,6 +430,10 @@ vector<Entity*> EntityManager::CheckOutOfBounds(std::vector<Entity*> bullet)
 	return _tempVec;
 }
 
+void EntityManager::RenderEnemies()
+{
+
+}
 	
 void EntityManager::RenderBullets()
 {

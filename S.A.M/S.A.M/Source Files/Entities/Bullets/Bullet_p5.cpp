@@ -11,7 +11,7 @@ Bullet_p5::Bullet_p5(SoundManager * SoundManager, int MapWidth, int MapLength, X
 	m_rotation = XMMatrixRotationAxis(_rotzAxis, 0.0f);
 	m_scale = Scale;
 	m_position = Position;
-	m_entityBox.Extents = XMFLOAT3(5, 0, 100);
+	m_entityBox.Extents = XMFLOAT3(0.5, 0, 100);
 }
 
 Bullet_p5::~Bullet_p5()
