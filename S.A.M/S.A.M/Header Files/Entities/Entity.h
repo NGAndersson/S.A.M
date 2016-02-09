@@ -74,6 +74,16 @@ public:
 		 return m_delete;
 	 }
 
+	 virtual int GetHealth()
+	 {
+		 return m_health;
+	 }
+
+	 virtual void AddHealth(int change)
+	 {
+		 m_health += change;
+	 }
+
 	//----------------------------Attributes----------------------------------------
 protected:
 	//Modelhandler

@@ -44,7 +44,7 @@ void EntityManager::SpawnEntity(HandlerIndex type)
 		m_player = new Player(m_soundManager, MAPWIDTH,MAPLENGTH,XMFLOAT3(1.0f, 0.0f, 1.0f), XMFLOAT3(0.5f, 0.5f, 0.5f), 1, m_input);
 		break;
 	case(ENEMY1) :
-		tempEntity1 = new Enemy_1(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(_tempX, 0.0f, 70.0f),XMFLOAT3(0.5f,0.5f,0.5f), 2);
+		tempEntity1 = new Enemy_1(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(_tempX, 0.0f, 70.0f),XMFLOAT3(0.5f,0.5f,0.5f), 6);
 		m_enemy1.push_back(tempEntity1);
 		break;
 	//case(ENEMY2) :
@@ -170,7 +170,8 @@ void EntityManager::Render()
 	m_partSys.PartRend(m_deviceContext);
 	
 	//Render Player
-	m_renderer->Render(m_modelHandlers[PLAYER], m_player->GetPosition(), m_player->GetRotation(), m_player->GetScale());
+	if(m_player->GetHealth() > 0)
+		m_renderer->Render(m_modelHandlers[PLAYER], m_player->GetPosition(), m_player->GetRotation(), m_player->GetScale());
 	RenderBullets();
 
 	//Render Enemies
@@ -249,45 +250,47 @@ void EntityManager::Update(double time)
 	//Do collision checks
 
 	//Check Bullet1 agains Enemies
-	m_collision.CheckCollisionEntity(&m_bullet1, &m_enemy1,BULLET1);
-	//m_collision.CheckCollisionEntity(&m_bullet1, &m_enemy2,BULLET1);
-	//m_collision.CheckCollisionEntity(&m_bullet1, &m_enemy3,BULLET1);
-	//m_collision.CheckCollisionEntity(&m_bullet1, &m_enemy4,BULLET1);
+	m_collision.CheckCollisionEntity(&m_bullet1, &m_enemy1,BULLET1, ENEMY1);
+	//m_collision.CheckCollisionEntity(&m_bullet1, &m_enemy2,BULLET1, ENEMY2);
+	//m_collision.CheckCollisionEntity(&m_bullet1, &m_enemy3,BULLET1, ENEMY3);
+	//m_collision.CheckCollisionEntity(&m_bullet1, &m_enemy4,BULLET1, ENEMY4);
 
 
 	//Check Bullet2 agains Enemies
-	m_collision.CheckCollisionEntity(&m_bullet2, &m_enemy1,BULLET2);
-	//m_collision.CheckCollisionEntity(&m_bullet2, &m_enemy2,BULLET2);
-	//m_collision.CheckCollisionEntity(&m_bullet2, &m_enemy3,BULLET2);
-	//m_collision.CheckCollisionEntity(&m_bullet2, &m_enemy4,BULLET2);
+	m_collision.CheckCollisionEntity(&m_bullet2, &m_enemy1,BULLET2, ENEMY1);
+	//m_collision.CheckCollisionEntity(&m_bullet2, &m_enemy2,BULLET2, ENEMY2);
+	//m_collision.CheckCollisionEntity(&m_bullet2, &m_enemy3,BULLET2, ENEMY3);
+	//m_collision.CheckCollisionEntity(&m_bullet2, &m_enemy4,BULLET2, ENEMY4);
 
 
 	//Check Bullet3 agains Enemies
-	m_collision.CheckCollisionEntity(&m_bullet3, &m_enemy1,BULLET3);
-	//m_collision.CheckCollisionEntity(&m_bullet3, &m_enemy2,BULLET3);
-	//m_collision.CheckCollisionEntity(&m_bullet3, &m_enemy3,BULLET3);
-	//m_collision.CheckCollisionEntity(&m_bullet3, &m_enemy4,BULLET3);
+	m_collision.CheckCollisionEntity(&m_bullet3, &m_enemy1,BULLET3, ENEMY1);
+	//m_collision.CheckCollisionEntity(&m_bullet3, &m_enemy2,BULLET3, ENEMY2);
+	//m_collision.CheckCollisionEntity(&m_bullet3, &m_enemy3,BULLET3, ENEMY3);
+	//m_collision.CheckCollisionEntity(&m_bullet3, &m_enemy4,BULLET3, ENEMY4);
 
 
 	//Check Bullet4 agains Enemies
-	m_collision.CheckCollisionEntity(&m_bullet4, &m_enemy1,BULLET4);
-	//m_collision.CheckCollisionEntity(&m_bullet4, &m_enemy2,BULLET4);
-	//m_collision.CheckCollisionEntity(&m_bullet4, &m_enemy3,BULLET4);
-	//m_collision.CheckCollisionEntity(&m_bullet4, &m_enemy4,BULLET4);
+	m_collision.CheckCollisionEntity(&m_bullet4, &m_enemy1,BULLET4, ENEMY1);
+	//m_collision.CheckCollisionEntity(&m_bullet4, &m_enemy2,BULLET4, ENEMY2);
+	//m_collision.CheckCollisionEntity(&m_bullet4, &m_enemy3,BULLET4, ENEMY3);
+	//m_collision.CheckCollisionEntity(&m_bullet4, &m_enemy4,BULLET4, ENEMY4);
 
 	//Check Bullet5 agains Enemies
-	m_collision.CheckCollisionEntity(&m_bullet5, &m_enemy1,BULLET5);
-	//m_collision.CheckCollisionEntity(&m_bullet5, &m_enemy2,BULLET5);
-	//m_collision.CheckCollisionEntity(&m_bullet5, &m_enemy3,BULLET5);
-	//m_collision.CheckCollisionEntity(&m_bullet5, &m_enemy4,BULLET5);
+	m_collision.CheckCollisionEntity(&m_bullet5, &m_enemy1,BULLET5, ENEMY1);
+	//m_collision.CheckCollisionEntity(&m_bullet5, &m_enemy2,BULLET5, ENEMY2);
+	//m_collision.CheckCollisionEntity(&m_bullet5, &m_enemy3,BULLET5, ENEMY3);
+	//m_collision.CheckCollisionEntity(&m_bullet5, &m_enemy4,BULLET5, ENEMY4);
 
+
+	//Check Player against Enemy Bullet
+	std::vector<Entity*> _playerVec = { m_player };
+	m_collision.CheckCollisionEntity(&m_bullet6, &_playerVec, BULLET6, PLAYER);
+	//if (!m_player || m_player == nullptr)
+	//	m_player = new Player(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(1.0f, 0.0f, 1.0f), XMFLOAT3(0.5f, 0.5f, 0.5f), 1, m_input);
 	//Enemies
 	for (auto i = 0; i < m_enemy1.size(); i++)
 		m_enemy1[i]->Update(time);
-
-
-
-
 
 	//for (auto i = 0; i < m_enemy2.size(); i++)
 	//	m_enemy2[i]->Update(time);
@@ -317,7 +320,8 @@ void EntityManager::Update(double time)
 	//Update every entity of Bullet6
 	for (int i = 0; i < m_bullet6.size(); i++)
 		m_bullet6[i]->Update(time);
-	m_player->Update(time);
+	if (m_player->GetHealth() > 0)
+		m_player->Update(time);
 	
 	//CheckEnemies Out Of BOUNDS
 	m_enemy1 = CheckOutOfBounds(m_enemy1);
@@ -379,30 +383,33 @@ void EntityManager::InitMusic(std::string filename)
 
 void EntityManager::BeatWasDetected()
 {
-	//Spawn correct bullet (which plays the sound as well)
-	BulletType _bullet = m_input->CheckBullet();
-	static int _randOffset;
-	switch (_bullet)
+	//Spawn correct bullet (which plays the sound as well) Only if player is alive
+	if (m_player->GetHealth() > 0)
 	{
-	case INPUT_DEFAULT_BULLET:
-		SpawnEntity(BULLET1); //Default bullet
-		break;
-	case INPUT_BULLET2:
-		SpawnEntity(BULLET2);
-		break;
-	case INPUT_BULLET3:
-		SpawnEntity(BULLET3);
-		break;
-	case INPUT_BULLET4:
-		SpawnEntity(BULLET4);
-		break;
-	case INPUT_BULLET5:
-		SpawnEntity(BULLET5);
-		break;
-	default:
-		break;
+		BulletType _bullet = m_input->CheckBullet();
+		switch (_bullet)
+		{
+		case INPUT_DEFAULT_BULLET:
+			SpawnEntity(BULLET1); //Default bullet
+			break;
+		case INPUT_BULLET2:
+			SpawnEntity(BULLET2);
+			break;
+		case INPUT_BULLET3:
+			SpawnEntity(BULLET3);
+			break;
+		case INPUT_BULLET4:
+			SpawnEntity(BULLET4);
+			break;
+		case INPUT_BULLET5:
+			SpawnEntity(BULLET5);
+			break;
+		default:
+			break;
+		}
 	}
 
+	static int _randOffset;
 	m_level = 3;
 	auto _rand = rand() % 100 + 1;
 	if (_rand > 80/m_level)

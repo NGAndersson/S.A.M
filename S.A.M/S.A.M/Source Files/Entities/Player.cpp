@@ -58,6 +58,8 @@ void Player::Update(double time)
 	if (m_position.x < (float)-m_mapWidth / 2)
 		m_position.x = (float)-m_mapWidth / 2;
 
+
+	m_entityBox.Center = m_position;
 }
 
 void Player::Destroyed()

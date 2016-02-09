@@ -11,7 +11,7 @@ Bullet_e::Bullet_e(SoundManager * SoundManager, int MapWidth, int MapLength, XMF
 	m_rotation = XMMatrixRotationAxis(_rotzAxis, 0.0f);
 	m_scale = Scale;
 	m_position = Position;
-	m_entityBox.Extents = XMFLOAT3(5, 0, 100);
+	m_entityBox.Extents = XMFLOAT3(2, 0, 2);
 	m_health = Health;
 }
 
