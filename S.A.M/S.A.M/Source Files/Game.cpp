@@ -60,7 +60,7 @@ void Game::InitGame(Input* input, Display* disp)
 
 	//Create and initialize EntityManager
 	m_entityManager = new EntityManager;
-	m_entityManager->Initialize(m_soundManager, m_input, m_device, m_deviceContext);
+	m_entityManager->Initialize(m_soundManager, m_input, m_device, m_deviceContext, m_scoreManager);
 
 	//FUN STUFF! REMOVE!
 	//m_soundManager->LoadSound("Resources/wave.mp3", "wave", "music", LOAD_STREAM);
@@ -70,7 +70,7 @@ void Game::InitGame(Input* input, Display* disp)
 	m_deferredBuffer.Initialize(m_device, WIDTH, HEIGHT);
 	m_deferredRender.InitializeShader(m_device);
 	m_deferredRender.InitializeBufferString(m_device);
-	m_entityManager->Initialize(m_soundManager, m_input, m_device, m_deviceContext, m_scoreManager);
+	
 }
 
 WPARAM Game::MainLoop()

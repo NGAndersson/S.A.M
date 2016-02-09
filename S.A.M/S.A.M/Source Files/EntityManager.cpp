@@ -41,12 +41,12 @@ void EntityManager::SpawnEntity(HandlerIndex type)
 
 	switch (type) {
 	case(PLAYER) :
-		m_player = new Player(m_soundManager, MAPWIDTH,MAPLENGTH,XMFLOAT3(1.0f, 0.0f, 1.0f), XMFLOAT3(0.5f, 0.5f, 0.5f), 1, m_input);
-		m_player = new Player(m_soundManager, MAPWIDTH,MAPLENGTH,XMFLOAT3(MAPWIDTH / 2, 0.0f, MAPLENGTH / 2), XMFLOAT3(0.5f, 0.5f, 0.5f), m_input);
+		//m_player = new Player(m_soundManager, MAPWIDTH,MAPLENGTH,XMFLOAT3(1.0f, 0.0f, 1.0f), XMFLOAT3(0.5f, 0.5f, 0.5f), 1, m_input);
+		m_player = new Player(m_soundManager, MAPWIDTH,MAPLENGTH,XMFLOAT3(MAPWIDTH / 2, 0.0f, MAPLENGTH / 2), XMFLOAT3(0.5f, 0.5f, 0.5f), 1, m_input);
 		break;
 	case(ENEMY1) :
-		tempEntity1 = new Enemy_1(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(_tempX, 0.0f, 110.0f),XMFLOAT3(0.5f,0.5f,0.5f));
-		tempEntity1 = new Enemy_1(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(_tempX, 0.0f, 70.0f),XMFLOAT3(0.5f,0.5f,0.5f), 6);
+		tempEntity1 = new Enemy_1(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(_tempX, 0.0f, 110.0f),XMFLOAT3(0.5f,0.5f,0.5f), 6);
+		//tempEntity1 = new Enemy_1(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(_tempX, 0.0f, 70.0f),XMFLOAT3(0.5f,0.5f,0.5f), 6);
 		m_enemy1.push_back(tempEntity1);
 		break;
 	//case(ENEMY2) :
