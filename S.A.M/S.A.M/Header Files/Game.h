@@ -13,7 +13,7 @@
 #include <d3d11.h>	//temp
 
 #define WIDTH 1640
-#define HEIGHT 720
+#define HEIGHT 980
 
 class Game
 {
