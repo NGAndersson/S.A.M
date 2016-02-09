@@ -14,7 +14,7 @@ public:
 	bool LoadScore(std::string filename);
 private:
 	int m_score;
-	int m_highScores[10];
+	std::pair<std::string, int> m_highScores[10] = { { "", 0 } };
 public:
 };
 

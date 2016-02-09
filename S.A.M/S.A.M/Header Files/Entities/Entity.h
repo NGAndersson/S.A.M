@@ -17,7 +17,7 @@ class Entity
 public:
 	Entity() {}
 	~Entity() {}
-	Entity(SoundManager* SoundManager, int MapWidth, int MapLength, XMFLOAT3 Position, XMFLOAT3 Scale)
+	Entity(SoundManager* SoundManager, int MapWidth, int MapLength, XMFLOAT3 Position, XMFLOAT3 Scale, int Health)
 	{
 		m_soundManager = SoundManager;
 		m_mapLength = MapLength;
@@ -26,53 +26,38 @@ public:
 		m_scale = Scale;
 		m_entityWidth = 5.0f;
 
-
+		m_score = 0;
+		m_health = Health;
 		m_entityBox.Center = Position;
 		m_entityBox.Extents = XMFLOAT3(5.0f, 5.0f, 5.0f);
 	}
 
 	virtual void Update(double time) = 0;
 
-	 virtual void Destroyed()
-	 {
-		 delete m_soundManager;
-	 }
+	virtual void Destroyed(double time) = 0;
 
 	 //Get set 
-	 virtual XMFLOAT3 GetPosition()
-	 {
-		 return m_position;
-	 }
+	 virtual XMFLOAT3 GetPosition(){return m_position;}
 
-	 virtual void SetPosition(XMFLOAT3 newPos)
-	 {
-		 m_position = newPos;
-	 }
+	 virtual void SetPosition(XMFLOAT3 newPos) { m_position = newPos; }
 
-	 virtual XMMATRIX GetRotation()
-	 {
-		 return m_rotation;
-	 }
+	 virtual XMMATRIX GetRotation(){ return m_rotation; }
 
-	 virtual XMFLOAT3 GetScale()
-	 {
-		 return m_scale;
-	 }
+	 virtual XMFLOAT3 GetScale() { return m_scale; }
 
-	 virtual void SetScale(XMFLOAT3 newScale)
-	 {
-		 m_scale = newScale;
-	 }
+	 virtual void SetScale(XMFLOAT3 newScale) { m_scale = newScale; }
 
-	 virtual BoundingBox GetBoundingBox()
-	 {
-		 return m_entityBox;
-	 }
+	 virtual BoundingBox GetBoundingBox() { return m_entityBox; }
 
-	 virtual bool GetDelete()
-	 {
-		 return m_delete;
-	 }
+	 virtual bool GetDelete() { return m_delete; }
+
+	 virtual void SetDelete(bool b) { m_delete = b; }
+
+	 virtual int GetHealth(){return m_health;}
+
+	 virtual void AddHealth(int change){ m_health += change;}
+
+	 virtual int GetScore() { return m_score; }
 
 	//----------------------------Attributes----------------------------------------
 protected:
@@ -92,6 +77,8 @@ protected:
 
 	 //When entities are to be deleted
 	 bool m_delete = false;
+
+	 int m_health;
+	 int m_score;
 };
 #endif // ! ENTITY
-

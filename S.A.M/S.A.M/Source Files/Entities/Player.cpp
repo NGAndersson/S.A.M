@@ -5,7 +5,7 @@ Player::Player()
 
 }
 
-Player::Player(SoundManager* SoundManager, int MapWidth, int MapLength,XMFLOAT3 Position, XMFLOAT3 Scale, Input* input) : Entity(SoundManager, MapWidth, MapLength, Position, Scale)
+Player::Player(SoundManager* SoundManager, int MapWidth, int MapLength,XMFLOAT3 Position, XMFLOAT3 Scale, int Health, Input* input) : Entity(SoundManager, MapWidth, MapLength, Position, Scale, Health)
 {
 	m_input = input;
 	//Loading death sounds FIX LATER :)
@@ -58,10 +58,13 @@ void Player::Update(double time)
 	if (m_position.x < 1)
 		m_position.x = 1;
 
+
+	m_entityBox.Center = m_position;
+
 }
 
-void Player::Destroyed()
+void Player::Destroyed(double time)
 {
 	//Play sound when destroyed..
-	m_soundManager->PlayOneShotSound("PlayerDeathSound", 0.5f);
+	//m_soundManager->PlayOneShotSound("PlayerDeathSound", 0.5f);
 }

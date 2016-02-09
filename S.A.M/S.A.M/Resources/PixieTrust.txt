@@ -1,4 +1,5 @@
 music=Resources/Sound/PixieTrust.mp3
+score=PixieTrust.txt
 offset=44
 bulletD=Resources/Sound/DefaultSoundBullet1.wav
 bulletQ=Resources/Sound/DefaultSoundBullet2.wav

@@ -33,6 +33,8 @@ Game::~Game()
 	if (m_sampleState)
 		m_sampleState->Release();
 
+	delete m_scoreManager;
+
 }
 
 void Game::InitGame(Input* input, Display* disp)
@@ -43,6 +45,8 @@ void Game::InitGame(Input* input, Display* disp)
 
 	//Create and initialize SoundManager
 	m_soundManager = new SoundManager;  //Initializes in constructor
+
+	m_scoreManager = new Score;
 
 	//Create and initialize device/devicecontext/swapchain/depthstenciel
 	CreateDirect3DContext(disp->GethWnd());
@@ -66,6 +70,7 @@ void Game::InitGame(Input* input, Display* disp)
 	m_deferredBuffer.Initialize(m_device, WIDTH, HEIGHT);
 	m_deferredRender.InitializeShader(m_device);
 	m_deferredRender.InitializeBufferString(m_device);
+	m_entityManager->Initialize(m_soundManager, m_input, m_device, m_deviceContext, m_scoreManager);
 }
 
 WPARAM Game::MainLoop()
@@ -102,6 +107,7 @@ WPARAM Game::MainLoop()
 		//Call Render Functions
 		Render();
 	}
+
 }
 
 void Game::Update(double time)
@@ -141,9 +147,10 @@ void Game::Render()
 void Game::CheckInput()
 {
 	//InputType _returnInput = m_input->CheckKeyBoardInput();
-	if (m_input->CheckEsc())
+	if (m_input->CheckEsc()) {
+		m_scoreManager->SaveScore("PixieTrust.txt", "SomeNoob");
 		exit(0);
-
+	}
 	m_input->CheckMouseInput();
 }
 

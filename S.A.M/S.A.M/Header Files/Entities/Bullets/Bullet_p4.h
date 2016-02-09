@@ -9,10 +9,10 @@ private:
 protected:
 public:
 	Bullet_p4();
-	Bullet_p4(SoundManager* SoundManager, int MapWidth, int MapLength, XMFLOAT3 Position, XMFLOAT3 Scale);
+	Bullet_p4(SoundManager* SoundManager, int MapWidth, int MapLength, XMFLOAT3 Position, XMFLOAT3 Scale, int Health);
 	~Bullet_p4();
 	void Update(double time);
-	void Destroyed();
+	void Destroyed(double time);
 
 	//Variables
 private:
