@@ -111,4 +111,5 @@ void Camera::SetConstantBuffer(ID3D11DeviceContext* gDeviceContext)
 	gDeviceContext->Unmap(m_constCameraBuffer, 0);
 
 	gDeviceContext->GSSetConstantBuffers(0, 1, &m_constCameraBuffer);
+	gDeviceContext->PSSetConstantBuffers(2, 1, &m_constCameraBuffer);
 }

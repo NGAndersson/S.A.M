@@ -163,6 +163,9 @@ void EntityManager::Initialize(SoundManager* soundManager, Input* input, ID3D11D
 	ChangeSongData(m_beatDetector->GetTempo());
 	m_doBeatDet = true;
 	m_beat = m_beatDetector->GetBeat();
+
+	//Create Light Buffer
+	m_light.InitializBuffer(m_device);
 }
 
 void EntityManager::Render()
@@ -332,7 +335,8 @@ void EntityManager::Update(double time)
 	m_bullet5 = CheckIfAlive(m_bullet5);
 	m_bullet6 = CheckOutOfBounds(m_bullet6);
 
-
+	//sets the lightbuffer
+	m_light.SetConstbuffer(m_deviceContext);
 
 	//Update Particle System
 	m_partSys.updatePart(m_deviceContext, time, 40);

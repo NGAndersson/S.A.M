@@ -6,6 +6,7 @@
 #include "Graphics\Renderer.h"
 #include "Graphics\ModelHandler.h"
 #include "Graphics\ParticleSys.h"
+#include "Graphics\LightHandler.h"
 #include "Gamelogic\Input.h"
 #include "Audio\BeatDetector.h"
 #include <d3d11.h>
@@ -48,6 +49,7 @@ public:
 private:
 	//Vectors with all the different types of entities
 	ModelHandler* m_modelHandlers[10];
+	LightHandler m_light;
 	std::vector<Entity*> m_bullet1;
 	std::vector<Entity*> m_bullet2;
 	std::vector<Entity*> m_bullet3;

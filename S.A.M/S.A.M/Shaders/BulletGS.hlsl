@@ -7,12 +7,14 @@ cbuffer CameraViewProject : register(b0)
 struct GS_IN
 {
 	float4 PosInW : WORLDPOS;
+	float4 NormalInW : NORMALINW;
 	float2 Tex : TEXCOORD;
 };
 
 struct GS_OUT
 {
 	float4 Pos : SV_POSITION;
+	float4 NormalInW : NORMALINW;
 	float2 Tex : TEXCOORD;
 };
 
@@ -33,6 +35,7 @@ void GS_main(triangle GS_IN input[3], inout TriangleStream< GS_OUT > streamOutpu
 		for (int i = 0; i < 3; i++)
 		{
 			output.Pos = mul(input[i].PosInW, ViewProjection);
+			output.NormalInW = input[i].NormalInW;
 			output.Tex = input[i].Tex;
 			streamOutput.Append(output);
 		}
