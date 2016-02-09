@@ -60,10 +60,11 @@ void Player::Update(double time)
 
 
 	m_entityBox.Center = m_position;
+
 }
 
-void Player::Destroyed()
+void Player::Destroyed(double time)
 {
 	//Play sound when destroyed..
-	m_soundManager->PlayOneShotSound("PlayerDeathSound", 0.5f);
+	//m_soundManager->PlayOneShotSound("PlayerDeathSound", 0.5f);
 }

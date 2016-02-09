@@ -15,7 +15,7 @@ public:
 	}
 	//~Enemy();
 	virtual void Update(double time) = 0;
-	virtual void Destroyed() = 0;
+	virtual void Destroyed(double time) = 0;
 
 	//Attributes
 private:

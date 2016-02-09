@@ -31,7 +31,7 @@ void Bullet_p3::Update(double time)
 	m_entityBox.Center = m_position;
 }
 
-void Bullet_p3::Destroyed()
+void Bullet_p3::Destroyed(double time)
 {
 	m_delete = true;
 }

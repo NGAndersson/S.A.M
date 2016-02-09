@@ -12,7 +12,7 @@ public:
 	Enemy_2(SoundManager* SoundManager, int MapWidth, int MapLength, XMFLOAT3 Position, XMFLOAT3 Scale, int Health) : Enemy(SoundManager, MapWidth, MapLength, Position, Scale, Health) {}
 	~Enemy_2();
 	void Update(double time);
-	void Destroyed();
+	void Destroyed(double time);
 
 	//Attributes
 private:

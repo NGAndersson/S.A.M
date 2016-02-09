@@ -284,10 +284,13 @@ void EntityManager::Update(double time)
 
 
 	//Check Player against Enemy Bullet
-	std::vector<Entity*> _playerVec = { m_player };
-	m_collision.CheckCollisionEntity(&m_bullet6, &_playerVec, BULLET6, PLAYER);
-	//if (!m_player || m_player == nullptr)
-	//	m_player = new Player(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(1.0f, 0.0f, 1.0f), XMFLOAT3(0.5f, 0.5f, 0.5f), 1, m_input);
+	if (m_player->GetHealth() > 0 && !m_player->GetDelete())
+	{
+		std::vector<Entity*> _playerVec = { m_player };
+		m_collision.CheckCollisionEntity(&m_bullet6, &_playerVec, BULLET6, PLAYER);
+		if (m_player->GetHealth() <= 0)
+			m_player->SetDelete(true);
+	}
 	//Enemies
 	for (auto i = 0; i < m_enemy1.size(); i++)
 		m_enemy1[i]->Update(time);
@@ -320,8 +323,11 @@ void EntityManager::Update(double time)
 	//Update every entity of Bullet6
 	for (int i = 0; i < m_bullet6.size(); i++)
 		m_bullet6[i]->Update(time);
-	if (m_player->GetHealth() > 0)
+
+	if (!m_player->GetDelete())
 		m_player->Update(time);
+	else
+		m_player->Destroyed(time);
 	
 	//CheckEnemies Out Of BOUNDS
 	m_enemy1 = CheckOutOfBounds(m_enemy1);

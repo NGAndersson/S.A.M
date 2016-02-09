@@ -19,7 +19,7 @@ Bullet_p1::~Bullet_p1()
 
 }
 
-void Bullet_p1::Destroyed()
+void Bullet_p1::Destroyed(double time)
 {
 	m_delete = true;
 }

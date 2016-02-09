@@ -32,7 +32,7 @@ void Bullet_p5::Update(double time)
 
 }
 
-void Bullet_p5::Destroyed()
+void Bullet_p5::Destroyed(double time)
 {
 	m_delete = true;
 }

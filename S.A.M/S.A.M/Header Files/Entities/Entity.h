@@ -33,56 +33,28 @@ public:
 
 	virtual void Update(double time) = 0;
 
-	 virtual void Destroyed()
-	 {
-		 delete m_soundManager;
-	 }
+	virtual void Destroyed(double time) = 0;
 
 	 //Get set 
-	 virtual XMFLOAT3 GetPosition()
-	 {
-		 return m_position;
-	 }
+	 virtual XMFLOAT3 GetPosition(){return m_position;}
 
-	 virtual void SetPosition(XMFLOAT3 newPos)
-	 {
-		 m_position = newPos;
-	 }
+	 virtual void SetPosition(XMFLOAT3 newPos) { m_position = newPos; }
 
-	 virtual XMMATRIX GetRotation()
-	 {
-		 return m_rotation;
-	 }
+	 virtual XMMATRIX GetRotation(){ return m_rotation; }
 
-	 virtual XMFLOAT3 GetScale()
-	 {
-		 return m_scale;
-	 }
+	 virtual XMFLOAT3 GetScale() { return m_scale; }
 
-	 virtual void SetScale(XMFLOAT3 newScale)
-	 {
-		 m_scale = newScale;
-	 }
+	 virtual void SetScale(XMFLOAT3 newScale) { m_scale = newScale; }
 
-	 virtual BoundingBox GetBoundingBox()
-	 {
-		 return m_entityBox;
-	 }
+	 virtual BoundingBox GetBoundingBox() { return m_entityBox; }
 
-	 virtual bool GetDelete()
-	 {
-		 return m_delete;
-	 }
+	 virtual bool GetDelete() { return m_delete; }
 
-	 virtual int GetHealth()
-	 {
-		 return m_health;
-	 }
+	 virtual void SetDelete(bool b) { m_delete = b; }
 
-	 virtual void AddHealth(int change)
-	 {
-		 m_health += change;
-	 }
+	 virtual int GetHealth(){return m_health;}
+
+	 virtual void AddHealth(int change){ m_health += change;}
 
 	//----------------------------Attributes----------------------------------------
 protected:

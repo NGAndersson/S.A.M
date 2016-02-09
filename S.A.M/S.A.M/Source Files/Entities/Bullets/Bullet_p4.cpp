@@ -27,7 +27,7 @@ void Bullet_p4::Update(double time)
 	m_entityBox.Center = m_position;
 }
 
-void Bullet_p4::Destroyed()
+void Bullet_p4::Destroyed(double time)
 {
 	m_delete = true;
 }

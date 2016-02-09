@@ -16,7 +16,7 @@ void Enemy_3::Update(double time)
 
 }
 
-void Enemy_3::Destroyed()
+void Enemy_3::Destroyed(double time)
 {
 
 }

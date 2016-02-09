@@ -12,7 +12,7 @@ public:
 	Bullet_p2(SoundManager* SoundManager, int MapWidth, int MapLength, XMFLOAT3 Position, XMFLOAT3 Scale, int Health);
 	~Bullet_p2();
 	void Update(double time);
-	void Destroyed();
+	void Destroyed(double time);
 
 	//Variables
 private:

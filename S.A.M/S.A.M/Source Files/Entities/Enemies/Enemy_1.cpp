@@ -16,7 +16,7 @@ void Enemy_1::Update(double time)
 	m_entityBox.Center = m_position;
 }
 
-void Enemy_1::Destroyed()
+void Enemy_1::Destroyed(double time)
 {
 	//PlaySound of DEATH
 }
