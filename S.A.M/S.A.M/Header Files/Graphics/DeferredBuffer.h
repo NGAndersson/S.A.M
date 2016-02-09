@@ -21,11 +21,12 @@ public:
 	void SetRenderTargets(ID3D11DeviceContext* deviceContext);
 	void ClearRenderTargets(ID3D11DeviceContext* deviceContext);
 	void SetShaderResource(ID3D11DeviceContext* deviceContext);
+	void SetCleanResource(ID3D11DeviceContext* deviceContext);
 
 private:
 	int m_texWidth, m_texHeight;
 
-	ID3D11ShaderResourceView* m_SRVA[g_BUFFER_COUNT];	//shaderResourceViewArray
+	ID3D11ShaderResourceView* m_SRVA[g_BUFFER_COUNT], *m_cleanView;	//shaderResourceViewArray
 	ID3D11Texture2D* m_RTTA[g_BUFFER_COUNT];	//renderTargetTextureArray
 	ID3D11RenderTargetView* m_RTVA[g_BUFFER_COUNT];	//renderTargetViewArray
 	ID3D11DepthStencilView* m_depthStencilView;

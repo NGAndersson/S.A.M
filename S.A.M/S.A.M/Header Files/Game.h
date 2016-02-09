@@ -7,11 +7,13 @@
 #include "EntityManager.h"
 #include "Gamelogic\Input.h"
 #include "Gamelogic\Timer.h"
+#include "Graphics\DeferredRender.h"
+#include "Graphics\DeferredBuffer.h"
 
 #include <d3d11.h>	//temp
 
-#define WIDTH 1640;
-#define HEIGHT 720;
+#define WIDTH 1640
+#define HEIGHT 720
 
 class Game
 {
@@ -33,6 +35,8 @@ private:
 	SoundManager* m_soundManager;
 	ScreenManager* m_screenManager;
 	EntityManager* m_entityManager;
+	DeferredBuffer m_deferredBuffer;
+	DeferredRender m_deferredRender;
 	Input* m_input;
 	Display* m_display;
 	MSG m_winMSG;

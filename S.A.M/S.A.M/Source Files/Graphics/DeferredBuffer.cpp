@@ -10,6 +10,7 @@ DeferredBuffer::DeferredBuffer()
 	}
 	m_depthStencilView = nullptr;
 	m_depthStencil = nullptr;
+	m_cleanView = nullptr;
 }
 
 DeferredBuffer::~DeferredBuffer()
@@ -128,7 +129,7 @@ void DeferredBuffer::SetRenderTargets(ID3D11DeviceContext* deviceContext)
 
 void DeferredBuffer::ClearRenderTargets(ID3D11DeviceContext* deviceContext)
 {
-	float clearColor[] = { 1, 0, 1, 1 };
+	float clearColor[] = { 0, 0, 0, 0 };
 	int i;
 
 	// Clear the render target buffers.
@@ -150,4 +151,12 @@ void DeferredBuffer::SetShaderResource(ID3D11DeviceContext* deviceContext)
 	deviceContext->PSSetShaderResources(1, 1, &m_SRVA[1]);
 	deviceContext->PSSetShaderResources(2, 1, &m_SRVA[2]);
 	deviceContext->PSSetShaderResources(3, 1, &m_SRVA[3]);
+}
+
+void DeferredBuffer::SetCleanResource(ID3D11DeviceContext* deviceContext)
+{
+	deviceContext->PSSetShaderResources(0, 1, &m_cleanView);
+	deviceContext->PSSetShaderResources(1, 1, &m_cleanView);
+	deviceContext->PSSetShaderResources(2, 1, &m_cleanView);
+	deviceContext->PSSetShaderResources(3, 1, &m_cleanView);
 }

@@ -170,6 +170,7 @@ void EntityManager::Initialize(SoundManager* soundManager, Input* input, ID3D11D
 
 void EntityManager::Render()
 {
+
 	m_partSys.PartRend(m_deviceContext);
 	
 	//Render Player
