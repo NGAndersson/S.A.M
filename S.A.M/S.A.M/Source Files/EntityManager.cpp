@@ -91,12 +91,6 @@ void EntityManager::SpawnEntity(HandlerIndex type)
 		m_bullet5.push_back(tempEntity);
 		m_soundManager->PlayOneShotSound("Laser_R", 0.5f);
 		break;
-	//case(BULLET6) :
-	//	Bullet6* tempEntity = new Bullet6;
-	//	tempEntity->Initialize();
-	//	m_bullet6.push_back(tempEntity);
-	//	//Set infront of ENEMY
-		//Don't spawn sound for enemy bullets?
 	}
 }
 
@@ -222,7 +216,10 @@ void EntityManager::Update(double time)
 
 			//BEAT WAS DETECTED
 			if (m_offsetCount > m_offset)
+			{
 				BeatWasDetected();
+				EnemyFire();
+			}
 			else
 				m_offsetCount++;
 		}
@@ -237,6 +234,7 @@ void EntityManager::Update(double time)
 			if (m_offsetCount > m_offset) {
 				BeatWasDetected();
 				m_timeSinceLastBeat = 0;
+				EnemyFire();
 			}
 			else {
 				m_timeSinceLastBeat = 0;
@@ -315,6 +313,9 @@ void EntityManager::Update(double time)
 	//Update every entity of Bullet5
 	for (int i = 0; i < m_bullet5.size(); i++)
 		m_bullet5[i]->Update(time);
+	//Update every entity of Bullet6
+	for (int i = 0; i < m_bullet6.size(); i++)
+		m_bullet6[i]->Update(time);
 	m_player->Update(time);
 	
 	//CheckEnemies Out Of BOUNDS
@@ -329,6 +330,7 @@ void EntityManager::Update(double time)
 	m_bullet3 = CheckOutOfBounds(m_bullet3);
 	m_bullet4 = CheckOutOfBounds(m_bullet4);
 	m_bullet5 = CheckIfAlive(m_bullet5);
+	m_bullet6 = CheckOutOfBounds(m_bullet6);
 
 
 
@@ -417,14 +419,15 @@ void EntityManager::BeatWasDetected()
 vector<Entity*> EntityManager::CheckOutOfBounds(std::vector<Entity*> bullet)
 {
 	//Out of bounds check, remove immediately
-	bool removed = false;
+	//bool removed = false;
 	vector<Entity*> _tempVec = bullet;			//Can't use the member variable for some reason
-	for (int i = 0; i < _tempVec.size() && removed == false; i++) {			//REMOVE REMOVED == FALSE AND MAKE LISTS!
+	for (int i = 0; i < _tempVec.size() /*&& removed == false*/; i++) {			//REMOVE REMOVED == FALSE AND MAKE LISTS!
 		XMFLOAT3 _tempPos = _tempVec[i]->GetPosition();
 		if (_tempPos.x > 80 || _tempPos.x < -80 || _tempPos.z > 80 || _tempPos.z < -80) {
 			delete _tempVec[i];
 			_tempVec.erase(_tempVec.begin() + i);
-			removed = true;
+			i--;
+			//removed = true;
 		}
 	}
 	return _tempVec;
@@ -505,6 +508,18 @@ void EntityManager::RenderBullets()
 		_instanceScale.clear();
 		_instanceRotation.clear();
 	}
+	if (m_bullet6.size() > 0)
+	{
+		for (int i = 0; i < m_bullet6.size(); i++) {
+			_instancePosition.push_back(m_bullet6[i]->GetPosition());
+			_instanceScale.push_back(m_bullet6[i]->GetScale());
+			_instanceRotation.push_back(m_bullet6[i]->GetRotation());
+		}
+		m_renderer->RenderInstanced(m_modelHandlers[BULLET6], _instancePosition, _instanceRotation, m_bullet6.size(), _instanceScale);
+		_instancePosition.clear();
+		_instanceScale.clear();
+		_instanceRotation.clear();
+}
 }
 
 vector<Entity*> EntityManager::CheckIfAlive(std::vector<Entity*> bullet)
@@ -527,4 +542,13 @@ vector<Entity*> EntityManager::CheckIfAlive(std::vector<Entity*> bullet)
 		}
 	}
 	return _tempVec;
+}
+
+void EntityManager::EnemyFire()
+{
+	for (auto i = 0; i < m_enemy1.size(); i++)
+	{
+		Bullet* tempEntity = new Bullet_e(m_soundManager, MAPWIDTH, MAPLENGTH, m_enemy1[i]->GetPosition(), XMFLOAT3(0.5, 0.5, 0.5));
+		m_bullet6.push_back(tempEntity);
+	}
 }

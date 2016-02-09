@@ -1,6 +1,6 @@
 cbuffer worldPosition : register(b0)
 {
-	float4x4 World[100];
+	float4x4 World[800];
 };
 
 struct VS_IN
