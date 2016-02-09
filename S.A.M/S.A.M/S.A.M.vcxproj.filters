@@ -228,5 +228,8 @@
     <FxCompile Include="Shaders\BulletVS.hlsl" />
     <FxCompile Include="Shaders\BulletPS.hlsl" />
     <FxCompile Include="Shaders\BulletGS.hlsl" />
+    <FxCompile Include="Shaders\EnemiesVS.hlsl" />
+    <FxCompile Include="Shaders\EnemiesPS.hlsl" />
+    <FxCompile Include="Shaders\EnemiesGS.hlsl" />
   </ItemGroup>
 </Project>

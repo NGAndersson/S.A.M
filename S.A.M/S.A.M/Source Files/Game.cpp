@@ -31,7 +31,16 @@ Game::~Game()
 		m_depthStencil->Release();
 	}
 	if (m_sampleState)
+	{
 		m_sampleState->Release();
+	}
+
+	delete m_soundManager;
+	m_soundManager = 0;
+	delete m_screenManager;
+	m_screenManager = 0;
+	delete m_entityManager;
+	m_entityManager = 0;
 
 }
 
@@ -40,9 +49,8 @@ void Game::InitGame(Input* input, Display* disp)
 	m_input = input;
 	m_display = disp;
 
-
 	//Create and initialize SoundManager
-	m_soundManager = new SoundManager;  //Initializes in constructor
+	m_soundManager = new SoundManager();  //Initializes in constructor
 
 	//Create and initialize device/devicecontext/swapchain/depthstenciel
 	CreateDirect3DContext(disp->GethWnd());
@@ -51,17 +59,16 @@ void Game::InitGame(Input* input, Display* disp)
 	SetViewport();
 
 	//Create and initialize ScreenManager
-	m_screenManager = new ScreenManager;
+	m_screenManager = new ScreenManager();
 	m_screenManager->InitializeScreen(m_input);
 
 	//Create and initialize EntityManager
-	m_entityManager = new EntityManager;
+	m_entityManager = new EntityManager();
 	m_entityManager->Initialize(m_soundManager, m_input, m_device, m_deviceContext);
 
 	//FUN STUFF! REMOVE!
 	//m_soundManager->LoadSound("Resources/wave.mp3", "wave", "music", LOAD_STREAM);
 	//m_soundManager->LoadSound("Resources/Song.mp3", "gangnam", "music", LOAD_STREAM);
-
 }
 
 WPARAM Game::MainLoop()
@@ -130,7 +137,7 @@ void Game::CheckInput()
 {
 	//InputType _returnInput = m_input->CheckKeyBoardInput();
 	if (m_input->CheckEsc())
-		exit(0);
+		PostQuitMessage(0);
 
 	m_input->CheckMouseInput();
 }

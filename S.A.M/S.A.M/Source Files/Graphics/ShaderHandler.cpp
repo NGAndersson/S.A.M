@@ -72,7 +72,6 @@ bool ShaderHandler::CreateShaders(ID3D11Device* device, string vertexFile, strin
 		return false;
 	}
 
-
 	if (geometryFile != "")
 	{
 		//create geometry shader
@@ -88,7 +87,7 @@ bool ShaderHandler::CreateShaders(ID3D11Device* device, string vertexFile, strin
 
 	//create pixel shader
 	ID3DBlob* _ps = nullptr;
-	D3DCompileFromFile(vertexPSTemp.c_str(), nullptr, D3D_COMPILE_STANDARD_FILE_INCLUDE, "PS_main", "ps_5_0", 0, NULL, &_ps, nullptr);
+	_hr = D3DCompileFromFile(vertexPSTemp.c_str(), nullptr, D3D_COMPILE_STANDARD_FILE_INCLUDE, "PS_main", "ps_5_0", 0, NULL, &_ps, nullptr);
 	_hr = device->CreatePixelShader(_ps->GetBufferPointer(), _ps->GetBufferSize(), nullptr, &m_pixelShader);
 	_ps->Release();
 	if (_hr != S_OK)
@@ -130,7 +129,6 @@ bool ShaderHandler::CreateShadersCompute(ID3D11Device* device, string vertexFile
 	{
 		return false;
 	}
-
 
 	if (geometryFile != "")
 	{

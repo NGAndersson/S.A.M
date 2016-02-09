@@ -15,6 +15,9 @@ PartSys::PartSys()
 PartSys::~PartSys()
 {
 
+	if(m_partTex)
+		m_partTex->Release();
+
 	if (m_vertexLayout)
 		m_vertexLayout->Release();
 
@@ -31,9 +34,6 @@ PartSys::~PartSys()
 		m_pixelShader->Release();
 
 	delete[] m_partPos;
-
-	if(m_partTex)
-		m_partTex->Release();
 }
 
 void PartSys::updatePart(ID3D11DeviceContext* deviceContext, float time, float partSpeed)

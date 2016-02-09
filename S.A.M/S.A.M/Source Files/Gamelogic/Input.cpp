@@ -8,16 +8,25 @@ Input::Input()
 Input::~Input()
 {
 
-	m_Keyboard->Unacquire();
-	m_Mouse->Unacquire();
-
-	if(m_DirectInput)
-		m_DirectInput->Release();
-	
-	if(m_Keyboard)
+	if (m_Keyboard)
+	{
+		m_Keyboard->Unacquire();
 		m_Keyboard->Release();
-	if(m_Mouse)
+		m_Keyboard = 0;
+	}
+
+	if (m_Mouse)
+	{
+		m_Mouse->Unacquire();
 		m_Mouse->Release();
+		m_Mouse = 0;
+	}
+
+	if (m_DirectInput)
+	{
+		m_DirectInput->Release();
+		m_DirectInput = 0;
+	}
 
 }
 

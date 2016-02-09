@@ -14,12 +14,19 @@ SoundManager::SoundManager()
 SoundManager::~SoundManager()
 {
 	//Release the resources
+
+	m_musicSound->release();
+
 	m_system->release();
-	for (int i = 0; i < (int)m_sounds.size(); i++)
-	{
-		for (int j = 0; j < (int)m_sounds[i].size(); j++)
-			m_sounds[i][j]->release();
-	}
+	
+
+	
+	delete[] m_dataLeftChannel;
+	m_dataLeftChannel = NULL;
+
+	delete[] m_dataRightChannel;
+	m_dataRightChannel = NULL;
+
 }
 
 void SoundManager::MessageBoxAndShutDown(std::stringstream* _ss) {

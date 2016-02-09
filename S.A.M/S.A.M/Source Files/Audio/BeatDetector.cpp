@@ -22,7 +22,11 @@ BeatDetector::BeatDetector(SoundManager* snd_mgr)
 
 BeatDetector::~BeatDetector()
 {
-
+	delete[] m_energy1024;
+	delete[] m_energy44100;
+	delete[] m_conv;
+	delete[] m_beat;
+	delete[] m_energyPeak;
 }
 
 int BeatDetector::Energy(int* data, int offset, int window)
