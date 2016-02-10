@@ -7,4 +7,4 @@
 7|SomeNoob|53000
 8|Oscar|50000
 9|SomeNoob|49000
-10|Oscar|40000
+10|SomeNoob|41000

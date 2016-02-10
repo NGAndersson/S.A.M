@@ -193,8 +193,8 @@ void EntityManager::Render()
 	m_partSys.PartRend(m_deviceContext);
 	
 	//Render Player
-	//if(m_player->GetHealth() > 0)
-	m_renderer->Render(m_modelHandlers[PLAYER], m_player->GetPosition(), m_player->GetRotation(), m_player->GetScale());
+	if(m_player->GetHealth() > 0)			//Invulnerability-blinking
+		m_renderer->Render(m_modelHandlers[PLAYER], m_player->GetPosition(), m_player->GetRotation(), m_player->GetScale());
 	RenderBullets();
 
 	//Render Enemies
@@ -394,7 +394,7 @@ void EntityManager::InitMusic(std::string filename)
 void EntityManager::BeatWasDetected()
 {
 	//Spawn correct bullet (which plays the sound as well) Only if player is alive
-	if (m_player->GetHealth() > 0)
+	if (!m_player->GetDelete())
 		{
 		BulletType _bullet = m_input->CheckBullet();
 		switch (_bullet)
