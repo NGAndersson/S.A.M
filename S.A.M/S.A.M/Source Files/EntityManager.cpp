@@ -95,11 +95,11 @@ void EntityManager::SpawnEntity(HandlerIndex type)
 		break;
 	case(BULLET4) :
 		//tempEntity = new Bullet_p4(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x - 1, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(0.5, 0.5, 0.5));
-		m_bullet4.push_back(new Bullet_p4(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x - 1, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(0.5, 0.5, 0.5),1));
+		m_bullet4.push_back(new Bullet_p4(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x - 1, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(0.5, 0.5, 0.5), 1, m_modelHandlers[BULLET4]->GetDeffuse(), 0));
 		//tempEntity = new Bullet_p4(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(0.5, 0.5, 0.5));
-		m_bullet4.push_back(new Bullet_p4(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(0.5, 0.5, 0.5),1));
+		m_bullet4.push_back(new Bullet_p4(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(0.5, 0.5, 0.5), 1, m_modelHandlers[BULLET4]->GetDeffuse(), 1));
 		//tempEntity = new Bullet_p4(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x + 1, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(0.5, 0.5, 0.5));
-		m_bullet4.push_back(new Bullet_p4(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x + 1, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(0.5, 0.5, 0.5),1));
+		m_bullet4.push_back(new Bullet_p4(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x + 1, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(0.5, 0.5, 0.5), 1, m_modelHandlers[BULLET4]->GetDeffuse(), 2));
 		m_soundManager->PlayOneShotSound("Bullet_E", 0.5f);
 		break;
 	case(BULLET5) :
@@ -219,6 +219,7 @@ void EntityManager::Update(double time)
 				m_light.beatBoost(true, time, -1, m_currentBPM);
 				m_modelHandlers[BULLET1]->beatBoost(true, time, -1, m_currentBPM);
 				m_modelHandlers[BULLET3]->beatBoost(true, time, -1, m_currentBPM);
+				m_modelHandlers[BULLET4]->beatBoost(true, time, -1, m_currentBPM);
 				m_modelHandlers[BULLET6]->beatBoost(true, time, -1, m_currentBPM);
 			}
 			else
@@ -229,6 +230,7 @@ void EntityManager::Update(double time)
 			m_light.beatBoost(false, time, -1, m_currentBPM);
 			m_modelHandlers[BULLET1]->beatBoost(false, time, -1, m_currentBPM);
 			m_modelHandlers[BULLET3]->beatBoost(false, time, -1, m_currentBPM);
+			m_modelHandlers[BULLET4]->beatBoost(false, time, -1, m_currentBPM);
 			m_modelHandlers[BULLET6]->beatBoost(false, time, -1, m_currentBPM);
 	}
 	}
@@ -244,6 +246,7 @@ void EntityManager::Update(double time)
 				m_light.beatBoost(true, time, m_timeSinceLastBeat, 0);
 				m_modelHandlers[BULLET1]->beatBoost(true, time, m_timeSinceLastBeat, 0);
 				m_modelHandlers[BULLET3]->beatBoost(true, time, m_timeSinceLastBeat, 0);
+				m_modelHandlers[BULLET4]->beatBoost(true, time, m_timeSinceLastBeat, 0);
 				m_modelHandlers[BULLET6]->beatBoost(true, time, m_timeSinceLastBeat, 0);
 				m_timeSinceLastBeat = 0;
 				EnemyFire();
@@ -259,6 +262,7 @@ void EntityManager::Update(double time)
 			m_light.beatBoost(false, time, m_timeSinceLastBeat, 0);
 			m_modelHandlers[BULLET1]->beatBoost(false, time, m_timeSinceLastBeat, 0);
 			m_modelHandlers[BULLET3]->beatBoost(false, time, m_timeSinceLastBeat, 0);
+			m_modelHandlers[BULLET4]->beatBoost(false, time, m_timeSinceLastBeat, 0);
 			m_modelHandlers[BULLET6]->beatBoost(false, time, m_timeSinceLastBeat, 0);
 		}
 	}
@@ -365,6 +369,7 @@ void EntityManager::Update(double time)
 
 	m_light.addLights(m_bullet1);
 	m_light.addLights(m_bullet3);
+	m_light.addLights(m_bullet4);
 	m_light.addLights(m_bullet6);
 
 	//sets the lightbuffer
