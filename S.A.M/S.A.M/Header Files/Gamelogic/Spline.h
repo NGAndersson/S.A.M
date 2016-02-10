@@ -12,21 +12,17 @@ class Spline
 {
 public:
 	Spline();
-	Spline(int nrPath);
+	Spline(vector<XMFLOAT3> PathPositions);
 	~Spline();
+	XMFLOAT3 GetPathPosition(float t);
+	int GetCurrPathNode() { return m_pathStartPoint; }
+	void SetCurrPathNode(int PathNode) { m_pathStartPoint = PathNode; }
+private:
 
-	void GeneratePath(int NrPoints);	
-	void GeneratePath(XMFLOAT2* Points);
-	void GetPathPosition();
 
 private:
-	XMFLOAT3 CalcPoint();
-	float CalcT(int x,int y);
-
-private:
-	float* m_path;
-	double m_pathStartTime;
-
+	vector<XMFLOAT3> m_pathPositions;
+	int m_pathStartPoint = 0;
 };
 
 #endif //!ENDIF SPLINE

@@ -214,6 +214,7 @@ void EntityManager::Update(double time)
 			if (m_offsetCount > m_offset)
 			{
 				BeatWasDetected();
+
 				EnemyFire();
 			}
 			else
@@ -389,6 +390,7 @@ void EntityManager::InitMusic(std::string filename)
 
 void EntityManager::BeatWasDetected()
 {
+	static int _enemySpawRate;
 	//Spawn correct bullet (which plays the sound as well) Only if player is alive
 	if (m_player->GetHealth() > 0)
 	{
@@ -415,18 +417,16 @@ void EntityManager::BeatWasDetected()
 	}
 	}
 
-	static int _randOffset;
-	m_level = 3;
-	auto _rand = rand() % 100 + 1;
-	if (_rand > 80/m_level)
+
+	//use time and check that after 30 sec or so increse the level count by some.. int
+	
+	if (_enemySpawRate == m_beatDetector->GetTempo()/30)
 	{
 		SpawnEntity(ENEMY1);
-		_randOffset = 0;
+		_enemySpawRate = 0;
 	}
 	else
-	{
-		_randOffset++;
-	}
+		_enemySpawRate++;
 	
 }
 
@@ -630,8 +630,11 @@ void EntityManager::EnemyFire()
 {
 	for (auto i = 0; i < m_enemy1.size(); i++)
 	{
-		//Bullet* tempEntity = new Bullet_e(m_soundManager, MAPWIDTH, MAPLENGTH, m_enemy1[i]->GetPosition(), XMFLOAT3(0.5, 0.5, 0.5));
-		m_bullet6.push_back(new Bullet_e(m_soundManager, MAPWIDTH, MAPLENGTH, m_enemy1[i]->GetPosition(), XMFLOAT3(0.5, 0.5, 0.5),1));
-		
+		if (m_enemy1[i]->GetFireTime()>3.0f){
+			m_bullet6.push_back(new Bullet_e(m_soundManager, MAPWIDTH, MAPLENGTH, m_enemy1[i]->GetPosition(), XMFLOAT3(0.5, 0.5, 0.5), 1));
+			m_enemy1[i]->SetFireTime(0);
+		}
+
+		m_enemy1[i]->SetFireTime(m_enemy1[i]->GetFireTime() + 0.5);
 	}
 }

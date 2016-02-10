@@ -16,7 +16,7 @@ class Entity
 	//----------------------------Functions----------------------------------------
 public:
 	Entity() {}
-	~Entity() {}
+	virtual ~Entity() {}
 	Entity(SoundManager* SoundManager, int MapWidth, int MapLength, XMFLOAT3 Position, XMFLOAT3 Scale, int Health)
 	{
 		m_soundManager = SoundManager;
@@ -59,6 +59,10 @@ public:
 
 	 virtual int GetScore() { return m_score; }
 
+	 virtual double GetFireTime() { return m_fireTime; }
+
+	 virtual void SetFireTime(double NewTime) { m_fireTime = NewTime; }
+
 	//----------------------------Attributes----------------------------------------
 protected:
 	//Modelhandler
@@ -74,7 +78,7 @@ protected:
 	 BoundingBox m_entityBox;
 	 int m_mapWidth, m_mapLength;
 	 float m_entityWidth;
-
+	 double m_fireTime;
 	 //When entities are to be deleted
 	 bool m_delete = false;
 
