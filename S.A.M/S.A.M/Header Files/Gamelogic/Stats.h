@@ -3,11 +3,11 @@
 #include <fstream>
 #include <sstream>
 
-class Score {
+class Stats {
 private:
 public:
-	Score();
-	~Score();
+	Stats();
+	~Stats();
 	void AddScore(int add);
 	void ResetScore();
 	bool SaveScore(std::string filename, std::string playername);

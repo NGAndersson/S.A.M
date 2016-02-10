@@ -99,9 +99,6 @@
     <ClCompile Include="Source Files\Graphics\Camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source Files\Gamelogic\Score.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source Files\Collision.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -112,6 +109,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source Files\Graphics\LightHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\Gamelogic\Stats.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -221,9 +221,6 @@
     <ClInclude Include="Header Files\Collision.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Header Files\Gamelogic\Score.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Header Files\Graphics\LightHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -231,6 +228,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Header Files\Graphics\DeferredBuffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\Gamelogic\Stats.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

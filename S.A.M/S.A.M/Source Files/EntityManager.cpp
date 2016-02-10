@@ -96,13 +96,13 @@ void EntityManager::SpawnEntity(HandlerIndex type)
 	}
 }
 
-void EntityManager::Initialize(SoundManager* soundManager, Input* input, ID3D11Device* device, ID3D11DeviceContext* deviceContext, Score* scoreManager)
+void EntityManager::Initialize(SoundManager* soundManager, Input* input, ID3D11Device* device, ID3D11DeviceContext* deviceContext, Stats* statsManager)
 {
 
 	//Set the soundManager pointer which will be used in every entity
 	m_soundManager = soundManager;
 
-	m_scoreManager = scoreManager;
+	m_scoreManager = statsManager;
 
 	InitMusic("Resources/PixieTrust.txt");
 
@@ -290,7 +290,7 @@ void EntityManager::Update(double time)
 	//_addScore += m_collision.CheckCollisionEntity(&m_bullet5, &m_enemy3,BULLET5, ENEMY3);
 	//_addScore += m_collision.CheckCollisionEntity(&m_bullet5, &m_enemy4,BULLET5, ENEMY4);
 
-	m_scoreManager->AddScore(_addScore);
+	m_statsManager->AddScore(_addScore);
 
 	//Check Player against Enemy Bullet
 	if (m_player->GetHealth() > 0 && !m_player->GetDelete())
@@ -395,7 +395,7 @@ void EntityManager::InitMusic(std::string filename)
 		else if (std::string(_key) == "bulletR")
 			m_soundManager->LoadSound(_value, _value, "Laser_R", LOAD_MEMORY);
 		else if (std::string(_key) == "score")
-			m_scoreManager->LoadScore(_value);
+			m_statsManager->LoadScore(_value);
 	}
 }
 

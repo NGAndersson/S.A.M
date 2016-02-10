@@ -9,7 +9,7 @@
 #include "Gamelogic\Timer.h"
 #include "Graphics\DeferredRender.h"
 #include "Graphics\DeferredBuffer.h"
-#include "Gamelogic\Score.h"
+#include "Gamelogic\Stats.h"
 
 #include <d3d11.h>	//temp
 
@@ -36,7 +36,7 @@ private:
 	SoundManager* m_soundManager;
 	ScreenManager* m_screenManager;
 	EntityManager* m_entityManager;
-	Score* m_scoreManager;
+	Stats* m_statsManager;
 	DeferredBuffer m_deferredBuffer;
 	DeferredRender m_deferredRender;
 	Input* m_input;

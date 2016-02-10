@@ -1,26 +1,26 @@
-#include "..\..\Header Files\Gamelogic\Score.h"
+#include "..\..\Header Files\Gamelogic\Stats.h"
 
 
-Score::Score()
+Stats::Stats()
 {
 	m_score = 0;
 }
 
-Score::~Score()
+Stats::~Stats()
 {
 }
 
-void Score::AddScore(int add)
+void Stats::AddScore(int add)
 {
 	m_score += add;
 }
 
-void Score::ResetScore()
+void Stats::ResetScore()
 {
 	m_score = 0;
 }
 
-bool Score::SaveScore(std::string filename, std::string playername)
+bool Stats::SaveScore(std::string filename, std::string playername)
 {
 	std::fstream _file;
 	std::string _filepath = "score/" + filename;		//Opens a file in a folder called score
@@ -63,7 +63,7 @@ bool Score::SaveScore(std::string filename, std::string playername)
 	_file.close();
 }
 
-bool Score::LoadScore(std::string filename)
+bool Stats::LoadScore(std::string filename)
 {
 	std::fstream _file;
 	std::string _filepath = "score/" + filename;

@@ -20,7 +20,7 @@
 #include "Entities\Enemies\Enemy_1.h"
 #include <random>
 #include "Collision.h"
-#include "Gamelogic\Score.h"
+#include "Gamelogic\Stats.h"
 
 
 
@@ -40,7 +40,7 @@ private:
 public:
 	EntityManager();
 	~EntityManager();
-	void Initialize(SoundManager* soundManager, Input* input, ID3D11Device* device, ID3D11DeviceContext* deviceContext, Score* scoreManager);
+	void Initialize(SoundManager* soundManager, Input* input, ID3D11Device* device, ID3D11DeviceContext* deviceContext, Stats* statsManager);
 	void Render();
 	void Update(double time);
 	void ChangeSongData(int bpm);
@@ -65,7 +65,7 @@ private:
 	PartSys m_partSys;
 	Collision m_collision;
 
-	Score* m_scoreManager;
+	Stats* m_statsManager;
 
 	Renderer* m_renderer;
 	SoundManager* m_soundManager;
