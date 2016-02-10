@@ -139,7 +139,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Header Files\Graphics\DeferredBuffer.h" />
     <ClCompile Include="Source Files\Audio\BeatDetector.cpp" />
     <ClCompile Include="Source Files\Audio\SoundManager.cpp">
       <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">4996</DisableSpecificWarnings>
@@ -184,6 +183,7 @@
     <ClInclude Include="Header Files\Gamelogic\Score.h" />
     <ClInclude Include="Header Files\Graphics\Camera.h" />
     <ClInclude Include="Header Files\DirectXHelpers.h" />
+    <ClInclude Include="Header Files\Graphics\DeferredBuffer.h" />
     <ClInclude Include="Header Files\Graphics\DeferredRender.h" />
     <ClInclude Include="Header Files\Graphics\Display.h" />
     <ClInclude Include="Header Files\Entities\Bullets\Bullet.h" />

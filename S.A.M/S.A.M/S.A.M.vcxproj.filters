@@ -105,16 +105,13 @@
     <ClCompile Include="Source Files\Collision.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source Files\Graphics\LightHandler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source Files\Graphics\DeferredBuffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Header Files\Graphics\DeferredBuffer.h">
+    <ClCompile Include="Source Files\Graphics\DeferredRender.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source Files\Graphics\DeferredRender.cpp">
+    <ClCompile Include="Source Files\Graphics\LightHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -224,13 +221,16 @@
     <ClInclude Include="Header Files\Collision.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Header Files\Gamelogic\Score.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="Header Files\Graphics\LightHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Header Files\Graphics\DeferredRender.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Header Files\Gamelogic\Score.h">
+    <ClInclude Include="Header Files\Graphics\DeferredBuffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
