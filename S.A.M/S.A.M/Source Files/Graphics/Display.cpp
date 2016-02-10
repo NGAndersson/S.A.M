@@ -37,7 +37,8 @@ Display::Display(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, 
 		"S.A.M",    // title of the window
 		WS_OVERLAPPEDWINDOW,    // window style
 		CW_USEDEFAULT,    // x-position of the window
-		CW_USEDEFAULT,    // y-position of the window
+		//CW_USEDEFAULT,    // y-position of the window
+		0,					//Insted, so it doens't overlap with the taskbar
 		//width,    // width of the window
 		//height,    // height of the window
 		rc.right - rc.left,
