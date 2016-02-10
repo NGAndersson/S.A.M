@@ -1,6 +1,6 @@
 #include "EntityManager.h"
 #include <iostream>
-#define MAPWIDTH 107
+#define MAPWIDTH 77
 #define MAPLENGTH 103
 
 EntityManager::EntityManager()
@@ -53,7 +53,7 @@ EntityManager::~EntityManager()
 
 void EntityManager::SpawnEntity(HandlerIndex type)
 {
-	float _tempX = rand() % 101;
+	float _tempX = rand() % MAPWIDTH;
 
 	switch (type) {
 	case(PLAYER) :
@@ -111,13 +111,14 @@ void EntityManager::SpawnEntity(HandlerIndex type)
 	}
 }
 
-void EntityManager::Initialize(SoundManager* soundManager, Input* input, ID3D11Device* device, ID3D11DeviceContext* deviceContext, Score* scoreManager)
+void EntityManager::Initialize(SoundManager* soundManager, Input* input, ID3D11Device* device, ID3D11DeviceContext* deviceContext, Stats* statsManager)
 {
 
 	//Set the soundManager pointer which will be used in every entity
 	m_soundManager = soundManager;
 
-	m_scoreManager = scoreManager;
+	m_statsManager = statsManager;
+	m_statsManager->SetLives();
 
 	InitMusic("Resources/PixieTrust.txt");
 
@@ -192,8 +193,8 @@ void EntityManager::Render()
 	m_partSys.PartRend(m_deviceContext);
 	
 	//Render Player
-	if(m_player->GetHealth() > 0)
-	m_renderer->Render(m_modelHandlers[PLAYER], m_player->GetPosition(), m_player->GetRotation(), m_player->GetScale());
+	if(m_player->GetHealth() > 0)			//Invulnerability-blinking
+		m_renderer->Render(m_modelHandlers[PLAYER], m_player->GetPosition(), m_player->GetRotation(), m_player->GetScale());
 	RenderBullets();
 
 	//Render Enemies
@@ -278,15 +279,18 @@ void EntityManager::Update(double time)
 	//_addScore += m_collision.CheckCollisionEntity(&m_bullet5, &m_enemy3,BULLET5, ENEMY3);
 	//_addScore += m_collision.CheckCollisionEntity(&m_bullet5, &m_enemy4,BULLET5, ENEMY4);
 
-	m_scoreManager->AddScore(_addScore);
+	m_statsManager->AddScore(_addScore);
 
 	//Check Player against Enemy Bullet
-	if (m_player->GetHealth() > 0 && !m_player->GetDelete())
+	if (!m_player->GetInvulnerable())			//Only check if the player is alive and well
 	{
 		std::vector<Entity*> _playerVec = { m_player };
 		m_collision.CheckCollisionEntity(&m_bullet6, &_playerVec, BULLET6, PLAYER);
 		if (m_player->GetHealth() <= 0)
-			m_player->SetDelete(true);
+		{
+			m_player->SetDelete(true);				//Set player to run destruction update
+			m_statsManager->AddLives(-1);			//Reduce remaining lives
+		}
 	}
 	//Enemies
 	for (auto i = 0; i < m_enemy1.size(); i++)
@@ -322,7 +326,7 @@ void EntityManager::Update(double time)
 		m_bullet6[i]->Update(time);
 
 	if (!m_player->GetDelete())
-	m_player->Update(time);
+		m_player->Update(time);
 	else
 		m_player->Destroyed(time);
 	
@@ -383,7 +387,7 @@ void EntityManager::InitMusic(std::string filename)
 		else if (std::string(_key) == "bulletR")
 			m_soundManager->LoadSound(_value, _value, "Laser_R", LOAD_MEMORY);
 		else if (std::string(_key) == "score")
-			m_scoreManager->LoadScore(_value);
+			m_statsManager->LoadScore(_value);
 	}
 
 }
@@ -392,29 +396,29 @@ void EntityManager::BeatWasDetected()
 {
 	static int _enemySpawRate;
 	//Spawn correct bullet (which plays the sound as well) Only if player is alive
-	if (m_player->GetHealth() > 0)
-	{
-	BulletType _bullet = m_input->CheckBullet();
-	switch (_bullet)
-	{
-	case INPUT_DEFAULT_BULLET:
-		SpawnEntity(BULLET1); //Default bullet
-		break;
-	case INPUT_BULLET2:
-		SpawnEntity(BULLET2);
-		break;
-	case INPUT_BULLET3:
-		SpawnEntity(BULLET3);
-		break;
-	case INPUT_BULLET4:
-		SpawnEntity(BULLET4);
-		break;
-	case INPUT_BULLET5:
-		SpawnEntity(BULLET5);
-		break;
-	default:
-		break;
-	}
+	if (!m_player->GetDelete())
+		{
+		BulletType _bullet = m_input->CheckBullet();
+		switch (_bullet)
+		{
+		case INPUT_DEFAULT_BULLET:
+			SpawnEntity(BULLET1); //Default bullet
+			break;
+		case INPUT_BULLET2:
+			SpawnEntity(BULLET2);
+			break;
+		case INPUT_BULLET3:
+			SpawnEntity(BULLET3);
+			break;
+		case INPUT_BULLET4:
+			SpawnEntity(BULLET4);
+			break;
+		case INPUT_BULLET5:
+			SpawnEntity(BULLET5);
+			break;
+		default:
+			break;
+		}
 	}
 
 
@@ -430,14 +434,14 @@ void EntityManager::BeatWasDetected()
 	
 }
 
-vector<Entity*> EntityManager::CheckOutOfBounds(std::vector<Entity*> bullet)
+vector<Entity*> EntityManager::CheckOutOfBounds(std::vector<Entity*> entity)
 {
 	//Out of bounds check, remove immediately
 	//bool removed = false;
-	vector<Entity*> _tempVec = bullet;			//Can't use the member variable for some reason
+	vector<Entity*> _tempVec = entity;			//Can't use the member variable for some reason
 	for (int i = 0; i < _tempVec.size() /*&& removed == false*/; i++) {			//REMOVE REMOVED == FALSE AND MAKE LISTS!
 		XMFLOAT3 _tempPos = _tempVec[i]->GetPosition();
-		if (_tempPos.x > 110 || _tempPos.x < -20 || _tempPos.z > 120 || _tempPos.z < -20) {
+		if (_tempPos.x > MAPWIDTH+10 || _tempPos.x < -20 || _tempPos.z > MAPLENGTH+20 || _tempPos.z < -20) {
 			delete _tempVec[i];
 			_tempVec.erase(_tempVec.begin() + i);
 			i--;
@@ -577,7 +581,8 @@ void EntityManager::RenderBullets()
 		_instanceScale.clear();
 		_instanceRotation.clear();
 	}
-	if (m_bullet5.size() > 0)
+	//Don't render the lazer if the player just died
+	if (m_bullet5.size() > 0 && !m_player->GetDelete())
 	{
 		for (int i = 0; i < m_bullet5.size(); i++) {
 			_instancePosition.push_back(m_bullet5[i]->GetPosition());

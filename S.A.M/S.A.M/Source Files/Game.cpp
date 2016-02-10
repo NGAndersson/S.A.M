@@ -42,7 +42,7 @@ Game::~Game()
 	delete m_entityManager;
 	m_entityManager = 0;
 
-	delete m_scoreManager;
+	delete m_statsManager;
 
 }
 
@@ -54,7 +54,7 @@ void Game::InitGame(Input* input, Display* disp)
 	//Create and initialize SoundManager
 	m_soundManager = new SoundManager();  //Initializes in constructor
 
-	m_scoreManager = new Score;
+	m_statsManager = new Stats;
 
 	//Create and initialize device/devicecontext/swapchain/depthstenciel
 	CreateDirect3DContext(disp->GethWnd());
@@ -68,7 +68,7 @@ void Game::InitGame(Input* input, Display* disp)
 
 	//Create and initialize EntityManager
 	m_entityManager = new EntityManager;
-	m_entityManager->Initialize(m_soundManager, m_input, m_device, m_deviceContext, m_scoreManager);
+	m_entityManager->Initialize(m_soundManager, m_input, m_device, m_deviceContext, m_statsManager);
 
 	//FUN STUFF! REMOVE!
 	//m_soundManager->LoadSound("Resources/wave.mp3", "wave", "music", LOAD_STREAM);
@@ -126,6 +126,8 @@ void Game::Update(double time)
 	
 	//if(m_screenManager->GetCurrentScreen() == USERINTERFACE)
 	// Update Entity Manager
+
+	//Do life-checks here with m_statManager->GetLives();
 }
 
 void Game::Render()
@@ -156,7 +158,7 @@ void Game::CheckInput()
 {
 	//InputType _returnInput = m_input->CheckKeyBoardInput();
 	if (m_input->CheckEsc()) {
-		m_scoreManager->SaveScore("PixieTrust.txt", "SomeNoob");
+		m_statsManager->SaveScore("PixieTrust.txt", "SomeNoob");
 		PostQuitMessage(0);
 	}
 	m_input->CheckMouseInput();
