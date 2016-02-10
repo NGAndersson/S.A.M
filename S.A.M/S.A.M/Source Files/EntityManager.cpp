@@ -53,10 +53,7 @@ EntityManager::~EntityManager()
 
 void EntityManager::SpawnEntity(HandlerIndex type)
 {
-	Bullet* tempEntity;
-	Enemy* tempEntity1;
 	float _tempX = rand() % 101;
-	float _tempX = rand() % 101 - 50;
 
 	switch (type) {
 	case(PLAYER) :
@@ -65,7 +62,7 @@ void EntityManager::SpawnEntity(HandlerIndex type)
 		break;
 	case(ENEMY1) :
 		//temptest = new Enemy_1(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(_tempX, 0.0f, 70.0f),XMFLOAT3(0.5f,0.5f,0.5f));
-		m_enemy1.push_back(new Enemy_1(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(_tempX, 0.0f, 70.0f), XMFLOAT3(0.5f, 0.5f, 0.5f),6));
+		m_enemy1.push_back(new Enemy_1(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(_tempX, 0.0f, 110), XMFLOAT3(0.5f, 0.5f, 0.5f),6));
 		break;
 	//case(ENEMY2) :
 	//	Enemy2* tempEntity = new Enemy2;

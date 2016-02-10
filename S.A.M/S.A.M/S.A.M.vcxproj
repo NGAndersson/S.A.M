@@ -152,6 +152,8 @@
     <ClCompile Include="Source Files\Entities\Bullets\Bullet_p5.cpp" />
     <ClCompile Include="Source Files\Gamelogic\Score.cpp" />
     <ClCompile Include="Source Files\Graphics\Camera.cpp" />
+    <ClCompile Include="Source Files\Graphics\DeferredBuffer.cpp" />
+    <ClCompile Include="Source Files\Graphics\DeferredRender.cpp" />
     <ClCompile Include="Source Files\Graphics\Display.cpp" />
     <ClCompile Include="Source Files\Entities\Enemies\Enemy_1.cpp" />
     <ClCompile Include="Source Files\Entities\Enemies\Enemy_2.cpp" />
@@ -160,6 +162,7 @@
     <ClCompile Include="Source Files\EntityManager.cpp" />
     <ClCompile Include="Source Files\Game.cpp" />
     <ClCompile Include="Source Files\Gamelogic\Input.cpp" />
+    <ClCompile Include="Source Files\Graphics\LightHandler.cpp" />
     <ClCompile Include="Source Files\main.cpp" />
     <ClCompile Include="Source Files\Graphics\ModelHandler.cpp" />
     <ClCompile Include="Source Files\Graphics\OBJloader.cpp" />
@@ -179,6 +182,8 @@
     <ClInclude Include="Header Files\Collision.h" />
     <ClInclude Include="Header Files\Graphics\Camera.h" />
     <ClInclude Include="Header Files\DirectXHelpers.h" />
+    <ClInclude Include="Header Files\Graphics\DeferredBuffer.h" />
+    <ClInclude Include="Header Files\Graphics\DeferredRender.h" />
     <ClInclude Include="Header Files\Graphics\Display.h" />
     <ClInclude Include="Header Files\Entities\Bullets\Bullet.h" />
     <ClInclude Include="Header Files\Entities\Bullets\Bullet_e.h" />
@@ -196,6 +201,7 @@
     <ClInclude Include="Header Files\EntityManager.h" />
     <ClInclude Include="Header Files\Game.h" />
     <ClInclude Include="Header Files\Gamelogic\Input.h" />
+    <ClInclude Include="Header Files\Graphics\LightHandler.h" />
     <ClInclude Include="Header Files\Graphics\ModelHandler.h" />
     <ClInclude Include="Header Files\Graphics\OBJloader.h" />
     <ClInclude Include="Header Files\Graphics\ParticleSys.h" />
