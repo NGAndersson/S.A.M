@@ -9,7 +9,7 @@ private:
 protected:
 public:
 	Bullet_e();
-	Bullet_e(SoundManager* SoundManager, int MapWidth, int MapLength, XMFLOAT3 Position, XMFLOAT3 Scale, int Health);
+	Bullet_e(SoundManager* SoundManager, int MapWidth, int MapLength, XMFLOAT3 Position, XMFLOAT3 Scale, int Health, XMFLOAT3 Color);
 	~Bullet_e();
 	void Update(double time);
 	void Destroyed(double time);

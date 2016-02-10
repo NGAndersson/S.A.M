@@ -226,13 +226,20 @@ void EntityManager::Update(double time)
 			{
 				BeatWasDetected();
 				EnemyFire();
-				m_light.beatBoost(true, time);
+				m_light.beatBoost(true, time, -1, m_currentBPM);
+				m_modelHandlers[BULLET1]->beatBoost(true, time, -1, m_currentBPM);
+				m_modelHandlers[BULLET3]->beatBoost(true, time, -1, m_currentBPM);
+				m_modelHandlers[BULLET6]->beatBoost(true, time, -1, m_currentBPM);
 			}
 			else
-			{
 				m_offsetCount++;
-				m_light.beatBoost(false, time);
-			}
+		}
+		else
+		{
+			m_light.beatBoost(false, time, -1, m_currentBPM);
+			m_modelHandlers[BULLET1]->beatBoost(false, time, -1, m_currentBPM);
+			m_modelHandlers[BULLET3]->beatBoost(false, time, -1, m_currentBPM);
+			m_modelHandlers[BULLET6]->beatBoost(false, time, -1, m_currentBPM);
 		}
 	}
 	else {
@@ -244,18 +251,25 @@ void EntityManager::Update(double time)
 			//BEAT WAS DETECTED
 			if (m_offsetCount > m_offset) {
 				BeatWasDetected();
+				m_light.beatBoost(true, time, m_timeSinceLastBeat, 0);
+				m_modelHandlers[BULLET1]->beatBoost(true, time, m_timeSinceLastBeat, 0);
+				m_modelHandlers[BULLET3]->beatBoost(true, time, m_timeSinceLastBeat, 0);
+				m_modelHandlers[BULLET6]->beatBoost(true, time, m_timeSinceLastBeat, 0);
 				m_timeSinceLastBeat = 0;
 				EnemyFire();
-				m_light.beatBoost(true, time);
+				
 			}
 			else {
 				m_timeSinceLastBeat = 0;
 				m_offsetCount++;
-				m_light.beatBoost(false, time);
 			}
 		}
 		else {
 			m_timeSinceLastBeat += time;
+			m_light.beatBoost(false, time, m_timeSinceLastBeat, 0);
+			m_modelHandlers[BULLET1]->beatBoost(false, time, m_timeSinceLastBeat, 0);
+			m_modelHandlers[BULLET3]->beatBoost(false, time, m_timeSinceLastBeat, 0);
+			m_modelHandlers[BULLET6]->beatBoost(false, time, m_timeSinceLastBeat, 0);
 		}
 	}
 
@@ -358,6 +372,7 @@ void EntityManager::Update(double time)
 
 	m_light.addLights(m_bullet1);
 	m_light.addLights(m_bullet3);
+	m_light.addLights(m_bullet6);
 
 	//sets the lightbuffer
 	m_light.SetConstbuffer(m_deviceContext);
@@ -576,7 +591,7 @@ void EntityManager::EnemyFire()
 {
 	for (auto i = 0; i < m_enemy1.size(); i++)
 	{
-		Bullet* tempEntity = new Bullet_e(m_soundManager, MAPWIDTH, MAPLENGTH, m_enemy1[i]->GetPosition(), XMFLOAT3(0.5, 0.5, 0.5), 1);
+		Bullet* tempEntity = new Bullet_e(m_soundManager, MAPWIDTH, MAPLENGTH, m_enemy1[i]->GetPosition(), XMFLOAT3(0.5, 0.5, 0.5), 1, m_modelHandlers[BULLET6]->GetDeffuse());
 		m_bullet6.push_back(tempEntity);
 	}
 }

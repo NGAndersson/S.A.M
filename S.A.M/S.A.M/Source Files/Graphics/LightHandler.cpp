@@ -51,12 +51,11 @@ void LightHandler::InitializBuffer(ID3D11Device* device)
 
 }
 
-void LightHandler::SetConstbuffer(ID3D11DeviceContext* gDeviceContext)
+void LightHandler::SetConstbuffer(ID3D11DeviceContext* deviceContext)
 {
 	D3D11_MAPPED_SUBRESOURCE _mappedResource;
 
-	HRESULT hr = gDeviceContext->Map(m_lightBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &_mappedResource);
-	m_light.begin();
+	HRESULT hr = deviceContext->Map(m_lightBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &_mappedResource);
 
 	for (int i = 0; i < m_nummberOfLights; i++)
 	{
@@ -67,9 +66,9 @@ void LightHandler::SetConstbuffer(ID3D11DeviceContext* gDeviceContext)
 
 	memcpy(_mappedResource.pData, &m_lightningArray, sizeof(LightData));
 
-	gDeviceContext->Unmap(m_lightBuffer, 0);
+	deviceContext->Unmap(m_lightBuffer, 0);
 
-	gDeviceContext->PSSetConstantBuffers(1, 1, &m_lightBuffer);
+	deviceContext->PSSetConstantBuffers(1, 1, &m_lightBuffer);
 
 	m_nummberOfLights = 5;
 }
@@ -102,14 +101,23 @@ void LightHandler::addLights(std::vector<Entity*> bullet)
 	m_nummberOfLights = _numberOfTotLight;
 }
 
-void LightHandler::beatBoost(bool beat, float time)
+void LightHandler::beatBoost(bool beat, float time, float timeSinceLast, float BPM)
 {
 	if (beat == true)
 	{
-		m_beatBoost = 2;
+		if (timeSinceLast != -1)
+		{
+			m_beatBoost = 2;
+			m_beatTime = timeSinceLast;
+		}
+		else
+		{
+			m_beatBoost = 2;
+			m_beatTime = BPM / 60;
+		}
 	}
 	else if (beat == false)
 	{
-		m_beatBoost += -time;
+			m_beatBoost += -time * m_beatTime * 10;
 	}
 }

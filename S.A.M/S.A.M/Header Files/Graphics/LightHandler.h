@@ -27,7 +27,7 @@ public:
 	void InitializBuffer(ID3D11Device* device);
 	void SetConstbuffer(ID3D11DeviceContext* deviceContext);
 	void addLights(std::vector<Entity*> bullet);
-	void beatBoost(bool beat, float time);
+	void beatBoost(bool beat, float time, float timeSinceLast, float BPM);
 	
 
 private:
@@ -37,6 +37,7 @@ private:
 	vector<Light*> m_light;
 	Light* m_allLights = nullptr;
 	float m_beatBoost = 1;
+	float m_beatTime = 0;
 };
 
 #endif

@@ -104,8 +104,7 @@ bool ModelHandler::LoadOBJData(string OBJFileName, string colourFileName, ID3D11
 bool ModelHandler::CreateBuffers(ID3D11Device* device)
 {
 	D3D11_BUFFER_DESC _OBJvertexBufferDesc, _OBJColDesc;
-	D3D11_SUBRESOURCE_DATA _OBJvertexData, _OBJColourData;
-	OBJColourType* _OBJColour;
+	D3D11_SUBRESOURCE_DATA _OBJvertexData;
 
 	// description for vertexbuffer
 	_OBJvertexBufferDesc.Usage = D3D11_USAGE_DEFAULT;
@@ -123,30 +122,18 @@ bool ModelHandler::CreateBuffers(ID3D11Device* device)
 	// Creates vertex buffern
 	device->CreateBuffer(&_OBJvertexBufferDesc, &_OBJvertexData, &m_vertexBuffer);
 
-	_OBJColour = new OBJColourType[m_kdCount];
-
-	for (int _i = 0; _i < m_kdCount; _i++)
-	{
-		_OBJColour[_i].Deffuse = m_RGBDeffuse[_i];
-		_OBJColour[_i].Albi = m_RGBAL[_i];
-		_OBJColour[_i].Ni = m_Tf[_i];
-		_OBJColour[_i].Tf = m_Ni[_i];
-	}
+	
 
 	ZeroMemory(&_OBJColDesc, sizeof(D3D11_BUFFER_DESC));
 
-	_OBJColDesc.Usage = D3D11_USAGE_DEFAULT;
+	_OBJColDesc.Usage = D3D11_USAGE_DYNAMIC;
 	_OBJColDesc.ByteWidth = sizeof(OBJColourType);
 	_OBJColDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-	_OBJColDesc.CPUAccessFlags = 0;
+	_OBJColDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 	_OBJColDesc.MiscFlags = 0;
 
-	_OBJColourData.pSysMem = _OBJColour;
-	_OBJColourData.SysMemPitch = 0;
-	_OBJColourData.SysMemSlicePitch = 0;
-
 	//skapar constant buffer
-	device->CreateBuffer(&_OBJColDesc, &_OBJColourData, &m_OBJColourBuffer);
+	device->CreateBuffer(&_OBJColDesc, NULL, &m_OBJColourBuffer);
 
 	return true;
 }
@@ -189,6 +176,20 @@ bool ModelHandler::SetShaders(ID3D11DeviceContext* deviceContext)
 
 bool ModelHandler::SetBuffers(ID3D11DeviceContext* deviceContext)
 {
+	D3D11_MAPPED_SUBRESOURCE _mappedResource;
+
+	HRESULT hr = deviceContext->Map(m_OBJColourBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &_mappedResource);
+
+	_OBJColour.Deffuse = XMFLOAT3(m_RGBDeffuse[0].x * m_beatBoost, m_RGBDeffuse[0].y * m_beatBoost, m_RGBDeffuse[0].z * m_beatBoost);
+	_OBJColour.Albi = m_RGBAL[0];
+	_OBJColour.Ni = m_Tf[0];
+	_OBJColour.Tf = m_Ni[0];
+
+	memcpy(_mappedResource.pData, &_OBJColour, sizeof(OBJColourType));
+
+	deviceContext->Unmap(m_OBJColourBuffer, 0);
+
+
 	UINT32 _vertexSize = sizeof(float) * 8;
 	UINT32 _offset = 0;
 	deviceContext->IASetVertexBuffers(0, 1, &m_vertexBuffer, &_vertexSize, &_offset);
@@ -197,6 +198,27 @@ bool ModelHandler::SetBuffers(ID3D11DeviceContext* deviceContext)
 	deviceContext->PSSetShaderResources(0, 1, &m_ObjTex);
 
 	return true;
+}
+
+void ModelHandler::beatBoost(bool beat, float time, float timeSinceLast, float BPM)
+{
+	if (beat == true)
+	{
+		if (timeSinceLast != -1)
+		{
+			m_beatBoost = 2;
+			m_beatTime = timeSinceLast;
+		}
+		else
+		{
+			m_beatBoost = 2;
+			m_beatTime = BPM / 60;
+		}
+	}
+	else if (beat == false)
+	{
+		m_beatBoost += -time * m_beatTime * 10;
+	}
 }
 
 int ModelHandler::GetVertexCount()

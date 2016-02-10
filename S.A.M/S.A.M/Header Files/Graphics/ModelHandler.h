@@ -25,6 +25,7 @@ public:
 	bool CreateShadersCompute(ID3D11Device* device, string vertexFile, string geometryFile, string pixelFile, string computeFile);
 	bool SetShaders(ID3D11DeviceContext* deviceContext);
 	bool SetBuffers(ID3D11DeviceContext* deviceContext);
+	void beatBoost(bool beat, float time, float timeSinceLast, float BPM);
 	int GetVertexCount();
 	XMFLOAT3 GetDeffuse();
 
@@ -38,6 +39,9 @@ private:
 	ID3D11Buffer* m_vertexBuffer = nullptr, *m_OBJColourBuffer = nullptr;
 	ID3D11ShaderResourceView* m_ObjTex = nullptr;
 	VertexInputType* m_vertexInput;
+	float m_beatBoost = 1;
+	float m_beatTime = 0;
+	OBJColourType _OBJColour;
 };
 
 #endif
