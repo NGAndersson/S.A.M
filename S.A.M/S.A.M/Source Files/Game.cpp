@@ -42,6 +42,8 @@ Game::~Game()
 	delete m_entityManager;
 	m_entityManager = 0;
 
+	delete m_scoreManager;
+
 }
 
 void Game::InitGame(Input* input, Display* disp)
@@ -51,6 +53,8 @@ void Game::InitGame(Input* input, Display* disp)
 
 	//Create and initialize SoundManager
 	m_soundManager = new SoundManager();  //Initializes in constructor
+
+	m_scoreManager = new Score;
 
 	//Create and initialize device/devicecontext/swapchain/depthstenciel
 	CreateDirect3DContext(disp->GethWnd());
@@ -63,12 +67,18 @@ void Game::InitGame(Input* input, Display* disp)
 	m_screenManager->InitializeScreen(m_input);
 
 	//Create and initialize EntityManager
-	m_entityManager = new EntityManager();
-	m_entityManager->Initialize(m_soundManager, m_input, m_device, m_deviceContext);
+	m_entityManager = new EntityManager;
+	m_entityManager->Initialize(m_soundManager, m_input, m_device, m_deviceContext, m_scoreManager);
 
 	//FUN STUFF! REMOVE!
 	//m_soundManager->LoadSound("Resources/wave.mp3", "wave", "music", LOAD_STREAM);
 	//m_soundManager->LoadSound("Resources/Song.mp3", "gangnam", "music", LOAD_STREAM);
+
+	//Init defered buffer and render
+	m_deferredBuffer.Initialize(m_device, WIDTH, HEIGHT);
+	m_deferredRender.InitializeShader(m_device);
+	m_deferredRender.InitializeBufferString(m_device);
+	
 }
 
 WPARAM Game::MainLoop()
@@ -105,6 +115,7 @@ WPARAM Game::MainLoop()
 		//Call Render Functions
 		Render();
 	}
+
 }
 
 void Game::Update(double time)
@@ -128,7 +139,15 @@ void Game::Render()
 	//if(m_screenManager->GetCurrentScreen() == USERINTERFACE)
 	// Render Entity Manager
 	if (m_screenManager->GetCurrentScreen() == GAME)
+	{
+		m_deferredBuffer.SetCleanResource(m_deviceContext);
+		m_deferredBuffer.ClearRenderTargets(m_deviceContext);
+		m_deferredBuffer.SetRenderTargets(m_deviceContext);
 		m_entityManager->Render();
+		m_deviceContext->OMSetRenderTargets(1, &m_backbufferRTV, m_depthStencilView);
+		m_deferredBuffer.SetShaderResource(m_deviceContext);
+		m_deferredRender.Render(m_deviceContext);
+	}
 
 	m_swapChain->Present(0, 0);
 }
@@ -136,9 +155,10 @@ void Game::Render()
 void Game::CheckInput()
 {
 	//InputType _returnInput = m_input->CheckKeyBoardInput();
-	if (m_input->CheckEsc())
+	if (m_input->CheckEsc()) {
+		m_scoreManager->SaveScore("PixieTrust.txt", "SomeNoob");
 		PostQuitMessage(0);
-
+	}
 	m_input->CheckMouseInput();
 }
 

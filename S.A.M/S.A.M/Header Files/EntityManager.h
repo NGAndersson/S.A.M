@@ -6,6 +6,7 @@
 #include "Graphics\Renderer.h"
 #include "Graphics\ModelHandler.h"
 #include "Graphics\ParticleSys.h"
+#include "Graphics\LightHandler.h"
 #include "Gamelogic\Input.h"
 #include "Audio\BeatDetector.h"
 #include <d3d11.h>
@@ -41,7 +42,7 @@ private:
 public:
 	EntityManager();
 	~EntityManager();
-	void Initialize(SoundManager* soundManager, Input* input, ID3D11Device* device, ID3D11DeviceContext* deviceContext);
+	void Initialize(SoundManager* soundManager, Input* input, ID3D11Device* device, ID3D11DeviceContext* deviceContext, Score* scoreManager);
 	void Render();
 	void Update(double time);
 	void ChangeSongData(int bpm);
@@ -50,6 +51,7 @@ public:
 private:
 	//Vectors with all the different types of entities
 	ModelHandler* m_modelHandlers[10];
+	LightHandler m_light;
 	std::vector<Entity*> m_bullet1;
 	std::vector<Entity*> m_bullet2;
 	std::vector<Entity*> m_bullet3;
@@ -63,6 +65,8 @@ private:
 	Entity* m_player;
 	PartSys m_partSys;
 	Collision m_collision;
+
+	Score* m_scoreManager;
 
 	Renderer* m_renderer;
 	SoundManager* m_soundManager;
