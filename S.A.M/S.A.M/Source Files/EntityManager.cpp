@@ -308,7 +308,7 @@ void EntityManager::Update(double time)
 	if (!m_player->GetInvulnerable())			//Only check if the player is alive and well
 	{
 		std::vector<Entity*> _playerVec = { m_player };
-		//m_collision.CheckCollisionEntity(&m_bullet6, &_playerVec, BULLET6, PLAYER);
+		m_collision.CheckCollisionEntity(&m_bullet6, &_playerVec, BULLET6, PLAYER);
 		if (m_player->GetHealth() <= 0)
 		{
 			m_player->SetDelete(true);				//Set player to run destruction update
