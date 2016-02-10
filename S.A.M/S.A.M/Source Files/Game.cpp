@@ -32,7 +32,7 @@ Game::~Game()
 	}
 	if (m_sampleState)
 		m_sampleState->Release();
-	
+
 	delete m_scoreManager;
 
 }
@@ -61,6 +61,16 @@ void Game::InitGame(Input* input, Display* disp)
 	//Create and initialize EntityManager
 	m_entityManager = new EntityManager;
 	m_entityManager->Initialize(m_soundManager, m_input, m_device, m_deviceContext, m_scoreManager);
+
+	//FUN STUFF! REMOVE!
+	//m_soundManager->LoadSound("Resources/wave.mp3", "wave", "music", LOAD_STREAM);
+	//m_soundManager->LoadSound("Resources/Song.mp3", "gangnam", "music", LOAD_STREAM);
+
+	//Init defered buffer and render
+	m_deferredBuffer.Initialize(m_device, WIDTH, HEIGHT);
+	m_deferredRender.InitializeShader(m_device);
+	m_deferredRender.InitializeBufferString(m_device);
+	
 }
 
 WPARAM Game::MainLoop()
@@ -121,7 +131,15 @@ void Game::Render()
 	//if(m_screenManager->GetCurrentScreen() == USERINTERFACE)
 	// Render Entity Manager
 	if (m_screenManager->GetCurrentScreen() == GAME)
+	{
+		m_deferredBuffer.SetCleanResource(m_deviceContext);
+		m_deferredBuffer.ClearRenderTargets(m_deviceContext);
+		m_deferredBuffer.SetRenderTargets(m_deviceContext);
 		m_entityManager->Render();
+		m_deviceContext->OMSetRenderTargets(1, &m_backbufferRTV, m_depthStencilView);
+		m_deferredBuffer.SetShaderResource(m_deviceContext);
+		m_deferredRender.Render(m_deviceContext);
+	}
 
 	m_swapChain->Present(0, 0);
 }

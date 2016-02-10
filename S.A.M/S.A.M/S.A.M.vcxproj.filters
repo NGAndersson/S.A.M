@@ -105,6 +105,15 @@
     <ClCompile Include="Source Files\Collision.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source Files\Graphics\DeferredBuffer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\Graphics\DeferredRender.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\Graphics\LightHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header Files\SoundManager.h">
@@ -215,6 +224,15 @@
     <ClInclude Include="Header Files\Gamelogic\Score.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Header Files\Graphics\LightHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\Graphics\DeferredRender.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\Graphics\DeferredBuffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="fmodex.dll" />
@@ -231,5 +249,7 @@
     <FxCompile Include="Shaders\BulletVS.hlsl" />
     <FxCompile Include="Shaders\BulletPS.hlsl" />
     <FxCompile Include="Shaders\BulletGS.hlsl" />
+    <FxCompile Include="Shaders\DeferredVS.hlsl" />
+    <FxCompile Include="Shaders\DeferredPS.hlsl" />
   </ItemGroup>
 </Project>

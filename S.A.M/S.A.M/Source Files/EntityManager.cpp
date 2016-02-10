@@ -1,7 +1,7 @@
 #include "EntityManager.h"
 #include <iostream>
 #define MAPWIDTH 107
-#define MAPLENGTH 100
+#define MAPLENGTH 103
 
 EntityManager::EntityManager()
 {
@@ -37,14 +37,16 @@ void EntityManager::SpawnEntity(HandlerIndex type)
 {
 	Bullet* tempEntity;
 	Enemy* tempEntity1;
-	float _tempX = rand() % 101 - 50;
+	float _tempX = rand() % 101;
 
 	switch (type) {
 	case(PLAYER) :
-		m_player = new Player(m_soundManager, MAPWIDTH,MAPLENGTH,XMFLOAT3(1.0f, 0.0f, 1.0f), XMFLOAT3(0.5f, 0.5f, 0.5f), 1, m_input);
+		//m_player = new Player(m_soundManager, MAPWIDTH,MAPLENGTH,XMFLOAT3(1.0f, 0.0f, 1.0f), XMFLOAT3(0.5f, 0.5f, 0.5f), 1, m_input);
+		m_player = new Player(m_soundManager, MAPWIDTH,MAPLENGTH,XMFLOAT3(MAPWIDTH / 2, 0.0f, MAPLENGTH / 2), XMFLOAT3(0.5f, 0.5f, 0.5f), 1, m_input);
 		break;
 	case(ENEMY1) :
-		tempEntity1 = new Enemy_1(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(_tempX, 0.0f, 70.0f),XMFLOAT3(0.5f,0.5f,0.5f), 6);
+		tempEntity1 = new Enemy_1(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(_tempX, 0.0f, 110.0f),XMFLOAT3(0.5f,0.5f,0.5f), 6);
+		//tempEntity1 = new Enemy_1(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(_tempX, 0.0f, 70.0f),XMFLOAT3(0.5f,0.5f,0.5f), 6);
 		m_enemy1.push_back(tempEntity1);
 		break;
 	//case(ENEMY2) :
@@ -165,15 +167,19 @@ void EntityManager::Initialize(SoundManager* soundManager, Input* input, ID3D11D
 	ChangeSongData(m_beatDetector->GetTempo());
 	m_doBeatDet = true;
 	m_beat = m_beatDetector->GetBeat();
+
+	//Create Light Buffer
+	m_light.InitializBuffer(m_device);
 }
 
 void EntityManager::Render()
 {
+
 	m_partSys.PartRend(m_deviceContext);
 	
 	//Render Player
 	if(m_player->GetHealth() > 0)
-		m_renderer->Render(m_modelHandlers[PLAYER], m_player->GetPosition(), m_player->GetRotation(), m_player->GetScale());
+	m_renderer->Render(m_modelHandlers[PLAYER], m_player->GetPosition(), m_player->GetRotation(), m_player->GetScale());
 	RenderBullets();
 
 	//Render Enemies
@@ -328,7 +334,7 @@ void EntityManager::Update(double time)
 		m_bullet6[i]->Update(time);
 
 	if (!m_player->GetDelete())
-		m_player->Update(time);
+	m_player->Update(time);
 	else
 		m_player->Destroyed(time);
 	
@@ -346,7 +352,8 @@ void EntityManager::Update(double time)
 	m_bullet5 = CheckIfAlive(m_bullet5);
 	m_bullet6 = CheckOutOfBounds(m_bullet6);
 
-
+	//sets the lightbuffer
+	m_light.SetConstbuffer(m_deviceContext);
 
 	//Update Particle System
 	m_partSys.updatePart(m_deviceContext, time, 40);
@@ -397,27 +404,27 @@ void EntityManager::BeatWasDetected()
 	//Spawn correct bullet (which plays the sound as well) Only if player is alive
 	if (m_player->GetHealth() > 0)
 	{
-		BulletType _bullet = m_input->CheckBullet();
-		switch (_bullet)
-		{
-		case INPUT_DEFAULT_BULLET:
-			SpawnEntity(BULLET1); //Default bullet
-			break;
-		case INPUT_BULLET2:
-			SpawnEntity(BULLET2);
-			break;
-		case INPUT_BULLET3:
-			SpawnEntity(BULLET3);
-			break;
-		case INPUT_BULLET4:
-			SpawnEntity(BULLET4);
-			break;
-		case INPUT_BULLET5:
-			SpawnEntity(BULLET5);
-			break;
-		default:
-			break;
-		}
+	BulletType _bullet = m_input->CheckBullet();
+	switch (_bullet)
+	{
+	case INPUT_DEFAULT_BULLET:
+		SpawnEntity(BULLET1); //Default bullet
+		break;
+	case INPUT_BULLET2:
+		SpawnEntity(BULLET2);
+		break;
+	case INPUT_BULLET3:
+		SpawnEntity(BULLET3);
+		break;
+	case INPUT_BULLET4:
+		SpawnEntity(BULLET4);
+		break;
+	case INPUT_BULLET5:
+		SpawnEntity(BULLET5);
+		break;
+	default:
+		break;
+	}
 	}
 
 	static int _randOffset;
@@ -442,7 +449,7 @@ vector<Entity*> EntityManager::CheckOutOfBounds(std::vector<Entity*> bullet)
 	vector<Entity*> _tempVec = bullet;			//Can't use the member variable for some reason
 	for (int i = 0; i < _tempVec.size() /*&& removed == false*/; i++) {			//REMOVE REMOVED == FALSE AND MAKE LISTS!
 		XMFLOAT3 _tempPos = _tempVec[i]->GetPosition();
-		if (_tempPos.x > 80 || _tempPos.x < -80 || _tempPos.z > 80 || _tempPos.z < -80) {
+		if (_tempPos.x > 110 || _tempPos.x < -20 || _tempPos.z > 120 || _tempPos.z < -20) {
 			delete _tempVec[i];
 			_tempVec.erase(_tempVec.begin() + i);
 			i--;

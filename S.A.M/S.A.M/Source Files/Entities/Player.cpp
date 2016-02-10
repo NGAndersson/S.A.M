@@ -46,17 +46,17 @@ void Player::Update(double time)
 		m_position.z -= MOVEMENTSPEEDZ*(time * 1500);
 
 	//Check position if out of bounds.
-	if (m_position.z > (float)m_mapLength/2)
-		m_position.z = (float)m_mapLength / 2;
+	if (m_position.z > (float)m_mapLength)
+		m_position.z = (float)m_mapLength;
 
-	if (m_position.z < (float)-m_mapLength / 2)
-		m_position.z = (float)-m_mapLength / 2;
+	if (m_position.z < 1)
+		m_position.z = 1;
 
-	if (m_position.x >(float)m_mapWidth / 2)
-		m_position.x = (float)m_mapWidth / 2;
+	if (m_position.x >(float)m_mapWidth)
+		m_position.x = (float)m_mapWidth;
 				   
-	if (m_position.x < (float)-m_mapWidth / 2)
-		m_position.x = (float)-m_mapWidth / 2;
+	if (m_position.x < 1)
+		m_position.x = 1;
 
 
 	m_entityBox.Center = m_position;

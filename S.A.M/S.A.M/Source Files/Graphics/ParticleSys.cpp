@@ -8,7 +8,7 @@ PartSys::PartSys()
 	srand(int(time(0)));
 	for (int i = 0; i < m_amountOfPart; i++)
 	{
-		m_partPos[i] = XMFLOAT4(((float(rand() % 600)) - 300.0f), float(rand() % 200) - 400, float(rand() % 900) - float(500), 1.0f);
+		m_partPos[i] = XMFLOAT4(((float(rand() % 600) - 250)), float(rand() % 200) - 400, float(rand() % 900) - float(500), 1.0f);
 	}
 }
 
@@ -42,7 +42,7 @@ void PartSys::updatePart(ID3D11DeviceContext* deviceContext, float time, float p
 	{
 		if (m_partPos[i].z <= -400)
 		{
-			m_partPos[i] = XMFLOAT4(((float(rand() % 600)) - 300.0f), float(rand() % 200) - 400, float(rand() % 150) + float(400), 1.0f);
+			m_partPos[i] = XMFLOAT4(((float(rand() % 600)) - 250.0f), float(rand() % 200) - 400, float(rand() % 150) + float(400), 1.0f);
 		}
 		else
 		{
