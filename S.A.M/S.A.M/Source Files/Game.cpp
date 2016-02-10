@@ -158,7 +158,7 @@ void Game::CheckInput()
 {
 	//InputType _returnInput = m_input->CheckKeyBoardInput();
 	if (m_input->CheckEsc()) {
-		m_scoreManager->SaveScore("PixieTrust.txt", "SomeNoob");
+		m_statsManager->SaveScore("PixieTrust.txt", "SomeNoob");
 		PostQuitMessage(0);
 	}
 	m_input->CheckMouseInput();
