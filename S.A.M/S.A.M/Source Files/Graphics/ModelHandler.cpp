@@ -110,8 +110,6 @@ bool ModelHandler::CreateBuffers(ID3D11Device* device)
 	//skapar constant buffer
 	device->CreateBuffer(&_OBJColDesc, NULL, &m_OBJColourBuffer);
 
-	delete[] _OBJColour;
-
 	return true;
 }
 
