@@ -1,6 +1,6 @@
 #include "EntityManager.h"
 #include <iostream>
-#define MAPWIDTH 107
+#define MAPWIDTH 77
 #define MAPLENGTH 103
 
 EntityManager::EntityManager()
@@ -53,7 +53,7 @@ EntityManager::~EntityManager()
 
 void EntityManager::SpawnEntity(HandlerIndex type)
 {
-	float _tempX = rand() % 101;
+	float _tempX = rand() % MAPWIDTH;
 
 	switch (type) {
 	case(PLAYER) :
@@ -434,14 +434,14 @@ void EntityManager::BeatWasDetected()
 	
 }
 
-vector<Entity*> EntityManager::CheckOutOfBounds(std::vector<Entity*> bullet)
+vector<Entity*> EntityManager::CheckOutOfBounds(std::vector<Entity*> entity)
 {
 	//Out of bounds check, remove immediately
 	//bool removed = false;
-	vector<Entity*> _tempVec = bullet;			//Can't use the member variable for some reason
+	vector<Entity*> _tempVec = entity;			//Can't use the member variable for some reason
 	for (int i = 0; i < _tempVec.size() /*&& removed == false*/; i++) {			//REMOVE REMOVED == FALSE AND MAKE LISTS!
 		XMFLOAT3 _tempPos = _tempVec[i]->GetPosition();
-		if (_tempPos.x > 110 || _tempPos.x < -20 || _tempPos.z > 120 || _tempPos.z < -20) {
+		if (_tempPos.x > MAPWIDTH+10 || _tempPos.x < -20 || _tempPos.z > MAPLENGTH+20 || _tempPos.z < -20) {
 			delete _tempVec[i];
 			_tempVec.erase(_tempVec.begin() + i);
 			i--;

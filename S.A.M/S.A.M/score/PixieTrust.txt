@@ -4,7 +4,7 @@
 4|Oscar|80000
 5|Oscar|70000
 6|Oscar|60000
-7|Oscar|50000
-8|Oscar|40000
-9|Oscar|30000
-10|SomeNoob|30000
+7|SomeNoob|53000
+8|Oscar|50000
+9|SomeNoob|49000
+10|Oscar|40000

@@ -7,7 +7,7 @@
 using namespace DirectX;
 #include "Audio/SoundManager.h"
 
-#define MOVEMENTSPEEDX 0.3f / 16.40f // Divided by screen Width Hardcoded MOTHERFUCKER :)
+#define MOVEMENTSPEEDX 0.3f / 9.80f // Divided by screen Width Hardcoded MOTHERFUCKER :)
 
 #define MOVEMENTSPEEDZ 0.3f / 7.20f // Divided by screen Height Hardcoded
 enum HandlerIndex { PLAYER, BULLET1, BULLET2, BULLET3, BULLET4, BULLET5, BULLET6, ENEMY1, ENEMY2, ENEMY3, ENEMY4 };

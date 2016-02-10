@@ -15,7 +15,7 @@
 #include <dxgidebug.h>
 #include <memory>
 
-#define WIDTH 1640
+#define WIDTH 720
 #define HEIGHT 980
 
 class Game

@@ -80,7 +80,7 @@ void Player::Destroyed(double time)
 
 		m_invulnerable = true;
 		m_aliveTimer = 0;
-		SetPosition(XMFLOAT3(50, 0, -5)); //Move beneath the map, as soon as ship blows up
+		SetPosition(XMFLOAT3(m_mapWidth/2, 0, -5)); //Move beneath the map, as soon as ship blows up
 	}
 
 	m_destructionTimer += time;
