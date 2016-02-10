@@ -7,9 +7,9 @@ Texture2D PositionTex : register(t3);
 //Constants
 cbuffer LightData : register(b1)
 {
-	float4 LightPos[6];
-	float4 LightColor[6];
-	float4 LightRange[6];
+	float4 LightPos[200];
+	float4 LightColor[200];
+	float4 LightRange[200];
 };
 
 cbuffer CameraType : register(b2)

@@ -6,6 +6,7 @@
 #include <DirectXMath.h>
 #include <vector>
 #include "Entities\Entity.h"
+#include "Graphics\LightHandler.h"
 
 using namespace DirectX;
 using namespace std;

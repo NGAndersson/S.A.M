@@ -13,6 +13,7 @@ Bullet_p5::Bullet_p5(SoundManager * SoundManager, int MapWidth, int MapLength, X
 	m_position = Position;
 	m_entityBox.Extents = XMFLOAT3(5, 0, 100);
 	m_health = Health;
+	m_speed = 0;
 }
 
 Bullet_p5::~Bullet_p5()

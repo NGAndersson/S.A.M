@@ -26,6 +26,7 @@ public:
 	bool SetShaders(ID3D11DeviceContext* deviceContext);
 	bool SetBuffers(ID3D11DeviceContext* deviceContext);
 	int GetVertexCount();
+	XMFLOAT3 GetDeffuse();
 
 private:
 	XMFLOAT3* m_vertices,* m_normals, *m_RGBDeffuse, *m_RGBAL, *m_Tf, *m_Ni;

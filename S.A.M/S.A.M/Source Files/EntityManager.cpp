@@ -41,12 +41,10 @@ void EntityManager::SpawnEntity(HandlerIndex type)
 
 	switch (type) {
 	case(PLAYER) :
-		//m_player = new Player(m_soundManager, MAPWIDTH,MAPLENGTH,XMFLOAT3(1.0f, 0.0f, 1.0f), XMFLOAT3(0.5f, 0.5f, 0.5f), 1, m_input);
 		m_player = new Player(m_soundManager, MAPWIDTH,MAPLENGTH,XMFLOAT3(MAPWIDTH / 2, 0.0f, MAPLENGTH / 2), XMFLOAT3(0.5f, 0.5f, 0.5f), 1, m_input);
 		break;
 	case(ENEMY1) :
 		tempEntity1 = new Enemy_1(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(_tempX, 0.0f, 110.0f),XMFLOAT3(0.5f,0.5f,0.5f), 6);
-		//tempEntity1 = new Enemy_1(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(_tempX, 0.0f, 70.0f),XMFLOAT3(0.5f,0.5f,0.5f), 6);
 		m_enemy1.push_back(tempEntity1);
 		break;
 	//case(ENEMY2) :
@@ -65,7 +63,7 @@ void EntityManager::SpawnEntity(HandlerIndex type)
 	//	m_enemy4.push_back(tempEntity);
 	//	break;
 	case(BULLET1) :
-		tempEntity = new Bullet_p1(m_soundManager, MAPWIDTH, MAPLENGTH, m_player->GetPosition(), XMFLOAT3(1, 1, 1), 1);
+		tempEntity = new Bullet_p1(m_soundManager, MAPWIDTH, MAPLENGTH, m_player->GetPosition(), XMFLOAT3(1, 1, 1), 1, m_modelHandlers[BULLET1]->GetDeffuse());
 		m_bullet1.push_back(tempEntity);
 		m_soundManager->PlayOneShotSound("DefaultBullet", 0.5f);
 		break;
@@ -75,7 +73,7 @@ void EntityManager::SpawnEntity(HandlerIndex type)
 		m_soundManager->PlayOneShotSound("Bullet_Q", 0.5f);
 		break;
 	case(BULLET3) :
-		tempEntity = new Bullet_p3(m_soundManager, MAPWIDTH, MAPLENGTH, m_player->GetPosition(), XMFLOAT3(1, 1, 1), 1);
+		tempEntity = new Bullet_p3(m_soundManager, MAPWIDTH, MAPLENGTH, m_player->GetPosition(), XMFLOAT3(1, 1, 1), 1, m_modelHandlers[BULLET3]->GetDeffuse());
 		m_bullet3.push_back(tempEntity);
 		m_soundManager->PlayOneShotSound("Bullet_W", 0.5f);
 		break;
@@ -228,9 +226,13 @@ void EntityManager::Update(double time)
 			{
 				BeatWasDetected();
 				EnemyFire();
+				m_light.beatBoost(true, time);
 			}
 			else
+			{
 				m_offsetCount++;
+				m_light.beatBoost(false, time);
+			}
 		}
 	}
 	else {
@@ -244,10 +246,12 @@ void EntityManager::Update(double time)
 				BeatWasDetected();
 				m_timeSinceLastBeat = 0;
 				EnemyFire();
+				m_light.beatBoost(true, time);
 			}
 			else {
 				m_timeSinceLastBeat = 0;
 				m_offsetCount++;
+				m_light.beatBoost(false, time);
 			}
 		}
 		else {
@@ -296,7 +300,7 @@ void EntityManager::Update(double time)
 	if (m_player->GetHealth() > 0 && !m_player->GetDelete())
 	{
 		std::vector<Entity*> _playerVec = { m_player };
-		m_collision.CheckCollisionEntity(&m_bullet6, &_playerVec, BULLET6, PLAYER);
+		//m_collision.CheckCollisionEntity(&m_bullet6, &_playerVec, BULLET6, PLAYER);
 		if (m_player->GetHealth() <= 0)
 			m_player->SetDelete(true);
 	}
@@ -351,6 +355,9 @@ void EntityManager::Update(double time)
 	m_bullet4 = CheckOutOfBounds(m_bullet4);
 	m_bullet5 = CheckIfAlive(m_bullet5);
 	m_bullet6 = CheckOutOfBounds(m_bullet6);
+
+	m_light.addLights(m_bullet1);
+	m_light.addLights(m_bullet3);
 
 	//sets the lightbuffer
 	m_light.SetConstbuffer(m_deviceContext);

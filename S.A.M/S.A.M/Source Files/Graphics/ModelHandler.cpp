@@ -204,3 +204,8 @@ int ModelHandler::GetVertexCount()
 	return m_faceCount;
 }
 
+XMFLOAT3 ModelHandler::GetDeffuse()
+{
+	XMFLOAT3 _colour = m_RGBDeffuse[0];
+	return _colour;
+}

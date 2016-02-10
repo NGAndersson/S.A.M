@@ -31,7 +31,7 @@ int Collision::CheckCollisionEntity(vector<Entity*>* Entity_1, vector<Entity*>* 
 					if (EntityType1 != BULLET5)
 					{
 						(*Entity_1)[i]->AddHealth(-1);
-						if((*Entity_1)[i]->GetHealth() <= 0)
+						if ((*Entity_1)[i]->GetHealth() <= 0)
 							Entity_1 = RemoveEntity(i, Entity_1);
 					}
 					(*Entity_2)[j]->AddHealth(-2);

@@ -162,6 +162,7 @@
     <ClCompile Include="Source Files\EntityManager.cpp" />
     <ClCompile Include="Source Files\Game.cpp" />
     <ClCompile Include="Source Files\Gamelogic\Input.cpp" />
+    <ClCompile Include="Source Files\Graphics\Light.cpp" />
     <ClCompile Include="Source Files\Graphics\LightHandler.cpp" />
     <ClCompile Include="Source Files\main.cpp" />
     <ClCompile Include="Source Files\Graphics\ModelHandler.cpp" />
@@ -202,6 +203,7 @@
     <ClInclude Include="Header Files\EntityManager.h" />
     <ClInclude Include="Header Files\Game.h" />
     <ClInclude Include="Header Files\Gamelogic\Input.h" />
+    <ClInclude Include="Header Files\Graphics\Light.h" />
     <ClInclude Include="Header Files\Graphics\LightHandler.h" />
     <ClInclude Include="Header Files\Graphics\ModelHandler.h" />
     <ClInclude Include="Header Files\Graphics\OBJloader.h" />

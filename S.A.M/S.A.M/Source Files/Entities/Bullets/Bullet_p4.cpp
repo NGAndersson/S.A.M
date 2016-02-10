@@ -12,6 +12,7 @@ Bullet_p4::Bullet_p4(SoundManager * SoundManager, int MapWidth, int MapLength, X
 	m_scale = Scale;
 	m_position = Position;
 	m_health;
+	m_speed = 100;
 }
 
 Bullet_p4::~Bullet_p4()
@@ -21,7 +22,7 @@ Bullet_p4::~Bullet_p4()
 
 void Bullet_p4::Update(double time)
 {
-	m_position.z += 100 * time;
+	m_position.z += m_speed * time;
 
 
 	m_entityBox.Center = m_position;

@@ -6,6 +6,7 @@
 #include "Gamelogic\Input.h"
 using namespace DirectX;
 #include "Audio/SoundManager.h"
+#include <Graphics/Light.h>
 
 #define MOVEMENTSPEEDX 0.3f / 16.40f // Divided by screen Width Hardcoded MOTHERFUCKER :)
 
@@ -59,6 +60,10 @@ public:
 
 	 virtual int GetScore() { return m_score; }
 
+	 virtual float GetSpeed() { return m_speed; }
+
+	 virtual Light* GetLight() { return m_light; }
+
 	//----------------------------Attributes----------------------------------------
 protected:
 	//Modelhandler
@@ -77,8 +82,10 @@ protected:
 
 	 //When entities are to be deleted
 	 bool m_delete = false;
+	 Light* m_light = nullptr;
 
 	 int m_health;
 	 int m_score;
+	 float m_speed;
 };
 #endif // ! ENTITY

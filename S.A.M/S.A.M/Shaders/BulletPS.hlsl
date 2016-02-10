@@ -10,13 +10,6 @@ cbuffer OBJColourType : register(b0)
 	float3 Ni;
 };
 
-cbuffer LightData : register(b1)
-{
-	float4 LightPos[6];
-	float4 LightColor[6];
-	float4 LightRange[6];
-};
-
 cbuffer CameraType : register(b2)
 {
 	float4 CameraPos;
@@ -49,7 +42,4 @@ PS_OUT PS_main(PS_IN input)
 	output.Pos = input.PosInW;
 
 	return output;
-
-	/*float3 pixelOut = ObjTex.Sample(sampAni, input.Tex).xyz;
-	return float4(pixelOut + Diffuse, 1.0);*/
 }
