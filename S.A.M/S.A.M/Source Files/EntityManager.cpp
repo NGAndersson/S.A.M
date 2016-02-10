@@ -102,7 +102,8 @@ void EntityManager::Initialize(SoundManager* soundManager, Input* input, ID3D11D
 	//Set the soundManager pointer which will be used in every entity
 	m_soundManager = soundManager;
 
-	m_scoreManager = statsManager;
+	m_statsManager = statsManager;
+	m_statsManager->SetLives();
 
 	InitMusic("Resources/PixieTrust.txt");
 
@@ -178,7 +179,7 @@ void EntityManager::Render()
 	m_partSys.PartRend(m_deviceContext);
 	
 	//Render Player
-	if(m_player->GetHealth() > 0)
+	//if(m_player->GetHealth() > 0)
 	m_renderer->Render(m_modelHandlers[PLAYER], m_player->GetPosition(), m_player->GetRotation(), m_player->GetScale());
 	RenderBullets();
 
@@ -293,12 +294,15 @@ void EntityManager::Update(double time)
 	m_statsManager->AddScore(_addScore);
 
 	//Check Player against Enemy Bullet
-	if (m_player->GetHealth() > 0 && !m_player->GetDelete())
+	if (!m_player->GetInvulnerable())			//Only check if the player is alive and well
 	{
 		std::vector<Entity*> _playerVec = { m_player };
 		m_collision.CheckCollisionEntity(&m_bullet6, &_playerVec, BULLET6, PLAYER);
 		if (m_player->GetHealth() <= 0)
-			m_player->SetDelete(true);
+		{
+			m_player->SetDelete(true);				//Set player to run destruction update
+			m_statsManager->AddLives(-1);			//Reduce remaining lives
+		}
 	}
 	//Enemies
 	for (auto i = 0; i < m_enemy1.size(); i++)
@@ -334,7 +338,7 @@ void EntityManager::Update(double time)
 		m_bullet6[i]->Update(time);
 
 	if (!m_player->GetDelete())
-	m_player->Update(time);
+		m_player->Update(time);
 	else
 		m_player->Destroyed(time);
 	
@@ -403,28 +407,28 @@ void EntityManager::BeatWasDetected()
 {
 	//Spawn correct bullet (which plays the sound as well) Only if player is alive
 	if (m_player->GetHealth() > 0)
-	{
-	BulletType _bullet = m_input->CheckBullet();
-	switch (_bullet)
-	{
-	case INPUT_DEFAULT_BULLET:
-		SpawnEntity(BULLET1); //Default bullet
-		break;
-	case INPUT_BULLET2:
-		SpawnEntity(BULLET2);
-		break;
-	case INPUT_BULLET3:
-		SpawnEntity(BULLET3);
-		break;
-	case INPUT_BULLET4:
-		SpawnEntity(BULLET4);
-		break;
-	case INPUT_BULLET5:
-		SpawnEntity(BULLET5);
-		break;
-	default:
-		break;
-	}
+		{
+		BulletType _bullet = m_input->CheckBullet();
+		switch (_bullet)
+		{
+		case INPUT_DEFAULT_BULLET:
+			SpawnEntity(BULLET1); //Default bullet
+			break;
+		case INPUT_BULLET2:
+			SpawnEntity(BULLET2);
+			break;
+		case INPUT_BULLET3:
+			SpawnEntity(BULLET3);
+			break;
+		case INPUT_BULLET4:
+			SpawnEntity(BULLET4);
+			break;
+		case INPUT_BULLET5:
+			SpawnEntity(BULLET5);
+			break;
+		default:
+			break;
+		}
 	}
 
 	static int _randOffset;
@@ -517,7 +521,8 @@ void EntityManager::RenderBullets()
 		_instanceScale.clear();
 		_instanceRotation.clear();
 	}
-	if (m_bullet5.size() > 0)
+	//Don't render the lazer if the player just died
+	if (m_bullet5.size() > 0 && !m_player->GetDelete())
 	{
 		for (int i = 0; i < m_bullet5.size(); i++) {
 			_instancePosition.push_back(m_bullet5[i]->GetPosition());

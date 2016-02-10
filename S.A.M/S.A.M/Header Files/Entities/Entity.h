@@ -59,6 +59,8 @@ public:
 
 	 virtual int GetScore() { return m_score; }
 
+	 virtual int GetInvulnerable(){ return m_invulnerable; }
+
 	//----------------------------Attributes----------------------------------------
 protected:
 	//Modelhandler
@@ -77,6 +79,7 @@ protected:
 
 	 //When entities are to be deleted
 	 bool m_delete = false;
+	 bool m_invulnerable = false;
 
 	 int m_health;
 	 int m_score;

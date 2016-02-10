@@ -118,6 +118,8 @@ void Game::Update(double time)
 	
 	//if(m_screenManager->GetCurrentScreen() == USERINTERFACE)
 	// Update Entity Manager
+
+	//Do life-checks here with m_statManager->GetLives();
 }
 
 void Game::Render()

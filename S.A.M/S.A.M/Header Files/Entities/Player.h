@@ -19,6 +19,8 @@ public:
 private:
 	Input* m_input;
 	float m_rotAngle = 0;
+	float m_destructionTimer = 0;
+	float m_aliveTimer = 0;
 };
 
 #endif // ! PLAYER_H
