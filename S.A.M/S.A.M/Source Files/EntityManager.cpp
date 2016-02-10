@@ -1,51 +1,67 @@
 #include "EntityManager.h"
 #include <iostream>
-#define MAPWIDTH 107
+#define MAPWIDTH 77
 #define MAPLENGTH 103
 
 EntityManager::EntityManager()
 {
-
 }
 
 EntityManager::~EntityManager()
 {
-	delete[] m_modelHandlers;
+	for (int i = 0; i < 10; i++)
+	{
+		delete m_modelHandlers[i];
+		m_modelHandlers[i] = NULL;
+	}
+	delete m_renderer;
+	delete m_beatDetector;
+
 	delete m_player;
 
-	if (m_device)
-		m_device->Release();
+	for (int i = 0; i < m_bullet1.size(); i++)
+		delete m_bullet1[i];
 
-	if (m_deviceContext)
-		m_deviceContext->Release();
+	for (int i = 0; i < m_bullet2.size(); i++)
+		delete m_bullet2[i];
 
+	for (int i = 0; i < m_bullet3.size(); i++)
+		delete m_bullet3[i];
 
-	//Clearing Memory
-	std::vector<Entity*>().swap(m_bullet1);
-	std::vector<Entity*>().swap(m_bullet2);
-	std::vector<Entity*>().swap(m_bullet3);
-	std::vector<Entity*>().swap(m_bullet4);
-	std::vector<Entity*>().swap(m_bullet5);
-	std::vector<Entity*>().swap(m_bullet6);
-	std::vector<Entity*>().swap(m_enemy1);
-	std::vector<Entity*>().swap(m_enemy2);
-	std::vector<Entity*>().swap(m_enemy3);
-	std::vector<Entity*>().swap(m_enemy4);
+	for (int i = 0; i < m_bullet4.size(); i++)
+		delete m_bullet4[i];
+
+	for (int i = 0; i < m_bullet5.size(); i++)
+		delete m_bullet5[i];
+
+	for (int i = 0; i < m_bullet6.size(); i++)
+		delete m_bullet6[i];
+
+	for (int i = 0; i < m_enemy1.size(); i++)
+		delete m_enemy1[i];
+
+	for (int i = 0; i < m_enemy2.size(); i++)
+		delete m_enemy2[i];
+
+	for (int i = 0; i < m_enemy3.size(); i++)
+		delete m_enemy3[i];
+
+	for (int i = 0; i < m_enemy4.size(); i++)
+		delete m_enemy4[i];
+
 }
 
 void EntityManager::SpawnEntity(HandlerIndex type)
 {
-	Bullet* tempEntity;
-	Enemy* tempEntity1;
-	float _tempX = rand() % 101;
+	float _tempX = rand() % MAPWIDTH;
 
 	switch (type) {
 	case(PLAYER) :
 		m_player = new Player(m_soundManager, MAPWIDTH,MAPLENGTH,XMFLOAT3(MAPWIDTH / 2, 0.0f, MAPLENGTH / 2), XMFLOAT3(0.5f, 0.5f, 0.5f), 1, m_input);
 		break;
 	case(ENEMY1) :
-		tempEntity1 = new Enemy_1(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(_tempX, 0.0f, 110.0f),XMFLOAT3(0.5f,0.5f,0.5f), 6);
-		m_enemy1.push_back(tempEntity1);
+		//temptest = new Enemy_1(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(_tempX, 0.0f, 70.0f),XMFLOAT3(0.5f,0.5f,0.5f));
+		m_enemy1.push_back(new Enemy_1(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(_tempX, 0.0f, 110), XMFLOAT3(0.5f, 0.5f, 0.5f),6));
 		break;
 	//case(ENEMY2) :
 	//	Enemy2* tempEntity = new Enemy2;
@@ -63,50 +79,50 @@ void EntityManager::SpawnEntity(HandlerIndex type)
 	//	m_enemy4.push_back(tempEntity);
 	//	break;
 	case(BULLET1) :
-		tempEntity = new Bullet_p1(m_soundManager, MAPWIDTH, MAPLENGTH, m_player->GetPosition(), XMFLOAT3(1, 1, 1), 1, m_modelHandlers[BULLET1]->GetDeffuse());
-		m_bullet1.push_back(tempEntity);
+		//tempEntity = new Bullet_p1(m_soundManager, MAPWIDTH, MAPLENGTH, m_player->GetPosition(), XMFLOAT3(1, 1, 1));
+		m_bullet1.push_back(new Bullet_p1(m_soundManager, MAPWIDTH, MAPLENGTH, m_player->GetPosition(), XMFLOAT3(1, 1, 1), 1, m_modelHandlers[BULLET1]->GetDeffuse()));
 		m_soundManager->PlayOneShotSound("DefaultBullet", 0.5f);
 		break;
 	case(BULLET2) :
-		tempEntity = new Bullet_p2(m_soundManager, MAPWIDTH, MAPLENGTH, m_player->GetPosition(), XMFLOAT3(1, 1, 1), 1);
-		m_bullet2.push_back(tempEntity);
+		//tempEntity = new Bullet_p2(m_soundManager, MAPWIDTH, MAPLENGTH, m_player->GetPosition(), XMFLOAT3(1, 1, 1));
+		m_bullet2.push_back(new Bullet_p2(m_soundManager, MAPWIDTH, MAPLENGTH, m_player->GetPosition(), XMFLOAT3(1, 1, 1),1));
 		m_soundManager->PlayOneShotSound("Bullet_Q", 0.5f);
 		break;
 	case(BULLET3) :
-		tempEntity = new Bullet_p3(m_soundManager, MAPWIDTH, MAPLENGTH, m_player->GetPosition(), XMFLOAT3(1, 1, 1), 1, m_modelHandlers[BULLET3]->GetDeffuse());
-		m_bullet3.push_back(tempEntity);
+		//tempEntity = new Bullet_p3(m_soundManager, MAPWIDTH, MAPLENGTH, m_player->GetPosition(), XMFLOAT3(1, 1, 1));
+		m_bullet3.push_back(new Bullet_p3(m_soundManager, MAPWIDTH, MAPLENGTH, m_player->GetPosition(), XMFLOAT3(1, 1, 1),1 , m_modelHandlers[BULLET1]->GetDeffuse()));
 		m_soundManager->PlayOneShotSound("Bullet_W", 0.5f);
 		break;
 	case(BULLET4) :
-		tempEntity = new Bullet_p4(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x - 1, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(0.5, 0.5, 0.5), 1);
-		m_bullet4.push_back(tempEntity);
-		tempEntity = new Bullet_p4(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(0.5, 0.5, 0.5), 1);
-		m_bullet4.push_back(tempEntity);
-		tempEntity = new Bullet_p4(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x + 1, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(0.5, 0.5, 0.5), 1);
-		m_bullet4.push_back(tempEntity);
+		//tempEntity = new Bullet_p4(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x - 1, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(0.5, 0.5, 0.5));
+		m_bullet4.push_back(new Bullet_p4(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x - 1, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(0.5, 0.5, 0.5),1));
+		//tempEntity = new Bullet_p4(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(0.5, 0.5, 0.5));
+		m_bullet4.push_back(new Bullet_p4(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(0.5, 0.5, 0.5),1));
+		//tempEntity = new Bullet_p4(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x + 1, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(0.5, 0.5, 0.5));
+		m_bullet4.push_back(new Bullet_p4(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x + 1, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(0.5, 0.5, 0.5),1));
 		m_soundManager->PlayOneShotSound("Bullet_E", 0.5f);
 		break;
 	case(BULLET5) :
-		tempEntity = new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z + 60), XMFLOAT3(1, 1, 20), 1);
-		m_bullet5.push_back(tempEntity);
+		//tempEntity = new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z + 60), XMFLOAT3(1, 1, 20));
+		m_bullet5.push_back(new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z + 60), XMFLOAT3(1, 1, 20),1));
 		m_soundManager->PlayOneShotSound("Laser_R", 0.5f);
 		break;
 	}
 }
 
-void EntityManager::Initialize(SoundManager* soundManager, Input* input, ID3D11Device* device, ID3D11DeviceContext* deviceContext, Score* scoreManager)
+void EntityManager::Initialize(SoundManager* soundManager, Input* input, ID3D11Device* device, ID3D11DeviceContext* deviceContext, Stats* statsManager)
 {
 
 	//Set the soundManager pointer which will be used in every entity
 	m_soundManager = soundManager;
 
-	m_scoreManager = scoreManager;
+	m_statsManager = statsManager;
+	m_statsManager->SetLives();
 
 	InitMusic("Resources/PixieTrust.txt");
 
 	m_beatDetector = new BeatDetector(m_soundManager);
 	m_beatDetector->AudioProcess();
-
 
 	//Set the input class which will be passed down to Player
 	m_input = input;
@@ -126,7 +142,7 @@ void EntityManager::Initialize(SoundManager* soundManager, Input* input, ID3D11D
 	m_modelHandlers[ENEMY1] = new ModelHandler;
 	m_modelHandlers[ENEMY1]->LoadOBJData("Resources/Models/TestCube.obj", "Resources/Models/TestCube.mtl", m_device, m_deviceContext);
 	m_modelHandlers[ENEMY1]->CreateBuffers(m_device);
-	m_modelHandlers[ENEMY1]->CreateShaders(m_device, "Shaders\\PlayerVS.hlsl", "Shaders\\PlayerGS.hlsl", "Shaders\\PlayerPS.hlsl");
+	m_modelHandlers[ENEMY1]->CreateShaders(m_device, "Shaders\\EnemiesVS.hlsl", "Shaders\\EnemiesGS.hlsl", "Shaders\\EnemiesPS.hlsl");
 	m_modelHandlers[ENEMY2] = new ModelHandler;
 	m_modelHandlers[ENEMY3] = new ModelHandler;
 	m_modelHandlers[ENEMY4] = new ModelHandler;
@@ -176,40 +192,13 @@ void EntityManager::Render()
 	m_partSys.PartRend(m_deviceContext);
 	
 	//Render Player
-	if(m_player->GetHealth() > 0)
+	if(m_player->GetHealth() > 0)			//Invulnerability-blinking
 	m_renderer->Render(m_modelHandlers[PLAYER], m_player->GetPosition(), m_player->GetRotation(), m_player->GetScale());
 	RenderBullets();
 
 	//Render Enemies
-	for (int i = 0; i < m_enemy1.size(); i++)
-	{
-		bool test;
-		test = m_modelHandlers[ENEMY1]->SetBuffers(m_deviceContext);
-		test = m_modelHandlers[ENEMY1]->SetShaders(m_deviceContext);
-		m_renderer->Render(m_modelHandlers[ENEMY1], m_enemy1[i]->GetPosition(), m_enemy1[i]->GetRotation(), m_enemy1[i]->GetScale());
+	RenderEnemies();
 	}
-
-	/*
-	for (int i = 0; i < m_enemy2.size(); i++)
-	{
-		m_modelHandlers[ENEMY2]->SetBuffers(m_deviceContext);
-		m_modelHandlers[ENEMY2]->SetShaders(m_deviceContext);
-		m_renderer->Render(m_modelHandlers[ENEMY2], m_enemy2[i]->GetPosition(), m_enemy2[i]->GetRotation(), m_enemy2[i]->GetScale());
-	}
-	for (int i = 0; i < m_enemy3.size(); i++)
-	{
-		m_modelHandlers[ENEMY3]->SetBuffers(m_deviceContext);
-		m_modelHandlers[ENEMY3]->SetShaders(m_deviceContext);
-		m_renderer->Render(m_modelHandlers[ENEMY3], m_enemy3[i]->GetPosition(), m_enemy3[i]->GetRotation(), m_enemy3[i]->GetScale());
-	}
-	for (int i = 0; i < m_enemy4.size(); i++)
-	{
-		m_modelHandlers[ENEMY4]->SetBuffers(m_deviceContext);
-		m_modelHandlers[ENEMY4]->SetShaders(m_deviceContext);
-		m_renderer->Render(m_modelHandlers[ENEMY4], m_enemy4[i]->GetPosition(), m_enemy4[i]->GetRotation(), m_enemy4[i]->GetScale());
-	}
-	*/
-}
 
 void EntityManager::Update(double time)
 {
@@ -225,6 +214,7 @@ void EntityManager::Update(double time)
 			if (m_offsetCount > m_offset)
 			{
 				BeatWasDetected();
+
 				EnemyFire();
 				m_light.beatBoost(true, time, -1, m_currentBPM);
 				m_modelHandlers[BULLET1]->beatBoost(true, time, -1, m_currentBPM);
@@ -240,7 +230,7 @@ void EntityManager::Update(double time)
 			m_modelHandlers[BULLET1]->beatBoost(false, time, -1, m_currentBPM);
 			m_modelHandlers[BULLET3]->beatBoost(false, time, -1, m_currentBPM);
 			m_modelHandlers[BULLET6]->beatBoost(false, time, -1, m_currentBPM);
-		}
+	}
 	}
 	else {
 		//BeatDet test
@@ -308,15 +298,18 @@ void EntityManager::Update(double time)
 	//_addScore += m_collision.CheckCollisionEntity(&m_bullet5, &m_enemy3,BULLET5, ENEMY3);
 	//_addScore += m_collision.CheckCollisionEntity(&m_bullet5, &m_enemy4,BULLET5, ENEMY4);
 
-	m_scoreManager->AddScore(_addScore);
+	m_statsManager->AddScore(_addScore);
 
 	//Check Player against Enemy Bullet
-	if (m_player->GetHealth() > 0 && !m_player->GetDelete())
+	if (!m_player->GetInvulnerable())			//Only check if the player is alive and well
 	{
 		std::vector<Entity*> _playerVec = { m_player };
 		//m_collision.CheckCollisionEntity(&m_bullet6, &_playerVec, BULLET6, PLAYER);
 		if (m_player->GetHealth() <= 0)
-			m_player->SetDelete(true);
+		{
+			m_player->SetDelete(true);				//Set player to run destruction update
+			m_statsManager->AddLives(-1);			//Reduce remaining lives
+	}
 	}
 	//Enemies
 	for (auto i = 0; i < m_enemy1.size(); i++)
@@ -417,14 +410,16 @@ void EntityManager::InitMusic(std::string filename)
 		else if (std::string(_key) == "bulletR")
 			m_soundManager->LoadSound(_value, _value, "Laser_R", LOAD_MEMORY);
 		else if (std::string(_key) == "score")
-			m_scoreManager->LoadScore(_value);
+			m_statsManager->LoadScore(_value);
 	}
+
 }
 
 void EntityManager::BeatWasDetected()
 {
+	static int _enemySpawRate;
 	//Spawn correct bullet (which plays the sound as well) Only if player is alive
-	if (m_player->GetHealth() > 0)
+	if (!m_player->GetDelete())
 	{
 	BulletType _bullet = m_input->CheckBullet();
 	switch (_bullet)
@@ -449,29 +444,27 @@ void EntityManager::BeatWasDetected()
 	}
 	}
 
-	static int _randOffset;
-	m_level = 3;
-	auto _rand = rand() % 100 + 1;
-	if (_rand > 80/m_level)
+
+	//use time and check that after 30 sec or so increse the level count by some.. int
+	
+	if (_enemySpawRate == m_beatDetector->GetTempo()/30)
 	{
 		SpawnEntity(ENEMY1);
-		_randOffset = 0;
+		_enemySpawRate = 0;
 	}
 	else
-	{
-		_randOffset++;
-	}
+		_enemySpawRate++;
 	
 }
 
-vector<Entity*> EntityManager::CheckOutOfBounds(std::vector<Entity*> bullet)
+vector<Entity*> EntityManager::CheckOutOfBounds(std::vector<Entity*> entity)
 {
 	//Out of bounds check, remove immediately
 	//bool removed = false;
-	vector<Entity*> _tempVec = bullet;			//Can't use the member variable for some reason
+	vector<Entity*> _tempVec = entity;			//Can't use the member variable for some reason
 	for (int i = 0; i < _tempVec.size() /*&& removed == false*/; i++) {			//REMOVE REMOVED == FALSE AND MAKE LISTS!
 		XMFLOAT3 _tempPos = _tempVec[i]->GetPosition();
-		if (_tempPos.x > 110 || _tempPos.x < -20 || _tempPos.z > 120 || _tempPos.z < -20) {
+		if (_tempPos.x > MAPWIDTH+10 || _tempPos.x < -20 || _tempPos.z > MAPLENGTH+20 || _tempPos.z < -20) {
 			delete _tempVec[i];
 			_tempVec.erase(_tempVec.begin() + i);
 			i--;
@@ -479,6 +472,78 @@ vector<Entity*> EntityManager::CheckOutOfBounds(std::vector<Entity*> bullet)
 		}
 	}
 	return _tempVec;
+}
+	
+void EntityManager::RenderEnemies()
+{
+	vector<XMFLOAT3> _instancePosition;
+	vector<XMMATRIX> _instanceRotation;
+	vector<XMFLOAT3> _instanceScale;
+
+	_instancePosition.clear();
+	_instanceScale.clear();
+	_instanceRotation.clear();
+
+	if (m_enemy1.size() > 0)
+	{
+		for (auto i = 0; i < m_enemy1.size(); i++)
+		{
+			_instancePosition.push_back(m_enemy1[i]->GetPosition());
+			_instanceScale.push_back(m_enemy1[i]->GetScale());
+			_instanceRotation.push_back(m_enemy1[i]->GetRotation());
+
+		}
+		m_modelHandlers[ENEMY1]->SetBuffers(m_deviceContext);
+		m_modelHandlers[ENEMY1]->SetShaders(m_deviceContext);
+		m_renderer->RenderInstanced(m_modelHandlers[ENEMY1], _instancePosition, _instanceRotation, m_enemy1.size(), _instanceScale);
+
+	}
+
+	if (m_enemy2.size() > 0)
+	{
+		for (auto i = 0; i < m_enemy2.size(); i++)
+		{
+			_instancePosition.push_back(m_enemy2[i]->GetPosition());
+			_instanceScale.push_back(m_enemy2[i]->GetScale());
+			_instanceRotation.push_back(m_enemy2[i]->GetRotation());
+
+		}
+		m_modelHandlers[ENEMY2]->SetBuffers(m_deviceContext);
+		m_modelHandlers[ENEMY2]->SetShaders(m_deviceContext);
+		m_renderer->RenderInstanced(m_modelHandlers[ENEMY2], _instancePosition, _instanceRotation, m_enemy2.size(), _instanceScale);
+
+	}
+
+	if (m_enemy3.size() > 0)
+	{
+		for (auto i = 0; i < m_enemy3.size(); i++)
+		{
+			_instancePosition.push_back(m_enemy3[i]->GetPosition());
+			_instanceScale.push_back(m_enemy3[i]->GetScale());
+			_instanceRotation.push_back(m_enemy3[i]->GetRotation());
+
+		}
+		m_modelHandlers[ENEMY3]->SetBuffers(m_deviceContext);
+		m_modelHandlers[ENEMY3]->SetShaders(m_deviceContext);
+		m_renderer->RenderInstanced(m_modelHandlers[ENEMY3], _instancePosition, _instanceRotation, m_enemy3.size(), _instanceScale);
+
+	}
+
+	if (m_enemy4.size() > 0)
+	{
+		for (auto i = 0; i < m_enemy4.size(); i++)
+		{
+			_instancePosition.push_back(m_enemy4[i]->GetPosition());
+			_instanceScale.push_back(m_enemy4[i]->GetScale());
+			_instanceRotation.push_back(m_enemy4[i]->GetRotation());
+
+		}
+		m_modelHandlers[ENEMY4]->SetBuffers(m_deviceContext);
+		m_modelHandlers[ENEMY4]->SetShaders(m_deviceContext);
+		m_renderer->RenderInstanced(m_modelHandlers[ENEMY4], _instancePosition, _instanceRotation, m_enemy4.size(), _instanceScale);
+
+	}
+
 }
 	
 void EntityManager::RenderBullets()
@@ -539,7 +604,8 @@ void EntityManager::RenderBullets()
 		_instanceScale.clear();
 		_instanceRotation.clear();
 	}
-	if (m_bullet5.size() > 0)
+	//Don't render the lazer if the player just died
+	if (m_bullet5.size() > 0 && !m_player->GetDelete())
 	{
 		for (int i = 0; i < m_bullet5.size(); i++) {
 			_instancePosition.push_back(m_bullet5[i]->GetPosition());
@@ -563,6 +629,7 @@ void EntityManager::RenderBullets()
 		_instanceScale.clear();
 		_instanceRotation.clear();
 	}
+
 }
 
 vector<Entity*> EntityManager::CheckIfAlive(std::vector<Entity*> bullet)
@@ -591,7 +658,11 @@ void EntityManager::EnemyFire()
 {
 	for (auto i = 0; i < m_enemy1.size(); i++)
 	{
-		Bullet* tempEntity = new Bullet_e(m_soundManager, MAPWIDTH, MAPLENGTH, m_enemy1[i]->GetPosition(), XMFLOAT3(0.5, 0.5, 0.5), 1, m_modelHandlers[BULLET6]->GetDeffuse());
-		m_bullet6.push_back(tempEntity);
+		if (m_enemy1[i]->GetFireTime()>3.0f){
+			m_bullet6.push_back(new Bullet_e(m_soundManager, MAPWIDTH, MAPLENGTH, m_enemy1[i]->GetPosition(), XMFLOAT3(0.5, 0.5, 0.5), 1, m_modelHandlers[BULLET1]->GetDeffuse()));
+			m_enemy1[i]->SetFireTime(0);
+		}
+
+		m_enemy1[i]->SetFireTime(m_enemy1[i]->GetFireTime() + 0.5);
 	}
 }

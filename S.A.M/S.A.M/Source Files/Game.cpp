@@ -31,9 +31,18 @@ Game::~Game()
 		m_depthStencil->Release();
 	}
 	if (m_sampleState)
+	{
 		m_sampleState->Release();
+	}
 
-	delete m_scoreManager;
+	delete m_soundManager;
+	m_soundManager = 0;
+	delete m_screenManager;
+	m_screenManager = 0;
+	delete m_entityManager;
+	m_entityManager = 0;
+
+	delete m_statsManager;
 
 }
 
@@ -42,11 +51,10 @@ void Game::InitGame(Input* input, Display* disp)
 	m_input = input;
 	m_display = disp;
 
-
 	//Create and initialize SoundManager
-	m_soundManager = new SoundManager;  //Initializes in constructor
+	m_soundManager = new SoundManager();  //Initializes in constructor
 
-	m_scoreManager = new Score;
+	m_statsManager = new Stats;
 
 	//Create and initialize device/devicecontext/swapchain/depthstenciel
 	CreateDirect3DContext(disp->GethWnd());
@@ -55,12 +63,12 @@ void Game::InitGame(Input* input, Display* disp)
 	SetViewport();
 
 	//Create and initialize ScreenManager
-	m_screenManager = new ScreenManager;
+	m_screenManager = new ScreenManager();
 	m_screenManager->InitializeScreen(m_input);
 
 	//Create and initialize EntityManager
 	m_entityManager = new EntityManager;
-	m_entityManager->Initialize(m_soundManager, m_input, m_device, m_deviceContext, m_scoreManager);
+	m_entityManager->Initialize(m_soundManager, m_input, m_device, m_deviceContext, m_statsManager);
 
 	//FUN STUFF! REMOVE!
 	//m_soundManager->LoadSound("Resources/wave.mp3", "wave", "music", LOAD_STREAM);
@@ -118,6 +126,8 @@ void Game::Update(double time)
 	
 	//if(m_screenManager->GetCurrentScreen() == USERINTERFACE)
 	// Update Entity Manager
+
+	//Do life-checks here with m_statManager->GetLives();
 }
 
 void Game::Render()
@@ -148,8 +158,8 @@ void Game::CheckInput()
 {
 	//InputType _returnInput = m_input->CheckKeyBoardInput();
 	if (m_input->CheckEsc()) {
-		m_scoreManager->SaveScore("PixieTrust.txt", "SomeNoob");
-		exit(0);
+		m_statsManager->SaveScore("PixieTrust.txt", "SomeNoob");
+		PostQuitMessage(0);
 	}
 	m_input->CheckMouseInput();
 }

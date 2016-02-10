@@ -99,10 +99,10 @@
     <ClCompile Include="Source Files\Graphics\Camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source Files\Gamelogic\Score.cpp">
+    <ClCompile Include="Source Files\Collision.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source Files\Collision.cpp">
+    <ClCompile Include="Source Files\Graphics\LightHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source Files\Graphics\DeferredBuffer.cpp">
@@ -111,7 +111,10 @@
     <ClCompile Include="Source Files\Graphics\DeferredRender.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source Files\Graphics\LightHandler.cpp">
+    <ClCompile Include="Source Files\Gamelogic\Spline.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\Gamelogic\Stats.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source Files\Graphics\Light.cpp">
@@ -224,9 +227,6 @@
     <ClInclude Include="Header Files\Collision.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Header Files\Gamelogic\Score.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Header Files\Graphics\LightHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -234,6 +234,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Header Files\Graphics\DeferredBuffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\Gamelogic\Spline.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\Gamelogic\Stats.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Header Files\Graphics\Light.h">
@@ -255,7 +261,8 @@
     <FxCompile Include="Shaders\BulletVS.hlsl" />
     <FxCompile Include="Shaders\BulletPS.hlsl" />
     <FxCompile Include="Shaders\BulletGS.hlsl" />
-    <FxCompile Include="Shaders\DeferredVS.hlsl" />
-    <FxCompile Include="Shaders\DeferredPS.hlsl" />
+    <FxCompile Include="Shaders\EnemiesVS.hlsl" />
+    <FxCompile Include="Shaders\EnemiesPS.hlsl" />
+    <FxCompile Include="Shaders\EnemiesGS.hlsl" />
   </ItemGroup>
 </Project>

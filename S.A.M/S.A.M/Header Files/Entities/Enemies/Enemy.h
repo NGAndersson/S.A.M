@@ -13,7 +13,7 @@ public:
 		XMVECTOR _rotzAxis{ 0,0,1,0 };
 		m_rotation = XMMatrixRotationAxis(_rotzAxis, 0.0f);
 	}
-	//~Enemy();
+	virtual ~Enemy(){}
 	virtual void Update(double time) = 0;
 	virtual void Destroyed(double time) = 0;
 
@@ -21,7 +21,6 @@ public:
 private:
 protected:
 public:
-
 };
 
 #endif
