@@ -31,7 +31,16 @@ Game::~Game()
 		m_depthStencil->Release();
 	}
 	if (m_sampleState)
+	{
 		m_sampleState->Release();
+	}
+
+	delete m_soundManager;
+	m_soundManager = 0;
+	delete m_screenManager;
+	m_screenManager = 0;
+	delete m_entityManager;
+	m_entityManager = 0;
 
 	delete m_statsManager;
 
@@ -42,9 +51,8 @@ void Game::InitGame(Input* input, Display* disp)
 	m_input = input;
 	m_display = disp;
 
-
 	//Create and initialize SoundManager
-	m_soundManager = new SoundManager;  //Initializes in constructor
+	m_soundManager = new SoundManager();  //Initializes in constructor
 
 	m_statsManager = new Stats;
 
@@ -55,7 +63,7 @@ void Game::InitGame(Input* input, Display* disp)
 	SetViewport();
 
 	//Create and initialize ScreenManager
-	m_screenManager = new ScreenManager;
+	m_screenManager = new ScreenManager();
 	m_screenManager->InitializeScreen(m_input);
 
 	//Create and initialize EntityManager
@@ -150,8 +158,8 @@ void Game::CheckInput()
 {
 	//InputType _returnInput = m_input->CheckKeyBoardInput();
 	if (m_input->CheckEsc()) {
-		m_statsManager->SaveScore("PixieTrust.txt", "SomeNoob");
-		exit(0);
+		m_scoreManager->SaveScore("PixieTrust.txt", "SomeNoob");
+		PostQuitMessage(0);
 	}
 	m_input->CheckMouseInput();
 }

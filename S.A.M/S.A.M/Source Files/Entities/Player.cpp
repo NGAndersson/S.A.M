@@ -17,6 +17,7 @@ Player::Player(SoundManager* SoundManager, int MapWidth, int MapLength,XMFLOAT3 
 
 Player::~Player()
 {
+	
 }
 
 void Player::Update(double time)

@@ -29,7 +29,7 @@ public:
 		m_score = 0;
 		m_health = Health;
 		m_entityBox.Center = Position;
-		m_entityBox.Extents = XMFLOAT3(5.0f, 5.0f, 5.0f);
+		m_entityBox.Extents = XMFLOAT3(1.0f, 1.0f, 1.0f);
 	}
 
 	virtual void Update(double time) = 0;

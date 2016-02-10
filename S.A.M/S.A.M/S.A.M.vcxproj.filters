@@ -102,13 +102,13 @@
     <ClCompile Include="Source Files\Collision.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source Files\Graphics\LightHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="Source Files\Graphics\DeferredBuffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source Files\Graphics\DeferredRender.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source Files\Graphics\LightHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source Files\Gamelogic\Stats.cpp">
@@ -249,7 +249,8 @@
     <FxCompile Include="Shaders\BulletVS.hlsl" />
     <FxCompile Include="Shaders\BulletPS.hlsl" />
     <FxCompile Include="Shaders\BulletGS.hlsl" />
-    <FxCompile Include="Shaders\DeferredVS.hlsl" />
-    <FxCompile Include="Shaders\DeferredPS.hlsl" />
+    <FxCompile Include="Shaders\EnemiesVS.hlsl" />
+    <FxCompile Include="Shaders\EnemiesPS.hlsl" />
+    <FxCompile Include="Shaders\EnemiesGS.hlsl" />
   </ItemGroup>
 </Project>

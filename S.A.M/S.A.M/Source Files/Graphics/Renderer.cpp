@@ -28,6 +28,9 @@ Renderer::~Renderer()
 	if (m_worldBuffer)
 		m_worldBuffer->Release();
 
+	//if (m_worldBufferInstance)
+	//	m_worldBufferInstance->Release();
+
 }
 
 void Renderer::Render(ModelHandler * model, XMFLOAT3 position, XMMATRIX &rotation, XMFLOAT3 scale)

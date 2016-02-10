@@ -12,6 +12,8 @@
 #include "Gamelogic\Stats.h"
 
 #include <d3d11.h>	//temp
+#include <dxgidebug.h>
+#include <memory>
 
 #define WIDTH 1640
 #define HEIGHT 980

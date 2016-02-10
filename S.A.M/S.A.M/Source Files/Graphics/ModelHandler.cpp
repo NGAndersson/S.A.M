@@ -20,42 +20,17 @@ ModelHandler::~ModelHandler()
 	{
 		m_ObjTex->Release();
 	}
-	if(m_vertices)
-	{
-		delete[] m_vertices;
-	}
-	if (m_normals)
-	{
-		delete[] m_normals;
-	}
-	if (m_texcoords)
-	{
-		delete[] m_texcoords;
-	}
-	if (m_RGBDeffuse)
-	{
-		delete[] m_RGBDeffuse;
-	}
-	if (m_RGBAL)
-	{
-		delete[] m_RGBAL;
-	}
-	if (m_Tf)
-	{
-		delete[] m_Tf;
-	}
-	if (m_Ni)
-	{
-		delete[] m_Ni;
-	}
-	if (m_faces)
-	{
-		delete[] m_faces;
-	}
-	if (m_vertexInput)
-	{
-		delete[] m_vertexInput;
-	}
+
+	delete[] m_vertices;
+	delete[] m_normals;
+	delete[] m_texcoords;
+	delete[] m_RGBDeffuse;
+	delete[] m_RGBAL;
+	delete[] m_Tf;
+	delete[] m_Ni;
+	delete[] m_faces;
+	delete[] m_vertexInput;
+
 }
 
 bool ModelHandler::LoadOBJData(string OBJFileName, string colourFileName, ID3D11Device* device, ID3D11DeviceContext* deviceContext)
@@ -147,6 +122,8 @@ bool ModelHandler::CreateBuffers(ID3D11Device* device)
 
 	//skapar constant buffer
 	device->CreateBuffer(&_OBJColDesc, &_OBJColourData, &m_OBJColourBuffer);
+
+	delete[] _OBJColour;
 
 	return true;
 }

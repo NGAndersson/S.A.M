@@ -22,6 +22,7 @@
 #include "Collision.h"
 #include "Gamelogic\Stats.h"
 
+#include <memory>
 
 
 class EntityManager
@@ -36,6 +37,7 @@ private:
 	vector<Entity*> RemoveEntity(int RemoveId, vector<Entity*> RemoveType);
 	void InitMusic(std::string filename);
 	void EnemyFire();
+	void RenderEnemies();
 
 public:
 	EntityManager();
@@ -61,7 +63,6 @@ private:
 	std::vector<Entity*> m_enemy3;
 	std::vector<Entity*> m_enemy4;
 	Entity* m_player;
-
 	PartSys m_partSys;
 	Collision m_collision;
 
