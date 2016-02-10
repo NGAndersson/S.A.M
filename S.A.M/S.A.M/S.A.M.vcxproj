@@ -150,8 +150,8 @@
     <ClCompile Include="Source Files\Entities\Bullets\Bullet_p3.cpp" />
     <ClCompile Include="Source Files\Entities\Bullets\Bullet_p4.cpp" />
     <ClCompile Include="Source Files\Entities\Bullets\Bullet_p5.cpp" />
-    <ClCompile Include="Source Files\Gamelogic\Score.cpp" />
     <ClCompile Include="Source Files\Gamelogic\Spline.cpp" />
+    <ClCompile Include="Source Files\Gamelogic\Stats.cpp" />
     <ClCompile Include="Source Files\Graphics\Camera.cpp" />
     <ClCompile Include="Source Files\Graphics\DeferredBuffer.cpp" />
     <ClCompile Include="Source Files\Graphics\DeferredRender.cpp" />
@@ -182,6 +182,7 @@
     <ClInclude Include="Header Files\Bullet_e.h" />
     <ClInclude Include="Header Files\Collision.h" />
     <ClInclude Include="Header Files\Gamelogic\Spline.h" />
+    <ClInclude Include="Header Files\Gamelogic\Stats.h" />
     <ClInclude Include="Header Files\Graphics\Camera.h" />
     <ClInclude Include="Header Files\DirectXHelpers.h" />
     <ClInclude Include="Header Files\Graphics\DeferredBuffer.h" />
