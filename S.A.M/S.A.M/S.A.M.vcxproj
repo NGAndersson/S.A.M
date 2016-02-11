@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\directxtk_desktop_2015.2015.11.30.1\build\native\directxtk_desktop_2015.props" Condition="Exists('..\packages\directxtk_desktop_2015.2015.11.30.1\build\native\directxtk_desktop_2015.props')" />
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -160,6 +161,9 @@
     <ClCompile Include="Source Files\EntityManager.cpp" />
     <ClCompile Include="Source Files\Game.cpp" />
     <ClCompile Include="Source Files\Gamelogic\Input.cpp" />
+    <ClCompile Include="Source Files\Graphics\FontClass.cpp" />
+    <ClCompile Include="Source Files\Graphics\FontShaderClass.cpp" />
+    <ClCompile Include="Source Files\Graphics\TextClass.cpp" />
     <ClCompile Include="Source Files\main.cpp" />
     <ClCompile Include="Source Files\Graphics\ModelHandler.cpp" />
     <ClCompile Include="Source Files\Graphics\OBJloader.cpp" />
@@ -171,6 +175,7 @@
     <ClCompile Include="Source Files\Graphics\ShaderHandler.cpp" />
     <ClCompile Include="Source Files\Gamelogic\Timer.cpp" />
     <ClCompile Include="Source Files\Graphics\WICTextureLoader.cpp" />
+    <ClCompile Include="Source Files\Screens\MenuScreen.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header Files\Audio\BeatDetector.h" />
@@ -196,21 +201,26 @@
     <ClInclude Include="Header Files\EntityManager.h" />
     <ClInclude Include="Header Files\Game.h" />
     <ClInclude Include="Header Files\Gamelogic\Input.h" />
+    <ClInclude Include="Header Files\Graphics\FontClass.h" />
+    <ClInclude Include="Header Files\Graphics\FontShaderClass.h" />
     <ClInclude Include="Header Files\Graphics\ModelHandler.h" />
     <ClInclude Include="Header Files\Graphics\OBJloader.h" />
     <ClInclude Include="Header Files\Graphics\ParticleSys.h" />
     <ClInclude Include="Header Files\Graphics\pch.h" />
+    <ClInclude Include="Header Files\Graphics\TextClass.h" />
     <ClInclude Include="Header Files\PlatformHelpers.h" />
     <ClInclude Include="Header Files\Entities\Player.h" />
     <ClInclude Include="Header Files\Graphics\Renderer.h" />
     <ClInclude Include="Header Files\ScreenManager.h" />
     <ClInclude Include="Header Files\Graphics\ShaderHandler.h" />
+    <ClInclude Include="Header Files\Screens\MenuScreen.h" />
     <ClInclude Include="Header Files\SoundManager.h" />
     <ClInclude Include="Header Files\Gamelogic\Timer.h" />
     <ClInclude Include="Header Files\Graphics\WICTextureLoader.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="fmodex.dll" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="Resources\wave.mp3" />
@@ -277,5 +287,13 @@
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
+    <Import Project="..\packages\directxtk_desktop_2015.2015.11.30.1\build\native\directxtk_desktop_2015.targets" Condition="Exists('..\packages\directxtk_desktop_2015.2015.11.30.1\build\native\directxtk_desktop_2015.targets')" />
   </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\directxtk_desktop_2015.2015.11.30.1\build\native\directxtk_desktop_2015.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\directxtk_desktop_2015.2015.11.30.1\build\native\directxtk_desktop_2015.props'))" />
+    <Error Condition="!Exists('..\packages\directxtk_desktop_2015.2015.11.30.1\build\native\directxtk_desktop_2015.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\directxtk_desktop_2015.2015.11.30.1\build\native\directxtk_desktop_2015.targets'))" />
+  </Target>
 </Project>

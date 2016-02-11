@@ -120,7 +120,7 @@ void Game::Render()
 	if (m_screenManager->GetCurrentScreen() == GAME)
 		m_entityManager->Render();
 	else
-		m_screenManager->Render(m_device, m_deviceContext);
+		m_screenManager->Render();
 
 	m_swapChain->Present(0, 0);
 }
