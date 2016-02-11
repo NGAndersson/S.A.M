@@ -7,17 +7,25 @@ Bullet_p4::Bullet_p4()
 
 Bullet_p4::Bullet_p4(SoundManager * SoundManager, int MapWidth, int MapLength, XMFLOAT3 Position, XMFLOAT3 Scale, int Health, XMFLOAT3 Color, int bulletIndex)
 {
-	XMVECTOR _rotzAxis{ 0,0,1,0 };
-	m_rotation = XMMatrixRotationAxis(_rotzAxis, 0.0f);
+	XMVECTOR _rotzAxis{ 0,1,0,0 };
 	m_scale = Scale;
 	m_position = XMFLOAT3(Position.x, Position.y, Position.z + 2);
 	m_health;
 	if (bulletIndex == 0)
+	{
 		m_move = XMFLOAT3(-40, 0, 55);
+		m_rotation = XMMatrixRotationAxis(_rotzAxis, XM_PI * -0.2f);
+	}
 	else if (bulletIndex == 1)
+	{
 		m_move = XMFLOAT3(0, 0, 100);
+		m_rotation = XMMatrixRotationAxis(_rotzAxis, 0.0f);
+	}
 	else if (bulletIndex == 2)
+	{
 		m_move = XMFLOAT3(40, 0, 55);
+		m_rotation = XMMatrixRotationAxis(_rotzAxis, XM_PI * 0.2f);
+	}
 	m_light = new Light(XMFLOAT4(Position.x, Position.y, Position.z, 1.0f), XMFLOAT4(Color.x, Color.y, Color.z, 1.0f), XMFLOAT4(10, 1, 0, 0));
 }
 
