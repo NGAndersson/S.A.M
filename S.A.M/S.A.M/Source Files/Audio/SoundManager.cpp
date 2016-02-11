@@ -273,7 +273,7 @@ void SoundManager::LoadMusic(char * fileName)
 void SoundManager::PlayMusic(float volume)
 {
 	m_result = m_system->playSound(FMOD_CHANNEL_FREE, m_musicSound, false, &m_musicChannel);
-	m_musicChannel->setVolume(volume);
+	m_musicChannel->setVolume(0);
 }
 
 void SoundManager::PauseMusic()

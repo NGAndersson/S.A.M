@@ -61,7 +61,7 @@ void EntityManager::SpawnEntity(HandlerIndex type)
 		break;
 	case(ENEMY1) :
 		//temptest = new Enemy_1(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(_tempX, 0.0f, 70.0f),XMFLOAT3(0.5f,0.5f,0.5f));
-		m_enemy1.push_back(new Enemy_1(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(_tempX, 0.0f, 110), XMFLOAT3(0.5f, 0.5f, 0.5f),6));
+		m_enemy1.push_back(new Enemy_1(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(_tempX, 0.0f, 110), XMFLOAT3(0.5f, 0.5f, 0.5f),6,MOVEMENT_2));
 		break;
 	//case(ENEMY2) :
 	//	Enemy2* tempEntity = new Enemy2;
@@ -81,17 +81,17 @@ void EntityManager::SpawnEntity(HandlerIndex type)
 	case(BULLET1) :
 		//tempEntity = new Bullet_p1(m_soundManager, MAPWIDTH, MAPLENGTH, m_player->GetPosition(), XMFLOAT3(1, 1, 1));
 		m_bullet1.push_back(new Bullet_p1(m_soundManager, MAPWIDTH, MAPLENGTH, m_player->GetPosition(), XMFLOAT3(1, 1, 1), 1, m_modelHandlers[BULLET1]->GetDeffuse()));
-		m_soundManager->PlayOneShotSound("DefaultBullet", 0.5f);
+//		m_soundManager->PlayOneShotSound("DefaultBullet", 0.5f);
 		break;
 	case(BULLET2) :
 		//tempEntity = new Bullet_p2(m_soundManager, MAPWIDTH, MAPLENGTH, m_player->GetPosition(), XMFLOAT3(1, 1, 1));
 		m_bullet2.push_back(new Bullet_p2(m_soundManager, MAPWIDTH, MAPLENGTH, m_player->GetPosition(), XMFLOAT3(1, 1, 1),1));
-		m_soundManager->PlayOneShotSound("Bullet_Q", 0.5f);
+//		m_soundManager->PlayOneShotSound("Bullet_Q", 0.5f);
 		break;
 	case(BULLET3) :
 		//tempEntity = new Bullet_p3(m_soundManager, MAPWIDTH, MAPLENGTH, m_player->GetPosition(), XMFLOAT3(1, 1, 1));
 		m_bullet3.push_back(new Bullet_p3(m_soundManager, MAPWIDTH, MAPLENGTH, m_player->GetPosition(), XMFLOAT3(1, 1, 1),1 , m_modelHandlers[BULLET3]->GetDeffuse()));
-		m_soundManager->PlayOneShotSound("Bullet_W", 0.5f);
+//		m_soundManager->PlayOneShotSound("Bullet_W", 0.5f);
 		break;
 	case(BULLET4) :
 		//tempEntity = new Bullet_p4(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x - 1, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(0.5, 0.5, 0.5));
@@ -100,12 +100,12 @@ void EntityManager::SpawnEntity(HandlerIndex type)
 		m_bullet4.push_back(new Bullet_p4(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(0.5, 0.5, 0.5), 1, m_modelHandlers[BULLET4]->GetDeffuse(), 1));
 		//tempEntity = new Bullet_p4(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x + 1, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(0.5, 0.5, 0.5));
 		m_bullet4.push_back(new Bullet_p4(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x + 1, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(0.5, 0.5, 0.5), 1, m_modelHandlers[BULLET4]->GetDeffuse(), 2));
-		m_soundManager->PlayOneShotSound("Bullet_E", 0.5f);
+//		m_soundManager->PlayOneShotSound("Bullet_E", 0.5f);
 		break;
 	case(BULLET5) :
 		//tempEntity = new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z + 60), XMFLOAT3(1, 1, 20));
 		m_bullet5.push_back(new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z + 60), XMFLOAT3(1, 1, 20),1));
-		m_soundManager->PlayOneShotSound("Laser_R", 0.5f);
+//		m_soundManager->PlayOneShotSound("Laser_R", 0.5f);
 		break;
 	}
 }
@@ -151,15 +151,15 @@ void EntityManager::Initialize(SoundManager* soundManager, Input* input, ID3D11D
 	m_modelHandlers[BULLET1]->CreateBuffers(m_device);
 	m_modelHandlers[BULLET1]->CreateShaders(m_device, "Shaders\\BulletVS.hlsl", "Shaders\\BulletGS.hlsl", "Shaders\\BulletPS.hlsl");
 	m_modelHandlers[BULLET2] = new ModelHandler;
-	m_modelHandlers[BULLET2]->LoadOBJData("Resources/Models/Bullet2.obj", "Resources/Models/Bullet2.mtl", m_device, m_deviceContext);
+	m_modelHandlers[BULLET2]->LoadOBJData("Resources/Models/Bullet1.obj", "Resources/Models/Bullet1.mtl", m_device, m_deviceContext);
 	m_modelHandlers[BULLET2]->CreateBuffers(m_device);
 	m_modelHandlers[BULLET2]->CreateShaders(m_device, "Shaders\\BulletVS.hlsl", "Shaders\\BulletGS.hlsl", "Shaders\\BulletPS.hlsl");
 	m_modelHandlers[BULLET3] = new ModelHandler;
-	m_modelHandlers[BULLET3]->LoadOBJData("Resources/Models/Bullet3.obj", "Resources/Models/Bullet3.mtl", m_device, m_deviceContext);
+	m_modelHandlers[BULLET3]->LoadOBJData("Resources/Models/Bullet1.obj", "Resources/Models/Bullet1.mtl", m_device, m_deviceContext);
 	m_modelHandlers[BULLET3]->CreateBuffers(m_device);
 	m_modelHandlers[BULLET3]->CreateShaders(m_device, "Shaders\\BulletVS.hlsl", "Shaders\\BulletGS.hlsl", "Shaders\\BulletPS.hlsl");
 	m_modelHandlers[BULLET4] = new ModelHandler;
-	m_modelHandlers[BULLET4]->LoadOBJData("Resources/Models/Bullet4.obj", "Resources/Models/Bullet4.mtl", m_device, m_deviceContext);
+	m_modelHandlers[BULLET4]->LoadOBJData("Resources/Models/Bullet1.obj", "Resources/Models/Bullet1.mtl", m_device, m_deviceContext);
 	m_modelHandlers[BULLET4]->CreateBuffers(m_device);
 	m_modelHandlers[BULLET4]->CreateShaders(m_device, "Shaders\\BulletVS.hlsl", "Shaders\\BulletGS.hlsl", "Shaders\\BulletPS.hlsl");
 	m_modelHandlers[BULLET5] = new ModelHandler;
@@ -177,7 +177,7 @@ void EntityManager::Initialize(SoundManager* soundManager, Input* input, ID3D11D
 	m_partSys.CreateBuffer(m_device, m_deviceContext, _texName);
 	m_partSys.CreateShaders(m_device);
 
-	m_soundManager->PlayMusic(0.5f);
+	m_soundManager->PlayMusic(0);//TEMPORARY MUTE return to 0.5f when you want sound!
 	ChangeSongData(m_beatDetector->GetTempo());
 	m_doBeatDet = true;
 	m_beat = m_beatDetector->GetBeat();

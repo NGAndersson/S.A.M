@@ -6,5 +6,5 @@
 6|Oscar|50000
 7|SomeNoob|41000
 8|Oscar|40000
-9|Oscar|30000
-10|SomeNoob|29000
+9|SomeNoob|36000
+10|Oscar|30000

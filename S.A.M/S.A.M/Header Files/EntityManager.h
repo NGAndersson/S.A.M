@@ -24,7 +24,6 @@
 
 #include <memory>
 
-
 class EntityManager
 {
 	//Functions
