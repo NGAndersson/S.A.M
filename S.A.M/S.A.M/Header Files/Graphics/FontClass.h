@@ -34,19 +34,26 @@ private:
 		CharDescriptor Chars[64];
 	};
 
-	bool LoadFontData(char* fontFileName);
+	struct VertexType
+	{
+		DirectX::XMFLOAT3 position;
+		DirectX::XMFLOAT2 texture;
+	};
+
+	bool LoadFontData();
 	void ReleaseFontData();
-	bool LoadTexture();
+	bool LoadTexture(ID3D11Device* device);
 	void ReleaseTexture();
 	
 	bool ParseFont(std::istream& stream, CharSet& charSetDesc);
+
+
 protected:
 public:
 	FontClass();
-	FontClass(const FontClass& other);
 	~FontClass();
 
-	bool Initialize(ID3D11Device* device, char* fontFileName, WCHAR* textureFileName);
+	bool Initialize(ID3D11Device* device);
 	void ShutDown();
 
 	ID3D11ShaderResourceView* GetTexture();
@@ -57,9 +64,9 @@ public:
 private:
 	CharSet m_charSet;
 	std::ifstream fin;
+	ID3D11ShaderResourceView* m_textureResourceView = nullptr;
 protected:
 public:
 
 };
-
 #endif FONTCLASS_H
