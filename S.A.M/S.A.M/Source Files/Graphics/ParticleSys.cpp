@@ -14,26 +14,13 @@ PartSys::PartSys()
 
 PartSys::~PartSys()
 {
-
-	if(m_partTex)
+	delete[] m_partPos;
+	if(m_partTex != nullptr)
 		m_partTex->Release();
 
-	if (m_vertexLayout)
-		m_vertexLayout->Release();
+	if (m_vertexBuffer != nullptr)
+		m_vertexBuffer->Release();
 
-	if(m_vertexBuffer)
-		m_vertexLayout->Release();
-
-	if(m_vertexShader)
-		m_vertexShader->Release();
-
-	if(m_geometryShader)
-		m_geometryShader->Release();
-
-	if(m_pixelShader)
-		m_pixelShader->Release();
-
-	delete[] m_partPos;
 }
 
 void PartSys::updatePart(ID3D11DeviceContext* deviceContext, float time, float partSpeed)
@@ -81,46 +68,8 @@ bool PartSys::CreateBuffer(ID3D11Device* device, ID3D11DeviceContext* deviceCont
 	return true;
 }
 
-bool PartSys::CreateShaders(ID3D11Device* device)
-{
-
-	//create vertex shader
-	ID3DBlob* pVS = nullptr;
-	D3DCompileFromFile(L"Shaders\\PartVS.hlsl", nullptr, D3D_COMPILE_STANDARD_FILE_INCLUDE, "VS_main", "vs_5_0", 0, NULL, &pVS, nullptr);
-
-	device->CreateVertexShader(pVS->GetBufferPointer(), pVS->GetBufferSize(), nullptr, &m_vertexShader);
-
-	//create input layout (verified with vertex shader)
-	D3D11_INPUT_ELEMENT_DESC inputDesc[] =
-	{
-		{ "POSITION", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-	};
-	device->CreateInputLayout(inputDesc, ARRAYSIZE(inputDesc), pVS->GetBufferPointer(), pVS->GetBufferSize(), &m_vertexLayout);
-	pVS->Release();
-
-	ID3DBlob* pGS = nullptr;
-	D3DCompileFromFile(L"Shaders\\PartGS.hlsl", nullptr, D3D_COMPILE_STANDARD_FILE_INCLUDE, "GS_main", "gs_5_0", 0, NULL, &pGS, nullptr);
-	device->CreateGeometryShader(pGS->GetBufferPointer(), pGS->GetBufferSize(), nullptr, &m_geometryShader);
-	pGS->Release();
-
-	//create pixel shader
-	ID3DBlob* pPS = nullptr;
-	D3DCompileFromFile(L"Shaders\\PartPS.hlsl", nullptr, D3D_COMPILE_STANDARD_FILE_INCLUDE, "PS_main", "ps_5_0", 0, NULL, &pPS, nullptr);
-	device->CreatePixelShader(pPS->GetBufferPointer(), pPS->GetBufferSize(), nullptr, &m_pixelShader);
-	pPS->Release();
-
-
-	return true;
-}
-
 bool PartSys::PartRend(ID3D11DeviceContext* deviceContext)
 {
-	deviceContext->VSSetShader(m_vertexShader, nullptr, 0);
-	deviceContext->HSSetShader(nullptr, nullptr, 0);
-	deviceContext->DSSetShader(nullptr, nullptr, 0);
-	deviceContext->GSSetShader(m_geometryShader, nullptr, 0);
-	deviceContext->PSSetShader(m_pixelShader, nullptr, 0);
-
 	UINT32 vertexSize = sizeof(float) * 4;
 	UINT32 offset = 0;
 	deviceContext->IASetVertexBuffers(0, 1, &m_vertexBuffer, &vertexSize, &offset);
@@ -128,7 +77,6 @@ bool PartSys::PartRend(ID3D11DeviceContext* deviceContext)
 	deviceContext->PSSetShaderResources(0, 1, &m_partTex);
 
 	deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_POINTLIST);
-	deviceContext->IASetInputLayout(m_vertexLayout);
 
 	deviceContext->Draw(m_amountOfPart, 0);
 

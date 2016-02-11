@@ -16,20 +16,14 @@ struct Vertex    //Overloaded Vertex Structure
 
 Renderer::~Renderer()
 {
-	if (m_device)
-		m_device->Release();
-
-	if (m_deviceContext)
-		m_deviceContext->Release();
-	
-	if (m_camBuffer)
+	if (m_camBuffer != nullptr)
 		m_camBuffer->Release();
 
-	if (m_worldBuffer)
+	if (m_worldBuffer != nullptr)
 		m_worldBuffer->Release();
 
-	//if (m_worldBufferInstance)
-	//	m_worldBufferInstance->Release();
+	if (m_worldBufferInstance != nullptr)
+		m_worldBufferInstance->Release();
 
 }
 
@@ -37,7 +31,6 @@ void Renderer::Render(ModelHandler * model, XMFLOAT3 position, XMMATRIX &rotatio
 {
 	//Set vertexbuffer, pixel material constant buffer and set the correct shaders
 	model->SetBuffers(m_deviceContext);
-	model->SetShaders(m_deviceContext);
 
 	//Set Worldmatrix and Position(float3) as a Vertexshader constant buffer
 	XMMATRIX Scale = XMMatrixScaling(scale.x, scale.y, scale.z);
@@ -58,7 +51,6 @@ void Renderer::RenderInstanced(ModelHandler * model, vector<XMFLOAT3> position, 
 {
 	//Set vertexbuffer, pixel material constant buffer and set the correct shaders
 	model->SetBuffers(m_deviceContext);
-	model->SetShaders(m_deviceContext);
 	XMMATRIX Translation;
 	XMMATRIX Scale;
 	//Set Worldmatrix and Position(float3) as a Vertexshader constant buffer

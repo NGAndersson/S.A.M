@@ -15,19 +15,19 @@ DeferredBuffer::DeferredBuffer()
 
 DeferredBuffer::~DeferredBuffer()
 {
+	if (m_depthStencil != nullptr)
+		m_depthStencil->Release();
+	if (m_depthStencilView != nullptr)
+		m_depthStencilView->Release();
 	for (int i = 0; i < g_BUFFER_COUNT; i++)
 	{
-		if(m_RTTA[i])
+		if(m_RTTA[i] != nullptr)
 		m_RTTA[i]->Release();
-		if (m_SRVA[i])
+		if (m_SRVA[i] != nullptr)
 		m_SRVA[i]->Release();
-		if (m_RTVA[i])
+		if (m_RTVA[i] != nullptr)
 		m_RTVA[i]->Release();
 	}
-	if (m_depthStencilView)
-	m_depthStencilView->Release();
-	if (m_depthStencil)
-	m_depthStencil->Release();
 }
 
 bool DeferredBuffer::Initialize(ID3D11Device* device, int texWidth, int texHeight)

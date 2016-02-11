@@ -9,10 +9,15 @@ EntityManager::EntityManager()
 
 EntityManager::~EntityManager()
 {
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < 11; i++)
 	{
 		delete m_modelHandlers[i];
 		m_modelHandlers[i] = NULL;
+	}
+	for (int i = 0; i < 5; i++)
+	{
+		delete m_shaderLoad[i];
+		m_shaderLoad[i] = NULL;
 	}
 	delete m_renderer;
 	delete m_beatDetector;
@@ -134,48 +139,50 @@ void EntityManager::Initialize(SoundManager* soundManager, Input* input, ID3D11D
 	//Set the renderer
 	m_renderer = new Renderer(m_deviceContext, m_device);
 
+	//create shaders
+	m_shaderLoad[SHADER_PLAYER] = new ShaderHandler();
+	m_shaderLoad[SHADER_PLAYER]->CreateShaders(m_device, "Shaders\\PlayerVS.hlsl", "Shaders\\PlayerGS.hlsl", "Shaders\\PlayerPS.hlsl");
+	m_shaderLoad[SHADER_BULLET] = new ShaderHandler();
+	m_shaderLoad[SHADER_BULLET]->CreateShaders(m_device, "Shaders\\BulletVS.hlsl", "Shaders\\BulletGS.hlsl", "Shaders\\BulletPS.hlsl");
+	m_shaderLoad[SHADER_ENEMY] = new ShaderHandler();
+	m_shaderLoad[SHADER_ENEMY]->CreateShaders(m_device, "Shaders\\EnemiesVS.hlsl", "Shaders\\EnemiesGS.hlsl", "Shaders\\EnemiesPS.hlsl");
+	m_shaderLoad[SHADER_MENU] = new ShaderHandler();
+	m_shaderLoad[SHADER_PARTICLE] = new ShaderHandler();
+	m_shaderLoad[SHADER_PARTICLE]->CreateShadersPosOnly(m_device, "Shaders\\PartVS.hlsl", "Shaders\\PartGS.hlsl", "Shaders\\PartPS.hlsl");
+
 	//Create model handlers for each entity type
-	m_modelHandlers[PLAYER] = new ModelHandler;
+	m_modelHandlers[PLAYER] = new ModelHandler();
 	m_modelHandlers[PLAYER]->LoadOBJData("Resources/Models/TestCube.obj", "Resources/Models/TestCube.mtl", m_device, m_deviceContext);
 	m_modelHandlers[PLAYER]->CreateBuffers(m_device);
-	m_modelHandlers[PLAYER]->CreateShaders(m_device, "Shaders\\PlayerVS.hlsl", "Shaders\\PlayerGS.hlsl", "Shaders\\PlayerPS.hlsl");
-	m_modelHandlers[ENEMY1] = new ModelHandler;
+	m_modelHandlers[BULLET1] = new ModelHandler();
+	m_modelHandlers[BULLET1]->LoadOBJData("Resources/Models/Bullet1.obj", "Resources/Models/Bullet1.mtl", m_device, m_deviceContext);
+	m_modelHandlers[BULLET1]->CreateBuffers(m_device);
+	m_modelHandlers[BULLET2] = new ModelHandler();
+	m_modelHandlers[BULLET2]->LoadOBJData("Resources/Models/Bullet2.obj", "Resources/Models/Bullet2.mtl", m_device, m_deviceContext);
+	m_modelHandlers[BULLET2]->CreateBuffers(m_device);
+	m_modelHandlers[BULLET3] = new ModelHandler();
+	m_modelHandlers[BULLET3]->LoadOBJData("Resources/Models/Bullet3.obj", "Resources/Models/Bullet3.mtl", m_device, m_deviceContext);
+	m_modelHandlers[BULLET3]->CreateBuffers(m_device);
+	m_modelHandlers[BULLET4] = new ModelHandler();
+	m_modelHandlers[BULLET4]->LoadOBJData("Resources/Models/Bullet4.obj", "Resources/Models/Bullet4.mtl", m_device, m_deviceContext);
+	m_modelHandlers[BULLET4]->CreateBuffers(m_device);
+	m_modelHandlers[BULLET5] = new ModelHandler();
+	m_modelHandlers[BULLET5]->LoadOBJData("Resources/Models/Laser1.obj", "Resources/Models/Laser1.mtl", m_device, m_deviceContext);
+	m_modelHandlers[BULLET5]->CreateBuffers(m_device);
+	m_modelHandlers[BULLET6] = new ModelHandler();
+	m_modelHandlers[BULLET6]->LoadOBJData("Resources/Models/EnemyBullet.obj", "Resources/Models/EnemyBullet.mtl", m_device, m_deviceContext);
+	m_modelHandlers[BULLET6]->CreateBuffers(m_device);
+	m_modelHandlers[ENEMY1] = new ModelHandler();
 	m_modelHandlers[ENEMY1]->LoadOBJData("Resources/Models/TestCube.obj", "Resources/Models/TestCube.mtl", m_device, m_deviceContext);
 	m_modelHandlers[ENEMY1]->CreateBuffers(m_device);
-	m_modelHandlers[ENEMY1]->CreateShaders(m_device, "Shaders\\EnemiesVS.hlsl", "Shaders\\EnemiesGS.hlsl", "Shaders\\EnemiesPS.hlsl");
 	m_modelHandlers[ENEMY2] = new ModelHandler;
 	m_modelHandlers[ENEMY3] = new ModelHandler;
 	m_modelHandlers[ENEMY4] = new ModelHandler;
-	m_modelHandlers[BULLET1] = new ModelHandler;
-	m_modelHandlers[BULLET1]->LoadOBJData("Resources/Models/Bullet1.obj", "Resources/Models/Bullet1.mtl", m_device, m_deviceContext);
-	m_modelHandlers[BULLET1]->CreateBuffers(m_device);
-	m_modelHandlers[BULLET1]->CreateShaders(m_device, "Shaders\\BulletVS.hlsl", "Shaders\\BulletGS.hlsl", "Shaders\\BulletPS.hlsl");
-	m_modelHandlers[BULLET2] = new ModelHandler;
-	m_modelHandlers[BULLET2]->LoadOBJData("Resources/Models/Bullet2.obj", "Resources/Models/Bullet2.mtl", m_device, m_deviceContext);
-	m_modelHandlers[BULLET2]->CreateBuffers(m_device);
-	m_modelHandlers[BULLET2]->CreateShaders(m_device, "Shaders\\BulletVS.hlsl", "Shaders\\BulletGS.hlsl", "Shaders\\BulletPS.hlsl");
-	m_modelHandlers[BULLET3] = new ModelHandler;
-	m_modelHandlers[BULLET3]->LoadOBJData("Resources/Models/Bullet3.obj", "Resources/Models/Bullet3.mtl", m_device, m_deviceContext);
-	m_modelHandlers[BULLET3]->CreateBuffers(m_device);
-	m_modelHandlers[BULLET3]->CreateShaders(m_device, "Shaders\\BulletVS.hlsl", "Shaders\\BulletGS.hlsl", "Shaders\\BulletPS.hlsl");
-	m_modelHandlers[BULLET4] = new ModelHandler;
-	m_modelHandlers[BULLET4]->LoadOBJData("Resources/Models/Bullet4.obj", "Resources/Models/Bullet4.mtl", m_device, m_deviceContext);
-	m_modelHandlers[BULLET4]->CreateBuffers(m_device);
-	m_modelHandlers[BULLET4]->CreateShaders(m_device, "Shaders\\BulletVS.hlsl", "Shaders\\BulletGS.hlsl", "Shaders\\BulletPS.hlsl");
-	m_modelHandlers[BULLET5] = new ModelHandler;
-	m_modelHandlers[BULLET5]->LoadOBJData("Resources/Models/Laser1.obj", "Resources/Models/Laser1.mtl", m_device, m_deviceContext);
-	m_modelHandlers[BULLET5]->CreateBuffers(m_device);
-	m_modelHandlers[BULLET5]->CreateShaders(m_device, "Shaders\\BulletVS.hlsl", "Shaders\\BulletGS.hlsl", "Shaders\\BulletPS.hlsl");
-	m_modelHandlers[BULLET6] = new ModelHandler;
-	m_modelHandlers[BULLET6]->LoadOBJData("Resources/Models/EnemyBullet.obj", "Resources/Models/EnemyBullet.mtl", m_device, m_deviceContext);
-	m_modelHandlers[BULLET6]->CreateBuffers(m_device);
-	m_modelHandlers[BULLET6]->CreateShaders(m_device, "Shaders\\BulletVS.hlsl", "Shaders\\BulletGS.hlsl", "Shaders\\BulletPS.hlsl");
 	//Temp, create player
 	SpawnEntity(PLAYER);
 	//Temp, creates partsys
 	wstring _texName = L"Resources\\Models\\star3.jpg";
 	m_partSys.CreateBuffer(m_device, m_deviceContext, _texName);
-	m_partSys.CreateShaders(m_device);
 
 	m_soundManager->PlayMusic(0.5f);
 	ChangeSongData(m_beatDetector->GetTempo());
@@ -188,15 +195,20 @@ void EntityManager::Initialize(SoundManager* soundManager, Input* input, ID3D11D
 
 void EntityManager::Render()
 {
-
+	m_shaderLoad[SHADER_PARTICLE]->SetShaders(m_deviceContext);
 	m_partSys.PartRend(m_deviceContext);
 	
 	//Render Player
-	if(m_player->GetHealth() > 0)			//Invulnerability-blinking
-	m_renderer->Render(m_modelHandlers[PLAYER], m_player->GetPosition(), m_player->GetRotation(), m_player->GetScale());
+	if (m_player->GetHealth() > 0)			//Invulnerability-blinking
+	{
+		m_shaderLoad[SHADER_PLAYER]->SetShaders(m_deviceContext);
+		m_renderer->Render(m_modelHandlers[PLAYER], m_player->GetPosition(), m_player->GetRotation(), m_player->GetScale());
+	}
+	m_shaderLoad[SHADER_BULLET]->SetShaders(m_deviceContext);
 	RenderBullets();
 
 	//Render Enemies
+	m_shaderLoad[SHADER_ENEMY]->SetShaders(m_deviceContext);
 	RenderEnemies();
 	}
 
@@ -499,7 +511,6 @@ void EntityManager::RenderEnemies()
 
 		}
 		m_modelHandlers[ENEMY1]->SetBuffers(m_deviceContext);
-		m_modelHandlers[ENEMY1]->SetShaders(m_deviceContext);
 		m_renderer->RenderInstanced(m_modelHandlers[ENEMY1], _instancePosition, _instanceRotation, m_enemy1.size(), _instanceScale);
 
 	}
@@ -514,7 +525,6 @@ void EntityManager::RenderEnemies()
 
 		}
 		m_modelHandlers[ENEMY2]->SetBuffers(m_deviceContext);
-		m_modelHandlers[ENEMY2]->SetShaders(m_deviceContext);
 		m_renderer->RenderInstanced(m_modelHandlers[ENEMY2], _instancePosition, _instanceRotation, m_enemy2.size(), _instanceScale);
 
 	}
@@ -529,7 +539,6 @@ void EntityManager::RenderEnemies()
 
 		}
 		m_modelHandlers[ENEMY3]->SetBuffers(m_deviceContext);
-		m_modelHandlers[ENEMY3]->SetShaders(m_deviceContext);
 		m_renderer->RenderInstanced(m_modelHandlers[ENEMY3], _instancePosition, _instanceRotation, m_enemy3.size(), _instanceScale);
 
 	}
@@ -544,7 +553,6 @@ void EntityManager::RenderEnemies()
 
 		}
 		m_modelHandlers[ENEMY4]->SetBuffers(m_deviceContext);
-		m_modelHandlers[ENEMY4]->SetShaders(m_deviceContext);
 		m_renderer->RenderInstanced(m_modelHandlers[ENEMY4], _instancePosition, _instanceRotation, m_enemy4.size(), _instanceScale);
 
 	}

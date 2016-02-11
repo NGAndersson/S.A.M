@@ -31,10 +31,10 @@ public:
 	
 
 private:
-	ID3D11Buffer* m_lightBuffer;
+	ID3D11Buffer* m_lightBuffer = nullptr;
 	int m_nummberOfLights;
 	LightData m_lightningArray;
-	vector<Light*> m_light;
+	Light* m_light = nullptr;
 	Light* m_allLights = nullptr;
 	float m_beatBoost = 1;
 	float m_beatTime = 0;

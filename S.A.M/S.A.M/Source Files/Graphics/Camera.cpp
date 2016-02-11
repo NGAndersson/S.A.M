@@ -24,10 +24,8 @@ Camera::Camera(XMVECTOR NewCameraPosition, XMVECTOR PositionLookingAt)
 
 Camera::~Camera()
 {
-	if (m_constCameraBuffer)
-	{
+	if (m_constCameraBuffer != nullptr)
 		m_constCameraBuffer->Release();
-	}
 }
 
 XMVECTOR Camera::GetCameraPos()
