@@ -19,7 +19,8 @@ Bullet_p3::Bullet_p3(SoundManager * SoundManager, int MapWidth, int MapLength, X
 
 Bullet_p3::~Bullet_p3()
 {
-
+	if (m_light != nullptr)
+		delete m_light;
 }
 
 void Bullet_p3::Update(double time)

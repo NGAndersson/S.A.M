@@ -30,8 +30,10 @@ PS_OUT PS_main(PS_IN input)
 {
 	PS_OUT output = (PS_OUT)0;
 
+	float _depth = (input.PosInW.y + 2) / 4;
+
 	output.Normal = input.NormalInW;
-	output.DiffAlbedo = /*float4(Diffuse, 1) +*/ ObjTex.Sample(sampAni, input.Tex);
+	output.DiffAlbedo = (float4(Diffuse, 1) * _depth) + (ObjTex.Sample(sampAni, input.Tex) * _depth);
 	output.SpecAlbedo = float4(0.16f, 0.16f, 0.16f, 1000.0f);
 	output.Pos = input.PosInW;
 

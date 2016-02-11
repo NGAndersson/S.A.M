@@ -2,37 +2,38 @@
 
 Game::Game()
 {
+
 }
 
 Game::~Game()
 {
-	if (m_deviceContext)
-	{
-		m_deviceContext->Release();
-	}
-	if (m_device)
-	{
-		m_device->Release();
-	}
-	if (m_swapChain)
+	if (m_swapChain != nullptr)
 	{
 		m_swapChain->Release();
 	}
-	if (m_backbufferRTV)
+	if (m_backbufferRTV != nullptr)
 	{
 		m_backbufferRTV->Release();
 	}
-	if (m_depthStencilView)
+	if (m_depthStencilView != nullptr)
 	{
 		m_depthStencilView->Release();
 	}
-	if (m_depthStencil)
+	if (m_depthStencil != nullptr)
 	{
 		m_depthStencil->Release();
 	}
-	if (m_sampleState)
+	if (m_sampleState != nullptr)
 	{
 		m_sampleState->Release();
+	}
+	if (m_deviceContext != nullptr)
+	{
+		m_deviceContext->Release();
+	}
+	if (m_device != nullptr)
+	{
+		m_device->Release();
 	}
 
 	delete m_soundManager;
@@ -43,7 +44,6 @@ Game::~Game()
 	m_entityManager = 0;
 
 	delete m_statsManager;
-
 }
 
 void Game::InitGame(Input* input, Display* disp)

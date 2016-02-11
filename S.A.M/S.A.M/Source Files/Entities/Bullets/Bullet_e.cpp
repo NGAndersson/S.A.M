@@ -19,7 +19,8 @@ Bullet_e::Bullet_e(SoundManager * SoundManager, int MapWidth, int MapLength, XMF
 
 Bullet_e::~Bullet_e()
 {
-
+	if (m_light != nullptr)
+		delete m_light;
 }
 
 void Bullet_e::Update(double time)

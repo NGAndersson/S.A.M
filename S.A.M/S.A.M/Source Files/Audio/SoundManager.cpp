@@ -19,8 +19,6 @@ SoundManager::~SoundManager()
 
 	m_system->release();
 	
-
-	
 	delete[] m_dataLeftChannel;
 	m_dataLeftChannel = NULL;
 

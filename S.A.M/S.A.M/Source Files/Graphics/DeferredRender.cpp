@@ -7,10 +7,14 @@ DeferredRender::DeferredRender()
 
 DeferredRender::~DeferredRender()
 {
-	m_vertexLayout->Release();
-	m_vertexShader->Release();
-	m_pixelShader->Release();
-	m_vertexBuffer->Release();
+	if (m_vertexLayout != nullptr)
+		m_vertexLayout->Release();
+	if (m_vertexShader != nullptr)
+		m_vertexShader->Release();
+	if (m_pixelShader != nullptr)
+		m_pixelShader->Release();
+	if (m_vertexBuffer != nullptr)
+		m_vertexBuffer->Release();
 }
 
 bool DeferredRender::InitializeShader(ID3D11Device* gDevice)

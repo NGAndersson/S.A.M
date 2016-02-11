@@ -18,11 +18,13 @@
 #include "Entities\Bullets\Bullet_e.h"
 #include "Entities\Enemies\Enemy.h"
 #include "Entities\Enemies\Enemy_1.h"
+#include "Graphics\ShaderHandler.h"
 #include <random>
 #include "Collision.h"
 #include "Gamelogic\Stats.h"
 
 #include <memory>
+enum ShaderIndexName { SHADER_PLAYER, SHADER_BULLET, SHADER_ENEMY, SHADER_MENU, SHADER_PARTICLE };
 
 class EntityManager
 {
@@ -49,7 +51,8 @@ public:
 	//Variables
 private:
 	//Vectors with all the different types of entities
-	ModelHandler* m_modelHandlers[10];
+	ShaderHandler* m_shaderLoad[5];
+	ModelHandler* m_modelHandlers[11];
 	LightHandler m_light;
 	std::vector<Entity*> m_bullet1;
 	std::vector<Entity*> m_bullet2;

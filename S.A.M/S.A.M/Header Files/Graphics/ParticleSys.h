@@ -22,14 +22,9 @@ public:
 	PartSys();
 	~PartSys();
 	bool CreateBuffer(ID3D11Device* device, ID3D11DeviceContext* deviceContext, wstring texName);
-	bool CreateShaders(ID3D11Device* device);
 	bool PartRend(ID3D11DeviceContext*);
 	void updatePart(ID3D11DeviceContext* deviceContext, float time, float partSpeed);
 private:
-	ID3D11InputLayout* m_vertexLayout = nullptr;
-	ID3D11VertexShader* m_vertexShader = nullptr;
-	ID3D11GeometryShader* m_geometryShader = nullptr;
-	ID3D11PixelShader* m_pixelShader = nullptr;
 	ID3D11ShaderResourceView* m_partTex = nullptr;
 	int m_amountOfPart;
 	XMFLOAT4* m_partPos;

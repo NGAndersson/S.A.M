@@ -35,7 +35,7 @@ public:
 private:
 	XMVECTOR m_cameraPos, m_lookAtVec;
 	XMMATRIX m_view, m_projection, m_viewProjection;
-	ID3D11Buffer* m_constCameraBuffer;
+	ID3D11Buffer* m_constCameraBuffer = nullptr;
 	CameraType* m_constCamera;
 	
 };

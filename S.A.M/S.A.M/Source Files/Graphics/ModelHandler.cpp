@@ -7,7 +7,15 @@ ModelHandler::ModelHandler()
 
 ModelHandler::~ModelHandler()
 {
-	
+	delete[] m_vertices;
+	delete[] m_normals;
+	delete[] m_texcoords;
+	delete[] m_RGBDeffuse;
+	delete[] m_RGBAL;
+	delete[] m_Tf;
+	delete[] m_Ni;
+	delete[] m_faces;
+	delete[] m_vertexInput;
 	if (m_vertexBuffer)
 	{
 		m_vertexBuffer->Release();
@@ -20,17 +28,6 @@ ModelHandler::~ModelHandler()
 	{
 		m_ObjTex->Release();
 	}
-
-	delete[] m_vertices;
-	delete[] m_normals;
-	delete[] m_texcoords;
-	delete[] m_RGBDeffuse;
-	delete[] m_RGBAL;
-	delete[] m_Tf;
-	delete[] m_Ni;
-	delete[] m_faces;
-	delete[] m_vertexInput;
-
 }
 
 bool ModelHandler::LoadOBJData(string OBJFileName, string colourFileName, ID3D11Device* device, ID3D11DeviceContext* deviceContext)
@@ -113,42 +110,6 @@ bool ModelHandler::CreateBuffers(ID3D11Device* device)
 	return true;
 }
 
-bool ModelHandler::CreateShaders(ID3D11Device* device, string vertexFile, string geometryFile, string pixelFile)
-{
-	bool _ifOK;
-
-	_ifOK = m_shaderLoad.CreateShaders(device, vertexFile, geometryFile, pixelFile);
-	if (_ifOK == false)
-	{
-		return false;
-	}
-	return true;
-}
-
-bool ModelHandler::CreateShadersCompute(ID3D11Device* device, string vertexFile, string geometryFile, string pixelFile, string computeFile)
-{
-	bool _ifOK;
-
-	_ifOK = m_shaderLoad.CreateShadersCompute(device, vertexFile, geometryFile, pixelFile, computeFile);
-	if (_ifOK == false)
-	{
-		return false;
-	}
-	return true;
-}
-
-bool ModelHandler::SetShaders(ID3D11DeviceContext* deviceContext)
-{
-	bool _ifOK;
-
-	_ifOK = m_shaderLoad.SetShaders(deviceContext);
-	if (_ifOK == false)
-	{
-		return false;
-	}
-	return true;
-}
-
 bool ModelHandler::SetBuffers(ID3D11DeviceContext* deviceContext)
 {
 	D3D11_MAPPED_SUBRESOURCE _mappedResource;
@@ -187,7 +148,7 @@ void ModelHandler::beatBoost(bool beat, float time, float timeSinceLast, float B
 		else
 		{
 			m_beatBoost = 2;
-			m_beatTime = BPM / 60;
+			m_beatTime = 60 / BPM;
 		}
 	}
 	else if (beat == false)
