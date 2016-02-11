@@ -148,7 +148,7 @@ void ModelHandler::beatBoost(bool beat, float time, float timeSinceLast, float B
 		else
 		{
 			m_beatBoost = 2;
-			m_beatTime = BPM / 60;
+			m_beatTime = 60 / BPM;
 		}
 	}
 	else if (beat == false)

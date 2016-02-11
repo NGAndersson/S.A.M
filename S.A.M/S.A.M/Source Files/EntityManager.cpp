@@ -232,6 +232,7 @@ void EntityManager::Update(double time)
 				m_modelHandlers[BULLET1]->beatBoost(true, time, -1, m_currentBPM);
 				m_modelHandlers[BULLET3]->beatBoost(true, time, -1, m_currentBPM);
 				m_modelHandlers[BULLET4]->beatBoost(true, time, -1, m_currentBPM);
+				m_modelHandlers[BULLET5]->beatBoost(true, time, -1, m_currentBPM);
 				m_modelHandlers[BULLET6]->beatBoost(true, time, -1, m_currentBPM);
 			}
 			else
@@ -243,6 +244,7 @@ void EntityManager::Update(double time)
 			m_modelHandlers[BULLET1]->beatBoost(false, time, -1, m_currentBPM);
 			m_modelHandlers[BULLET3]->beatBoost(false, time, -1, m_currentBPM);
 			m_modelHandlers[BULLET4]->beatBoost(false, time, -1, m_currentBPM);
+			m_modelHandlers[BULLET5]->beatBoost(false, time, -1, m_currentBPM);
 			m_modelHandlers[BULLET6]->beatBoost(false, time, -1, m_currentBPM);
 	}
 	}
@@ -259,6 +261,7 @@ void EntityManager::Update(double time)
 				m_modelHandlers[BULLET1]->beatBoost(true, time, m_timeSinceLastBeat, 0);
 				m_modelHandlers[BULLET3]->beatBoost(true, time, m_timeSinceLastBeat, 0);
 				m_modelHandlers[BULLET4]->beatBoost(true, time, m_timeSinceLastBeat, 0);
+				m_modelHandlers[BULLET5]->beatBoost(true, time, m_timeSinceLastBeat, 0);
 				m_modelHandlers[BULLET6]->beatBoost(true, time, m_timeSinceLastBeat, 0);
 				m_timeSinceLastBeat = 0;
 				EnemyFire();
@@ -275,6 +278,7 @@ void EntityManager::Update(double time)
 			m_modelHandlers[BULLET1]->beatBoost(false, time, m_timeSinceLastBeat, 0);
 			m_modelHandlers[BULLET3]->beatBoost(false, time, m_timeSinceLastBeat, 0);
 			m_modelHandlers[BULLET4]->beatBoost(false, time, m_timeSinceLastBeat, 0);
+			m_modelHandlers[BULLET5]->beatBoost(false, time, m_timeSinceLastBeat, 0);
 			m_modelHandlers[BULLET6]->beatBoost(false, time, m_timeSinceLastBeat, 0);
 		}
 	}
