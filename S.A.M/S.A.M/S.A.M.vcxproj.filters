@@ -120,6 +120,24 @@
     <ClCompile Include="Source Files\Graphics\Light.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source Files\Screens\UI.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\Screens\Screen.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\Screens\Menu\PauseMenu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\Screens\Menu\StartMenu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\Screens\Menu\OptionsMenu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\Screens\Menu\HighscoreMenu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header Files\SoundManager.h">
@@ -245,9 +263,31 @@
     <ClInclude Include="Header Files\Graphics\Light.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Header Files\Screens\Screen.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\Screens\UI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\Screens\Menu\StartMenu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\Screens\Menu\PauseMenu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\Screens\Menu\OptionsMenu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\Screens\Menu\HighscoreMenu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\Screens\Menu\Menu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="fmodex.dll" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="Resources\wave.mp3" />

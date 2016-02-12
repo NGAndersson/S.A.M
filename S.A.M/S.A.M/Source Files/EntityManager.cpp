@@ -184,7 +184,7 @@ void EntityManager::Initialize(SoundManager* soundManager, Input* input, ID3D11D
 	wstring _texName = L"Resources\\Models\\star3.jpg";
 	m_partSys.CreateBuffer(m_device, m_deviceContext, _texName);
 
-	m_soundManager->PlayMusic(0);//TEMPORARY MUTE return to 0.5f when you want sound!
+	m_soundManager->PlayMusic(0.5f);//TEMPORARY MUTE return to 0.5f when you want sound!
 	ChangeSongData(m_beatDetector->GetTempo());
 	m_doBeatDet = true;
 	m_beat = m_beatDetector->GetBeat();
