@@ -2,18 +2,14 @@
 
 LightHandler::LightHandler()
 {
-	m_nummberOfLights = 5;
+	m_nummberOfLights = 1;
 	Light* _tempLight = nullptr;
 	m_light = new Light[5];
 
 	m_light[0] = Light(XMFLOAT4(0, -10, 0, 0), XMFLOAT4(0.4, 0.4, 0.4, 0), XMFLOAT4(5000, float(m_nummberOfLights), 1, 0));
-	m_light[1] = Light(XMFLOAT4(50, 0, 0, 0), XMFLOAT4(0.2, 0.2, 0.2, 0), XMFLOAT4(5000, float(m_nummberOfLights), 1, 0));
-	m_light[2] = Light(XMFLOAT4(0, 0, 50, 0), XMFLOAT4(0.2, 0.2, 0.2, 0), XMFLOAT4(5000, float(m_nummberOfLights), 1, 0));
-	m_light[3] = Light(XMFLOAT4(0, 0, -50, 0), XMFLOAT4(0.2, 0.2, 0.2, 0), XMFLOAT4(5000, float(m_nummberOfLights), 1, 0));
-	m_light[4] = Light(XMFLOAT4(-50, 0, 0, 0), XMFLOAT4(0.2, 0.2, 0.2, 0), XMFLOAT4(5000, float(m_nummberOfLights), 1, 0));
 
 	m_allLights = new Light[200];
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < m_nummberOfLights; i++)
 	{
 		m_allLights[i].SetPos(m_light[i].GetPos());
 		m_allLights[i].SetColor(m_light[i].GetColor());
