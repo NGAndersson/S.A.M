@@ -264,5 +264,8 @@
     <FxCompile Include="Shaders\EnemiesVS.hlsl" />
     <FxCompile Include="Shaders\EnemiesPS.hlsl" />
     <FxCompile Include="Shaders\EnemiesGS.hlsl" />
+    <FxCompile Include="Shaders\InstancePartVs.hlsl" />
+    <FxCompile Include="Shaders\InstancePartGS.hlsl" />
+    <FxCompile Include="Shaders\InstancePartPS.hlsl" />
   </ItemGroup>
 </Project>
