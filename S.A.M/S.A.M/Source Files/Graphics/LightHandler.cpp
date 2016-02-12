@@ -4,9 +4,9 @@ LightHandler::LightHandler()
 {
 	m_nummberOfLights = 1;
 	Light* _tempLight = nullptr;
-	m_light = new Light[5];
+	m_light = new Light[m_nummberOfLights];
 
-	m_light[0] = Light(XMFLOAT4(0, -10, 0, 0), XMFLOAT4(0.4, 0.4, 0.4, 0), XMFLOAT4(5000, float(m_nummberOfLights), 1, 0));
+	m_light[0] = Light(XMFLOAT4(0, -100, 0, 0), XMFLOAT4(0.2, 0.2, 0.2, 0), XMFLOAT4(5000, float(m_nummberOfLights), 1, 0));
 
 	m_allLights = new Light[200];
 	for (int i = 0; i < m_nummberOfLights; i++)
@@ -60,7 +60,7 @@ void LightHandler::SetConstbuffer(ID3D11DeviceContext* deviceContext)
 
 	deviceContext->PSSetConstantBuffers(1, 1, &m_lightBuffer);
 
-	m_nummberOfLights = 5;
+	m_nummberOfLights = 1;
 }
 
 void LightHandler::addLights(std::vector<Entity*> bullet)
