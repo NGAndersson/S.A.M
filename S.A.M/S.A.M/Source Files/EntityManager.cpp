@@ -438,7 +438,7 @@ void EntityManager::InitMusic(std::string filename)
 
 void EntityManager::BeatWasDetected()
 {
-	static int _enemySpawRate;
+	static int _enemySpawnRate;
 	//Spawn correct bullet (which plays the sound as well) Only if player is alive
 	if (!m_player->GetDelete())
 	{
@@ -468,13 +468,13 @@ void EntityManager::BeatWasDetected()
 
 	//use time and check that after 30 sec or so increse the level count by some.. int
 	
-	if (_enemySpawRate == m_beatDetector->GetTempo()/30)
+	if (_enemySpawnRate == m_beatDetector->GetTempo()/30)
 	{
 		SpawnEntity(ENEMY1);
-		_enemySpawRate = 0;
+		_enemySpawnRate = 0;
 	}
 	else
-		_enemySpawRate++;
+		_enemySpawnRate++;
 	
 }
 
