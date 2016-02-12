@@ -33,8 +33,12 @@ int Collision::CheckCollisionEntity(vector<Entity*>* Entity_1, vector<Entity*>* 
 						(*Entity_1)[i]->AddHealth(-1);
 						if ((*Entity_1)[i]->GetHealth() <= 0)
 							Entity_1 = RemoveEntity(i, Entity_1);
+
+						(*Entity_2)[j]->AddHealth(-1000);		//Normal bullets do 100 damage
 					}
-					(*Entity_2)[j]->AddHealth(-2);
+					else
+						(*Entity_2)[j]->AddHealth(-4);			//Laser does 1 damage (per-frame)
+
 					if ((*Entity_2)[j]->GetHealth() <= 0 && EntityType2 != PLAYER)
 					{
 						_returnScore += (*Entity_2)[j]->GetScore();
