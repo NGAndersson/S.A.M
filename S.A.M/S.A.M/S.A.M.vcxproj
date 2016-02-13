@@ -90,7 +90,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <AdditionalDependencies>fmodex_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -170,13 +170,11 @@
     <ClCompile Include="Source Files\Graphics\ModelHandler.cpp" />
     <ClCompile Include="Source Files\Graphics\OBJloader.cpp" />
     <ClCompile Include="Source Files\Graphics\ParticleSys.cpp" />
-    <ClCompile Include="Source Files\Graphics\pch.cpp" />
     <ClCompile Include="Source Files\Entities\Player.cpp" />
     <ClCompile Include="Source Files\Graphics\Renderer.cpp" />
     <ClCompile Include="Source Files\ScreenManager.cpp" />
     <ClCompile Include="Source Files\Graphics\ShaderHandler.cpp" />
     <ClCompile Include="Source Files\Gamelogic\Timer.cpp" />
-    <ClCompile Include="Source Files\Graphics\WICTextureLoader.cpp" />
     <ClCompile Include="Source Files\Screens\Menu\HighscoreMenu.cpp" />
     <ClCompile Include="Source Files\Screens\Menu\OptionsMenu.cpp" />
     <ClCompile Include="Source Files\Screens\Menu\PauseMenu.cpp" />
@@ -192,7 +190,6 @@
     <ClInclude Include="Header Files\Gamelogic\Spline.h" />
     <ClInclude Include="Header Files\Gamelogic\Stats.h" />
     <ClInclude Include="Header Files\Graphics\Camera.h" />
-    <ClInclude Include="Header Files\DirectXHelpers.h" />
     <ClInclude Include="Header Files\Graphics\DeferredBuffer.h" />
     <ClInclude Include="Header Files\Graphics\DeferredRender.h" />
     <ClInclude Include="Header Files\Graphics\Display.h" />
@@ -217,7 +214,6 @@
     <ClInclude Include="Header Files\Graphics\ModelHandler.h" />
     <ClInclude Include="Header Files\Graphics\OBJloader.h" />
     <ClInclude Include="Header Files\Graphics\ParticleSys.h" />
-    <ClInclude Include="Header Files\Graphics\pch.h" />
     <ClInclude Include="Header Files\Screens\Menu\HighscoreMenu.h" />
     <ClInclude Include="Header Files\Screens\Menu\Menu.h" />
     <ClInclude Include="Header Files\Screens\Menu\OptionsMenu.h" />
@@ -232,7 +228,6 @@
     <ClInclude Include="Header Files\Graphics\ShaderHandler.h" />
     <ClInclude Include="Header Files\SoundManager.h" />
     <ClInclude Include="Header Files\Gamelogic\Timer.h" />
-    <ClInclude Include="Header Files\Graphics\WICTextureLoader.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="fmodex.dll" />

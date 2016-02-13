@@ -13,7 +13,6 @@
 
 #include <d3d11.h>	//temp
 #include <dxgidebug.h>
-#include <memory>
 #include "Screens\Screen.h"
 
 #define WIDTH 720

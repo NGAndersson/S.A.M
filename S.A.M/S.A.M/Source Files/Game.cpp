@@ -104,20 +104,24 @@ WPARAM Game::MainLoop()
 		if (m_winMSG.message == WM_QUIT)
 			return m_winMSG.wParam;
 
-		m_screen.Render();
+	
 		//Update FMOD
-	//	m_soundManager->Update();
+		m_soundManager->Update();
 
 		//Get Time
 		float time = _time.TimeCheck();
 
-	//	CheckInput();
+		CheckInput();
 
 		//Call update functions
-		//Update(time);
+		Update(time);
 
 		//Call Render Functions
-		//Render();
+		Render();
+
+		m_screen.Render();
+
+		m_swapChain->Present(0, 0);
 	}
 
 }
@@ -154,8 +158,6 @@ void Game::Render()
 		m_deferredBuffer.SetShaderResource(m_deviceContext);
 		m_deferredRender.Render(m_deviceContext);
 	}
-
-	m_swapChain->Present(0, 0);
 }
 
 void Game::CheckInput()
