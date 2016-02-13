@@ -86,6 +86,11 @@ WPARAM Game::MainLoop()
 	Timer _time;
 	_time.StartTime();
 	_time.TimeCheck();
+	
+	//test = new StartMenu;
+
+//	test->Initialize(m_device,m_deviceContext);
+
 	while (TRUE) {
 		// Check to see if any messages are waiting in the queue
 		while (PeekMessage(&m_winMSG, NULL, 0, 0, PM_REMOVE))
@@ -101,19 +106,20 @@ WPARAM Game::MainLoop()
 		if (m_winMSG.message == WM_QUIT)
 			return m_winMSG.wParam;
 
+
 		//Update FMOD
-		m_soundManager->Update();
+	//	m_soundManager->Update();
 
 		//Get Time
 		float time = _time.TimeCheck();
 
-		CheckInput();
+	//	CheckInput();
 
 		//Call update functions
-		Update(time);
+		//Update(time);
 
 		//Call Render Functions
-		Render();
+		//Render();
 	}
 
 }
