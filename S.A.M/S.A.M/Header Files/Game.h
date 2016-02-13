@@ -14,6 +14,7 @@
 #include <d3d11.h>	//temp
 #include <dxgidebug.h>
 #include <memory>
+#include "Screens\Screen.h"
 
 #define WIDTH 720
 #define HEIGHT 980
@@ -35,6 +36,7 @@ public:
 	WPARAM MainLoop();
 
 private:
+	Screen m_screen;
 	SoundManager* m_soundManager;
 	ScreenManager* m_screenManager;
 	EntityManager* m_entityManager;

@@ -79,6 +79,7 @@ void Game::InitGame(Input* input, Display* disp)
 	m_deferredRender.InitializeShader(m_device);
 	m_deferredRender.InitializeBufferString(m_device);
 	
+
 }
 
 WPARAM Game::MainLoop()
@@ -86,10 +87,7 @@ WPARAM Game::MainLoop()
 	Timer _time;
 	_time.StartTime();
 	_time.TimeCheck();
-	
-	//test = new StartMenu;
-
-//	test->Initialize(m_device,m_deviceContext);
+	m_screen.Initialize(m_device, m_deviceContext);
 
 	while (TRUE) {
 		// Check to see if any messages are waiting in the queue
@@ -106,7 +104,7 @@ WPARAM Game::MainLoop()
 		if (m_winMSG.message == WM_QUIT)
 			return m_winMSG.wParam;
 
-
+		m_screen.Render();
 		//Update FMOD
 	//	m_soundManager->Update();
 
