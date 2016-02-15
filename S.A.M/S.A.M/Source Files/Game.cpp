@@ -126,11 +126,8 @@ void Game::Update(double time)
 	
 	//if(m_screenManager->GetCurrentScreen() == USERINTERFACE)
 	// Update Entity Manager
-<<<<<<< HEAD
-=======
 
 	//Do life-checks here with m_statManager->GetLives();
->>>>>>> refs/remotes/origin/master
 }
 
 void Game::Render()
@@ -149,13 +146,11 @@ void Game::Render()
 		m_deferredBuffer.ClearRenderTargets(m_deviceContext);
 		m_deferredBuffer.SetRenderTargets(m_deviceContext);
 		m_entityManager->Render();
-<<<<<<< HEAD
-=======
+
 		m_deviceContext->OMSetRenderTargets(1, &m_backbufferRTV, m_depthStencilView);
 		m_deferredBuffer.SetShaderResource(m_deviceContext);
 		m_deferredRender.Render(m_deviceContext);
 	}
->>>>>>> refs/remotes/origin/master
 
 	m_swapChain->Present(0, 0);
 }
