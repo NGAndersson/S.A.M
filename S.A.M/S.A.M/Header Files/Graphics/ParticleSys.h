@@ -22,8 +22,8 @@ class PartSys
 public:
 	PartSys();
 	~PartSys();
-	bool CreateBuffer(ID3D11Device* device, ID3D11DeviceContext* deviceContext, wstring texName);
-	bool CreateRocketBuffer(ID3D11Device* device, ID3D11DeviceContext* deviceContext, wstring texName);
+	bool CreateBuffer(ID3D11Device* device, ID3D11DeviceContext* deviceContext, const wstring &texName);
+	bool CreateRocketBuffer(ID3D11Device* device, ID3D11DeviceContext* deviceContext, const wstring &texName);
 	bool PartRend(ID3D11DeviceContext*);
 	bool InstancePartRend(ID3D11DeviceContext* deviceContext);
 	void BackGroundUpdatePart(ID3D11DeviceContext* deviceContext, float time, float partSpeed);
@@ -31,7 +31,7 @@ public:
 	void RocketPartSys(float offset, float lifeLenght);
 	void UpdateRocketPartSys(ID3D11DeviceContext* deviceContext, float time, float partSpeed);
 	void SetRocketBuffer(ID3D11DeviceContext* deviceContext);
-	void AddRocketPartSys(std::vector<Entity*> entity, XMFLOAT4 addPos);
+	void AddRocketPartSys(std::vector<Entity*> entity, const XMFLOAT4 &addPos);
 private:
 	ID3D11ShaderResourceView* m_partTex = nullptr;
 	int m_amountOfPart, m_nrOfPositions = 0;

@@ -16,7 +16,16 @@ class Entity
 {
 	//----------------------------Functions----------------------------------------
 public:
-	Entity() {}
+	Entity() 
+	{
+		m_mapWidth = 0;
+		m_mapLength = 0;
+		m_entityWidth = 0;
+		m_fireTime = 0;
+		m_health = 0;
+		m_score = 0;
+		m_speed = 0;
+	}
 	virtual ~Entity() {}
 	Entity(SoundManager* SoundManager, int MapWidth, int MapLength, XMFLOAT3 Position, XMFLOAT3 Scale, int Health)
 	{
@@ -26,6 +35,9 @@ public:
 		m_position = Position;
 		m_scale = Scale;
 		m_entityWidth = 5.0f;
+
+		m_fireTime = 0;
+		m_speed = 0;
 
 		m_score = 0;
 		m_health = Health;
@@ -75,7 +87,7 @@ protected:
 	//Modelhandler
 
 	//SoundManager
-	 SoundManager* m_soundManager;
+	 SoundManager* m_soundManager = nullptr;
 	 //Position // Rotation
 	 XMFLOAT3 m_position;
 	 XMMATRIX m_rotation;

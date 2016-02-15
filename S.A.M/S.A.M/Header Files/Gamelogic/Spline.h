@@ -18,7 +18,7 @@ public:
 	XMFLOAT3 GetPathPosition(float t);
 	int GetCurrPathNode() { return m_pathStartPoint; }
 	void SetCurrPathNode(int PathNode) { m_pathStartPoint = PathNode; }
-	void SetPathPos(vector<XMFLOAT3> newPath) { m_pathPositions = newPath; }
+	void SetPathPos(const vector<XMFLOAT3> &newPath) { m_pathPositions = newPath; }
 private:
 	vector<XMFLOAT3> m_pathPositions;
 	int m_pathStartPoint = 0;

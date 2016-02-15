@@ -2,7 +2,11 @@
 
 PartSys::PartSys()
 {
-	
+	m_amountOfPart = 0;
+	m_partPos = &XMFLOAT4(0, 0, 0, 0);
+	m_timeToLive = 0;
+	m_partLifeLenght = 0;
+	m_partOffset = 0;
 }
 
 PartSys::~PartSys()
@@ -54,7 +58,7 @@ void PartSys::BackGroundUpdatePart(ID3D11DeviceContext* deviceContext, float tim
 
 }
 
-bool PartSys::CreateBuffer(ID3D11Device* device, ID3D11DeviceContext* deviceContext, wstring texName)
+bool PartSys::CreateBuffer(ID3D11Device* device, ID3D11DeviceContext* deviceContext, const wstring &texName)
 {
 	D3D11_BUFFER_DESC _OBJvertexBufferDesc;
 
@@ -76,7 +80,7 @@ bool PartSys::CreateBuffer(ID3D11Device* device, ID3D11DeviceContext* deviceCont
 	return true;
 }
 
-bool PartSys::CreateRocketBuffer(ID3D11Device* device, ID3D11DeviceContext* deviceContext, wstring texName)
+bool PartSys::CreateRocketBuffer(ID3D11Device* device, ID3D11DeviceContext* deviceContext, const wstring &texName)
 {
 	D3D11_BUFFER_DESC _OBJvertexBufferDesc;
 
@@ -194,7 +198,7 @@ void PartSys::UpdateRocketPartSys(ID3D11DeviceContext* deviceContext, float time
 	deviceContext->Unmap(m_vertexBuffer, 0);
 }
 
-void PartSys::AddRocketPartSys(std::vector<Entity*> entity, XMFLOAT4 addPos)
+void PartSys::AddRocketPartSys(std::vector<Entity*> entity, const XMFLOAT4 &addPos)
 {
 	int _size = entity.size() + m_nrOfPositions;
 	int _offset = m_nrOfPositions;

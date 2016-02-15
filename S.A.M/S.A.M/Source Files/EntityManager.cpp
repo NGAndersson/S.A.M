@@ -59,7 +59,7 @@ EntityManager::~EntityManager()
 void EntityManager::SpawnEntity(HandlerIndex type)
 {
 	float _tempX = rand() % MAPWIDTH;
-
+	XMFLOAT3 _playerPos;
 	switch (type) {
 	case(PLAYER) :
 		m_player = new Player(m_soundManager, MAPWIDTH,MAPLENGTH,XMFLOAT3(MAPWIDTH / 2, 0.0f, MAPLENGTH / 2), XMFLOAT3(0.5f, 0.5f, 0.5f), 1, m_input);
@@ -84,32 +84,37 @@ void EntityManager::SpawnEntity(HandlerIndex type)
 	//	m_enemy4.push_back(tempEntity);
 	//	break;
 	case(BULLET1) :
+		_playerPos = m_player->GetPosition();
 		//tempEntity = new Bullet_p1(m_soundManager, MAPWIDTH, MAPLENGTH, m_player->GetPosition(), XMFLOAT3(1, 1, 1));
-		m_bullet1.push_back(new Bullet_p1(m_soundManager, MAPWIDTH, MAPLENGTH, m_player->GetPosition(), XMFLOAT3(1, 1, 1), 1, m_modelHandlers[BULLET1]->GetDeffuse()));
+		m_bullet1.push_back(new Bullet_p1(m_soundManager, MAPWIDTH, MAPLENGTH, _playerPos, XMFLOAT3(1, 1, 1), 1, m_modelHandlers[BULLET1]->GetDeffuse()));
 //		m_soundManager->PlayOneShotSound("DefaultBullet", 0.5f);
 		break;
 	case(BULLET2) :
+		_playerPos = m_player->GetPosition();
 		//tempEntity = new Bullet_p2(m_soundManager, MAPWIDTH, MAPLENGTH, m_player->GetPosition(), XMFLOAT3(1, 1, 1));
-		m_bullet2.push_back(new Bullet_p2(m_soundManager, MAPWIDTH, MAPLENGTH, m_player->GetPosition(), XMFLOAT3(1, 1, 1),1));
+		m_bullet2.push_back(new Bullet_p2(m_soundManager, MAPWIDTH, MAPLENGTH, _playerPos, XMFLOAT3(1, 1, 1),1));
 //		m_soundManager->PlayOneShotSound("Bullet_Q", 0.5f);
 		break;
 	case(BULLET3) :
+		_playerPos = m_player->GetPosition();
 		//tempEntity = new Bullet_p3(m_soundManager, MAPWIDTH, MAPLENGTH, m_player->GetPosition(), XMFLOAT3(1, 1, 1));
-		m_bullet3.push_back(new Bullet_p3(m_soundManager, MAPWIDTH, MAPLENGTH, m_player->GetPosition(), XMFLOAT3(1, 1, 1),1 , m_modelHandlers[BULLET3]->GetDeffuse()));
+		m_bullet3.push_back(new Bullet_p3(m_soundManager, MAPWIDTH, MAPLENGTH, _playerPos, XMFLOAT3(1, 1, 1),1 , m_modelHandlers[BULLET3]->GetDeffuse()));
 //		m_soundManager->PlayOneShotSound("Bullet_W", 0.5f);
 		break;
 	case(BULLET4) :
+		_playerPos = m_player->GetPosition();
 		//tempEntity = new Bullet_p4(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x - 1, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(0.5, 0.5, 0.5));
-		m_bullet4.push_back(new Bullet_p4(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x - 1, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(0.5, 0.5, 0.5), 1, m_modelHandlers[BULLET4]->GetDeffuse(), 0));
+		m_bullet4.push_back(new Bullet_p4(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(_playerPos.x - 1, _playerPos.y, _playerPos.z), XMFLOAT3(0.5, 0.5, 0.5), 1, m_modelHandlers[BULLET4]->GetDeffuse(), 0));
 		//tempEntity = new Bullet_p4(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(0.5, 0.5, 0.5));
-		m_bullet4.push_back(new Bullet_p4(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(0.5, 0.5, 0.5), 1, m_modelHandlers[BULLET4]->GetDeffuse(), 1));
+		m_bullet4.push_back(new Bullet_p4(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(_playerPos.x, _playerPos.y, _playerPos.z), XMFLOAT3(0.5, 0.5, 0.5), 1, m_modelHandlers[BULLET4]->GetDeffuse(), 1));
 		//tempEntity = new Bullet_p4(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x + 1, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(0.5, 0.5, 0.5));
-		m_bullet4.push_back(new Bullet_p4(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x + 1, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(0.5, 0.5, 0.5), 1, m_modelHandlers[BULLET4]->GetDeffuse(), 2));
+		m_bullet4.push_back(new Bullet_p4(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(_playerPos.x + 1, _playerPos.y, _playerPos.z), XMFLOAT3(0.5, 0.5, 0.5), 1, m_modelHandlers[BULLET4]->GetDeffuse(), 2));
 //		m_soundManager->PlayOneShotSound("Bullet_E", 0.5f);
 		break;
 	case(BULLET5) :
+		_playerPos = m_player->GetPosition();
 		//tempEntity = new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z + 60), XMFLOAT3(1, 1, 20));
-		m_bullet5.push_back(new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z + 60), XMFLOAT3(1, 1, 20),1));
+		m_bullet5.push_back(new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(_playerPos.x, _playerPos.y, _playerPos.z + 60), XMFLOAT3(1, 1, 20),1));
 //		m_soundManager->PlayOneShotSound("Laser_R", 0.5f);
 		break;
 	}
@@ -236,9 +241,9 @@ void EntityManager::Update(double time)
 	if (m_doBeatDet == false) 
 	{
 		m_timeSinceLastBeat += time * 1000;
-		if (m_timeSinceLastBeat >= 60000 / m_currentBPM) 
+		if (m_timeSinceLastBeat >= double(60000 / m_currentBPM)) 
 		{
-			m_timeSinceLastBeat -= 60000 / m_currentBPM;
+			m_timeSinceLastBeat -= double(60000 / m_currentBPM);
 
 			//BEAT WAS DETECTED
 			if (m_offsetCount > m_offset)
@@ -419,7 +424,7 @@ void EntityManager::ChangeSongData(int bpm)
 	m_currentBPM = bpm;
 }
 
-void EntityManager::InitMusic(std::string filename)
+void EntityManager::InitMusic(const std::string &filename)
 {
 	vector<vector<XMFLOAT3>> _movPatterns;
 
@@ -560,7 +565,7 @@ void EntityManager::BeatWasDetected()
 	
 }
 
-vector<Entity*> EntityManager::CheckOutOfBounds(std::vector<Entity*> entity)
+vector<Entity*> EntityManager::CheckOutOfBounds(const std::vector<Entity*> &entity)
 {
 	//Out of bounds check, remove immediately
 	//bool removed = false;
@@ -731,11 +736,12 @@ void EntityManager::RenderBullets()
 
 }
 
-vector<Entity*> EntityManager::CheckIfAlive(std::vector<Entity*> bullet)
+vector<Entity*> EntityManager::CheckIfAlive(const std::vector<Entity*> &bullet)
 {
 	//If Alive check, remove immediately
 	bool removed = false;
 	vector<Entity*> _tempVec = bullet;			//Can't use the member variable for some reason
+	XMFLOAT3 _playerPos = m_player->GetPosition();
 	for (int i = 0; i < _tempVec.size() && removed == false; i++) 
 	{
 		bool _temp = _tempVec[i]->GetDelete();
@@ -747,7 +753,7 @@ vector<Entity*> EntityManager::CheckIfAlive(std::vector<Entity*> bullet)
 		}
 		else
 		{
-			_tempVec[i]->SetPosition(XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z + 60));
+			_tempVec[i]->SetPosition(XMFLOAT3(_playerPos.x, _playerPos.y, _playerPos.z + 60));
 		}
 	}
 	return _tempVec;

@@ -84,7 +84,7 @@ void Player::Update(double time)
 
 void Player::Destroyed(double time)
 {
-	if (m_destructionTimer == 0)
+	if (m_destructionTimer <= 0)
 	{
 		//Play sound when destroyed..
 		//m_soundManager->PlayOneShotSound("PlayerDeathSound", 0.5f);
