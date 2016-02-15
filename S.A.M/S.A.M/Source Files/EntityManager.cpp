@@ -66,7 +66,7 @@ void EntityManager::SpawnEntity(HandlerIndex type)
 		break;
 	case(ENEMY1) :
 		//temptest = new Enemy_1(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(_tempX, 0.0f, 70.0f),XMFLOAT3(0.5f,0.5f,0.5f));
-		m_enemy1.push_back(new Enemy_1(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(_tempX, 0.0f, 110), XMFLOAT3(0.5f, 0.5f, 0.5f),1000,MOVEMENT_2));
+		m_enemy1.push_back(new Enemy_1(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(_tempX, 0.0f, 110), XMFLOAT3(0.5f, 0.5f, 0.5f),1000,m_enemy1MovPatterns[0].second));
 		break;
 	//case(ENEMY2) :
 	//	Enemy2* tempEntity = new Enemy2;
@@ -124,7 +124,8 @@ void EntityManager::Initialize(SoundManager* soundManager, Input* input, ID3D11D
 	m_statsManager = statsManager;
 	m_statsManager->SetLives();
 
-	InitMusic("Resources/PixieTrust.txt");
+	//Which song to load/play
+	InitMusic("Resources/Ignition.txt");
 
 	m_beatDetector = new BeatDetector(m_soundManager);
 	m_beatDetector->AudioProcess();
@@ -184,7 +185,7 @@ void EntityManager::Initialize(SoundManager* soundManager, Input* input, ID3D11D
 	wstring _texName = L"Resources\\Models\\star3.jpg";
 	m_partSys.CreateBuffer(m_device, m_deviceContext, _texName);
 
-	m_soundManager->PlayMusic(0);//TEMPORARY MUTE return to 0.5f when you want sound!
+	m_soundManager->PlayMusic(0.5f);//TEMPORARY MUTE return to 0.5f when you want sound!
 	ChangeSongData(m_beatDetector->GetTempo());
 	m_doBeatDet = true;
 	m_beat = m_beatDetector->GetBeat();
@@ -402,8 +403,11 @@ void EntityManager::ChangeSongData(int bpm)
 
 void EntityManager::InitMusic(std::string filename)
 {
+	vector<vector<XMFLOAT3>> _movPatterns;
+
 	ifstream _file;
 	_file.open(filename);
+
 	char _key[100];
 	char _value[100];
 	std::string _tempLine;
@@ -412,28 +416,88 @@ void EntityManager::InitMusic(std::string filename)
 
 		std::istringstream _ss(_tempLine);
 
-		_ss.get(_key, 1000, '=');		//Get field name
+		_ss.get(_key, 100, '=');		//Get field name
 		_ss.ignore();
-		_ss.get(_value, 1000, '=');		//Get value
-		
-		if (std::string(_key) == "music")
-			m_soundManager->LoadMusic(_value);		//Load music
-		else if (std::string(_key) == "offset")
-			m_offset = atoi(_value);				//Load beginning offset
-		else if (std::string(_key) == "bulletD")
-			m_soundManager->LoadSound(_value, _value, "DefaultBullet", LOAD_MEMORY);
-		else if (std::string(_key) == "bulletQ")
-			m_soundManager->LoadSound(_value, _value, "Bullet_Q", LOAD_MEMORY);
-		else if (std::string(_key) == "bulletW")
-			m_soundManager->LoadSound(_value, _value, "Bullet_W", LOAD_MEMORY);
-		else if (std::string(_key) == "bulletE")
-			m_soundManager->LoadSound(_value, _value, "Bullet_E", LOAD_MEMORY);
-		else if (std::string(_key) == "bulletR")
-			m_soundManager->LoadSound(_value, _value, "Laser_R", LOAD_MEMORY);
-		else if (std::string(_key) == "score")
-			m_statsManager->LoadScore(_value);
-	}
+		if (_key[0] != '#') {
+			_ss.get(_value, 100, '=');		//Get value
+						//Skip comment lines
+			if (std::string(_key) == "music")
+				m_soundManager->LoadMusic(_value);		//Load music
 
+			else if (std::string(_key) == "offset")
+				m_offset = atoi(_value);				//Load beginning offset
+
+			else if (std::string(_key) == "bulletD")
+				m_soundManager->LoadSound(_value, _value, "DefaultBullet", LOAD_MEMORY);
+			else if (std::string(_key) == "bulletQ")
+				m_soundManager->LoadSound(_value, _value, "Bullet_Q", LOAD_MEMORY);
+			else if (std::string(_key) == "bulletW")
+				m_soundManager->LoadSound(_value, _value, "Bullet_W", LOAD_MEMORY);
+			else if (std::string(_key) == "bulletE")
+				m_soundManager->LoadSound(_value, _value, "Bullet_E", LOAD_MEMORY);
+			else if (std::string(_key) == "bulletR")
+				m_soundManager->LoadSound(_value, _value, "Laser_R", LOAD_MEMORY);
+
+			else if (std::string(_key) == "score")
+				m_statsManager->LoadScore(_value);
+
+			else if (std::string(_key) == "mov")	//Mov patterns
+			{
+				vector<XMFLOAT3> _pattern;
+				_ss = istringstream(_value);
+				string _floatVec;				//For keeping xmfloat3 string
+				while (getline(_ss, _floatVec, '|')) 
+				{
+					XMFLOAT3 _splinePoint;
+					istringstream _ssfloatVec = istringstream(_floatVec);
+					string _coord;
+					getline(_ssfloatVec, _coord, ',');		//Get x coord
+					_splinePoint.x = stoi(_coord);
+
+					_splinePoint.y = 0;
+
+					getline(_ssfloatVec, _coord, ',');		//Get z coord
+					_splinePoint.z = stoi(_coord);
+					
+					_pattern.push_back(_splinePoint);
+				}
+				_movPatterns.push_back(_pattern);	//Put the new pattern into the vector
+			}
+			else if (std::string(_key).find("movcomp") != string::npos) //Mov compilations
+			{
+				pair<int, vector<XMFLOAT3>> _movComp;
+				_ss = istringstream(_value);
+				
+				string _startBeat;				
+				getline(_ss, _startBeat, '|');		// Get at what beat enemies will spawn with this compilation
+				_movComp.first = stoi(_startBeat);
+
+				string _compSegment;
+				while (getline(_ss, _compSegment, '|'))
+				{
+					istringstream _compSegmentSS(_compSegment);
+					string _nrOfRepeats;
+					getline(_compSegmentSS, _nrOfRepeats, ',');
+					
+					string _nrOfPattern;
+					getline(_compSegmentSS, _nrOfPattern, ',');
+
+					for (int i = 0; i < stoi(_nrOfRepeats); i++)			//Add to a temp full vector
+						_movComp.second.insert(_movComp.second.end(), _movPatterns[stoi(_nrOfPattern)].begin(), _movPatterns[stoi(_nrOfPattern)].end());
+				}
+
+				//Add to the relevant final vector once done loading
+				if (std::string(_key) == "movcomp1")
+					m_enemy1MovPatterns.push_back(_movComp);
+				if (std::string(_key) == "movcomp2")
+					m_enemy2MovPatterns.push_back(_movComp);
+				if (std::string(_key) == "movcomp3")
+					m_enemy3MovPatterns.push_back(_movComp);
+				if (std::string(_key) == "movcomp4")
+					m_enemy4MovPatterns.push_back(_movComp);
+			}
+		}
+	}
 }
 
 void EntityManager::BeatWasDetected()

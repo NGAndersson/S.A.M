@@ -68,6 +68,11 @@ private:
 	PartSys m_partSys;
 	Collision m_collision;
 
+	std::vector<std::pair<int, std::vector<XMFLOAT3>>> m_enemy1MovPatterns;
+	std::vector<std::pair<int, std::vector<XMFLOAT3>>> m_enemy2MovPatterns;
+	std::vector<std::pair<int, std::vector<XMFLOAT3>>> m_enemy3MovPatterns;
+	std::vector<std::pair<int, std::vector<XMFLOAT3>>> m_enemy4MovPatterns;
+
 	Stats* m_statsManager;
 
 	Renderer* m_renderer;

@@ -12,10 +12,12 @@ private:
 protected:
 public:
 	Enemy() {}
-	Enemy(SoundManager* SoundManager, int MapWidth, int MapLength, XMFLOAT3 Position, XMFLOAT3 Scale, int Health, EnemyMovementPattern MovementPattern) : Entity(SoundManager, MapWidth, MapLength, Position, Scale, Health) {
+	Enemy(SoundManager* SoundManager, int MapWidth, int MapLength, XMFLOAT3 Position, XMFLOAT3 Scale, int Health, vector<XMFLOAT3> MovPattern) : Entity(SoundManager, MapWidth, MapLength, Position, Scale, Health) {
 		XMVECTOR _rotzAxis{ 0,0,1,0 };
 		m_rotation = XMMatrixRotationAxis(_rotzAxis, 0.0f);
-		if (MovementPattern == MOVEMENT_1)
+		m_spline = new Spline(MovPattern);
+		
+		/*if (MovementPattern == MOVEMENT_1)
 			m_spline = new Spline(g_movementPattern1);
 
 		else if (MovementPattern == MOVEMENT_2)
@@ -23,6 +25,7 @@ public:
 
 		else if (MovementPattern == MOVEMENT_3)
 			m_spline = new Spline(g_movementPattern3);
+		*/
 
 	}
 	virtual ~Enemy(){}
