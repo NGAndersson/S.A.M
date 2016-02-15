@@ -16,11 +16,11 @@ void ScreenManager::Update(double time)
 	switch (m_Current)
 	{
 	case 0:
-		//Start Menu
-		m_menuScreen.Update();
+		//Startscreen
+
 		break;
 	case 1:
-		//Game
+		//Userinterface
 
 		break;
 	case 2:
@@ -51,22 +51,22 @@ void ScreenManager::InitializeScreen(Input* Input)
 	//Starting all the otherClasses etc..
 
 	//Current screen is startscreen
-	m_Current = MENU;
+	m_Current = GAME;
 	//m_Current = USERINTERFACE;
 	//Create Modelhandlers...
 }
 
-void ScreenManager::Render(ID3D11Device *device, ID3D11DeviceContext *deviceContext)
+void ScreenManager::Render()
 {
 	//Renders different things depending on what screen the user is in.
 	switch (m_Current)
 	{
 	case 0:
-		//Start Menu
-		m_menuScreen.Render(device, deviceContext);
+		//Startscreen
+
 		break;
 	case 1:
-		//Game
+		//Userinterface
 
 		break;
 	case 2:
