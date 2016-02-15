@@ -170,7 +170,7 @@ void PartSys::UpdateRocketPartSys(ID3D11DeviceContext* deviceContext, float time
 		if (m_timeToLive[i] <= 0)
 		{
 			m_partPos[i] = XMFLOAT4((((float(rand() % (int(m_partOffset) * 10000)) / 10000) - ((m_partOffset / 2)))), (((float(rand() % (int(m_partOffset) * 10000)) / 10000) - ((m_partOffset / 2)))), float(rand() % int(m_partOffset / 2)), 1.0f);
-			if (((m_partPos[i].x * m_partPos[i].x) + (m_partPos[i].z * m_partPos[i].z)) < (m_partOffset * (m_partOffset)))
+			if (((m_partPos[i].x * m_partPos[i].x) + (m_partPos[i].z * m_partPos[i].z)) < (m_partOffset))
 			{
 				m_timeToLive[i] = m_partLifeLenght;
 			}
