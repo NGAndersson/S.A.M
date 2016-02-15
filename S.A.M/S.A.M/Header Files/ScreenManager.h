@@ -19,7 +19,7 @@ public:
 	//Initializing the screen manager
 	void InitializeScreen(Input* input);
 	//Rendercall
-	void Render ();
+	void Render(ID3D11Device *device, ID3D11DeviceContext *deviceContext);
 	
 	//Returns the current screen
 	EnumScreens GetCurrentScreen() { return m_Current; }
