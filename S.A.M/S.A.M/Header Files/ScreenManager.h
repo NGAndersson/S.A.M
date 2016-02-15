@@ -3,7 +3,6 @@
 
 #include "Gamelogic\Input.h"
 #include "Graphics\ModelHandler.h"
-#include "Screens\MenuScreen.h"
 
 enum EnumScreens { MENU, GAME, HIGHSCORE, OPTION, PAUSE, ENDSCREEN };
 
@@ -17,9 +16,9 @@ public:
 	//Uppdate screens
 	void Update(double time);
 	//Initializing the screen manager
-	void InitializeScreen(Input* Input, ID3D11Device* device, ID3D11DeviceContext* deviceContext, HWND hWnd);
+	void InitializeScreen(Input* input);
 	//Rendercall
-	void Render(ID3D11DeviceContext* deviceContext);
+	void Render();
 	
 	//Returns the current screen
 	EnumScreens GetCurrentScreen() { return m_Current; }
@@ -29,7 +28,6 @@ private:
 	//Current status.
 	EnumScreens m_Current;
 	//Different screens
-	MenuScreen m_menuScreen;
 
 	//input
 	Input* m_input;
