@@ -114,6 +114,9 @@
     <ClCompile Include="Source Files\Graphics\FontClass.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source Files\Graphics\FontShaderClass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header Files\SoundManager.h">
@@ -230,6 +233,9 @@
     <ClInclude Include="Header Files\Graphics\FontClass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Header Files\Graphics\FontShaderClass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="fmodex.dll" />
@@ -247,7 +253,5 @@
     <FxCompile Include="Shaders\BulletVS.hlsl" />
     <FxCompile Include="Shaders\BulletPS.hlsl" />
     <FxCompile Include="Shaders\BulletGS.hlsl" />
-    <FxCompile Include="Shaders\FontPS.hlsl" />
-    <FxCompile Include="Shaders\FontVS.hlsl" />
   </ItemGroup>
 </Project>

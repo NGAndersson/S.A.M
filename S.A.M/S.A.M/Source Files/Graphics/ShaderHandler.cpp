@@ -27,10 +27,6 @@ ShaderHandler::~ShaderHandler()
 	{
 		m_computeShader->Release();
 	}
-	if (m_pixelBuffer)
-	{
-		m_pixelBuffer->Release();
-	}
 }
 
 std::wstring s2ws(const std::string& s)
@@ -172,63 +168,6 @@ bool ShaderHandler::CreateShadersCompute(ID3D11Device* device, string vertexFile
 	return true;
 }
 
-bool ShaderHandler::CreateFontShaders(ID3D11Device* device, string vertexFile, string pixelFile)
-{
-	D3D11_BUFFER_DESC pixelBufferDesc;
-	wstring vertexVSTemp = s2ws(vertexFile);
-	wstring vertexPSTemp = s2ws(pixelFile);
-
-	//create vertex shader
-	ID3DBlob* _vs = nullptr;
-	D3DCompileFromFile(vertexVSTemp.c_str(), nullptr, D3D_COMPILE_STANDARD_FILE_INCLUDE, "VS_main", "vs_5_0", 0, NULL, &_vs, nullptr);
-
-	HRESULT _hr = device->CreateVertexShader(_vs->GetBufferPointer(), _vs->GetBufferSize(), nullptr, &m_vertexShader);
-	if (!_hr)
-	{
-		_vs->Release();
-		return false;
-	}
-
-	//create input layout (verified with vertex shader)
-	D3D11_INPUT_ELEMENT_DESC inputDesc[] =
-	{
-		{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-		{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-	};
-	_hr = device->CreateInputLayout(inputDesc, ARRAYSIZE(inputDesc), _vs->GetBufferPointer(), _vs->GetBufferSize(), &m_vertexLayout);
-	_vs->Release();
-	if (!_hr)
-	{
-		return false;
-	}
-
-
-	//create pixel shader
-	ID3DBlob* _ps = nullptr;
-	D3DCompileFromFile(vertexPSTemp.c_str(), nullptr, D3D_COMPILE_STANDARD_FILE_INCLUDE, "PS_main", "ps_5_0", 0, NULL, &_ps, nullptr);
-	_hr = device->CreatePixelShader(_ps->GetBufferPointer(), _ps->GetBufferSize(), nullptr, &m_pixelShader);
-	_ps->Release();
-	if (_hr != S_OK)
-	{
-		return false;
-	}
-
-	pixelBufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-	pixelBufferDesc.ByteWidth = sizeof(PixelBufferType);
-	pixelBufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
-	pixelBufferDesc.MiscFlags = 0;
-	pixelBufferDesc.StructureByteStride = 0;
-	pixelBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
-
-	_hr = device->CreateBuffer(&pixelBufferDesc, NULL, &m_pixelBuffer);
-	if (_hr != S_OK)
-	{
-		return false;
-	}
-
-	return true;
-}
-
 bool ShaderHandler::SetShaders(ID3D11DeviceContext* deviceContext)
 {
 	deviceContext->VSSetShader(m_vertexShader, nullptr, 0);
@@ -246,73 +185,6 @@ bool ShaderHandler::SetShaders(ID3D11DeviceContext* deviceContext)
 	}
 
 	deviceContext->IASetInputLayout(m_vertexLayout);
-
-	return true;
-}
-
-bool ShaderHandler::SetShaderParameters(ID3D11DeviceContext* deviceContext, DirectX::XMMATRIX worldMatrix, DirectX::XMMATRIX viewMatrix, DirectX::XMMATRIX projectionMatrix, ID3D11ShaderResourceView* texture, DirectX::XMFLOAT4 pixelColor)
-{
-	HRESULT result;
-	D3D11_MAPPED_SUBRESOURCE mappedResource;
-	ConstantBufferType* dataPtr;
-	unsigned int bufferNumber;
-	PixelBufferType* dataPtr2;
-
-
-	// Lock the constant buffer so it can be written to.
-	result = deviceContext->Map(m_constantBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource);
-	if (FAILED(result))
-	{
-		return false;
-	}
-
-	// Get a pointer to the data in the constant buffer.
-	dataPtr = (ConstantBufferType*)mappedResource.pData;
-
-	// Transpose the matrices to prepare them for the shader.
-	DirectX::XMMatrixTranspose(worldMatrix);
-	DirectX::XMMatrixTranspose(viewMatrix);
-	DirectX::XMMatrixTranspose(projectionMatrix);
-
-	// Copy the matrices into the constant buffer.
-	dataPtr->world = worldMatrix;
-	dataPtr->view = viewMatrix;
-	dataPtr->projection = projectionMatrix;
-
-	// Unlock the constant buffer.
-	deviceContext->Unmap(m_constantBuffer, 0);
-
-	// Set the position of the constant buffer in the vertex shader.
-	bufferNumber = 0;
-
-	// Now set the constant buffer in the vertex shader with the updated values.
-	deviceContext->VSSetConstantBuffers(bufferNumber, 1, &m_constantBuffer);
-
-	// Set shader texture resource in the pixel shader.
-	deviceContext->PSSetShaderResources(0, 1, &texture);
-
-
-	// Lock the pixel constant buffer so it can be written to.
-	result = deviceContext->Map(m_pixelBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource);
-	if (FAILED(result))
-	{
-		return false;
-	}
-
-	// Get a pointer to the data in the pixel constant buffer.
-	dataPtr2 = (PixelBufferType*)mappedResource.pData;
-
-	// Copy the pixel color into the pixel constant buffer.
-	dataPtr2->pixelColor = pixelColor;
-
-	// Unlock the pixel constant buffer.
-	deviceContext->Unmap(m_pixelBuffer, 0);
-
-	// Set the position of the pixel constant buffer in the pixel shader.
-	bufferNumber = 0;
-
-	// Now set the pixel constant buffer in the pixel shader with the updated value.
-	deviceContext->PSSetConstantBuffers(bufferNumber, 1, &m_pixelBuffer);
 
 	return true;
 }

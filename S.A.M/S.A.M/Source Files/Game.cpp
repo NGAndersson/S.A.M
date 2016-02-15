@@ -52,7 +52,7 @@ void Game::InitGame(Input* input, Display* disp)
 
 	//Create and initialize ScreenManager
 	m_screenManager = new ScreenManager;
-	m_screenManager->InitializeScreen(m_input, m_device, m_deviceContext, disp->GethWnd());
+	m_screenManager->InitializeScreen(m_input);
 
 	//Create and initialize EntityManager
 	m_entityManager = new EntityManager;
@@ -120,7 +120,7 @@ void Game::Render()
 	if (m_screenManager->GetCurrentScreen() == GAME)
 		m_entityManager->Render();
 	else
-		m_screenManager->Render(m_deviceContext);
+		m_screenManager->Render();
 
 	m_swapChain->Present(0, 0);
 }

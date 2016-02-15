@@ -17,9 +17,9 @@ public:
 	//Uppdate screens
 	void Update(double time);
 	//Initializing the screen manager
-	void InitializeScreen(Input* Input, ID3D11Device* device, ID3D11DeviceContext* deviceContext, HWND hWnd);
+	void InitializeScreen(Input* input);
 	//Rendercall
-	void Render(ID3D11DeviceContext* deviceContext);
+	void Render ();
 	
 	//Returns the current screen
 	EnumScreens GetCurrentScreen() { return m_Current; }
