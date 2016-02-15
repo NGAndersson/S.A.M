@@ -64,7 +64,7 @@ void Game::InitGame(Input* input, Display* disp)
 
 	//Create and initialize ScreenManager
 	m_screenManager = new ScreenManager();
-	m_screenManager->InitializeScreen(m_input);
+	m_screenManager->InitializeScreen(m_device,m_deviceContext,HEIGHT,WIDTH,m_input);
 
 	//Create and initialize EntityManager
 	m_entityManager = new EntityManager;
@@ -87,8 +87,6 @@ WPARAM Game::MainLoop()
 	Timer _time;
 	_time.StartTime();
 	_time.TimeCheck();
-	m_screen.Initialize(m_device, m_deviceContext);
-
 	while (TRUE) {
 		// Check to see if any messages are waiting in the queue
 		while (PeekMessage(&m_winMSG, NULL, 0, 0, PM_REMOVE))
@@ -103,11 +101,9 @@ WPARAM Game::MainLoop()
 		// If the message is WM_QUIT, exit the while loop
 		if (m_winMSG.message == WM_QUIT)
 			return m_winMSG.wParam;
-
-	
+		m_input->Update();
 		//Update FMOD
 		m_soundManager->Update();
-
 		//Get Time
 		float time = _time.TimeCheck();
 
@@ -118,9 +114,6 @@ WPARAM Game::MainLoop()
 
 		//Call Render Functions
 		Render();
-
-		m_screen.Render();
-
 		m_swapChain->Present(0, 0);
 	}
 
@@ -128,10 +121,13 @@ WPARAM Game::MainLoop()
 
 void Game::Update(double time)
 {
-	m_screenManager->Update(time);
+	m_screenManager->Update();
+
+	//RENDER particle system here 
 	if (m_screenManager->GetCurrentScreen() == GAME)
 		m_entityManager->Update(time);
-	
+
+
 	//if(m_screenManager->GetCurrentScreen() == USERINTERFACE)
 	// Update Entity Manager
 
@@ -145,7 +141,7 @@ void Game::Render()
 	m_deviceContext->ClearRenderTargetView(m_backbufferRTV, _clearColor);
 	m_deviceContext->ClearDepthStencilView(m_depthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
 	m_deviceContext->OMSetRenderTargets(1, &m_backbufferRTV, m_depthStencilView);
-	m_screenManager->Render();
+
 	//if(m_screenManager->GetCurrentScreen() == USERINTERFACE)
 	// Render Entity Manager
 	if (m_screenManager->GetCurrentScreen() == GAME)
@@ -157,7 +153,8 @@ void Game::Render()
 		m_deviceContext->OMSetRenderTargets(1, &m_backbufferRTV, m_depthStencilView);
 		m_deferredBuffer.SetShaderResource(m_deviceContext);
 		m_deferredRender.Render(m_deviceContext);
-	}
+	}	
+	m_screenManager->Render();
 }
 
 void Game::CheckInput()

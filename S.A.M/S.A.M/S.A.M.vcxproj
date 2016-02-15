@@ -232,6 +232,7 @@
   <ItemGroup>
     <None Include="fmodex.dll" />
     <None Include="packages.config" />
+    <None Include="Resources\moonhouse.spritefont" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="Resources\wave.mp3" />

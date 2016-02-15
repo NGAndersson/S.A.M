@@ -4,7 +4,9 @@
 #include "Gamelogic\Input.h"
 #include "Graphics\ModelHandler.h"
 
-enum EnumScreens { MENU, GAME, HIGHSCORE, OPTION, PAUSE, ENDSCREEN };
+#include "Screens\Screen.h"
+#include "Screens\Menu\StartMenu.h"
+
 
 class ScreenManager
 {
@@ -14,32 +16,23 @@ public:
 	ScreenManager();
 	~ScreenManager();
 	//Uppdate screens
-	void Update(double time);
+	void Update();
 	//Initializing the screen manager
-	void InitializeScreen(Input* input);
+	void InitializeScreen(ID3D11Device* Device, ID3D11DeviceContext* DeviceContext, int ScreenHeight, int ScreenWidth, Input* input);
 	//Rendercall
 	void Render();
-	
 	//Returns the current screen
-	EnumScreens GetCurrentScreen() { return m_Current; }
+	MenuScreens GetCurrentScreen() { return m_current; }
 
 //----------------------------Attributes----------------------------------------
 private:
 	//Current status.
-	EnumScreens m_Current;
+	MenuScreens m_current;
 	//Different screens
-
+	Screen* m_screenMenu;
 	//input
 	Input* m_input;
 
-	//Modelhandler
-
-	//ModelHandler m_uI;
-	//ModelHandler m_highScore;
-	//ModelHandler m_options;
-	//ModelHandler m_pause;
-	//ModelHandler m_start;
-	//ModelHandler m_endScreen;
 
 };
 

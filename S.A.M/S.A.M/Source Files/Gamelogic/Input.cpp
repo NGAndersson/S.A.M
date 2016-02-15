@@ -30,6 +30,18 @@ Input::~Input()
 
 }
 
+void  Input::Update()
+{
+	m_Keyboard->Acquire();
+
+	ZeroMemory(&m_keyBoardState, sizeof(m_keyBoardState));
+	m_Keyboard->GetDeviceState(sizeof(m_keyBoardState), (LPVOID)&m_keyBoardState);
+
+	m_Mouse->Acquire();
+	m_Mouse->GetDeviceState(sizeof(DIMOUSESTATE), &m_CurrMouse);
+
+}
+
 void Input::Initialize(HINSTANCE hInstance,HWND& hwnd, int ScreenWidth, int ScreenHeight)
 {
 	HRESULT _hr;
@@ -56,48 +68,62 @@ void Input::Initialize(HINSTANCE hInstance,HWND& hwnd, int ScreenWidth, int Scre
 
 BulletType Input::CheckBullet()
 {
-	m_Keyboard->Acquire();
-	BYTE _KeyboardState[256];
 	
 	BulletType _returnType = INPUT_DEFAULT_BULLET;
 
-	ZeroMemory(&_KeyboardState, sizeof(_KeyboardState));
-	m_Keyboard->GetDeviceState(sizeof(_KeyboardState), (LPVOID)&_KeyboardState);
-
-	if (_KeyboardState[DIK_Q] & 0x80)
+	if (m_keyBoardState[DIK_Q] & 0x80)
 		return	_returnType = INPUT_BULLET2;
 
-	if (_KeyboardState[DIK_W] & 0x80)
+	if (m_keyBoardState[DIK_W] & 0x80)
 		return	_returnType = INPUT_BULLET3;
 
-	if (_KeyboardState[DIK_E] & 0x80)
+	if (m_keyBoardState[DIK_E] & 0x80)
 		return	_returnType = INPUT_BULLET4;
 
-	if (_KeyboardState[DIK_R] & 0x80)
+	if (m_keyBoardState[DIK_R] & 0x80)
 		return	_returnType = INPUT_BULLET5;
 
 	return _returnType;
 
 }
+InputType Input::CheckKeyBoardInput()
+{
+	if (m_keyBoardState[DIK_LEFT] & 0x80)
+		return INPUT_MOVE_LEFT;
+
+	else if (m_keyBoardState[DIK_RIGHT] & 0x80)
+		return INPUT_MOVE_RIGHT;
+
+	else if (m_keyBoardState[DIK_UP] & 0x80)
+		return INPUT_MOVE_UP;
+
+	else if (m_keyBoardState[DIK_DOWN] & 0x80)
+		return INPUT_MOVE_DOWN;
+
+	return INPUT_DEFAULT;
+
+}
+
+bool Input::CheckReturn()
+{
+	if (m_keyBoardState[DIK_RETURN] & 0x80)
+		return true;
+	
+	return false;
+}
 
 void Input::CheckKeyBoardInput(InputType* returnput)
 {
-	m_Keyboard->Acquire();
-	BYTE _KeyboardState[256];
-	ZeroMemory(&_KeyboardState, sizeof(_KeyboardState));
-
-	m_Keyboard->GetDeviceState(sizeof(_KeyboardState), (LPVOID)&_KeyboardState);
-
-	if (_KeyboardState[DIK_LEFT] & 0x80)
+	if (m_keyBoardState[DIK_LEFT] & 0x80)
 		returnput[0] = INPUT_MOVE_LEFT;
 
-	if (_KeyboardState[DIK_RIGHT] &0x80)
+	if (m_keyBoardState[DIK_RIGHT] &0x80)
 		returnput[1] = INPUT_MOVE_RIGHT;
 
-	if (_KeyboardState[DIK_UP] & 0x80)
+	if (m_keyBoardState[DIK_UP] & 0x80)
 		returnput[2] = INPUT_MOVE_UP;
 
-	if (_KeyboardState[DIK_DOWN] & 0x80)
+	if (m_keyBoardState[DIK_DOWN] & 0x80)
 		returnput[3] = INPUT_MOVE_DOWN;
 
 
@@ -106,17 +132,14 @@ void Input::CheckKeyBoardInput(InputType* returnput)
 MouseClicked Input::CheckMouseInput()
 {
 
-	m_Mouse->Acquire();
-	DIMOUSESTATE _CurrMouse;
 	MouseClicked _ReturnType;
-	m_Mouse->GetDeviceState(sizeof(DIMOUSESTATE), &_CurrMouse);
 	_ReturnType.MouseAct = INPUT_DEFAULT;
 
 	POINT _p;
 	GetCursorPos(&_p);
 	ScreenToClient(m_Hwnd, &_p);
 
-	if (_CurrMouse.rgbButtons[0] & 0x80)
+	if (m_CurrMouse.rgbButtons[0] & 0x80)
 	{
 		_ReturnType.MouseAct = INPUT_MOUSE_LK;
 		_ReturnType.Mouse_Position_X = _p.x;
@@ -129,12 +152,12 @@ MouseClicked Input::CheckMouseInput()
 
 bool Input::CheckEsc()
 {
-	BYTE _KeyboardState[256];
-	ZeroMemory(&_KeyboardState, sizeof(_KeyboardState));
+	BYTE m_keyBoardState[256];
+	ZeroMemory(&m_keyBoardState, sizeof(m_keyBoardState));
 
-	m_Keyboard->GetDeviceState(sizeof(_KeyboardState), (LPVOID)&_KeyboardState);
+	m_Keyboard->GetDeviceState(sizeof(m_keyBoardState), (LPVOID)&m_keyBoardState);
 
-	if (_KeyboardState[DIK_ESCAPE] & 0x80)
+	if (m_keyBoardState[DIK_ESCAPE] & 0x80)
 		return true;
 
 	return false;
