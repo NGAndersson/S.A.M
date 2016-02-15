@@ -2,6 +2,7 @@
 #include <iostream>
 #define MAPWIDTH 77
 #define MAPLENGTH 103
+#define BEATLENIENCY 100
 
 EntityManager::EntityManager()
 {
@@ -232,6 +233,8 @@ void EntityManager::Render()
 
 void EntityManager::Update(double time)
 {
+	CheckCombo();
+
 		//Regular BPM test
 	if (m_doBeatDet == false) 
 	{
@@ -264,23 +267,23 @@ void EntityManager::Update(double time)
 			m_modelHandlers[BULLET4]->beatBoost(false, time, -1, m_currentBPM);
 			m_modelHandlers[BULLET5]->beatBoost(false, time, -1, m_currentBPM);
 			m_modelHandlers[BULLET6]->beatBoost(false, time, -1, m_currentBPM);
-	}
+		}
 	}
 	else {
 		//BeatDet test
 		float _currentPos = m_soundManager->GetCurrentMusicTimePCM() / 1024.f;
 
-		if (m_beat[(int)_currentPos] > 0.0f && m_timeSinceLastBeat > 0.1)		//Small time buffer to prevent it from going off 50 times per beat 
+		if (m_beat[(int)_currentPos] > 0.0f && m_timeSinceLastBeat > 100)		//Small time buffer to prevent it from going off 50 times per beat 
 		{
 			//BEAT WAS DETECTED
 			if (m_offsetCount > m_offset) {
 				BeatWasDetected();
-				m_light.beatBoost(true, time, m_timeSinceLastBeat, 0);
-				m_modelHandlers[BULLET1]->beatBoost(true, time, m_timeSinceLastBeat, 0);
-				m_modelHandlers[BULLET3]->beatBoost(true, time, m_timeSinceLastBeat, 0);
-				m_modelHandlers[BULLET4]->beatBoost(true, time, m_timeSinceLastBeat, 0);
-				m_modelHandlers[BULLET5]->beatBoost(true, time, m_timeSinceLastBeat, 0);
-				m_modelHandlers[BULLET6]->beatBoost(true, time, m_timeSinceLastBeat, 0);
+				m_light.beatBoost(true, time, m_timeSinceLastBeat/1000, 0);
+				m_modelHandlers[BULLET1]->beatBoost(true, time, m_timeSinceLastBeat/1000, 0);
+				m_modelHandlers[BULLET3]->beatBoost(true, time, m_timeSinceLastBeat/1000, 0);
+				m_modelHandlers[BULLET4]->beatBoost(true, time, m_timeSinceLastBeat/1000, 0);
+				m_modelHandlers[BULLET5]->beatBoost(true, time, m_timeSinceLastBeat/1000, 0);
+				m_modelHandlers[BULLET6]->beatBoost(true, time, m_timeSinceLastBeat/1000, 0);
 				m_timeSinceLastBeat = 0;
 				EnemyFire();
 				
@@ -291,13 +294,13 @@ void EntityManager::Update(double time)
 			}
 		}
 		else {
-			m_timeSinceLastBeat += time;
-			m_light.beatBoost(false, time, m_timeSinceLastBeat, 0);
-			m_modelHandlers[BULLET1]->beatBoost(false, time, m_timeSinceLastBeat, 0);
-			m_modelHandlers[BULLET3]->beatBoost(false, time, m_timeSinceLastBeat, 0);
-			m_modelHandlers[BULLET4]->beatBoost(false, time, m_timeSinceLastBeat, 0);
-			m_modelHandlers[BULLET5]->beatBoost(false, time, m_timeSinceLastBeat, 0);
-			m_modelHandlers[BULLET6]->beatBoost(false, time, m_timeSinceLastBeat, 0);
+			m_timeSinceLastBeat += time * 1000;
+			m_light.beatBoost(false, time, m_timeSinceLastBeat/1000, 0);
+			m_modelHandlers[BULLET1]->beatBoost(false, time, m_timeSinceLastBeat/1000, 0);
+			m_modelHandlers[BULLET3]->beatBoost(false, time, m_timeSinceLastBeat/1000, 0);
+			m_modelHandlers[BULLET4]->beatBoost(false, time, m_timeSinceLastBeat/1000, 0);
+			m_modelHandlers[BULLET5]->beatBoost(false, time, m_timeSinceLastBeat/1000, 0);
+			m_modelHandlers[BULLET6]->beatBoost(false, time, m_timeSinceLastBeat/1000, 0);
 		}
 	}
 
@@ -336,7 +339,7 @@ void EntityManager::Update(double time)
 	//_addScore += m_collision.CheckCollisionEntity(&m_bullet5, &m_enemy3,BULLET5, ENEMY3);
 	//_addScore += m_collision.CheckCollisionEntity(&m_bullet5, &m_enemy4,BULLET5, ENEMY4);
 
-	m_statsManager->AddScore(_addScore);
+	m_statsManager->AddScore(_addScore*m_statsManager->GetCombo());
 
 	//Check Player against Enemy Bullet
 	if (!m_player->GetInvulnerable())			//Only check if the player is alive and well
@@ -772,5 +775,50 @@ void EntityManager::EnemyFire()
 		}
 
 		m_enemy1[i]->SetFireTime(m_enemy1[i]->GetFireTime() + 1.0f);
+	}
+}
+
+void EntityManager::CheckCombo()
+{
+	// Check key presses near the beat, for combo
+	static bool _registeredCombo = true;
+	static BulletType _currentBulletType;
+	if (m_offsetCount > m_offset) {						//Only check for combos after the beats have actually started
+		if (m_timeSinceLastBeat < 25000 / m_currentBPM)
+		{
+			if (m_input->IsNewButtonPressed(_currentBulletType)) //If button is pressed
+			{
+				if (m_timeSinceLastBeat < BEATLENIENCY && _registeredCombo == false)	//If key was pressed during sweet spot and key hadn't been pressed earlier
+				{
+					m_statsManager->AddCombo();
+					OutputDebugStringA(to_string(m_statsManager->GetCombo()).c_str());		//DDDDDEBUGGG
+					_registeredCombo = true;
+				}
+				else					//Reset combo if pressed more than once or after sweetspot
+				{
+					m_statsManager->ResetCombo();
+				}
+			}
+			if (m_timeSinceLastBeat > BEATLENIENCY && m_timeSinceLastBeat < 30000 / m_currentBPM && _registeredCombo == false)	//If a key wasn't pressed at all during a beat, reset combo
+				m_statsManager->ResetCombo();
+		}
+		else if (m_timeSinceLastBeat > 25000 / m_currentBPM && m_timeSinceLastBeat < 35000 / m_currentBPM)	//Switch to new beat, Allow a new key to be pressed 
+			_registeredCombo = false;
+		else if (m_timeSinceLastBeat > 35000 / m_currentBPM)
+		{
+			if (m_input->IsNewButtonPressed(_currentBulletType)) //If button is pressed
+			{
+				if (m_timeSinceLastBeat > 60000 / m_currentBPM - BEATLENIENCY && _registeredCombo == false)	//If key was pressed during sweet spot and key hadn't been pressed earlier
+				{
+					m_statsManager->AddCombo();
+					OutputDebugStringA(to_string(m_statsManager->GetCombo()).c_str());		//DDDDDEBUGGG
+					_registeredCombo = true;
+				}
+				else					//Reset combo if pressed more than once or after sweetspot
+				{
+					m_statsManager->ResetCombo();
+				}
+			}
+		}
 	}
 }

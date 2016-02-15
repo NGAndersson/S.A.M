@@ -39,6 +39,7 @@ private:
 	void InitMusic(std::string filename);
 	void EnemyFire();
 	void RenderEnemies();
+	void CheckCombo();
 
 public:
 	EntityManager();
