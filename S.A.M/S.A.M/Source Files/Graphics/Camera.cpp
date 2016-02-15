@@ -24,10 +24,8 @@ Camera::Camera(XMVECTOR NewCameraPosition, XMVECTOR PositionLookingAt)
 
 Camera::~Camera()
 {
-	if (m_constCameraBuffer)
-	{
+	if (m_constCameraBuffer != nullptr)
 		m_constCameraBuffer->Release();
-	}
 }
 
 XMVECTOR Camera::GetCameraPos()
@@ -62,7 +60,7 @@ void Camera::SetViewMatrix()
 
 void Camera::SetProjectionMatrix()
 {
-	m_projection = XMMatrixPerspectiveFovLH(XM_PI * 0.45f, 640 / 480, 0.1f, 1500);
+	m_projection = XMMatrixPerspectiveFovLH(XM_PI * 0.45f, 720.0f / 980.0f, 0.1f, 1500);
 }
 
 void Camera::SetViewProjectionMatrix()
@@ -111,4 +109,5 @@ void Camera::SetConstantBuffer(ID3D11DeviceContext* gDeviceContext)
 	gDeviceContext->Unmap(m_constCameraBuffer, 0);
 
 	gDeviceContext->GSSetConstantBuffers(0, 1, &m_constCameraBuffer);
+	gDeviceContext->PSSetConstantBuffers(2, 1, &m_constCameraBuffer);
 }

@@ -22,7 +22,7 @@ class Renderer
 
 	//World buffer for VS
 	struct WorldStructInstanced {
-		XMFLOAT4X4 worldMatrix[800];
+		XMFLOAT4X4 worldMatrix[50];
 	};
 
 //Functions
@@ -36,14 +36,14 @@ public:
 
 //Variables
 private:
-	ID3D11DeviceContext* m_deviceContext;
-	ID3D11Device* m_device;
+	ID3D11DeviceContext* m_deviceContext = nullptr;
+	ID3D11Device* m_device = nullptr;
 
 	CamStruct m_camStruct;
-	ID3D11Buffer* m_camBuffer;
+	ID3D11Buffer* m_camBuffer = nullptr;
 	WorldStruct m_worldStruct;
 	WorldStructInstanced m_worldStructInstanced;
-	ID3D11Buffer* m_worldBuffer, *m_worldBufferInstance;
+	ID3D11Buffer* m_worldBuffer = nullptr, *m_worldBufferInstance = nullptr;
 	Camera m_cam;
 
 public:

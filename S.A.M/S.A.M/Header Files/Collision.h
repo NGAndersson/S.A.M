@@ -6,6 +6,7 @@
 #include <DirectXMath.h>
 #include <vector>
 #include "Entities\Entity.h"
+#include "Graphics\LightHandler.h"
 
 using namespace DirectX;
 using namespace std;
@@ -17,7 +18,7 @@ private:
 public:
 	Collision();
 	~Collision();
-	void CheckCollisionEntity(vector<Entity*>* Entity_1, vector<Entity*>* Entity_2, HandlerIndex BulletType);
+	int CheckCollisionEntity(vector<Entity*>* Entity_1, vector<Entity*>* Entity_2, HandlerIndex EntityType1, HandlerIndex EntityType2);
 private:
 public:
 

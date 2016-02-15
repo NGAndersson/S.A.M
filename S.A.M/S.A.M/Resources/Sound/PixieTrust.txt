@@ -1,7 +1,0 @@
-music=Resources/Sound/PixieTrust.mp3
-offset=44
-bulletD=Resources/Sound/DefaultSoundBullet1.wav
-bulletQ=Resources/Sound/DefaultSoundBullet2.wav
-bulletW=Resources/Sound/DefaultSoundBullet3.wav
-bulletE=Resources/Sound/DefaultSoundBullet4.wav
-bulletR=Resources/Sound/DefaultSoundBullet5.wav

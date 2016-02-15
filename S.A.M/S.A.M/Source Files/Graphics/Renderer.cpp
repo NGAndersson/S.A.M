@@ -16,17 +16,14 @@ struct Vertex    //Overloaded Vertex Structure
 
 Renderer::~Renderer()
 {
-	if (m_device)
-		m_device->Release();
-
-	if (m_deviceContext)
-		m_deviceContext->Release();
-	
-	if (m_camBuffer)
+	if (m_camBuffer != nullptr)
 		m_camBuffer->Release();
 
-	if (m_worldBuffer)
+	if (m_worldBuffer != nullptr)
 		m_worldBuffer->Release();
+
+	if (m_worldBufferInstance != nullptr)
+		m_worldBufferInstance->Release();
 
 }
 
@@ -34,7 +31,6 @@ void Renderer::Render(ModelHandler * model, XMFLOAT3 position, XMMATRIX &rotatio
 {
 	//Set vertexbuffer, pixel material constant buffer and set the correct shaders
 	model->SetBuffers(m_deviceContext);
-	model->SetShaders(m_deviceContext);
 
 	//Set Worldmatrix and Position(float3) as a Vertexshader constant buffer
 	XMMATRIX Scale = XMMatrixScaling(scale.x, scale.y, scale.z);
@@ -55,7 +51,6 @@ void Renderer::RenderInstanced(ModelHandler * model, vector<XMFLOAT3> position, 
 {
 	//Set vertexbuffer, pixel material constant buffer and set the correct shaders
 	model->SetBuffers(m_deviceContext);
-	model->SetShaders(m_deviceContext);
 	XMMATRIX Translation;
 	XMMATRIX Scale;
 	//Set Worldmatrix and Position(float3) as a Vertexshader constant buffer
@@ -90,8 +85,8 @@ Renderer::Renderer(ID3D11DeviceContext * deviceContext, ID3D11Device * device)
 	m_device = device;
 	m_deviceContext = deviceContext;
 
-	m_cam.SetCameraPos(XMVectorSet(0.0f, 65.0f,  0.0f, 0.0f));
-	m_cam.SetLookAtVec(XMVectorSet(0.0f, -100.0f, 0.0001f, 0.0f));
+	m_cam.SetCameraPos(XMVectorSet(39.0f, 65.0f,  52.0f, 0.0f));
+	m_cam.SetLookAtVec(XMVectorSet(0.0f, -1.0f, 0.0001f, 0.0f));
 	m_cam.SetProjectionMatrix();
 	m_cam.SetViewMatrix();
 	m_cam.SetViewProjectionMatrix();

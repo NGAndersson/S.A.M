@@ -5,7 +5,7 @@ Player::Player()
 
 }
 
-Player::Player(SoundManager* SoundManager, int MapWidth, int MapLength,XMFLOAT3 Position, XMFLOAT3 Scale, Input* input) : Entity(SoundManager, MapWidth, MapLength, Position, Scale)
+Player::Player(SoundManager* SoundManager, int MapWidth, int MapLength,XMFLOAT3 Position, XMFLOAT3 Scale, int Health, Input* input) : Entity(SoundManager, MapWidth, MapLength, Position, Scale, Health)
 {
 	m_input = input;
 	//Loading death sounds FIX LATER :)
@@ -17,6 +17,7 @@ Player::Player(SoundManager* SoundManager, int MapWidth, int MapLength,XMFLOAT3 
 
 Player::~Player()
 {
+	
 }
 
 void Player::Update(double time)
@@ -46,22 +47,57 @@ void Player::Update(double time)
 		m_position.z -= MOVEMENTSPEEDZ*(time * 1500);
 
 	//Check position if out of bounds.
-	if (m_position.z > (float)m_mapLength/2)
-		m_position.z = (float)m_mapLength / 2;
+	if (m_position.z > (float)m_mapLength)
+		m_position.z = (float)m_mapLength;
 
-	if (m_position.z < (float)-m_mapLength / 2)
-		m_position.z = (float)-m_mapLength / 2;
+	if (m_position.z < 1)
+		m_position.z = 1;
 
-	if (m_position.x >(float)m_mapWidth / 2)
-		m_position.x = (float)m_mapWidth / 2;
+	if (m_position.x >(float)m_mapWidth)
+		m_position.x = (float)m_mapWidth;
 				   
-	if (m_position.x < (float)-m_mapWidth / 2)
-		m_position.x = (float)-m_mapWidth / 2;
+	if (m_position.x < 1)
+		m_position.x = 1;
 
+
+	m_entityBox.Center = m_position;
+
+
+	//Add time to alivetimer (used for invulnerability after death)
+	m_aliveTimer += time;
+	if (m_aliveTimer > 3 && m_invulnerable == true) //Be invulnerable for 3 seconds
+	{
+		m_destructionTimer = 0;
+		m_invulnerable = false;
+		m_health = 1;
+	}
+	else if (m_aliveTimer < 3 && m_invulnerable == true) {
+		m_destructionTimer += time;			//reuse destructiontimer for invul-blinking, since it's not otherwise used here
+		if (m_destructionTimer < 0.3f)
+			m_health = 0;					//reuse health as a "bool" for blinking.
+		else if (m_destructionTimer < 0.6f)								
+			m_health = 1;
+		else
+			m_destructionTimer = 0;
+	}
 }
 
-void Player::Destroyed()
+void Player::Destroyed(double time)
 {
-	//Play sound when destroyed..
-	m_soundManager->PlayOneShotSound("PlayerDeathSound", 0.5f);
+	if (m_destructionTimer == 0)
+	{
+		//Play sound when destroyed..
+		//m_soundManager->PlayOneShotSound("PlayerDeathSound", 0.5f);
+		m_health = 1;
+		m_invulnerable = true;
+		m_aliveTimer = 0;
+		SetPosition(XMFLOAT3(m_mapWidth/2, 0, -5)); //Move beneath the map, as soon as ship blows up
+	}
+
+	m_destructionTimer += time;
+	m_position.z += MOVEMENTSPEEDZ * (time * 200);
+	if (m_position.z > 8) {
+		m_delete = false;
+		m_destructionTimer = 0;
+	}
 }

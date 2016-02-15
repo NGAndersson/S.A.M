@@ -13,11 +13,32 @@ cbuffer OBJColourType : register(b0)
 struct PS_IN
 {
 	float4 Pos : SV_POSITION;
+	float4 PosInW : WORLDPOS;
+	float4 NormalInW : NORMALINW;
 	float2 Tex : TEXCOORD;
 };
 
-float4 PS_main(PS_IN input) : SV_TARGET
+struct PS_OUT
 {
-	float3 pixelOut = ObjTex.Sample(sampAni, input.Tex).xyz;
-	return float4(pixelOut + Diffuse, 1.0);
+	float4 Normal : SV_Target0;
+	float4 DiffAlbedo : SV_Target1;
+	float4 SpecAlbedo : SV_Target2;
+	float4 Pos : SV_Target3;
+};
+
+PS_OUT PS_main(PS_IN input)
+{
+	PS_OUT output = (PS_OUT)0;
+
+	float _depth = (input.PosInW.y + 2) / 4;
+
+	output.Normal = input.NormalInW;
+	output.DiffAlbedo = (float4(Diffuse, 1) * _depth) + (ObjTex.Sample(sampAni, input.Tex) * _depth);
+	output.SpecAlbedo = float4(0.16f, 0.16f, 0.16f, 1000.0f);
+	output.Pos = input.PosInW;
+
+	return output;
+
+	/*float3 pixelOut = ObjTex.Sample(sampAni, input.Tex).xyz;
+	return float4(pixelOut + Diffuse, 1.0);*/
 }

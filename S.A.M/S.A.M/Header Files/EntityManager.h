@@ -6,6 +6,7 @@
 #include "Graphics\Renderer.h"
 #include "Graphics\ModelHandler.h"
 #include "Graphics\ParticleSys.h"
+#include "Graphics\LightHandler.h"
 #include "Gamelogic\Input.h"
 #include "Audio\BeatDetector.h"
 #include <d3d11.h>
@@ -17,11 +18,13 @@
 #include "Entities\Bullets\Bullet_e.h"
 #include "Entities\Enemies\Enemy.h"
 #include "Entities\Enemies\Enemy_1.h"
+#include "Graphics\ShaderHandler.h"
 #include <random>
 #include "Collision.h"
-#include "Gamelogic\Score.h"
+#include "Gamelogic\Stats.h"
 
-
+#include <memory>
+enum ShaderIndexName { SHADER_PLAYER, SHADER_BULLET, SHADER_ENEMY, SHADER_MENU, SHADER_PARTICLE, SHADER_ROCKETPART };
 
 class EntityManager
 {
@@ -35,11 +38,12 @@ private:
 	vector<Entity*> RemoveEntity(int RemoveId, vector<Entity*> RemoveType);
 	void InitMusic(std::string filename);
 	void EnemyFire();
+	void RenderEnemies();
 
 public:
 	EntityManager();
 	~EntityManager();
-	void Initialize(SoundManager* soundManager, Input* input, ID3D11Device* device, ID3D11DeviceContext* deviceContext);
+	void Initialize(SoundManager* soundManager, Input* input, ID3D11Device* device, ID3D11DeviceContext* deviceContext, Stats* statsManager);
 	void Render();
 	void Update(double time);
 	void ChangeSongData(int bpm);
@@ -47,7 +51,9 @@ public:
 	//Variables
 private:
 	//Vectors with all the different types of entities
-	ModelHandler* m_modelHandlers[10];
+	ShaderHandler* m_shaderLoad[6];
+	ModelHandler* m_modelHandlers[11];
+	LightHandler m_light;
 	std::vector<Entity*> m_bullet1;
 	std::vector<Entity*> m_bullet2;
 	std::vector<Entity*> m_bullet3;
@@ -59,9 +65,15 @@ private:
 	std::vector<Entity*> m_enemy3;
 	std::vector<Entity*> m_enemy4;
 	Entity* m_player;
-
-	PartSys m_partSys;
+	PartSys m_backgroundPartSys, m_rocketPartSys;
 	Collision m_collision;
+
+	std::vector<std::pair<int, std::vector<XMFLOAT3>>> m_enemy1MovPatterns;
+	std::vector<std::pair<int, std::vector<XMFLOAT3>>> m_enemy2MovPatterns;
+	std::vector<std::pair<int, std::vector<XMFLOAT3>>> m_enemy3MovPatterns;
+	std::vector<std::pair<int, std::vector<XMFLOAT3>>> m_enemy4MovPatterns;
+
+	Stats* m_statsManager;
 
 	Renderer* m_renderer;
 	SoundManager* m_soundManager;

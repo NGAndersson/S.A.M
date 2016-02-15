@@ -7,13 +7,14 @@
 // the entry point for any Windows program
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
+	srand(int(time(0)));
 	int _width = WIDTH;
 	int _height = HEIGHT;
 	Display _display(hInstance, hPrevInstance, lpCmdLine, nCmdShow, _width, _height);
 
 	//FOR DEBUGGING PURPOSE
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-	//_CrtSetBreakAlloc(780);
+	//_CrtSetBreakAlloc(467);
 
 	//Create and initialize Input	
 	HWND _hWnd = _display.GethWnd();

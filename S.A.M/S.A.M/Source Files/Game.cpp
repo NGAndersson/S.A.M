@@ -2,37 +2,48 @@
 
 Game::Game()
 {
+
 }
 
 Game::~Game()
 {
-	if (m_deviceContext)
-	{
-		m_deviceContext->Release();
-	}
-	if (m_device)
-	{
-		m_device->Release();
-	}
-	if (m_swapChain)
+	if (m_swapChain != nullptr)
 	{
 		m_swapChain->Release();
 	}
-	if (m_backbufferRTV)
+	if (m_backbufferRTV != nullptr)
 	{
 		m_backbufferRTV->Release();
 	}
-	if (m_depthStencilView)
+	if (m_depthStencilView != nullptr)
 	{
 		m_depthStencilView->Release();
 	}
-	if (m_depthStencil)
+	if (m_depthStencil != nullptr)
 	{
 		m_depthStencil->Release();
 	}
-	if (m_sampleState)
+	if (m_sampleState != nullptr)
+	{
 		m_sampleState->Release();
+	}
+	if (m_deviceContext != nullptr)
+	{
+		m_deviceContext->Release();
+	}
+	if (m_device != nullptr)
+	{
+		m_device->Release();
+	}
 
+	delete m_soundManager;
+	m_soundManager = 0;
+	delete m_screenManager;
+	m_screenManager = 0;
+	delete m_entityManager;
+	m_entityManager = 0;
+
+	delete m_statsManager;
 }
 
 void Game::InitGame(Input* input, Display* disp)
@@ -40,9 +51,10 @@ void Game::InitGame(Input* input, Display* disp)
 	m_input = input;
 	m_display = disp;
 
-
 	//Create and initialize SoundManager
-	m_soundManager = new SoundManager;  //Initializes in constructor
+	m_soundManager = new SoundManager();  //Initializes in constructor
+
+	m_statsManager = new Stats;
 
 	//Create and initialize device/devicecontext/swapchain/depthstenciel
 	CreateDirect3DContext(disp->GethWnd());
@@ -51,17 +63,22 @@ void Game::InitGame(Input* input, Display* disp)
 	SetViewport();
 
 	//Create and initialize ScreenManager
-	m_screenManager = new ScreenManager;
+	m_screenManager = new ScreenManager();
 	m_screenManager->InitializeScreen(m_input);
 
 	//Create and initialize EntityManager
 	m_entityManager = new EntityManager;
-	m_entityManager->Initialize(m_soundManager, m_input, m_device, m_deviceContext);
+	m_entityManager->Initialize(m_soundManager, m_input, m_device, m_deviceContext, m_statsManager);
 
 	//FUN STUFF! REMOVE!
 	//m_soundManager->LoadSound("Resources/wave.mp3", "wave", "music", LOAD_STREAM);
 	//m_soundManager->LoadSound("Resources/Song.mp3", "gangnam", "music", LOAD_STREAM);
 
+	//Init defered buffer and render
+	m_deferredBuffer.Initialize(m_device, WIDTH, HEIGHT);
+	m_deferredRender.InitializeShader(m_device);
+	m_deferredRender.InitializeBufferString(m_device);
+	
 }
 
 WPARAM Game::MainLoop()
@@ -98,6 +115,7 @@ WPARAM Game::MainLoop()
 		//Call Render Functions
 		Render();
 	}
+
 }
 
 void Game::Update(double time)
@@ -108,6 +126,11 @@ void Game::Update(double time)
 	
 	//if(m_screenManager->GetCurrentScreen() == USERINTERFACE)
 	// Update Entity Manager
+<<<<<<< HEAD
+=======
+
+	//Do life-checks here with m_statManager->GetLives();
+>>>>>>> refs/remotes/origin/master
 }
 
 void Game::Render()
@@ -121,7 +144,18 @@ void Game::Render()
 	//if(m_screenManager->GetCurrentScreen() == USERINTERFACE)
 	// Render Entity Manager
 	if (m_screenManager->GetCurrentScreen() == GAME)
+	{
+		m_deferredBuffer.SetCleanResource(m_deviceContext);
+		m_deferredBuffer.ClearRenderTargets(m_deviceContext);
+		m_deferredBuffer.SetRenderTargets(m_deviceContext);
 		m_entityManager->Render();
+<<<<<<< HEAD
+=======
+		m_deviceContext->OMSetRenderTargets(1, &m_backbufferRTV, m_depthStencilView);
+		m_deferredBuffer.SetShaderResource(m_deviceContext);
+		m_deferredRender.Render(m_deviceContext);
+	}
+>>>>>>> refs/remotes/origin/master
 
 	m_swapChain->Present(0, 0);
 }
@@ -129,9 +163,10 @@ void Game::Render()
 void Game::CheckInput()
 {
 	//InputType _returnInput = m_input->CheckKeyBoardInput();
-	if (m_input->CheckEsc())
-		exit(0);
-
+	if (m_input->CheckEsc()) {
+		m_statsManager->SaveScore("PixieTrust.txt", "SomeNoob");
+		PostQuitMessage(0);
+	}
 	m_input->CheckMouseInput();
 }
 

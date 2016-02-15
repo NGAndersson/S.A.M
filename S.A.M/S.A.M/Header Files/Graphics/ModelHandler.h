@@ -2,9 +2,6 @@
 #define _MODELHANDLER_H_
 
 #include "Graphics\OBJloader.h"
-#include "Graphics\ShaderHandler.h"
-
-
 
 class ModelHandler
 {
@@ -21,11 +18,10 @@ public:
 	~ModelHandler();
 	bool LoadOBJData(string OBJFileName, string colourFileName, ID3D11Device* device, ID3D11DeviceContext* deviceContext);
 	bool CreateBuffers(ID3D11Device* device);
-	bool CreateShaders(ID3D11Device* device, string vertexFile, string geometryFile, string pixelFile);
-	bool CreateShadersCompute(ID3D11Device* device, string vertexFile, string geometryFile, string pixelFile, string computeFile);
-	bool SetShaders(ID3D11DeviceContext* deviceContext);
 	bool SetBuffers(ID3D11DeviceContext* deviceContext);
+	void beatBoost(bool beat, float time, float timeSinceLast, float BPM);
 	int GetVertexCount();
+	XMFLOAT3 GetDeffuse();
 
 private:
 	XMFLOAT3* m_vertices,* m_normals, *m_RGBDeffuse, *m_RGBAL, *m_Tf, *m_Ni;
@@ -33,10 +29,12 @@ private:
 	int m_vertexCount, m_textureCount, m_normalCount, m_faceCount, m_kdCount, m_kaCount, m_tfCount, m_niCount;
 	FaceType* m_faces;
 	OBJLoader m_OBJLoad;
-	ShaderHandler m_shaderLoad;
 	ID3D11Buffer* m_vertexBuffer = nullptr, *m_OBJColourBuffer = nullptr;
 	ID3D11ShaderResourceView* m_ObjTex = nullptr;
 	VertexInputType* m_vertexInput;
+	float m_beatBoost = 1;
+	float m_beatTime = 0;
+	OBJColourType _OBJColour;
 };
 
 #endif
