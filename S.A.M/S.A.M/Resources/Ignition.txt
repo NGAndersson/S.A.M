@@ -1,12 +1,12 @@
 # <-- Comment
 #### Soundfile
-music=Resources/Sound/PixieTrust.mp3
+music=Resources/Sound/Ignition.mp3
 
 #### Scorefile
-score=PixieTrust.txt
+score=Ignition.txt
 
 #### Beginning offset
-offset=44
+offset=0
 
 #### Bullet Sounds
 bulletD=Resources/Sound/DefaultSoundBullet1.wav
