@@ -189,7 +189,7 @@ void EntityManager::Initialize(SoundManager* soundManager, Input* input, ID3D11D
 	m_backgroundPartSys.CreateBuffer(m_device, m_deviceContext, _texName);
 
 	_texName = L"Resources\\Models\\star.jpg";
-	m_rocketPartSys.RocketPartSys(3, 10000);
+	m_rocketPartSys.RocketPartSys(3, 1000);
 	m_rocketPartSys.CreateRocketBuffer(m_device, m_deviceContext, _texName);
 
 	m_soundManager->PlayMusic(0.5f);//TEMPORARY MUTE return to 0.5f when you want sound!

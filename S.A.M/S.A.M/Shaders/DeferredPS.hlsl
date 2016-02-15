@@ -68,7 +68,7 @@ float4 PS_main(PS_IN input) : SV_TARGET
 
 		TotLight = ((Diffuse + SpecularL) * Attenuation) + TotLight;
 	}
-	TotLight = TotLight + (float3(0.3, 0.3, 0.3) * DiffuseLight);
+	TotLight = TotLight + (float3(0.4, 0.4, 0.4) * DiffuseLight);
 
 	return float4(TotLight, 1.0f);
 }

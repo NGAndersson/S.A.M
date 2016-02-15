@@ -144,7 +144,7 @@ bool PartSys::InstancePartRend(ID3D11DeviceContext* deviceContext)
 
 void PartSys::RocketPartSys(float offset, float lifeLenght)
 {
-	m_amountOfPart = 600;
+	m_amountOfPart = 6000;
 	m_partPos = new XMFLOAT4[m_amountOfPart];
 	m_partLifeLenght = lifeLenght;
 	m_timeToLive = new float[m_amountOfPart];
@@ -152,7 +152,14 @@ void PartSys::RocketPartSys(float offset, float lifeLenght)
 	for (int i = 0; i < m_amountOfPart; i++)
 	{
 		m_partPos[i] = XMFLOAT4((((float(rand() % (int(m_partOffset) * 10000)) / 10000) + ((m_partOffset / 2)))), ((float(rand() % (int(m_partOffset) * 10000)) / 10000) + ((m_partOffset / 2))), (float(rand() % int(m_partOffset / 2))), 1.0f);
-		m_timeToLive[i] = m_partLifeLenght;
+		if (((m_partPos[i].x * m_partPos[i].x) + (m_partPos[i].z * m_partPos[i].z)) < (m_partOffset * m_partOffset))
+		{
+			m_timeToLive[i] = m_partLifeLenght;
+		}
+		else
+		{
+			i--;
+		}
 	}
 }
 
@@ -163,7 +170,14 @@ void PartSys::UpdateRocketPartSys(ID3D11DeviceContext* deviceContext, float time
 		if (m_timeToLive[i] <= 0)
 		{
 			m_partPos[i] = XMFLOAT4((((float(rand() % (int(m_partOffset) * 10000)) / 10000) - ((m_partOffset / 2)))), (((float(rand() % (int(m_partOffset) * 10000)) / 10000) - ((m_partOffset / 2)))), float(rand() % int(m_partOffset / 2)), 1.0f);
-			m_timeToLive[i] = m_partLifeLenght;
+			if (((m_partPos[i].x * m_partPos[i].x) + (m_partPos[i].z * m_partPos[i].z)) < (m_partOffset * (m_partOffset)))
+			{
+				m_timeToLive[i] = m_partLifeLenght;
+			}
+			else
+			{
+				i--;
+			}
 		}
 		else
 		{
