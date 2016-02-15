@@ -1,10 +1,10 @@
 1|Oscar|100000
 2|Oscar|90000
 3|Oscar|80000
-4|Oscar|70000
-5|Oscar|60000
-6|Oscar|50000
-7|SomeNoob|41000
-8|Oscar|40000
-9|SomeNoob|38000
+4|SomeNoob|74000
+5|Oscar|70000
+6|Oscar|60000
+7|Oscar|50000
+8|SomeNoob|41000
+9|Oscar|40000
 10|SomeNoob|36000

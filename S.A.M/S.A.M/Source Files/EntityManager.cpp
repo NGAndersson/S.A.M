@@ -14,7 +14,7 @@ EntityManager::~EntityManager()
 		delete m_modelHandlers[i];
 		m_modelHandlers[i] = NULL;
 	}
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < 6; i++)
 	{
 		delete m_shaderLoad[i];
 		m_shaderLoad[i] = NULL;
@@ -150,6 +150,8 @@ void EntityManager::Initialize(SoundManager* soundManager, Input* input, ID3D11D
 	m_shaderLoad[SHADER_MENU] = new ShaderHandler();
 	m_shaderLoad[SHADER_PARTICLE] = new ShaderHandler();
 	m_shaderLoad[SHADER_PARTICLE]->CreateShadersPosOnly(m_device, "Shaders\\PartVS.hlsl", "Shaders\\PartGS.hlsl", "Shaders\\PartPS.hlsl");
+	m_shaderLoad[SHADER_ROCKETPART] = new ShaderHandler();
+	m_shaderLoad[SHADER_ROCKETPART]->CreateShadersPosOnly(m_device, "Shaders\\InstancePartVS.hlsl", "Shaders\\InstancePartGS.hlsl", "Shaders\\InstancePartPS.hlsl");
 
 	//Create model handlers for each entity type
 	m_modelHandlers[PLAYER] = new ModelHandler();
@@ -183,7 +185,12 @@ void EntityManager::Initialize(SoundManager* soundManager, Input* input, ID3D11D
 	SpawnEntity(PLAYER);
 	//Temp, creates partsys
 	wstring _texName = L"Resources\\Models\\star3.jpg";
-	m_partSys.CreateBuffer(m_device, m_deviceContext, _texName);
+	m_backgroundPartSys.BackGround();
+	m_backgroundPartSys.CreateBuffer(m_device, m_deviceContext, _texName);
+
+	_texName = L"Resources\\Models\\star.jpg";
+	m_rocketPartSys.RocketPartSys(3, 10000);
+	m_rocketPartSys.CreateRocketBuffer(m_device, m_deviceContext, _texName);
 
 	m_soundManager->PlayMusic(0.5f);//TEMPORARY MUTE return to 0.5f when you want sound!
 	ChangeSongData(m_beatDetector->GetTempo());
@@ -197,8 +204,18 @@ void EntityManager::Initialize(SoundManager* soundManager, Input* input, ID3D11D
 void EntityManager::Render()
 {
 	m_shaderLoad[SHADER_PARTICLE]->SetShaders(m_deviceContext);
-	m_partSys.PartRend(m_deviceContext);
-	
+	m_backgroundPartSys.PartRend(m_deviceContext);
+	if (m_bullet2.size() > 0)
+	{
+		m_rocketPartSys.AddRocketPartSys(m_bullet2, XMFLOAT4(0, 0, -7, 0));	
+	}
+
+	std::vector<Entity*> _playerVec = { m_player };
+	m_shaderLoad[SHADER_ROCKETPART]->SetShaders(m_deviceContext);
+	m_rocketPartSys.AddRocketPartSys(_playerVec, XMFLOAT4(0, 0, -4, 0));
+	m_rocketPartSys.SetRocketBuffer(m_deviceContext);
+	m_rocketPartSys.InstancePartRend(m_deviceContext);
+
 	//Render Player
 	if (m_player->GetHealth() > 0)			//Invulnerability-blinking
 	{
@@ -393,7 +410,8 @@ void EntityManager::Update(double time)
 	m_light.SetConstbuffer(m_deviceContext);
 
 	//Update Particle System
-	m_partSys.updatePart(m_deviceContext, time, 40);
+	m_backgroundPartSys.BackGroundUpdatePart(m_deviceContext, time, 40);
+	m_rocketPartSys.UpdateRocketPartSys(m_deviceContext, time, 10);
 }
 
 void EntityManager::ChangeSongData(int bpm)

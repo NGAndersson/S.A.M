@@ -24,7 +24,7 @@
 #include "Gamelogic\Stats.h"
 
 #include <memory>
-enum ShaderIndexName { SHADER_PLAYER, SHADER_BULLET, SHADER_ENEMY, SHADER_MENU, SHADER_PARTICLE };
+enum ShaderIndexName { SHADER_PLAYER, SHADER_BULLET, SHADER_ENEMY, SHADER_MENU, SHADER_PARTICLE, SHADER_ROCKETPART };
 
 class EntityManager
 {
@@ -51,7 +51,7 @@ public:
 	//Variables
 private:
 	//Vectors with all the different types of entities
-	ShaderHandler* m_shaderLoad[5];
+	ShaderHandler* m_shaderLoad[6];
 	ModelHandler* m_modelHandlers[11];
 	LightHandler m_light;
 	std::vector<Entity*> m_bullet1;
@@ -65,7 +65,7 @@ private:
 	std::vector<Entity*> m_enemy3;
 	std::vector<Entity*> m_enemy4;
 	Entity* m_player;
-	PartSys m_partSys;
+	PartSys m_backgroundPartSys, m_rocketPartSys;
 	Collision m_collision;
 
 	std::vector<std::pair<int, std::vector<XMFLOAT3>>> m_enemy1MovPatterns;

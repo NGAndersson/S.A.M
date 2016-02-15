@@ -24,7 +24,6 @@ void Bullet_p2::Update(double time)
 {
 	m_position.z += m_speed * time;
 
-
 	m_entityBox.Center = m_position;
 }
 
