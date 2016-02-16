@@ -142,6 +142,7 @@ void Game::Update(double time)
 
 void Game::Render()
 {
+
 	// clear the back buffer to a deep blue
 	float _clearColor[] = { 0, 0, 0, 1 };
 	m_deviceContext->ClearRenderTargetView(m_backbufferRTV, _clearColor);
@@ -158,12 +159,21 @@ void Game::Render()
 	if (m_screenManager->GetCurrentScreen() == GAME)
 	{
 		m_entityManager->Render();
+
 	}
 	m_deviceContext->OMSetRenderTargets(1, &m_backbufferRTV, m_depthStencilView);
 	m_deferredBuffer.SetShaderResource(m_deviceContext);
 	m_deferredRender.Render(m_deviceContext);
 
 	m_screenManager->Render();
+
+	//spritbatch goes retard and setts rendershit to 2D things...
+	float _blendF[4] = { 0.0f,0.0f,0.0f,0.0f };
+	UINT _sampleM = 0xffffffff;
+	m_deviceContext->OMSetBlendState(m_blendState,_blendF,_sampleM);
+
+	m_deviceContext->OMSetDepthStencilState(m_depthStencilState, 0);
+
 }
 
 void Game::CheckInput()
@@ -251,6 +261,8 @@ HRESULT Game::CreateDirect3DContext(HWND wndHandle)
 		//Set the sampler state
 		m_deviceContext->PSSetSamplers(0, 1, &m_sampleState);
 	}
+
+	
 	return _hr;
 }
 

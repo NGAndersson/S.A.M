@@ -54,6 +54,8 @@ private:
 	ID3D11DepthStencilView* m_depthStencilView = nullptr;
 	ID3D11Texture2D* m_depthStencil = nullptr;
 	ID3D11SamplerState* m_sampleState = nullptr;
+	ID3D11BlendState1* m_blendState = nullptr;
+	ID3D11DepthStencilState* m_depthStencilState = nullptr;
 
 public:
 };
