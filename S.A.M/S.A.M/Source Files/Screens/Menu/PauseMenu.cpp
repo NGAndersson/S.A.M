@@ -34,6 +34,10 @@ PauseMenu::PauseMenu(ID3D11Device* Device, ID3D11DeviceContext* DeviceContext, i
 void PauseMenu::Update()
 {
 
+//	wstring = to_wstring(stats->GetScore)=....
+
+
+
 	InputType _inputReturn;
 
 	_inputReturn = m_input->CheckKeyBoardInput();
@@ -65,10 +69,8 @@ void PauseMenu::Update()
 void PauseMenu::Render()
 {
 
-
-
 	m_spriteBatch->Begin();
-
+	
 	m_font->DrawString(m_spriteBatch.get(), m_resume, m_choices[0].m_position, m_choices[0].m_color, 0.f, m_choices[0].m_origin);
 
 	m_font->DrawString(m_spriteBatch.get(), m_options, m_choices[1].m_position, m_choices[1].m_color, 0.f, m_choices[1].m_origin);

@@ -46,9 +46,13 @@ void ScreenManager::Update( )
 		//Pause
 
 		break;
-	case 6:
+	case ENDSCREEN:
 		//Endscreen
-
+		m_endScreen->Update();
+		if (m_input->CheckReturn())
+		{
+			m_current = m_endScreen->GetTargetMenu();
+		}
 		break;
 	default:
 		break;
@@ -62,12 +66,13 @@ void ScreenManager::InitializeScreen(ID3D11Device* Device, ID3D11DeviceContext* 
 	//Starting all the otherClasses etc..
 
 	//Current screen is startscreen
-	m_current = MENU;
+	m_current = ENDSCREEN;
 	//m_Current = USERINTERFACE;
 	//Create Modelhandlers...
 	m_input = input;
 	m_screenMenu = new StartMenu(Device, DeviceContext, ScreenHeight, ScreenWidth, input);
 	m_screenGame = new UI(Device, DeviceContext, ScreenHeight, ScreenWidth, input, stats);
+	m_endScreen = new EndScreen(Device, DeviceContext, ScreenHeight, ScreenWidth, input, stats);
 }
 
 void ScreenManager::Render()
@@ -98,9 +103,9 @@ void ScreenManager::Render()
 		//Pause
 
 		break;
-	case 6:
+	case ENDSCREEN:
 		//Endscreen
-
+		m_endScreen->Render();
 		break;
 	default:
 		break;

@@ -65,7 +65,7 @@ void Game::InitGame(Input* input, Display* disp)
 
 	//Create and initialize ScreenManager
 	m_screenManager = new ScreenManager();
-	m_screenManager->InitializeScreen(m_device,m_deviceContext,HEIGHT,WIDTH,m_input,m_statsManager);
+	m_screenManager->InitializeScreen(m_device, m_deviceContext, HEIGHT, WIDTH, m_input, m_statsManager);
 
 	//Create and initialize EntityManager
 	m_entityManager = new EntityManager;

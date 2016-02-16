@@ -51,5 +51,4 @@ protected:
 	SimpleMath::Vector2 m_fontPosition;
 };
 
-
 #endif

@@ -8,6 +8,7 @@
 #include "Screens\Screen.h"
 #include "Screens\Menu\StartMenu.h"
 #include "Screens\Menu\UI.h"
+#include "Screens\EndScreen.h"
 
 class ScreenManager
 {
@@ -35,6 +36,7 @@ private:
 	Screen* m_screenOptions;
 	Screen* m_screenPause;
 	Screen* m_screenHighScore;
+	Screen* m_endScreen;
 
 	//input
 	Input* m_input;

@@ -141,6 +141,9 @@
     <ClCompile Include="Source Files\Graphics\SpacePart.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source Files\Screens\EndScreen.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header Files\SoundManager.h">
@@ -282,6 +285,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Header Files\Graphics\SpacePart.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\Screens\EndScreen.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

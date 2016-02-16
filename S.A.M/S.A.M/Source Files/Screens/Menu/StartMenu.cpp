@@ -65,9 +65,6 @@ void StartMenu::Update()
 
 void StartMenu::Render()
 {
-
-
-	
 	m_spriteBatch->Begin();
 
 	m_font->DrawString(m_spriteBatch.get(), m_start, m_choices[0].m_position, m_choices[0].m_color, 0.f, m_choices[0].m_origin);
