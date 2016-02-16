@@ -51,6 +51,7 @@ public:
 	BulletType CheckBullet();
 	MouseClicked CheckMouseInput();
 	bool CheckEsc();
+	bool IsNewButtonPressed(BulletType& checkAgainst);
 
 	//----------------------------Attributes----------------------------------------
 private:

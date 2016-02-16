@@ -15,6 +15,13 @@ bulletW=Resources/Sound/DefaultSoundBullet3.wav
 bulletE=Resources/Sound/DefaultSoundBullet4.wav
 bulletR=Resources/Sound/DefaultSoundBullet5.wav
 
+#### Bullet frequencies, default is 3 if not defined here
+BeatPerShot1=2
+BeatPerShot2=2
+BeatPerShot3=2
+BeatPerShot4=2
+
+
 #### Movement Patterns.		Map Width = 0 to 77, Map Length = 0 to 103
 ### |Xcoord,Zcoord|
 #0 Enter-direction, needs to be attached to something
