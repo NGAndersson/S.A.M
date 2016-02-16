@@ -16,6 +16,7 @@ struct PS_OUT
 	float4 DiffAlbedo : SV_Target1;
 	float4 SpecAlbedo : SV_Target2;
 	float4 Pos : SV_Target3;
+	float4 Glow : SV_Target4;
 };
 
 PS_OUT PS_main(PS_IN input)
@@ -26,9 +27,7 @@ PS_OUT PS_main(PS_IN input)
 	output.DiffAlbedo = PartTex.Sample(sampAni, input.Tex);
 	output.SpecAlbedo = float4(0.16f, 0.16f, 0.16f, 1000.0f);
 	output.Pos = float4(input.Position, 1.0f);
+	output.Glow = PartTex.Sample(sampAni, input.Tex);
 
 	return output;
-
-	/*float3 pixelOut = PartTex.Sample(sampAni, input.Tex).xyz;
-	return float4(pixelOut, 1.0);*/
 }

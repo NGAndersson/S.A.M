@@ -151,6 +151,7 @@ void DeferredBuffer::SetShaderResource(ID3D11DeviceContext* deviceContext)
 	deviceContext->PSSetShaderResources(1, 1, &m_SRVA[1]);
 	deviceContext->PSSetShaderResources(2, 1, &m_SRVA[2]);
 	deviceContext->PSSetShaderResources(3, 1, &m_SRVA[3]);
+	deviceContext->PSSetShaderResources(4, 1, &m_SRVA[4]);
 }
 
 void DeferredBuffer::SetCleanResource(ID3D11DeviceContext* deviceContext)
@@ -159,4 +160,5 @@ void DeferredBuffer::SetCleanResource(ID3D11DeviceContext* deviceContext)
 	deviceContext->PSSetShaderResources(1, 1, &m_cleanView);
 	deviceContext->PSSetShaderResources(2, 1, &m_cleanView);
 	deviceContext->PSSetShaderResources(3, 1, &m_cleanView);
+	deviceContext->PSSetShaderResources(4, 1, &m_cleanView);
 }
