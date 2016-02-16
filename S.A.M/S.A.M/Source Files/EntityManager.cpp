@@ -2,6 +2,7 @@
 #include <iostream>
 #define MAPWIDTH 77
 #define MAPLENGTH 103
+#define BEATLENIENCY 100
 
 EntityManager::EntityManager()
 {
@@ -88,17 +89,17 @@ void EntityManager::SpawnEntity(HandlerIndex type)
 	case(BULLET1) :
 		//tempEntity = new Bullet_p1(m_soundManager, MAPWIDTH, MAPLENGTH, m_player->GetPosition(), XMFLOAT3(1, 1, 1));
 		m_bullet1.push_back(new Bullet_p1(m_soundManager, MAPWIDTH, MAPLENGTH, m_player->GetPosition(), XMFLOAT3(1, 1, 1), 1, m_modelHandlers[BULLET1]->GetDeffuse()));
-//		m_soundManager->PlayOneShotSound("DefaultBullet", 0.5f);
+		m_soundManager->PlayOneShotSound("DefaultBullet", 0.5f);
 		break;
 	case(BULLET2) :
 		//tempEntity = new Bullet_p2(m_soundManager, MAPWIDTH, MAPLENGTH, m_player->GetPosition(), XMFLOAT3(1, 1, 1));
 		m_bullet2.push_back(new Bullet_p2(m_soundManager, MAPWIDTH, MAPLENGTH, m_player->GetPosition(), XMFLOAT3(1, 1, 1),1));
-//		m_soundManager->PlayOneShotSound("Bullet_Q", 0.5f);
+		m_soundManager->PlayOneShotSound("Bullet_Q", 0.5f);
 		break;
 	case(BULLET3) :
 		//tempEntity = new Bullet_p3(m_soundManager, MAPWIDTH, MAPLENGTH, m_player->GetPosition(), XMFLOAT3(1, 1, 1));
 		m_bullet3.push_back(new Bullet_p3(m_soundManager, MAPWIDTH, MAPLENGTH, m_player->GetPosition(), XMFLOAT3(1, 1, 1),1 , m_modelHandlers[BULLET3]->GetDeffuse()));
-//		m_soundManager->PlayOneShotSound("Bullet_W", 0.5f);
+		m_soundManager->PlayOneShotSound("Bullet_W", 0.5f);
 		break;
 	case(BULLET4) :
 		//tempEntity = new Bullet_p4(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x - 1, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(0.5, 0.5, 0.5));
@@ -107,12 +108,12 @@ void EntityManager::SpawnEntity(HandlerIndex type)
 		m_bullet4.push_back(new Bullet_p4(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(0.5, 0.5, 0.5), 1, m_modelHandlers[BULLET4]->GetDeffuse(), 1));
 		//tempEntity = new Bullet_p4(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x + 1, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(0.5, 0.5, 0.5));
 		m_bullet4.push_back(new Bullet_p4(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x + 1, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(0.5, 0.5, 0.5), 1, m_modelHandlers[BULLET4]->GetDeffuse(), 2));
-//		m_soundManager->PlayOneShotSound("Bullet_E", 0.5f);
+		m_soundManager->PlayOneShotSound("Bullet_E", 0.5f);
 		break;
 	case(BULLET5) :
 		//tempEntity = new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z + 60), XMFLOAT3(1, 1, 20));
 		m_bullet5.push_back(new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z + 60), XMFLOAT3(1, 1, 20),1));
-//		m_soundManager->PlayOneShotSound("Laser_R", 0.5f);
+		m_soundManager->PlayOneShotSound("Laser_R", 0.5f);
 		break;
 	}
 }
@@ -127,7 +128,7 @@ void EntityManager::Initialize(SoundManager* soundManager, Input* input, ID3D11D
 	m_statsManager->SetLives();
 
 	//Which song to load/play
-	InitMusic("Resources/Ignition.txt");
+	InitMusic("Resources/PixieTrust.txt");
 
 	m_beatDetector = new BeatDetector(m_soundManager);
 	m_beatDetector->AudioProcess();
@@ -233,6 +234,8 @@ void EntityManager::Render()
 
 void EntityManager::Update(double time)
 {
+	CheckCombo();
+
 		//Regular BPM test
 	if (m_doBeatDet == false) 
 	{
@@ -265,23 +268,23 @@ void EntityManager::Update(double time)
 			m_modelHandlers[BULLET4]->beatBoost(false, time, -1, m_currentBPM);
 			m_modelHandlers[BULLET5]->beatBoost(false, time, -1, m_currentBPM);
 			m_modelHandlers[BULLET6]->beatBoost(false, time, -1, m_currentBPM);
-	}
+		}
 	}
 	else {
 		//BeatDet test
 		float _currentPos = m_soundManager->GetCurrentMusicTimePCM() / 1024.f;
 
-		if (m_beat[(int)_currentPos] > 0.0f && m_timeSinceLastBeat > 0.1)		//Small time buffer to prevent it from going off 50 times per beat 
+		if (m_beat[(int)_currentPos] > 0.0f && m_timeSinceLastBeat > 100)		//Small time buffer to prevent it from going off 50 times per beat 
 		{
 			//BEAT WAS DETECTED
 			if (m_offsetCount > m_offset) {
 				BeatWasDetected();
-				m_light.beatBoost(true, time, m_timeSinceLastBeat, 0);
-				m_modelHandlers[BULLET1]->beatBoost(true, time, m_timeSinceLastBeat, 0);
-				m_modelHandlers[BULLET3]->beatBoost(true, time, m_timeSinceLastBeat, 0);
-				m_modelHandlers[BULLET4]->beatBoost(true, time, m_timeSinceLastBeat, 0);
-				m_modelHandlers[BULLET5]->beatBoost(true, time, m_timeSinceLastBeat, 0);
-				m_modelHandlers[BULLET6]->beatBoost(true, time, m_timeSinceLastBeat, 0);
+				m_light.beatBoost(true, time, m_timeSinceLastBeat/1000, 0);
+				m_modelHandlers[BULLET1]->beatBoost(true, time, m_timeSinceLastBeat/1000, 0);
+				m_modelHandlers[BULLET3]->beatBoost(true, time, m_timeSinceLastBeat/1000, 0);
+				m_modelHandlers[BULLET4]->beatBoost(true, time, m_timeSinceLastBeat/1000, 0);
+				m_modelHandlers[BULLET5]->beatBoost(true, time, m_timeSinceLastBeat/1000, 0);
+				m_modelHandlers[BULLET6]->beatBoost(true, time, m_timeSinceLastBeat/1000, 0);
 				m_timeSinceLastBeat = 0;
 				EnemyFire();
 				
@@ -292,13 +295,13 @@ void EntityManager::Update(double time)
 			}
 		}
 		else {
-			m_timeSinceLastBeat += time;
-			m_light.beatBoost(false, time, m_timeSinceLastBeat, 0);
-			m_modelHandlers[BULLET1]->beatBoost(false, time, m_timeSinceLastBeat, 0);
-			m_modelHandlers[BULLET3]->beatBoost(false, time, m_timeSinceLastBeat, 0);
-			m_modelHandlers[BULLET4]->beatBoost(false, time, m_timeSinceLastBeat, 0);
-			m_modelHandlers[BULLET5]->beatBoost(false, time, m_timeSinceLastBeat, 0);
-			m_modelHandlers[BULLET6]->beatBoost(false, time, m_timeSinceLastBeat, 0);
+			m_timeSinceLastBeat += time * 1000;
+			m_light.beatBoost(false, time, m_timeSinceLastBeat/1000, 0);
+			m_modelHandlers[BULLET1]->beatBoost(false, time, m_timeSinceLastBeat/1000, 0);
+			m_modelHandlers[BULLET3]->beatBoost(false, time, m_timeSinceLastBeat/1000, 0);
+			m_modelHandlers[BULLET4]->beatBoost(false, time, m_timeSinceLastBeat/1000, 0);
+			m_modelHandlers[BULLET5]->beatBoost(false, time, m_timeSinceLastBeat/1000, 0);
+			m_modelHandlers[BULLET6]->beatBoost(false, time, m_timeSinceLastBeat/1000, 0);
 		}
 	}
 
@@ -337,7 +340,7 @@ void EntityManager::Update(double time)
 	//_addScore += m_collision.CheckCollisionEntity(&m_bullet5, &m_enemy3,BULLET5, ENEMY3);
 	//_addScore += m_collision.CheckCollisionEntity(&m_bullet5, &m_enemy4,BULLET5, ENEMY4);
 
-	m_statsManager->AddScore(_addScore);
+	m_statsManager->AddScore(_addScore*m_statsManager->GetCombo());
 
 	//Check Player against Enemy Bullet
 	if (!m_player->GetInvulnerable())			//Only check if the player is alive and well
@@ -460,6 +463,15 @@ void EntityManager::InitMusic(std::string filename)
 
 			else if (std::string(_key) == "score")
 				m_statsManager->LoadScore(_value);
+
+			else if (std::string(_key) == "BeatPerShot1")
+				m_beatPerShot1 = atoi(_value);
+			else if (std::string(_key) == "BeatPerShot2")
+				m_beatPerShot2 = atoi(_value);
+			else if (std::string(_key) == "BeatPerShot3")
+				m_beatPerShot3 = atoi(_value);
+			else if (std::string(_key) == "BeatPerShot4")
+				m_beatPerShot4 = atoi(_value);
 
 			else if (std::string(_key) == "mov")	//Mov patterns
 			{
@@ -759,11 +771,56 @@ void EntityManager::EnemyFire()
 {
 	for (auto i = 0; i < m_enemy1.size(); i++)
 	{
-		if (m_enemy1[i]->GetFireTime()>3.0f){
+		if (m_enemy1[i]->GetFireTime()>m_beatPerShot1){
 			m_bullet6.push_back(new Bullet_e(m_soundManager, MAPWIDTH, MAPLENGTH, m_enemy1[i]->GetPosition(), XMFLOAT3(0.5, 0.5, 0.5), 1, m_modelHandlers[BULLET6]->GetDeffuse()));
 			m_enemy1[i]->SetFireTime(0);
 		}
 
-		m_enemy1[i]->SetFireTime(m_enemy1[i]->GetFireTime() + 0.5);
+		m_enemy1[i]->SetFireTime(m_enemy1[i]->GetFireTime() + 1.0f);
+	}
+}
+
+void EntityManager::CheckCombo()
+{
+	// Check key presses near the beat, for combo
+	static bool _registeredCombo = true;
+	static BulletType _currentBulletType;
+	if (m_offsetCount > m_offset) {						//Only check for combos after the beats have actually started
+		if (m_timeSinceLastBeat < 25000 / m_currentBPM)
+		{
+			if (m_input->IsNewButtonPressed(_currentBulletType)) //If button is pressed
+			{
+				if (m_timeSinceLastBeat < BEATLENIENCY && _registeredCombo == false)	//If key was pressed during sweet spot and key hadn't been pressed earlier
+				{
+					m_statsManager->AddCombo();
+					OutputDebugStringA(to_string(m_statsManager->GetCombo()).c_str());		//DDDDDEBUGGG
+					_registeredCombo = true;
+				}
+				else					//Reset combo if pressed more than once or after sweetspot
+				{
+					m_statsManager->ResetCombo();
+				}
+			}
+			if (m_timeSinceLastBeat > BEATLENIENCY && m_timeSinceLastBeat < 30000 / m_currentBPM && _registeredCombo == false)	//If a key wasn't pressed at all during a beat, reset combo
+				m_statsManager->ResetCombo();
+		}
+		else if (m_timeSinceLastBeat > 25000 / m_currentBPM && m_timeSinceLastBeat < 35000 / m_currentBPM)	//Switch to new beat, Allow a new key to be pressed 
+			_registeredCombo = false;
+		else if (m_timeSinceLastBeat > 35000 / m_currentBPM)
+		{
+			if (m_input->IsNewButtonPressed(_currentBulletType)) //If button is pressed
+			{
+				if (m_timeSinceLastBeat > 60000 / m_currentBPM - BEATLENIENCY && _registeredCombo == false)	//If key was pressed during sweet spot and key hadn't been pressed earlier
+				{
+					m_statsManager->AddCombo();
+					OutputDebugStringA(to_string(m_statsManager->GetCombo()).c_str());		//DDDDDEBUGGG
+					_registeredCombo = true;
+				}
+				else					//Reset combo if pressed more than once or after sweetspot
+				{
+					m_statsManager->ResetCombo();
+				}
+			}
+		}
 	}
 }

@@ -42,6 +42,7 @@ private:
 	void InitMusic(std::string filename);
 	void EnemyFire();
 	void RenderEnemies();
+	void CheckCombo();
 
 public:
 	EntityManager();
@@ -76,6 +77,10 @@ private:
 	std::vector<std::pair<int, std::vector<XMFLOAT3>>> m_enemy2MovPatterns;
 	std::vector<std::pair<int, std::vector<XMFLOAT3>>> m_enemy3MovPatterns;
 	std::vector<std::pair<int, std::vector<XMFLOAT3>>> m_enemy4MovPatterns;
+	int m_beatPerShot1 = 3;
+	int m_beatPerShot2 = 3;
+	int m_beatPerShot3 = 3;
+	int m_beatPerShot4 = 3;
 
 	Stats* m_statsManager;
 
