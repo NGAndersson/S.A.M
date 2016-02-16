@@ -18,12 +18,9 @@ enum MenuScreens {MENU_DEFAULT, MENU, GAME, HIGHSCORE, OPTION, PAUSE, ENDSCREEN 
 
 class Screen
 {
-
 public:
-	Screen(){}
-
-	~Screen(){}
-
+	Screen() {}
+	virtual ~Screen() {}
 	Screen(ID3D11Device* Device, ID3D11DeviceContext* DeviceContext, int ScreenHeight, int ScreenWidth, Input* input);
 	virtual void Update();
 	virtual void Render();

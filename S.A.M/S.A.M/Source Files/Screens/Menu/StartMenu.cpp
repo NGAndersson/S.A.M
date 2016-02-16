@@ -59,9 +59,7 @@ void StartMenu::Update()
 	{
 		m_keyDown = false;
 	}
-	else if(_inputReturn == INPUT_ENTER)
-	{
-	}
+
 
 }
 

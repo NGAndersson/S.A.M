@@ -15,6 +15,7 @@ public:
 	void AddLives(int change) { m_lives += change; }
 	void SetLives(int change = 3) { m_lives = change; }
 	int GetLives() { return m_lives; }
+	int GetScore() { return m_score; }
 private:
 	int m_score;
 	std::pair<std::string, int> m_highScores[10] = { { "", 0 } };

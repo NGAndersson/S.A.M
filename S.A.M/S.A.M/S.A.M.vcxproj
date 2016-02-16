@@ -180,7 +180,7 @@
     <ClCompile Include="Source Files\Screens\Menu\PauseMenu.cpp" />
     <ClCompile Include="Source Files\Screens\Menu\StartMenu.cpp" />
     <ClCompile Include="Source Files\Screens\Screen.cpp" />
-    <ClCompile Include="Source Files\Screens\UI.cpp" />
+    <ClCompile Include="Source Files\Screens\Menu\UI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header Files\Audio\BeatDetector.h" />
@@ -215,12 +215,11 @@
     <ClInclude Include="Header Files\Graphics\OBJloader.h" />
     <ClInclude Include="Header Files\Graphics\ParticleSys.h" />
     <ClInclude Include="Header Files\Screens\Menu\HighscoreMenu.h" />
-    <ClInclude Include="Header Files\Screens\Menu\Menu.h" />
     <ClInclude Include="Header Files\Screens\Menu\OptionsMenu.h" />
     <ClInclude Include="Header Files\Screens\Menu\PauseMenu.h" />
     <ClInclude Include="Header Files\Screens\Screen.h" />
     <ClInclude Include="Header Files\Screens\Menu\StartMenu.h" />
-    <ClInclude Include="Header Files\Screens\UI.h" />
+    <ClInclude Include="Header Files\Screens\Menu\UI.h" />
     <ClInclude Include="Header Files\PlatformHelpers.h" />
     <ClInclude Include="Header Files\Entities\Player.h" />
     <ClInclude Include="Header Files\Graphics\Renderer.h" />

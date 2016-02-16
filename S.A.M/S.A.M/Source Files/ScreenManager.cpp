@@ -6,18 +6,17 @@ ScreenManager::ScreenManager()
 
 ScreenManager::~ScreenManager()
 {
-	
+	delete m_screenGame;
 	delete m_screenMenu;
-
+	delete m_screenOptions;
+	delete m_screenPause;
+	delete m_screenHighScore;
 }
 
 void ScreenManager::Update( )
 {
 
 	//Checks input depending on what screen the user is in.
-
-
-
 
 	switch (m_current)
 	{
@@ -33,7 +32,7 @@ void ScreenManager::Update( )
 		break;
 	case GAME:
 		//Game
-
+		m_screenGame->Update();
 		break;
 	case 3:
 		//HighScore
@@ -58,7 +57,7 @@ void ScreenManager::Update( )
 
 }
 
-void ScreenManager::InitializeScreen(ID3D11Device* Device, ID3D11DeviceContext* DeviceContext, int ScreenHeight, int ScreenWidth, Input* input)
+void ScreenManager::InitializeScreen(ID3D11Device* Device, ID3D11DeviceContext* DeviceContext, int ScreenHeight, int ScreenWidth, Input* input,Stats* stats)
 {
 	//Starting all the otherClasses etc..
 
@@ -68,6 +67,7 @@ void ScreenManager::InitializeScreen(ID3D11Device* Device, ID3D11DeviceContext* 
 	//Create Modelhandlers...
 	m_input = input;
 	m_screenMenu = new StartMenu(Device, DeviceContext, ScreenHeight, ScreenWidth, input);
+	m_screenGame = new UI(Device, DeviceContext, ScreenHeight, ScreenWidth, input, stats);
 }
 
 void ScreenManager::Render()
@@ -84,7 +84,7 @@ void ScreenManager::Render()
 		break;
 	case GAME:
 		//Userinterface
-
+		m_screenGame->Render();
 		break;
 	case 3:
 		//HighScore
