@@ -162,7 +162,7 @@ void Game::Render()
 		m_deviceContext->OMSetRenderTargets(1, &m_backbufferRTV, m_depthStencilView);
 		m_deferredBuffer.SetShaderResource(m_deviceContext);
 		m_deferredRender.Render(m_deviceContext);
-	}	
+
 	m_screenManager->Render();
 }
 

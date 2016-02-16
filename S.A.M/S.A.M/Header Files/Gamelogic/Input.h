@@ -52,6 +52,7 @@ public:
 	InputType CheckKeyBoardInput();
 	BulletType CheckBullet();
 	MouseClicked CheckMouseInput();
+	void Update();
 	bool CheckReturn();
 	bool CheckEsc();
 	bool IsNewButtonPressed(BulletType& checkAgainst);

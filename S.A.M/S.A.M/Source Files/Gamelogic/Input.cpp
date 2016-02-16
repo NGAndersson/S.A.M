@@ -30,7 +30,7 @@ Input::~Input()
 
 }
 
-void  Input::Update()
+void Input::Update()
 {
 	m_Keyboard->Acquire();
 
