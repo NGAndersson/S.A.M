@@ -150,18 +150,18 @@ void Game::Render()
 
 	//if(m_screenManager->GetCurrentScreen() == USERINTERFACE)
 	// Render Entity Manager
-		m_deferredBuffer.SetCleanResource(m_deviceContext);
-		m_deferredBuffer.ClearRenderTargets(m_deviceContext);
-		m_deferredBuffer.SetRenderTargets(m_deviceContext);
+	m_deferredBuffer.SetCleanResource(m_deviceContext);
+	m_deferredBuffer.ClearRenderTargets(m_deviceContext);
+	m_deferredBuffer.SetRenderTargets(m_deviceContext);
 	PartShader.SetShaders(m_deviceContext);
 	m_backgroundPartSys->Render(m_deviceContext);
 	if (m_screenManager->GetCurrentScreen() == GAME)
-	{	
+	{
 		m_entityManager->Render();
 	}
-		m_deviceContext->OMSetRenderTargets(1, &m_backbufferRTV, m_depthStencilView);
-		m_deferredBuffer.SetShaderResource(m_deviceContext);
-		m_deferredRender.Render(m_deviceContext);
+	m_deviceContext->OMSetRenderTargets(1, &m_backbufferRTV, m_depthStencilView);
+	m_deferredBuffer.SetShaderResource(m_deviceContext);
+	m_deferredRender.Render(m_deviceContext);
 
 	m_screenManager->Render();
 }

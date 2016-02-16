@@ -168,6 +168,7 @@
     <ClCompile Include="Source Files\Graphics\Light.cpp" />
     <ClCompile Include="Source Files\Graphics\LightHandler.cpp" />
     <ClCompile Include="Source Files\Graphics\PlayerPart.cpp" />
+    <ClCompile Include="Source Files\Graphics\SpacePart.cpp" />
     <ClCompile Include="Source Files\main.cpp" />
     <ClCompile Include="Source Files\Graphics\ModelHandler.cpp" />
     <ClCompile Include="Source Files\Graphics\OBJloader.cpp" />

@@ -8,7 +8,6 @@ Stats::Stats()
 
 Stats::~Stats()
 {
-	int i = 4;
 }
 
 void Stats::AddScore(int add)
