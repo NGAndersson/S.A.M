@@ -187,7 +187,7 @@ void EntityManager::Initialize(SoundManager* soundManager, Input* input, ID3D11D
 	SpawnEntity(PLAYER);
 	//Temp, creates partsys
 	wstring _texName = L"Resources\\Models\\star.jpg";
-	m_rocketPartSys = new FirePart(3, 1000);
+	m_rocketPartSys = new FirePart(2, 1000);
 	m_rocketPartSys->CreateBuffer(m_device, m_deviceContext, _texName);
 
 	std::vector<Entity*> _playerVec = { m_player };
