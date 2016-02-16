@@ -8,7 +8,7 @@
 using namespace std;
 using namespace DirectX;
 
-const int g_BUFFER_COUNT = 4;
+const int g_BUFFER_COUNT = 5;
 
 class DeferredBuffer
 {

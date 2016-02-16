@@ -30,6 +30,7 @@ struct PS_OUT
 	float4 DiffAlbedo : SV_Target1;
 	float4 SpecAlbedo : SV_Target2;
 	float4 Pos : SV_Target3;
+	float4 Glow : SV_Target4;
 };
 
 PS_OUT PS_main(PS_IN input)
@@ -42,6 +43,7 @@ PS_OUT PS_main(PS_IN input)
 	output.DiffAlbedo = (float4(Diffuse, 1) * _depth) + (ObjTex.Sample(sampAni, input.Tex) * _depth);
 	output.SpecAlbedo = float4(0.16f, 0.16f, 0.16f, 1000.0f);
 	output.Pos = input.PosInW;
+	output.Glow = (float4(Diffuse, 1) * _depth) + (ObjTex.Sample(sampAni, input.Tex) * _depth);
 
 	return output;
 }
