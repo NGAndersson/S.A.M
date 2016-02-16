@@ -6,6 +6,9 @@
 #include "Graphics\Renderer.h"
 #include "Graphics\ModelHandler.h"
 #include "Graphics\ParticleSys.h"
+#include "Graphics\FirePart.h"
+#include "Graphics\SpacePart.h"
+#include "Graphics\PlayerPart.h"
 #include "Graphics\LightHandler.h"
 #include "Gamelogic\Input.h"
 #include "Audio\BeatDetector.h"
@@ -24,7 +27,7 @@
 #include "Gamelogic\Stats.h"
 
 #include <memory>
-enum ShaderIndexName { SHADER_PLAYER, SHADER_BULLET, SHADER_ENEMY, SHADER_MENU, SHADER_PARTICLE, SHADER_ROCKETPART };
+enum ShaderIndexName { SHADER_PLAYER, SHADER_BULLET, SHADER_ENEMY, SHADER_MENU, SHADER_PLAYERPART, SHADER_ROCKETPART };
 
 class EntityManager
 {
@@ -39,6 +42,7 @@ private:
 	void InitMusic(const std::string &filename);
 	void EnemyFire();
 	void RenderEnemies();
+	void CheckCombo();
 
 public:
 	EntityManager();
@@ -65,13 +69,18 @@ private:
 	std::vector<Entity*> m_enemy3;
 	std::vector<Entity*> m_enemy4;
 	Entity* m_player;
-	PartSys m_backgroundPartSys, m_rocketPartSys;
+	FirePart* m_rocketPartSys;
+	PlayerPart* m_playerPartSys;
 	Collision m_collision;
 
 	std::vector<std::pair<int, std::vector<XMFLOAT3>>> m_enemy1MovPatterns;
 	std::vector<std::pair<int, std::vector<XMFLOAT3>>> m_enemy2MovPatterns;
 	std::vector<std::pair<int, std::vector<XMFLOAT3>>> m_enemy3MovPatterns;
 	std::vector<std::pair<int, std::vector<XMFLOAT3>>> m_enemy4MovPatterns;
+	int m_beatPerShot1 = 3;
+	int m_beatPerShot2 = 3;
+	int m_beatPerShot3 = 3;
+	int m_beatPerShot4 = 3;
 
 	Stats* m_statsManager;
 
