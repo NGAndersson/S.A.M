@@ -7,16 +7,16 @@ cbuffer CameraViewProject : register(b0)
 struct GS_IN
 {
 	float4 Pos : POS;
-	float4 CenterPos : CENTERPOS;
+	float4 SourcePos : SOURCEPOS;
 };
 
 struct GS_OUT
 {
 	float4 Pos : SV_POSITION;
+	float4 SourcePos : SOURCEPOS;
 	float3 Normal : NORMAL;
 	float3 Position : POS;
 	float2 Tex : TEXCOORD;
-	float4 CenterPos : CENTERPOS;
 };
 
 [maxvertexcount(6)]
@@ -34,44 +34,44 @@ void GS_main(point GS_IN input[1], inout TriangleStream< GS_OUT > streamOutput)
 	output.Normal = _Normal;
 	output.Position = float3(input[0].Pos.xyz + _VekRi - _VekUp);
 	output.Tex = float2(0, 0);
-	output.CenterPos = input[0].CenterPos;
+	output.SourcePos = input[0].SourcePos;
 	streamOutput.Append(output);
 
 	output.Pos = mul(float4(input[0].Pos.xyz + _VekRi + _VekUp, 1), ViewProjection);
 	output.Normal = _Normal;
 	output.Position = float3(input[0].Pos.xyz + _VekRi + _VekUp);
 	output.Tex = float2(0, 1);
-	output.CenterPos = input[0].CenterPos;
-	streamOutput.Append(output);
-
-	output.Pos = mul(float4(input[0].Pos.xyz - _VekRi + _VekUp , 1), ViewProjection);
-	output.Normal = _Normal;
-	output.Position = float3(input[0].Pos.xyz - _VekRi + _VekUp );
-	output.Tex = float2(1, 1);
-	output.CenterPos = input[0].CenterPos;
-	streamOutput.Append(output);
-
-	streamOutput.RestartStrip();
-
-	output.Pos = mul(float4(input[0].Pos.xyz + _VekRi - _VekUp, 1), ViewProjection);
-	output.Normal = _Normal;
-	output.Position = float3(input[0].Pos.xyz + _VekRi - _VekUp );
-	output.Tex = float2(0, 0);
-	output.CenterPos = input[0].CenterPos;
+	output.SourcePos = input[0].SourcePos;
 	streamOutput.Append(output);
 
 	output.Pos = mul(float4(input[0].Pos.xyz - _VekRi + _VekUp, 1), ViewProjection);
 	output.Normal = _Normal;
 	output.Position = float3(input[0].Pos.xyz - _VekRi + _VekUp);
 	output.Tex = float2(1, 1);
-	output.CenterPos = input[0].CenterPos;
+	output.SourcePos = input[0].SourcePos;
+	streamOutput.Append(output);
+
+	streamOutput.RestartStrip();
+
+	output.Pos = mul(float4(input[0].Pos.xyz + _VekRi - _VekUp, 1), ViewProjection);
+	output.Normal = _Normal;
+	output.Position = float3(input[0].Pos.xyz + _VekRi - _VekUp);
+	output.Tex = float2(0, 0);
+	output.SourcePos = input[0].SourcePos;
+	streamOutput.Append(output);
+
+	output.Pos = mul(float4(input[0].Pos.xyz - _VekRi + _VekUp, 1), ViewProjection);
+	output.Normal = _Normal;
+	output.Position = float3(input[0].Pos.xyz - _VekRi + _VekUp);
+	output.Tex = float2(1, 1);
+	output.SourcePos = input[0].SourcePos;
 	streamOutput.Append(output);
 
 	output.Pos = mul(float4(input[0].Pos.xyz - _VekRi - _VekUp, 1), ViewProjection);
 	output.Normal = _Normal;
 	output.Position = float3(input[0].Pos.xyz - _VekRi - _VekUp);
 	output.Tex = float2(1, 0);
-	output.CenterPos = input[0].CenterPos;
+	output.SourcePos = input[0].SourcePos;
 	streamOutput.Append(output);
 
 	streamOutput.RestartStrip();

@@ -54,7 +54,8 @@ public:
 	MouseClicked CheckMouseInput();
 	bool CheckReturn();
 	bool CheckEsc();
-	void Update();
+	bool IsNewButtonPressed(BulletType& checkAgainst);
+
 	//----------------------------Attributes----------------------------------------
 private:
 

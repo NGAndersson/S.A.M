@@ -23,6 +23,7 @@ public:
 	~ShaderHandler();
 	bool CreateShaders(ID3D11Device* device, string vertexFile, string geometryFile, string pixelFile);
 	bool CreateShadersPosOnly(ID3D11Device* device, string vertexFile, string geometryFile, string pixelFile);
+	bool CreatePlayerFireShaders(ID3D11Device* device, string vertexFile, string geometryFile, string pixelFile);
 	bool CreateShadersCompute(ID3D11Device* device, string vertexFile, string geometryFile, string pixelFile, string computeFile);
 	bool SetShaders(ID3D11DeviceContext* deviceContext);
 
