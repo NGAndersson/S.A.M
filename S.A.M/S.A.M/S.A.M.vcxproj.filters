@@ -291,5 +291,6 @@
     <FxCompile Include="Shaders\PlayerPartVS.hlsl" />
     <FxCompile Include="Shaders\PlayerPartGS.hlsl" />
     <FxCompile Include="Shaders\PlayerPartPS.hlsl" />
+    <FxCompile Include="Shaders\GlowCS.hlsl" />
   </ItemGroup>
 </Project>
