@@ -78,13 +78,7 @@
     <ClCompile Include="Source Files\Graphics\ParticleSys.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source Files\Graphics\pch.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source Files\Graphics\Renderer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source Files\Graphics\WICTextureLoader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source Files\Graphics\ShaderHandler.cpp">
@@ -120,13 +114,31 @@
     <ClCompile Include="Source Files\Graphics\Light.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source Files\Graphics\SpacePart.cpp">
+    <ClCompile Include="Source Files\Screens\Screen.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\Screens\Menu\PauseMenu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\Screens\Menu\StartMenu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\Screens\Menu\OptionsMenu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\Screens\Menu\HighscoreMenu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\Screens\Menu\UI.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\Graphics\FirePart.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source Files\Graphics\PlayerPart.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source Files\Graphics\FirePart.cpp">
+    <ClCompile Include="Source Files\Graphics\SpacePart.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -138,9 +150,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Header Files\ScreenManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Header Files\DirectXHelpers.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Header Files\EntityManager.h">
@@ -206,9 +215,6 @@
     <ClInclude Include="Header Files\Graphics\ShaderHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Header Files\Graphics\WICTextureLoader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Header Files\Gamelogic\Timer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -222,9 +228,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Header Files\Graphics\ParticleSys.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Header Files\Graphics\pch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Header Files\Graphics\Renderer.h">
@@ -254,7 +257,22 @@
     <ClInclude Include="Header Files\Graphics\Light.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Header Files\Graphics\SpacePart.h">
+    <ClInclude Include="Header Files\Screens\Screen.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\Screens\Menu\StartMenu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\Screens\Menu\PauseMenu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\Screens\Menu\OptionsMenu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\Screens\Menu\HighscoreMenu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\Screens\Menu\UI.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Header Files\Graphics\FirePart.h">
@@ -263,9 +281,14 @@
     <ClInclude Include="Header Files\Graphics\PlayerPart.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Header Files\Graphics\SpacePart.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="fmodex.dll" />
+    <None Include="packages.config" />
+    <None Include="Resources\moonhouse.spritefont" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="Resources\wave.mp3" />
@@ -285,12 +308,5 @@
     <FxCompile Include="Shaders\InstancePartVs.hlsl" />
     <FxCompile Include="Shaders\InstancePartGS.hlsl" />
     <FxCompile Include="Shaders\InstancePartPS.hlsl" />
-    <FxCompile Include="Shaders\PlayerGS.hlsl" />
-    <FxCompile Include="Shaders\DeferredVS.hlsl" />
-    <FxCompile Include="Shaders\DeferredPS.hlsl" />
-    <FxCompile Include="Shaders\PlayerPartVS.hlsl" />
-    <FxCompile Include="Shaders\PlayerPartGS.hlsl" />
-    <FxCompile Include="Shaders\PlayerPartPS.hlsl" />
-    <FxCompile Include="Shaders\GlowCS.hlsl" />
   </ItemGroup>
 </Project>

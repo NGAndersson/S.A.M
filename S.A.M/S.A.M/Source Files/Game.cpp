@@ -65,7 +65,7 @@ void Game::InitGame(Input* input, Display* disp)
 
 	//Create and initialize ScreenManager
 	m_screenManager = new ScreenManager();
-	m_screenManager->InitializeScreen(m_input);
+	m_screenManager->InitializeScreen(m_device,m_deviceContext,HEIGHT,WIDTH,m_input,m_statsManager);
 
 	//Create and initialize EntityManager
 	m_entityManager = new EntityManager;
@@ -79,7 +79,7 @@ void Game::InitGame(Input* input, Display* disp)
 	m_deferredBuffer.Initialize(m_device, WIDTH, HEIGHT);
 	m_deferredRender.InitializeShader(m_device);
 	m_deferredRender.InitializeBufferString(m_device);
-
+	
 	wstring _texName = L"Resources\\Models\\star3.jpg";
 	m_backgroundPartSys = new SpacePart();
 	m_backgroundPartSys->CreateBuffer(m_device, m_deviceContext, _texName);
@@ -105,10 +105,9 @@ WPARAM Game::MainLoop()
 		// If the message is WM_QUIT, exit the while loop
 		if (m_winMSG.message == WM_QUIT)
 			return m_winMSG.wParam;
-
+		m_input->Update();
 		//Update FMOD
 		m_soundManager->Update();
-
 		//Get Time
 		float time = _time.TimeCheck();
 
@@ -119,16 +118,19 @@ WPARAM Game::MainLoop()
 
 		//Call Render Functions
 		Render();
+		m_swapChain->Present(0, 0);
 	}
 
 }
 
 void Game::Update(double time)
 {
-	m_screenManager->Update(time);
+	m_screenManager->Update();
+
+	//RENDER particle system here 
 	if (m_screenManager->GetCurrentScreen() == GAME)
 		m_entityManager->Update(time);
-
+	
 	//Updates space
 	m_backgroundPartSys->Update(m_deviceContext, time, 40);
 	
@@ -145,7 +147,7 @@ void Game::Render()
 	m_deviceContext->ClearRenderTargetView(m_backbufferRTV, _clearColor);
 	m_deviceContext->ClearDepthStencilView(m_depthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
 	m_deviceContext->OMSetRenderTargets(1, &m_backbufferRTV, m_depthStencilView);
-	m_screenManager->Render();
+
 	//if(m_screenManager->GetCurrentScreen() == USERINTERFACE)
 	// Render Entity Manager
 	m_deferredBuffer.SetCleanResource(m_deviceContext);
@@ -154,14 +156,14 @@ void Game::Render()
 	PartShader.SetShaders(m_deviceContext);
 	m_backgroundPartSys->Render(m_deviceContext);
 	if (m_screenManager->GetCurrentScreen() == GAME)
-	{	
+	{
 		m_entityManager->Render();
 	}
 	m_deviceContext->OMSetRenderTargets(1, &m_backbufferRTV, m_depthStencilView);
 	m_deferredBuffer.SetShaderResource(m_deviceContext);
 	m_deferredRender.Render(m_deviceContext);
 
-	m_swapChain->Present(0, 0);
+	m_screenManager->Render();
 }
 
 void Game::CheckInput()

@@ -18,6 +18,7 @@ public:
 	int GetCombo() { return m_combo; }
 	void ResetCombo() { m_combo = 0; }
 	void AddCombo() { m_combo += 1; }
+	int GetScore() { return m_score; }
 private:
 	int m_score;
 	std::pair<std::string, int> m_highScores[10] = { { "", 0 } };

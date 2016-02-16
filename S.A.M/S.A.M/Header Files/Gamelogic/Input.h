@@ -15,6 +15,7 @@ enum InputType
 	INPUT_MOVE_DOWN,
 	INPUT_MOUSE_LK,
 	INPUT_MOUSE_RK,
+	INPUT_ENTER,
 	INPUT_ESC
 };
 
@@ -48,8 +49,11 @@ public:
 
 	void Initialize(HINSTANCE hInstance, HWND& hwnd,int ScreenWidth,int ScreenHeight);
 	void CheckKeyBoardInput(InputType* returnput);
+	InputType CheckKeyBoardInput();
 	BulletType CheckBullet();
 	MouseClicked CheckMouseInput();
+	void Update();
+	bool CheckReturn();
 	bool CheckEsc();
 	bool IsNewButtonPressed(BulletType& checkAgainst);
 
@@ -65,7 +69,8 @@ private:
 
 	int m_ScreenHeight;
 	int m_ScreenWidth;
-
+	BYTE m_keyBoardState[256];
+	DIMOUSESTATE m_CurrMouse;
 	HWND m_Hwnd;
 
 };

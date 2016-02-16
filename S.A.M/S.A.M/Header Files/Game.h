@@ -13,7 +13,8 @@
 
 #include <d3d11.h>	//temp
 #include <dxgidebug.h>
-#include <memory>
+
+
 
 #define WIDTH 720
 #define HEIGHT 980

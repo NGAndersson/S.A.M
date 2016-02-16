@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\directxtk_desktop_2015.2015.11.30.1\build\native\directxtk_desktop_2015.props" Condition="Exists('..\packages\directxtk_desktop_2015.2015.11.30.1\build\native\directxtk_desktop_2015.props')" />
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -89,7 +90,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <AdditionalDependencies>fmodex_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -172,13 +173,17 @@
     <ClCompile Include="Source Files\Graphics\ModelHandler.cpp" />
     <ClCompile Include="Source Files\Graphics\OBJloader.cpp" />
     <ClCompile Include="Source Files\Graphics\ParticleSys.cpp" />
-    <ClCompile Include="Source Files\Graphics\pch.cpp" />
     <ClCompile Include="Source Files\Entities\Player.cpp" />
     <ClCompile Include="Source Files\Graphics\Renderer.cpp" />
     <ClCompile Include="Source Files\ScreenManager.cpp" />
     <ClCompile Include="Source Files\Graphics\ShaderHandler.cpp" />
     <ClCompile Include="Source Files\Gamelogic\Timer.cpp" />
-    <ClCompile Include="Source Files\Graphics\WICTextureLoader.cpp" />
+    <ClCompile Include="Source Files\Screens\Menu\HighscoreMenu.cpp" />
+    <ClCompile Include="Source Files\Screens\Menu\OptionsMenu.cpp" />
+    <ClCompile Include="Source Files\Screens\Menu\PauseMenu.cpp" />
+    <ClCompile Include="Source Files\Screens\Menu\StartMenu.cpp" />
+    <ClCompile Include="Source Files\Screens\Screen.cpp" />
+    <ClCompile Include="Source Files\Screens\Menu\UI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header Files\Audio\BeatDetector.h" />
@@ -188,7 +193,6 @@
     <ClInclude Include="Header Files\Gamelogic\Spline.h" />
     <ClInclude Include="Header Files\Gamelogic\Stats.h" />
     <ClInclude Include="Header Files\Graphics\Camera.h" />
-    <ClInclude Include="Header Files\DirectXHelpers.h" />
     <ClInclude Include="Header Files\Graphics\DeferredBuffer.h" />
     <ClInclude Include="Header Files\Graphics\DeferredRender.h" />
     <ClInclude Include="Header Files\Graphics\Display.h" />
@@ -214,9 +218,14 @@
     <ClInclude Include="Header Files\Graphics\ModelHandler.h" />
     <ClInclude Include="Header Files\Graphics\OBJloader.h" />
     <ClInclude Include="Header Files\Graphics\ParticleSys.h" />
-    <ClInclude Include="Header Files\Graphics\pch.h" />
     <ClInclude Include="Header Files\Graphics\PlayerPart.h" />
     <ClInclude Include="Header Files\Graphics\SpacePart.h" />
+    <ClInclude Include="Header Files\Screens\Menu\HighscoreMenu.h" />
+    <ClInclude Include="Header Files\Screens\Menu\OptionsMenu.h" />
+    <ClInclude Include="Header Files\Screens\Menu\PauseMenu.h" />
+    <ClInclude Include="Header Files\Screens\Screen.h" />
+    <ClInclude Include="Header Files\Screens\Menu\StartMenu.h" />
+    <ClInclude Include="Header Files\Screens\Menu\UI.h" />
     <ClInclude Include="Header Files\PlatformHelpers.h" />
     <ClInclude Include="Header Files\Entities\Player.h" />
     <ClInclude Include="Header Files\Graphics\Renderer.h" />
@@ -224,10 +233,11 @@
     <ClInclude Include="Header Files\Graphics\ShaderHandler.h" />
     <ClInclude Include="Header Files\SoundManager.h" />
     <ClInclude Include="Header Files\Gamelogic\Timer.h" />
-    <ClInclude Include="Header Files\Graphics\WICTextureLoader.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="fmodex.dll" />
+    <None Include="packages.config" />
+    <None Include="Resources\moonhouse.spritefont" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="Resources\wave.mp3" />
@@ -251,26 +261,6 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
       <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">PS_main</EntryPointName>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
-    </FxCompile>
-    <FxCompile Include="Shaders\GlowCS.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Compute</ShaderType>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">4.0</ShaderModel>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compute</ShaderType>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4.0</ShaderModel>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Compute</ShaderType>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">4.0</ShaderModel>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compute</ShaderType>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4.0</ShaderModel>
-    </FxCompile>
-    <FxCompile Include="Shaders\DeferredPS.hlsl">
-      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">PS_main</EntryPointName>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
-    </FxCompile>
-    <FxCompile Include="Shaders\DeferredVS.hlsl">
-      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">VS_main</EntryPointName>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
     </FxCompile>
     <FxCompile Include="Shaders\EnemiesGS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Geometry</ShaderType>
@@ -341,38 +331,6 @@
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
     </FxCompile>
-    <FxCompile Include="Shaders\PlayerGS.hlsl">
-      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">GS_main</EntryPointName>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Geometry</ShaderType>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
-    </FxCompile>
-    <FxCompile Include="Shaders\PlayerPartGS.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Geometry</ShaderType>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Geometry</ShaderType>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4.0</ShaderModel>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Geometry</ShaderType>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">4.0</ShaderModel>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Geometry</ShaderType>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4.0</ShaderModel>
-      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">GS_main</EntryPointName>
-    </FxCompile>
-    <FxCompile Include="Shaders\PlayerPartPS.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
-      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">PS_main</EntryPointName>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
-    </FxCompile>
-    <FxCompile Include="Shaders\PlayerPartVS.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
-      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">VS_main</EntryPointName>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
-    </FxCompile>
     <FxCompile Include="Shaders\PlayerPS.hlsl">
       <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">PS_main</EntryPointName>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">5.0</ShaderModel>
@@ -400,5 +358,13 @@
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
+    <Import Project="..\packages\directxtk_desktop_2015.2015.11.30.1\build\native\directxtk_desktop_2015.targets" Condition="Exists('..\packages\directxtk_desktop_2015.2015.11.30.1\build\native\directxtk_desktop_2015.targets')" />
   </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\directxtk_desktop_2015.2015.11.30.1\build\native\directxtk_desktop_2015.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\directxtk_desktop_2015.2015.11.30.1\build\native\directxtk_desktop_2015.props'))" />
+    <Error Condition="!Exists('..\packages\directxtk_desktop_2015.2015.11.30.1\build\native\directxtk_desktop_2015.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\directxtk_desktop_2015.2015.11.30.1\build\native\directxtk_desktop_2015.targets'))" />
+  </Target>
 </Project>
