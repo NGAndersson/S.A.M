@@ -36,6 +36,8 @@ public:
 
 private:
 	SoundManager* m_soundManager;
+	SpacePart* m_backgroundPartSys;
+	ShaderHandler PartShader;
 	ScreenManager* m_screenManager;
 	EntityManager* m_entityManager;
 	Stats* m_statsManager;

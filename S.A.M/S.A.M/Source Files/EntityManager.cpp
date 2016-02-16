@@ -21,6 +21,8 @@ EntityManager::~EntityManager()
 	}
 	delete m_renderer;
 	delete m_beatDetector;
+	delete m_rocketPartSys;
+	delete m_playerPartSys;
 
 	delete m_player;
 
@@ -148,8 +150,8 @@ void EntityManager::Initialize(SoundManager* soundManager, Input* input, ID3D11D
 	m_shaderLoad[SHADER_ENEMY] = new ShaderHandler();
 	m_shaderLoad[SHADER_ENEMY]->CreateShaders(m_device, "Shaders\\EnemiesVS.hlsl", "Shaders\\EnemiesGS.hlsl", "Shaders\\EnemiesPS.hlsl");
 	m_shaderLoad[SHADER_MENU] = new ShaderHandler();
-	m_shaderLoad[SHADER_PARTICLE] = new ShaderHandler();
-	m_shaderLoad[SHADER_PARTICLE]->CreateShadersPosOnly(m_device, "Shaders\\PartVS.hlsl", "Shaders\\PartGS.hlsl", "Shaders\\PartPS.hlsl");
+	m_shaderLoad[SHADER_PLAYERPART] = new ShaderHandler();
+	m_shaderLoad[SHADER_PLAYERPART]->CreatePlayerFireShaders(m_device, "Shaders\\PlayerPartVS.hlsl", "Shaders\\PlayerPartGS.hlsl", "Shaders\\PlayerPartPS.hlsl");
 	m_shaderLoad[SHADER_ROCKETPART] = new ShaderHandler();
 	m_shaderLoad[SHADER_ROCKETPART]->CreateShadersPosOnly(m_device, "Shaders\\InstancePartVS.hlsl", "Shaders\\InstancePartGS.hlsl", "Shaders\\InstancePartPS.hlsl");
 
@@ -184,13 +186,13 @@ void EntityManager::Initialize(SoundManager* soundManager, Input* input, ID3D11D
 	//Temp, create player
 	SpawnEntity(PLAYER);
 	//Temp, creates partsys
-	wstring _texName = L"Resources\\Models\\star3.jpg";
-	m_backgroundPartSys.BackGround();
-	m_backgroundPartSys.CreateBuffer(m_device, m_deviceContext, _texName);
+	wstring _texName = L"Resources\\Models\\star.jpg";
+	m_rocketPartSys = new FirePart(3, 1000);
+	m_rocketPartSys->CreateBuffer(m_device, m_deviceContext, _texName);
 
-	_texName = L"Resources\\Models\\star.jpg";
-	m_rocketPartSys.RocketPartSys(3, 1000);
-	m_rocketPartSys.CreateRocketBuffer(m_device, m_deviceContext, _texName);
+	std::vector<Entity*> _playerVec = { m_player };
+	m_playerPartSys = new PlayerPart(2.5, 1000, _playerVec);
+	m_playerPartSys->CreateBuffer(m_device, m_deviceContext, _texName);
 
 	m_soundManager->PlayMusic(0.5f);//TEMPORARY MUTE return to 0.5f when you want sound!
 	ChangeSongData(m_beatDetector->GetTempo());
@@ -203,24 +205,23 @@ void EntityManager::Initialize(SoundManager* soundManager, Input* input, ID3D11D
 
 void EntityManager::Render()
 {
-	m_shaderLoad[SHADER_PARTICLE]->SetShaders(m_deviceContext);
-	m_backgroundPartSys.PartRend(m_deviceContext);
 	if (m_bullet2.size() > 0)
 	{
-		m_rocketPartSys.AddRocketPartSys(m_bullet2, XMFLOAT4(0, 0, -7, 0));	
+		m_rocketPartSys->AddPartSys(m_bullet2, XMFLOAT4(0, 0, -7, 0));
+		m_shaderLoad[SHADER_ROCKETPART]->SetShaders(m_deviceContext);
+		m_rocketPartSys->SetBuffer(m_deviceContext);
+		m_rocketPartSys->Render(m_deviceContext);
 	}
 
-	std::vector<Entity*> _playerVec = { m_player };
-	m_shaderLoad[SHADER_ROCKETPART]->SetShaders(m_deviceContext);
-	m_rocketPartSys.AddRocketPartSys(_playerVec, XMFLOAT4(0, 0, -4, 0));
-	m_rocketPartSys.SetRocketBuffer(m_deviceContext);
-	m_rocketPartSys.InstancePartRend(m_deviceContext);
+	m_shaderLoad[SHADER_PLAYERPART]->SetShaders(m_deviceContext);
+	m_playerPartSys->Render(m_deviceContext);
+
 
 	//Render Player
 	if (m_player->GetHealth() > 0)			//Invulnerability-blinking
 	{
 		m_shaderLoad[SHADER_PLAYER]->SetShaders(m_deviceContext);
-	m_renderer->Render(m_modelHandlers[PLAYER], m_player->GetPosition(), m_player->GetRotation(), m_player->GetScale());
+		m_renderer->Render(m_modelHandlers[PLAYER], m_player->GetPosition(), m_player->GetRotation(), m_player->GetScale());
 	}
 	m_shaderLoad[SHADER_BULLET]->SetShaders(m_deviceContext);
 	RenderBullets();
@@ -410,8 +411,9 @@ void EntityManager::Update(double time)
 	m_light.SetConstbuffer(m_deviceContext);
 
 	//Update Particle System
-	m_backgroundPartSys.BackGroundUpdatePart(m_deviceContext, time, 40);
-	m_rocketPartSys.UpdateRocketPartSys(m_deviceContext, time, 10);
+	std::vector<Entity*> _playerVec = { m_player };
+	m_rocketPartSys->Update(m_deviceContext, time, 10);
+	m_playerPartSys->Update(m_deviceContext, time, 60, _playerVec);
 }
 
 void EntityManager::ChangeSongData(int bpm)

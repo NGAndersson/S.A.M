@@ -43,6 +43,7 @@ Game::~Game()
 	delete m_entityManager;
 	m_entityManager = 0;
 
+	delete m_backgroundPartSys;
 	delete m_statsManager;
 }
 
@@ -78,7 +79,11 @@ void Game::InitGame(Input* input, Display* disp)
 	m_deferredBuffer.Initialize(m_device, WIDTH, HEIGHT);
 	m_deferredRender.InitializeShader(m_device);
 	m_deferredRender.InitializeBufferString(m_device);
-	
+
+	wstring _texName = L"Resources\\Models\\star3.jpg";
+	m_backgroundPartSys = new SpacePart();
+	m_backgroundPartSys->CreateBuffer(m_device, m_deviceContext, _texName);
+	PartShader.CreateShadersPosOnly(m_device, "Shaders\\PartVS.hlsl", "Shaders\\PartGS.hlsl", "Shaders\\PartPS.hlsl");;
 }
 
 WPARAM Game::MainLoop()
@@ -123,6 +128,9 @@ void Game::Update(double time)
 	m_screenManager->Update(time);
 	if (m_screenManager->GetCurrentScreen() == GAME)
 		m_entityManager->Update(time);
+
+	//Updates space
+	m_backgroundPartSys->Update(m_deviceContext, time, 40);
 	
 	//if(m_screenManager->GetCurrentScreen() == USERINTERFACE)
 	// Update Entity Manager
@@ -140,16 +148,18 @@ void Game::Render()
 	m_screenManager->Render();
 	//if(m_screenManager->GetCurrentScreen() == USERINTERFACE)
 	// Render Entity Manager
+	m_deferredBuffer.SetCleanResource(m_deviceContext);
+	m_deferredBuffer.ClearRenderTargets(m_deviceContext);
+	m_deferredBuffer.SetRenderTargets(m_deviceContext);
+	PartShader.SetShaders(m_deviceContext);
+	m_backgroundPartSys->Render(m_deviceContext);
 	if (m_screenManager->GetCurrentScreen() == GAME)
-	{
-		m_deferredBuffer.SetCleanResource(m_deviceContext);
-		m_deferredBuffer.ClearRenderTargets(m_deviceContext);
-		m_deferredBuffer.SetRenderTargets(m_deviceContext);
+	{	
 		m_entityManager->Render();
-		m_deviceContext->OMSetRenderTargets(1, &m_backbufferRTV, m_depthStencilView);
-		m_deferredBuffer.SetShaderResource(m_deviceContext);
-		m_deferredRender.Render(m_deviceContext);
 	}
+	m_deviceContext->OMSetRenderTargets(1, &m_backbufferRTV, m_depthStencilView);
+	m_deferredBuffer.SetShaderResource(m_deviceContext);
+	m_deferredRender.Render(m_deviceContext);
 
 	m_swapChain->Present(0, 0);
 }
