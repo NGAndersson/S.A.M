@@ -587,7 +587,7 @@ vector<Entity*> EntityManager::CheckOutOfBounds(const std::vector<Entity*> &enti
 			i--;
 			//removed = true;
 		}
-	}
+	} 
 	return _tempVec;
 }
 	
