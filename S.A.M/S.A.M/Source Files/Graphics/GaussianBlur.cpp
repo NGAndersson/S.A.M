@@ -2,6 +2,11 @@
 
 GaussianBlur::~GaussianBlur()
 {
+	m_unAc->Release();
+	m_unAc2->Release();
+	m_compShaderTexture1->Release;
+	m_compShaderTexture2->Release;
+	m_targetedShaderResourceView->Release();
 
 }
 
@@ -10,7 +15,6 @@ GaussianBlur::GaussianBlur(ID3D11Device* Device, ID3D11DeviceContext* DeviceCont
 
 	m_screenHeight = height;
 	m_screenWidth = width;
-
 
 	//Create shaders...
 	D3D11_TEXTURE2D_DESC _gausDesc;
