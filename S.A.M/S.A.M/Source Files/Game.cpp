@@ -84,6 +84,8 @@ void Game::InitGame(Input* input, Display* disp)
 	m_backgroundPartSys = new SpacePart();
 	m_backgroundPartSys->CreateBuffer(m_device, m_deviceContext, _texName);
 	PartShader.CreateShadersPosOnly(m_device, "Shaders\\PartVS.hlsl", "Shaders\\PartGS.hlsl", "Shaders\\PartPS.hlsl");;
+	
+	//m_gaussianFilter = new GaussianBlur(m_device, m_deviceContext, PartShader, WIDTH, HEIGHT);
 }
 
 WPARAM Game::MainLoop()
@@ -161,13 +163,14 @@ void Game::Render()
 		m_entityManager->Render();
 
 	}
+
 	m_deviceContext->OMSetRenderTargets(1, &m_backbufferRTV, m_depthStencilView);
 	m_deferredBuffer.SetShaderResource(m_deviceContext);
 	m_deferredRender.Render(m_deviceContext);
-
+	
 	m_screenManager->Render();
 
-	//spritbatch goes retard and setts rendershit to 2D things...
+	//spritbatch goes retard and setts rendershit to 2D things... This is the reset for those things 
 	float _blendF[4] = { 0.0f,0.0f,0.0f,0.0f };
 	UINT _sampleM = 0xffffffff;
 	m_deviceContext->OMSetBlendState(m_blendState,_blendF,_sampleM);
