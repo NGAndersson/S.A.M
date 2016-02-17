@@ -26,19 +26,18 @@ public:
 			return HIGHSCORE;
 			break;
 		case 3:
-			return ENDSCREEN;
+			return EXIT;
 			break;
 		}
 	}
 
 private:
-	const wchar_t* m_resume = L"Resume";
-	const wchar_t* m_options = L"Options";
-	const wchar_t* m_highScore = L"HighScore";
-	const wchar_t* m_exit = L"Quit";
+	const wstring m_resume = L"Resume";
+	const wstring m_options = L"Options";
+	const wstring m_highScore = L"HighScore";
+	const wstring m_exit = L"Quit";
 	bool m_keyDown = false;
 	Font m_choices[4];
-
 	int m_currentFont;
 };
 

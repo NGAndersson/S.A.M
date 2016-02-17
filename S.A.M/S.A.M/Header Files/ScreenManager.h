@@ -8,6 +8,8 @@
 #include "Screens\Screen.h"
 #include "Screens\Menu\StartMenu.h"
 #include "Screens\Menu\UI.h"
+#include "Screens\Menu\PauseMenu.h"
+#include "Screens\Menu\HighscoreMenu.h"
 #include "Screens\EndScreen.h"
 
 class ScreenManager
@@ -25,7 +27,7 @@ public:
 	void Render();
 	//Returns the current screen
 	MenuScreens GetCurrentScreen() { return m_current; }
-
+	void SetCurrentScreenPAUSE() { m_current = PAUSE; }
 //----------------------------Attributes----------------------------------------
 private:
 	//Current status.
@@ -40,9 +42,6 @@ private:
 
 	//input
 	Input* m_input;
-
-	bool m_keyDown = false;
-
 
 };
 

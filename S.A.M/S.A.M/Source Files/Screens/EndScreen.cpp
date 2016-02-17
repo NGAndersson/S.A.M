@@ -9,7 +9,7 @@ EndScreen::EndScreen(ID3D11Device* Device, ID3D11DeviceContext* DeviceContext, i
     m_menu = L"Return to Menu";
 	m_message1 = L"Congratulations!";
 	m_message2 = L"You have been killed!";
-	m_message3 = L"Score: 0 ";
+	m_message3 = L"Score: " + stats->GetScore();
 
 	SimpleMath::Vector2 _offsetV;
 	_offsetV.x = 0.0f;

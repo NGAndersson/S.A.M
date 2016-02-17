@@ -141,7 +141,7 @@
     <ClCompile Include="Source Files\Graphics\SpacePart.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source Files\Screens\EndScreen.cpp">
+    <ClCompile Include="Source Files\Graphics\GaussianBlur.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -287,7 +287,7 @@
     <ClInclude Include="Header Files\Graphics\SpacePart.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Header Files\Screens\EndScreen.h">
+    <ClInclude Include="Header Files\Graphics\GaussianBlur.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -314,5 +314,12 @@
     <FxCompile Include="Shaders\InstancePartVs.hlsl" />
     <FxCompile Include="Shaders\InstancePartGS.hlsl" />
     <FxCompile Include="Shaders\InstancePartPS.hlsl" />
+    <FxCompile Include="Shaders\DeferredPS.hlsl" />
+    <FxCompile Include="Shaders\DeferredVS.hlsl" />
+    <FxCompile Include="Shaders\PlayerGS.hlsl" />
+    <FxCompile Include="Shaders\PlayerPartGS.hlsl" />
+    <FxCompile Include="Shaders\PlayerPartPS.hlsl" />
+    <FxCompile Include="Shaders\PlayerPartVS.hlsl" />
+    <FxCompile Include="Shaders\ComputeShader.hlsl" />
   </ItemGroup>
 </Project>

@@ -45,6 +45,7 @@ Game::~Game()
 
 	delete m_backgroundPartSys;
 	delete m_statsManager;
+	delete m_gaussianFilter;
 }
 
 void Game::InitGame(Input* input, Display* disp)
@@ -83,7 +84,10 @@ void Game::InitGame(Input* input, Display* disp)
 	wstring _texName = L"Resources\\Models\\star3.jpg";
 	m_backgroundPartSys = new SpacePart();
 	m_backgroundPartSys->CreateBuffer(m_device, m_deviceContext, _texName);
-	PartShader.CreateShadersPosOnly(m_device, "Shaders\\PartVS.hlsl", "Shaders\\PartGS.hlsl", "Shaders\\PartPS.hlsl");;
+	m_partShader.CreateShadersPosOnly(m_device, "Shaders\\PartVS.hlsl", "Shaders\\PartGS.hlsl", "Shaders\\PartPS.hlsl");;
+	m_glowshader.CreateShadersCompute(m_device, "Shaders\\ComputeShader.hlsl");
+
+	m_gaussianFilter = new GaussianBlur(m_device, m_deviceContext, &m_glowshader, WIDTH, HEIGHT);
 }
 
 WPARAM Game::MainLoop()
@@ -131,6 +135,11 @@ void Game::Update(double time)
 	if (m_screenManager->GetCurrentScreen() == GAME)
 		m_entityManager->Update(time);
 	
+	if (m_screenManager->GetCurrentScreen() == EXIT)
+	{
+		m_statsManager->SaveScore("PixieTrust.txt", "SomeNoob");
+		PostQuitMessage(0);
+	}
 	//Updates space
 	m_backgroundPartSys->Update(m_deviceContext, time, 40);
 	
@@ -142,6 +151,7 @@ void Game::Update(double time)
 
 void Game::Render()
 {
+
 	// clear the back buffer to a deep blue
 	float _clearColor[] = { 0, 0, 0, 1 };
 	m_deviceContext->ClearRenderTargetView(m_backbufferRTV, _clearColor);
@@ -153,25 +163,34 @@ void Game::Render()
 	m_deferredBuffer.SetCleanResource(m_deviceContext);
 	m_deferredBuffer.ClearRenderTargets(m_deviceContext);
 	m_deferredBuffer.SetRenderTargets(m_deviceContext);
-	PartShader.SetShaders(m_deviceContext);
+	m_partShader.SetShaders(m_deviceContext);
 	m_backgroundPartSys->Render(m_deviceContext);
-	if (m_screenManager->GetCurrentScreen() == GAME)
+	if (m_screenManager->GetCurrentScreen() == GAME||m_screenManager->GetCurrentScreen()==PAUSE)
 	{
 		m_entityManager->Render();
 	}
+
 	m_deviceContext->OMSetRenderTargets(1, &m_backbufferRTV, m_depthStencilView);
 	m_deferredBuffer.SetShaderResource(m_deviceContext);
+	m_gaussianFilter->Blur(m_device, m_deviceContext, 4, m_deferredBuffer.GetResourceView(4));
 	m_deferredRender.Render(m_deviceContext);
-
+	
 	m_screenManager->Render();
+
+	//spritbatch goes retard and setts rendershit to 2D things... This is the reset for those things 
+	float _blendF[4] = { 0.0f,0.0f,0.0f,0.0f };
+	UINT _sampleM = 0xffffffff;
+	m_deviceContext->OMSetBlendState(m_blendState,_blendF,_sampleM);
+
+	m_deviceContext->OMSetDepthStencilState(m_depthStencilState, 0);
+
 }
 
 void Game::CheckInput()
 {
 	//InputType _returnInput = m_input->CheckKeyBoardInput();
 	if (m_input->CheckEsc()) {
-		m_statsManager->SaveScore("PixieTrust.txt", "SomeNoob");
-		PostQuitMessage(0);
+		m_screenManager->SetCurrentScreenPAUSE();
 	}
 	m_input->CheckMouseInput();
 }
@@ -251,6 +270,8 @@ HRESULT Game::CreateDirect3DContext(HWND wndHandle)
 		//Set the sampler state
 		m_deviceContext->PSSetSamplers(0, 1, &m_sampleState);
 	}
+
+	
 	return _hr;
 }
 

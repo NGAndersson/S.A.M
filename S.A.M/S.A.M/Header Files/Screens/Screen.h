@@ -14,7 +14,7 @@ using namespace std;
 using namespace DirectX;
 using namespace Microsoft;
 using namespace WRL;
-enum MenuScreens {MENU_DEFAULT, MENU, GAME, HIGHSCORE, OPTION, PAUSE, ENDSCREEN };
+enum MenuScreens {MENU_DEFAULT, MENU, GAME, HIGHSCORE, OPTION, PAUSE, ENDSCREEN ,EXIT};
 
 class Screen
 {
