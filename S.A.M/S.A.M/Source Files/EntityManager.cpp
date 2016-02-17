@@ -340,7 +340,7 @@ void EntityManager::Update(double time)
 	//_addScore += m_collision.CheckCollisionEntity(&m_bullet5, &m_enemy3,BULLET5, ENEMY3);
 	//_addScore += m_collision.CheckCollisionEntity(&m_bullet5, &m_enemy4,BULLET5, ENEMY4);
 
-	m_statsManager->AddScore(_addScore*m_statsManager->GetCombo()+1);
+	m_statsManager->AddScore(_addScore*(m_statsManager->GetCombo()+1));
 
 	//Check Player against Enemy Bullet
 	if (!m_player->GetInvulnerable())			//Only check if the player is alive and well

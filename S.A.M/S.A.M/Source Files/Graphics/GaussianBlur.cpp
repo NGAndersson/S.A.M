@@ -4,8 +4,8 @@ GaussianBlur::~GaussianBlur()
 {
 	m_unAc->Release();
 	m_unAc2->Release();
-	m_compShaderTexture1->Release;
-	m_compShaderTexture2->Release;
+	//m_compShaderTexture1->Release;
+	//m_compShaderTexture2->Release;
 	m_targetedShaderResourceView->Release();
 
 }
