@@ -135,6 +135,11 @@ void Game::Update(double time)
 	if (m_screenManager->GetCurrentScreen() == GAME)
 		m_entityManager->Update(time);
 	
+	if (m_screenManager->GetCurrentScreen() == EXIT)
+	{
+		m_statsManager->SaveScore("PixieTrust.txt", "SomeNoob");
+		PostQuitMessage(0);
+	}
 	//Updates space
 	m_backgroundPartSys->Update(m_deviceContext, time, 40);
 	
@@ -160,12 +165,11 @@ void Game::Render()
 	m_deferredBuffer.SetRenderTargets(m_deviceContext);
 	m_partShader.SetShaders(m_deviceContext);
 	m_backgroundPartSys->Render(m_deviceContext);
-	if (m_screenManager->GetCurrentScreen() == GAME)
+	if (m_screenManager->GetCurrentScreen() == GAME||m_screenManager->GetCurrentScreen()==PAUSE)
 	{
 		m_entityManager->Render();
-
 	}
-	
+
 	m_deviceContext->OMSetRenderTargets(1, &m_backbufferRTV, m_depthStencilView);
 	m_deferredBuffer.SetShaderResource(m_deviceContext);
 	m_gaussianFilter->Blur(m_device, m_deviceContext, 4, m_deferredBuffer.GetResourceView(4));
@@ -186,8 +190,7 @@ void Game::CheckInput()
 {
 	//InputType _returnInput = m_input->CheckKeyBoardInput();
 	if (m_input->CheckEsc()) {
-		m_statsManager->SaveScore("PixieTrust.txt", "SomeNoob");
-		PostQuitMessage(0);
+		m_screenManager->SetCurrentScreenPAUSE();
 	}
 	m_input->CheckMouseInput();
 }
