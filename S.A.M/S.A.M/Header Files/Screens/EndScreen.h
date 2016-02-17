@@ -10,7 +10,7 @@ private:
 protected:
 public:
 	EndScreen() {}
-	~EndScreen() { m_font.release(); }
+	~EndScreen() {}
 
 	EndScreen(ID3D11Device* Device, ID3D11DeviceContext* DeviceContext, int ScreenHeight, int ScreenWidth, Input* input, Stats* stats);
 	void Update();

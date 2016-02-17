@@ -11,6 +11,7 @@ ScreenManager::~ScreenManager()
 	delete m_screenOptions;
 	delete m_screenPause;
 	delete m_screenHighScore;
+	delete m_endScreen;
 }
 
 void ScreenManager::Update( )
