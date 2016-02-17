@@ -39,7 +39,11 @@ void ScreenManager::Update( )
 		break;
 	case 4:
 		//Options
-
+		m_screenOptions->Update();
+		if (m_input->CheckReturn())
+		{
+			m_current = m_screenPause->GetTargetMenu();
+		}
 		break;
 	case PAUSE:
 		//Pause
@@ -81,6 +85,7 @@ void ScreenManager::InitializeScreen(ID3D11Device* Device, ID3D11DeviceContext* 
 	m_screenPause = new PauseMenu(Device, DeviceContext, ScreenHeight, ScreenWidth, input);
 	m_screenHighScore = new HighScoreMenu(Device, DeviceContext, ScreenHeight, ScreenWidth, input);
 	m_endScreen = new EndScreen(Device, DeviceContext, ScreenHeight, ScreenWidth, input, stats);
+	m_screenOptions = new OptionsMenu(Device, DeviceContext, ScreenHeight, ScreenWidth, input);
 }
 
 void ScreenManager::Render()
@@ -105,7 +110,7 @@ void ScreenManager::Render()
 		break;
 	case 4:
 		//Options
-
+		m_screenOptions->Render();
 		break;
 	case 5:
 		//Pause

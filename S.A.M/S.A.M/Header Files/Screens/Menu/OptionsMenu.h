@@ -19,25 +19,13 @@ public:
 		case 0:
 			return MENU;
 			break;
-		case 1:
-			return OPTION;
-			break;
-		case 2:
-			return HIGHSCORE;
-			break;
-		case 3:
-			return ENDSCREEN;
-			break;
 		}
 	}
 
 private:
-	const wchar_t* m_start = L"";
-	const wchar_t* m_options = L"";
-	const wchar_t* m_highScore = L"";
-	const wchar_t* m_exit = L"";
+	const wchar_t* m_menu = L"Return to Menu";
 	bool m_keyDown = false;
-	Font m_choices[4];
+	Font m_choices[1];
 
 	int m_currentFont;
 };
