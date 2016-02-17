@@ -11,17 +11,16 @@ ScreenManager::~ScreenManager()
 	delete m_screenOptions;
 	delete m_screenPause;
 	delete m_screenHighScore;
+	delete m_endScreen;
 }
 
 void ScreenManager::Update( )
 {
-
 	//Checks input depending on what screen the user is in.
-
 	switch (m_current)
 	{
 	case MENU_DEFAULT:
-			break;
+		break;
 	case MENU:
 		//Startscreen
 		m_screenMenu->Update();
@@ -52,7 +51,11 @@ void ScreenManager::Update( )
 		break;
 	case 6:
 		//Endscreen
-
+		m_endScreen->Update();
+		if (m_input->CheckReturn())
+		{
+			m_current = m_screenPause->GetTargetMenu();
+		}
 		break;
 	case EXIT:
 		//Do nothing will exit when going to update in game class
@@ -69,7 +72,7 @@ void ScreenManager::InitializeScreen(ID3D11Device* Device, ID3D11DeviceContext* 
 	//Starting all the otherClasses etc..
 
 	//Current screen is startscreen
-	m_current = MENU;
+	m_current = ENDSCREEN;
 	//m_Current = USERINTERFACE;
 	//Create Modelhandlers...
 	m_input = input;
@@ -77,6 +80,7 @@ void ScreenManager::InitializeScreen(ID3D11Device* Device, ID3D11DeviceContext* 
 	m_screenGame = new UI(Device, DeviceContext, ScreenHeight, ScreenWidth, input, stats);
 	m_screenPause = new PauseMenu(Device, DeviceContext, ScreenHeight, ScreenWidth, input);
 	m_screenHighScore = new HighScoreMenu(Device, DeviceContext, ScreenHeight, ScreenWidth, input);
+	m_endScreen = new EndScreen(Device, DeviceContext, ScreenHeight, ScreenWidth, input, stats);
 }
 
 void ScreenManager::Render()
@@ -109,7 +113,7 @@ void ScreenManager::Render()
 		break;
 	case 6:
 		//Endscreen
-
+		m_endScreen->Render();
 		break;
 	default:
 		break;
