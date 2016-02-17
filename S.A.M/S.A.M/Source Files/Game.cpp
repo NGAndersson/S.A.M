@@ -45,6 +45,7 @@ Game::~Game()
 
 	delete m_backgroundPartSys;
 	delete m_statsManager;
+	delete m_gaussianFilter;
 }
 
 void Game::InitGame(Input* input, Display* disp)
@@ -83,9 +84,10 @@ void Game::InitGame(Input* input, Display* disp)
 	wstring _texName = L"Resources\\Models\\star3.jpg";
 	m_backgroundPartSys = new SpacePart();
 	m_backgroundPartSys->CreateBuffer(m_device, m_deviceContext, _texName);
-	PartShader.CreateShadersPosOnly(m_device, "Shaders\\PartVS.hlsl", "Shaders\\PartGS.hlsl", "Shaders\\PartPS.hlsl");;
-	
-	//m_gaussianFilter = new GaussianBlur(m_device, m_deviceContext, PartShader, WIDTH, HEIGHT);
+	m_partShader.CreateShadersPosOnly(m_device, "Shaders\\PartVS.hlsl", "Shaders\\PartGS.hlsl", "Shaders\\PartPS.hlsl");;
+	m_glowshader.CreateShadersCompute(m_device, "Shaders\\ComputeShader.hlsl");
+
+	m_gaussianFilter = new GaussianBlur(m_device, m_deviceContext, &m_glowshader, WIDTH, HEIGHT);
 }
 
 WPARAM Game::MainLoop()
@@ -156,16 +158,17 @@ void Game::Render()
 	m_deferredBuffer.SetCleanResource(m_deviceContext);
 	m_deferredBuffer.ClearRenderTargets(m_deviceContext);
 	m_deferredBuffer.SetRenderTargets(m_deviceContext);
-	PartShader.SetShaders(m_deviceContext);
+	m_partShader.SetShaders(m_deviceContext);
 	m_backgroundPartSys->Render(m_deviceContext);
 	if (m_screenManager->GetCurrentScreen() == GAME)
 	{
 		m_entityManager->Render();
 
 	}
-
+	
 	m_deviceContext->OMSetRenderTargets(1, &m_backbufferRTV, m_depthStencilView);
 	m_deferredBuffer.SetShaderResource(m_deviceContext);
+	m_gaussianFilter->Blur(m_device, m_deviceContext, 4, m_deferredBuffer.GetResourceView(4));
 	m_deferredRender.Render(m_deviceContext);
 	
 	m_screenManager->Render();

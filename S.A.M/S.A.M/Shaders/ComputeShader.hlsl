@@ -8,7 +8,7 @@ float gausCalc(float x)
 
 #ifdef _FIRST
 [numthreads(16, 1, 1)]
-void main(uint3 DTid : SV_DispatchThreadID)
+void CS_main(uint3 DTid : SV_DispatchThreadID)
 {
 
 	float GaNo = 0;
@@ -29,7 +29,7 @@ void main(uint3 DTid : SV_DispatchThreadID)
 #else
 
 [numthreads(1, 16, 1)]
-void main(uint3 DTid : SV_DispatchThreadID)
+void CS_main(uint3 DTid : SV_DispatchThreadID)
 {
 	float GaNo = 0;
 	float result = 0;
