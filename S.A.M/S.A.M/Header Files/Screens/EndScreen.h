@@ -9,20 +9,32 @@ class EndScreen : public Screen
 private:
 protected:
 public:
-	EndScreen() {};
-	~EndScreen() {};
+	EndScreen() {}
+	~EndScreen() { m_font.release(); }
 
 	EndScreen(ID3D11Device* Device, ID3D11DeviceContext* DeviceContext, int ScreenHeight, int ScreenWidth, Input* input, Stats* stats);
 	void Update();
 	void Render();
 
+	virtual MenuScreens GetTargetMenu() {
+		switch (m_currentFont)
+		{
+		case 0:
+			return HIGHSCORE;
+			break;
+		case 1:
+			return MENU;
+			break;
+		}
+	}
+
 	//Attributes
 private:
-	const wchar_t* m_highScore = L"High Score";
-	const wchar_t* m_menu = L"Return to Menu";
-	const wchar_t* m_message1 = L"Congratulations!";
-	const wchar_t* m_message2 = L"You have been killed!";
-	const wchar_t* m_message3 = L"Score: 6";
+	const wchar_t* m_highScore;
+	const wchar_t* m_menu;
+	const wchar_t* m_message1;
+	const wchar_t* m_message2;
+	const wchar_t* m_message3;
 
 	bool m_keyDown = false;
 	Font m_choices[2];

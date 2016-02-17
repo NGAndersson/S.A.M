@@ -15,9 +15,7 @@ ScreenManager::~ScreenManager()
 
 void ScreenManager::Update( )
 {
-
 	//Checks input depending on what screen the user is in.
-
 	switch (m_current)
 	{
 	case MENU_DEFAULT:
@@ -25,10 +23,13 @@ void ScreenManager::Update( )
 	case MENU:
 		//Startscreen
 		m_screenMenu->Update();
-		if (m_input->CheckReturn())
+		if (m_input->CheckReturn() && !m_keyDown)
 		{
+			m_keyDown = true;
 			m_current =	m_screenMenu->GetTargetMenu();
 		}
+		if (!m_input->CheckReturn())
+			m_keyDown = false;
 		break;
 	case GAME:
 		//Game
@@ -49,8 +50,9 @@ void ScreenManager::Update( )
 	case ENDSCREEN:
 		//Endscreen
 		m_endScreen->Update();
-		if (m_input->CheckReturn())
+		if (m_input->CheckReturn() && !m_keyDown)
 		{
+			m_keyDown = true;
 			m_current = m_endScreen->GetTargetMenu();
 		}
 		break;

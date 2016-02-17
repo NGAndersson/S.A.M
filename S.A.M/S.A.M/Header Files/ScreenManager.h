@@ -41,6 +41,8 @@ private:
 	//input
 	Input* m_input;
 
+	bool m_keyDown = false;
+
 
 };
 
