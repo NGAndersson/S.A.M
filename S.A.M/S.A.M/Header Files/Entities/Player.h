@@ -17,7 +17,7 @@ public:
 	void Destroyed(double time);
 	//----------------------------Attributes----------------------------------------
 private:
-	Input* m_input;
+	Input* m_input = nullptr;
 	float m_rotAngle = 0;
 	float m_destructionTimer = 0;
 	float m_aliveTimer = 0;

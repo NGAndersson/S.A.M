@@ -2,13 +2,14 @@
 
 Bullet_e::Bullet_e()
 {
-
+	m_rotationValue = 0.0f;
 }
 
 Bullet_e::Bullet_e(SoundManager * SoundManager, int MapWidth, int MapLength, XMFLOAT3 Position, XMFLOAT3 Scale, int Health, XMFLOAT3 Color)
 {
 	XMVECTOR _rotzAxis{ 0,0,1,0 };
 	m_rotation = XMMatrixRotationAxis(_rotzAxis, 0.0f);
+	m_rotationValue = 0.0f;
 	m_scale = Scale;
 	m_position = Position;
 	m_entityBox.Extents = XMFLOAT3(2, 0, 2);
@@ -19,8 +20,7 @@ Bullet_e::Bullet_e(SoundManager * SoundManager, int MapWidth, int MapLength, XMF
 
 Bullet_e::~Bullet_e()
 {
-	if (m_light != nullptr)
-		delete m_light;
+	delete m_light;
 }
 
 void Bullet_e::Update(double time)
