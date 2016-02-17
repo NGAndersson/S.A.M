@@ -22,6 +22,8 @@ public:
 	void ClearRenderTargets(ID3D11DeviceContext* deviceContext);
 	void SetShaderResource(ID3D11DeviceContext* deviceContext);
 	void SetCleanResource(ID3D11DeviceContext* deviceContext);
+	void SetResourceView(ID3D11DeviceContext* deviceContext, ID3D11ShaderResourceView* newResource, int tartgetResource);
+	ID3D11ShaderResourceView* GetResourceView(int tartgetResource);
 
 private:
 	int m_texWidth, m_texHeight;

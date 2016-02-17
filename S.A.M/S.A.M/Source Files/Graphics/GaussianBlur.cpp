@@ -62,13 +62,13 @@ GaussianBlur::GaussianBlur(ID3D11Device* Device, ID3D11DeviceContext* DeviceCont
 
 }
 
-ID3D11ShaderResourceView* GaussianBlur::Blur(ID3D11Device* Device, ID3D11DeviceContext* DeviceContext, UINT ShaderTarget)
+ID3D11ShaderResourceView* GaussianBlur::Blur(ID3D11Device* Device, ID3D11DeviceContext* DeviceContext, UINT ShaderTarget, ID3D11ShaderResourceView* shaderResource)
 {
 	//Set first pass Shaders
 	m_shaderHandler->SetComputeShader(DeviceContext, 1);
 	ID3D11ShaderResourceView* _temp = NULL; //No need to release if NULL
 	DeviceContext->CSSetUnorderedAccessViews(0, 1, &m_unAc,0);
-	DeviceContext->CSSetShaderResources(ShaderTarget, 1, &m_targetedShaderResourceView);
+	DeviceContext->CSSetShaderResources(ShaderTarget, 1, &shaderResource);
 	//First pass
 	DeviceContext->Dispatch(m_screenWidth / 16, m_screenHeight, 1);
 
@@ -80,7 +80,7 @@ ID3D11ShaderResourceView* GaussianBlur::Blur(ID3D11Device* Device, ID3D11DeviceC
 	DeviceContext->Dispatch(m_screenWidth, m_screenHeight / 16, 1);
 	DeviceContext->CSSetShaderResources(ShaderTarget, 1, &_temp);
 
-	DeviceContext->PSSetShaderResources(ShaderTarget, 1, &m_targetedShaderResourceView);
+	DeviceContext->PSSetShaderResources(ShaderTarget, 1, &shaderResource);
 
-	return m_targetedShaderResourceView;
+	return shaderResource;
 }
