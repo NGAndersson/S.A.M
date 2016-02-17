@@ -9,6 +9,7 @@
 #include "Screens\Menu\StartMenu.h"
 #include "Screens\Menu\UI.h"
 #include "Screens\Menu\PauseMenu.h"
+#include "Screens\Menu\HighscoreMenu.h"
 
 class ScreenManager
 {

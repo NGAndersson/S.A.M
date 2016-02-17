@@ -36,7 +36,7 @@ void ScreenManager::Update( )
 		break;
 	case 3:
 		//HighScore
-
+		m_screenHighScore->Update();
 		break;
 	case 4:
 		//Options
@@ -76,6 +76,7 @@ void ScreenManager::InitializeScreen(ID3D11Device* Device, ID3D11DeviceContext* 
 	m_screenMenu = new StartMenu(Device, DeviceContext, ScreenHeight, ScreenWidth, input);
 	m_screenGame = new UI(Device, DeviceContext, ScreenHeight, ScreenWidth, input, stats);
 	m_screenPause = new PauseMenu(Device, DeviceContext, ScreenHeight, ScreenWidth, input);
+	m_screenHighScore = new HighScoreMenu(Device, DeviceContext, ScreenHeight, ScreenWidth, input);
 }
 
 void ScreenManager::Render()
@@ -96,7 +97,7 @@ void ScreenManager::Render()
 		break;
 	case 3:
 		//HighScore
-
+		m_screenHighScore->Render();
 		break;
 	case 4:
 		//Options
