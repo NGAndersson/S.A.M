@@ -53,8 +53,6 @@ void ScreenManager::Update( )
 	default:
 		break;
 	}
-
-
 }
 
 void ScreenManager::InitializeScreen(ID3D11Device* Device, ID3D11DeviceContext* DeviceContext, int ScreenHeight, int ScreenWidth, Input* input,Stats* stats)
@@ -107,6 +105,3 @@ void ScreenManager::Render()
 		break;
 	}
 }
-
-
-

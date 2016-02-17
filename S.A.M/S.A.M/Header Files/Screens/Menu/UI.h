@@ -18,9 +18,8 @@ public:
 private:
 	Stats* m_stats;
 	wstring m_score;
-	wstring m_high = L"HighScore: ";
 	wstring m_livesLeft;
-	wstring m_lives = L"Lives: ";
+	wstring m_combo;
 };
 
 
