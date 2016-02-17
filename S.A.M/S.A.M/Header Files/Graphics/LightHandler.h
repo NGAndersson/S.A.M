@@ -33,7 +33,7 @@ public:
 private:
 	ID3D11Buffer* m_lightBuffer = nullptr;
 	int m_nummberOfLights;
-	LightData m_lightningArray;
+	LightData m_lightningArray = {};
 	//Light* m_light = nullptr;
 	Light* m_allLights = nullptr;
 	float m_beatBoost = 1;

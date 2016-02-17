@@ -424,7 +424,7 @@ void EntityManager::ChangeSongData(int bpm)
 	m_currentBPM = bpm;
 }
 
-void EntityManager::InitMusic(std::string filename)
+void EntityManager::InitMusic(const std::string &filename)
 {
 	vector<vector<XMFLOAT3>> _movPatterns;
 
@@ -574,7 +574,7 @@ void EntityManager::BeatWasDetected()
 	
 }
 
-vector<Entity*> EntityManager::CheckOutOfBounds(std::vector<Entity*> entity)
+vector<Entity*> EntityManager::CheckOutOfBounds(const std::vector<Entity*> &entity)
 {
 	//Out of bounds check, remove immediately
 	//bool removed = false;
@@ -745,7 +745,7 @@ void EntityManager::RenderBullets()
 
 }
 
-vector<Entity*> EntityManager::CheckIfAlive(std::vector<Entity*> bullet)
+vector<Entity*> EntityManager::CheckIfAlive(const std::vector<Entity*> &bullet)
 {
 	//If Alive check, remove immediately
 	bool removed = false;
