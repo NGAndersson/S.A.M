@@ -72,7 +72,7 @@ void ScreenManager::InitializeScreen(ID3D11Device* Device, ID3D11DeviceContext* 
 	//Starting all the otherClasses etc..
 
 	//Current screen is startscreen
-	m_current = ENDSCREEN;
+	m_current = MENU;
 	//m_Current = USERINTERFACE;
 	//Create Modelhandlers...
 	m_input = input;
