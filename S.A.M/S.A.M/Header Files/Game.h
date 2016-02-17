@@ -10,11 +10,10 @@
 #include "Graphics\DeferredRender.h"
 #include "Graphics\DeferredBuffer.h"
 #include "Gamelogic\Stats.h"
+#include "Graphics\GaussianBlur.h"
 
 #include <d3d11.h>	//temp
 #include <dxgidebug.h>
-
-
 
 #define WIDTH 720
 #define HEIGHT 980
@@ -56,7 +55,8 @@ private:
 	ID3D11SamplerState* m_sampleState = nullptr;
 	ID3D11BlendState1* m_blendState = nullptr;
 	ID3D11DepthStencilState* m_depthStencilState = nullptr;
-
+	//Fixa in GaussianFilteret h‰rr‰r‰‰r‰
+	GaussianBlur* m_gaussianFilter;
 public:
 };
 

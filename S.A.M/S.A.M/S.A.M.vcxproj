@@ -165,6 +165,7 @@
     <ClCompile Include="Source Files\Game.cpp" />
     <ClCompile Include="Source Files\Gamelogic\Input.cpp" />
     <ClCompile Include="Source Files\Graphics\FirePart.cpp" />
+    <ClCompile Include="Source Files\Graphics\GaussianBlur.cpp" />
     <ClCompile Include="Source Files\Graphics\Light.cpp" />
     <ClCompile Include="Source Files\Graphics\LightHandler.cpp" />
     <ClCompile Include="Source Files\Graphics\PlayerPart.cpp" />
@@ -213,6 +214,7 @@
     <ClInclude Include="Header Files\Game.h" />
     <ClInclude Include="Header Files\Gamelogic\Input.h" />
     <ClInclude Include="Header Files\Graphics\FirePart.h" />
+    <ClInclude Include="Header Files\Graphics\GaussianBlur.h" />
     <ClInclude Include="Header Files\Graphics\Light.h" />
     <ClInclude Include="Header Files\Graphics\LightHandler.h" />
     <ClInclude Include="Header Files\Graphics\ModelHandler.h" />
@@ -261,6 +263,16 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
       <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">PS_main</EntryPointName>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Shaders\ComputeShader.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Compute</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compute</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Compute</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">4.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compute</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4.0</ShaderModel>
     </FxCompile>
     <FxCompile Include="Shaders\DeferredPS.hlsl">
       <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">PS_main</EntryPointName>
