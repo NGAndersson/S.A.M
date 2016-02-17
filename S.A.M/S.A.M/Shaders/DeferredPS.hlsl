@@ -33,7 +33,7 @@ float4 PS_main(PS_IN input) : SV_TARGET
 	float3 DiffuseLight = DiffuseAlbedoTex.Load(ScreenPos).xyz;
 	float4 Specular = SpecularAlbedoTex.Load(ScreenPos);
 	float3 Pos = PositionTex.Load(ScreenPos).xyz;
-	float3 Glow = GlowMap.Load(ScreenPos).xyz;
+	float4 Glow = GlowMap.Load(ScreenPos);
 
 
 	float3 SpecularAlbedo = Specular.xyz;
@@ -41,10 +41,9 @@ float4 PS_main(PS_IN input) : SV_TARGET
 	Normal = normalize(Normal);
 
 	float Attenuation = 1.0f;
-	float3 TotLight = Glow;
+	float3 TotLight = float3(0, 0, 0);
 	float3 Light = float3(0, 0, 0);
 	float Distance;
-
 
 	for (int i = 0; i < LightRange[0].y; i++)
 	{
@@ -68,11 +67,9 @@ float4 PS_main(PS_IN input) : SV_TARGET
 		float3 H = normalize(Light + V);
 		float3 SpecularL = pow(saturate(dot(Normal, H)), SpecularPower) * LightColor[i].xyz * SpecularAlbedo.xyz * NormalDotLight;
 
-		TotLight = ((Glow + Diffuse + SpecularL) * Attenuation) + TotLight;
+		TotLight = ((Diffuse + SpecularL) * Attenuation) + TotLight;
 	}
 	TotLight = TotLight + (float3(0.4, 0.4, 0.4) * DiffuseLight);
 
-	return float4(Glow, 1.0);
-
-	return float4(TotLight, 1.0f);
+	return float4(TotLight, 1.0f) + Glow;
 }
