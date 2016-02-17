@@ -182,6 +182,7 @@
     <ClCompile Include="Source Files\Screens\Menu\HighscoreMenu.cpp" />
     <ClCompile Include="Source Files\Screens\Menu\OptionsMenu.cpp" />
     <ClCompile Include="Source Files\Screens\Menu\PauseMenu.cpp" />
+    <ClCompile Include="Source Files\Screens\Menu\SongSelect.cpp" />
     <ClCompile Include="Source Files\Screens\Menu\StartMenu.cpp" />
     <ClCompile Include="Source Files\Screens\Screen.cpp" />
     <ClCompile Include="Source Files\Screens\Menu\UI.cpp" />
@@ -225,6 +226,7 @@
     <ClInclude Include="Header Files\Screens\Menu\HighscoreMenu.h" />
     <ClInclude Include="Header Files\Screens\Menu\OptionsMenu.h" />
     <ClInclude Include="Header Files\Screens\Menu\PauseMenu.h" />
+    <ClInclude Include="Header Files\Screens\Menu\SongSelect.h" />
     <ClInclude Include="Header Files\Screens\Screen.h" />
     <ClInclude Include="Header Files\Screens\Menu\StartMenu.h" />
     <ClInclude Include="Header Files\Screens\Menu\UI.h" />

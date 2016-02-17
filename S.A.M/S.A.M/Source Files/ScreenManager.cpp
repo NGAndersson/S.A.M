@@ -13,7 +13,7 @@ ScreenManager::~ScreenManager()
 	delete m_screenHighScore;
 }
 
-void ScreenManager::Update( )
+void ScreenManager::Update(double time)
 {
 
 	//Checks input depending on what screen the user is in.

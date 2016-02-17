@@ -12,7 +12,7 @@ UI::~UI()
 	m_livesLeft.erase();
 }
 
-void UI::Update()
+void UI::Update(double time)
 {
 	m_score = to_wstring(m_stats->GetScore());
 	m_livesLeft = to_wstring(m_stats->GetLives());

@@ -12,7 +12,7 @@ private:
 
 public:
 	UI(ID3D11Device* Device, ID3D11DeviceContext* DeviceContext, int ScreenHeight, int ScreenWidth, Input* input,Stats* stats);
-	void Update();
+	void Update(double time);
 	void Render();
 
 private:

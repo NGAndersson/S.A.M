@@ -127,12 +127,6 @@ void EntityManager::Initialize(SoundManager* soundManager, Input* input, ID3D11D
 	m_statsManager = statsManager;
 	m_statsManager->SetLives();
 
-	//Which song to load/play
-	InitMusic("Resources/PixieTrust.txt");
-
-	m_beatDetector = new BeatDetector(m_soundManager);
-	m_beatDetector->AudioProcess();
-
 	//Set the input class which will be passed down to Player
 	m_input = input;
 
@@ -195,10 +189,7 @@ void EntityManager::Initialize(SoundManager* soundManager, Input* input, ID3D11D
 	m_playerPartSys = new PlayerPart(2.5, 1000, _playerVec);
 	m_playerPartSys->CreateBuffer(m_device, m_deviceContext, _texName);
 
-	m_soundManager->PlayMusic(0.5f);//TEMPORARY MUTE return to 0.5f when you want sound!
-	ChangeSongData(m_beatDetector->GetTempo());
-	m_doBeatDet = true;
-	m_beat = m_beatDetector->GetBeat();
+
 
 	//Create Light Buffer
 	m_light.InitializBuffer(m_device);
@@ -351,7 +342,7 @@ void EntityManager::Update(double time)
 		{
 			m_player->SetDelete(true);				//Set player to run destruction update
 			m_statsManager->AddLives(-1);			//Reduce remaining lives
-	}
+		}
 	}
 	//Enemies
 	for (auto i = 0; i < m_enemy1.size(); i++)
@@ -530,6 +521,16 @@ void EntityManager::InitMusic(std::string filename)
 			}
 		}
 	}
+
+	//Init beatdetector
+	m_beatDetector = new BeatDetector(m_soundManager);
+	m_beatDetector->AudioProcess();
+
+	//Start playing music
+	m_soundManager->PlayMusic(0.5f);
+	ChangeSongData(m_beatDetector->GetTempo());
+	m_doBeatDet = true;				//Make this changable at song select
+	m_beat = m_beatDetector->GetBeat();
 }
 
 void EntityManager::BeatWasDetected()
@@ -541,23 +542,23 @@ void EntityManager::BeatWasDetected()
 	BulletType _bullet = m_input->CheckBullet();
 	switch (_bullet)
 	{
-	case INPUT_DEFAULT_BULLET:
-		SpawnEntity(BULLET1); //Default bullet
-		break;
-	case INPUT_BULLET2:
-		SpawnEntity(BULLET2);
-		break;
-	case INPUT_BULLET3:
-		SpawnEntity(BULLET3);
-		break;
-	case INPUT_BULLET4:
-		SpawnEntity(BULLET4);
-		break;
-	case INPUT_BULLET5:
-		SpawnEntity(BULLET5);
-		break;
-	default:
-		break;
+		case INPUT_DEFAULT_BULLET:
+			SpawnEntity(BULLET1); //Default bullet
+			break;
+		case INPUT_BULLET2:
+			SpawnEntity(BULLET2);
+			break;
+		case INPUT_BULLET3:
+			SpawnEntity(BULLET3);
+			break;
+		case INPUT_BULLET4:
+			SpawnEntity(BULLET4);
+			break;
+		case INPUT_BULLET5:
+			SpawnEntity(BULLET5);
+			break;
+		default:
+			break;
 	}
 	}
 

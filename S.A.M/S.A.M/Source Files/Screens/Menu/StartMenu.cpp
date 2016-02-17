@@ -31,7 +31,7 @@ StartMenu::StartMenu(ID3D11Device* Device, ID3D11DeviceContext* DeviceContext, i
 	m_currentFont = 0;
 }
 
-void StartMenu::Update()
+void StartMenu::Update(double time)
 {
 
 	InputType _inputReturn;

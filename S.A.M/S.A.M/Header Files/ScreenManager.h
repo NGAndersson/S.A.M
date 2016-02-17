@@ -17,7 +17,7 @@ public:
 	ScreenManager();
 	~ScreenManager();
 	//Uppdate screens
-	void Update();
+	void Update(double time);
 	//Initializing the screen manager
 	void InitializeScreen(ID3D11Device* Device, ID3D11DeviceContext* DeviceContext, int ScreenHeight, int ScreenWidth, Input* input,Stats* stats);
 	//Rendercall

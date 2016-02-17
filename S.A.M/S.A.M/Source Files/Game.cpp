@@ -127,12 +127,17 @@ WPARAM Game::MainLoop()
 
 void Game::Update(double time)
 {
-	m_screenManager->Update();
+	static MenuScreens _prevScreen;
 
-	//RENDER particle system here 
+	m_screenManager->Update(time);
+
+
 	if (m_screenManager->GetCurrentScreen() == GAME)
+	{
+		if(_prevScreen == MENU)
+			m_entityManager->InitMusic("Resources/PixieTrust.txt");
 		m_entityManager->Update(time);
-	
+	}
 	//Updates space
 	m_backgroundPartSys->Update(m_deviceContext, time, 40);
 	
@@ -140,6 +145,8 @@ void Game::Update(double time)
 	// Update Entity Manager
 
 	//Do life-checks here with m_statManager->GetLives();
+
+	_prevScreen = m_screenManager->GetCurrentScreen();
 }
 
 void Game::Render()
