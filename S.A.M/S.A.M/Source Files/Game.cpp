@@ -83,9 +83,7 @@ void Game::InitGame(Input* input, Display* disp)
 	wstring _texName = L"Resources\\Models\\star3.jpg";
 	m_backgroundPartSys = new SpacePart();
 	m_backgroundPartSys->CreateBuffer(m_device, m_deviceContext, _texName);
-	PartShader.CreateShadersPosOnly(m_device, "Shaders\\PartVS.hlsl", "Shaders\\PartGS.hlsl", "Shaders\\PartPS.hlsl");;
-	
-	//m_gaussianFilter = new GaussianBlur(m_device, m_deviceContext, PartShader, WIDTH, HEIGHT);
+	PartShader.CreateShadersPosOnly(m_device, "Shaders\\PartVS.hlsl", "Shaders\\PartGS.hlsl", "Shaders\\PartPS.hlsl");
 }
 
 WPARAM Game::MainLoop()
@@ -133,6 +131,11 @@ void Game::Update(double time)
 	if (m_screenManager->GetCurrentScreen() == GAME)
 		m_entityManager->Update(time);
 	
+	if (m_screenManager->GetCurrentScreen() == EXIT)
+	{
+		m_statsManager->SaveScore("PixieTrust.txt", "SomeNoob");
+		PostQuitMessage(0);
+	}
 	//Updates space
 	m_backgroundPartSys->Update(m_deviceContext, time, 40);
 	
@@ -158,10 +161,9 @@ void Game::Render()
 	m_deferredBuffer.SetRenderTargets(m_deviceContext);
 	PartShader.SetShaders(m_deviceContext);
 	m_backgroundPartSys->Render(m_deviceContext);
-	if (m_screenManager->GetCurrentScreen() == GAME)
+	if (m_screenManager->GetCurrentScreen() == GAME||m_screenManager->GetCurrentScreen()==PAUSE)
 	{
 		m_entityManager->Render();
-
 	}
 
 	m_deviceContext->OMSetRenderTargets(1, &m_backbufferRTV, m_depthStencilView);
@@ -183,8 +185,7 @@ void Game::CheckInput()
 {
 	//InputType _returnInput = m_input->CheckKeyBoardInput();
 	if (m_input->CheckEsc()) {
-		m_statsManager->SaveScore("PixieTrust.txt", "SomeNoob");
-		PostQuitMessage(0);
+		m_screenManager->SetCurrentScreenPAUSE();
 	}
 	m_input->CheckMouseInput();
 }

@@ -42,14 +42,21 @@ void ScreenManager::Update( )
 		//Options
 
 		break;
-	case 5:
+	case PAUSE:
 		//Pause
-
+		m_screenPause->Update();
+		if (m_input->CheckReturn())
+		{
+			m_current = m_screenPause->GetTargetMenu();
+		}
 		break;
 	case 6:
 		//Endscreen
 
 		break;
+	case EXIT:
+		//Do nothing will exit when going to update in game class
+			break;
 	default:
 		break;
 	}
@@ -68,7 +75,7 @@ void ScreenManager::InitializeScreen(ID3D11Device* Device, ID3D11DeviceContext* 
 	m_input = input;
 	m_screenMenu = new StartMenu(Device, DeviceContext, ScreenHeight, ScreenWidth, input);
 	m_screenGame = new UI(Device, DeviceContext, ScreenHeight, ScreenWidth, input, stats);
-
+	m_screenPause = new PauseMenu(Device, DeviceContext, ScreenHeight, ScreenWidth, input);
 }
 
 void ScreenManager::Render()
@@ -97,7 +104,7 @@ void ScreenManager::Render()
 		break;
 	case 5:
 		//Pause
-
+		m_screenPause->Render();
 		break;
 	case 6:
 		//Endscreen
