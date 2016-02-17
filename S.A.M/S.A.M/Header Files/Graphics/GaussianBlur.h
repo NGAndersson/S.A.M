@@ -24,9 +24,7 @@ private:
 	ShaderHandler* m_shaderHandler;
 	ID3D11UnorderedAccessView* m_unAc;
 	ID3D11UnorderedAccessView* m_unAc2;
-	ID3D11ShaderResourceView* m_compShaderTexture1;
-	ID3D11ShaderResourceView* m_compShaderTexture2;//Nessecary????
-	ID3D11ShaderResourceView* m_targetedShaderResourceView; //ShaderResource view that you want blurred.
+	ID3D11ShaderResourceView* m_compShaderTexture;
 	UINT m_shaderTarget; //Targeted place for shader
 
 	int m_screenHeight,m_screenWidth;

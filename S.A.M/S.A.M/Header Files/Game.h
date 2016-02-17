@@ -56,6 +56,7 @@ private:
 	ID3D11BlendState1* m_blendState = nullptr;
 	ID3D11DepthStencilState* m_depthStencilState = nullptr;
 	//Fixa in GaussianFilteret h‰rr‰r‰‰r‰
+	GaussianBlur* m_gaussianFilter;
 public:
 };
 

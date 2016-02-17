@@ -44,8 +44,7 @@ GaussianBlur::GaussianBlur(ID3D11Device* Device, ID3D11DeviceContext* DeviceCont
 	_gST.Texture2D.MipLevels = 1;
 	_gST.Texture2D.MostDetailedMip = 0;
 
-	_hr = Device->CreateShaderResourceView(_gausTex, &_gST, &m_compShaderTexture1);
-	_hr = Device->CreateShaderResourceView(_gausTex2, &_gST, &m_compShaderTexture2);
+	_hr = Device->CreateShaderResourceView(_gausTex, &_gST, &m_compShaderTexture);
 
 	D3D11_UNORDERED_ACCESS_VIEW_DESC UAVDesc;
 
@@ -67,20 +66,21 @@ ID3D11ShaderResourceView* GaussianBlur::Blur(ID3D11Device* Device, ID3D11DeviceC
 	//Set first pass Shaders
 	m_shaderHandler->SetComputeShader(DeviceContext, 1);
 	ID3D11ShaderResourceView* _temp = NULL; //No need to release if NULL
+
+
+	//First pass
 	DeviceContext->CSSetUnorderedAccessViews(0, 1, &m_unAc,0);
 	DeviceContext->CSSetShaderResources(ShaderTarget, 1, &shaderResource);
-	//First pass
 	DeviceContext->Dispatch(m_screenWidth / 16, m_screenHeight, 1);
-
-	DeviceContext->CSSetUnorderedAccessViews(0, 1, &m_unAc2, 0);
-	DeviceContext->CSSetShaderResources(ShaderTarget, 1, &m_compShaderTexture1);
 
 	//Set Second pass Shader
 	m_shaderHandler->SetComputeShader(DeviceContext, 2);
+	DeviceContext->CSSetUnorderedAccessViews(0, 1, &m_unAc2, 0);
+	DeviceContext->CSSetShaderResources(ShaderTarget, 1, &m_compShaderTexture);
+
 	DeviceContext->Dispatch(m_screenWidth, m_screenHeight / 16, 1);
 	DeviceContext->CSSetShaderResources(ShaderTarget, 1, &_temp);
 
-	DeviceContext->PSSetShaderResources(ShaderTarget, 1, &shaderResource);
-
-	return shaderResource;
+	DeviceContext->PSSetShaderResources(ShaderTarget, 1, &m_compShaderTexture);
+	return m_compShaderTexture;
 }
