@@ -35,7 +35,7 @@ void ScreenManager::Update(double time)
 		break;
 	case 3:
 		//HighScore
-		m_screenHighScore->Update();
+		m_screenHighScore->Update(time);
 		break;
 	case 4:
 		//Options
@@ -43,7 +43,7 @@ void ScreenManager::Update(double time)
 		break;
 	case PAUSE:
 		//Pause
-		m_screenPause->Update();
+		m_screenPause->Update(time);
 		if (m_input->CheckReturn())
 		{
 			m_current = m_screenPause->GetTargetMenu();
@@ -51,7 +51,7 @@ void ScreenManager::Update(double time)
 		break;
 	case 6:
 		//Endscreen
-		m_endScreen->Update();
+		m_endScreen->Update(time);
 		if (m_input->CheckReturn())
 		{
 			m_current = m_screenPause->GetTargetMenu();
