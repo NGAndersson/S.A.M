@@ -1,13 +1,48 @@
 #include "../../../Header Files/Screens/Menu/SongSelect.h" 
 
-SongSelect::SongSelect(ID3D11Device* Device, ID3D11DeviceContext* DeviceContext, int ScreenHeight, int ScreenWidth, Input* input) : Screen(Device, DeviceContext, ScreenHeight, ScreenWidth, input)
+
+vector<string> GetAllFilesNamesWithinFolder(string folder)
+{
+	vector<string> _names;
+	char _searchPath[200];
+	sprintf_s(_searchPath, "%s/*.txt", folder.c_str());
+	WIN32_FIND_DATA _fd;
+	HANDLE _hFind = ::FindFirstFile(_searchPath, &_fd);
+	if (_hFind != INVALID_HANDLE_VALUE) {
+		do {
+			// read all (real) files in current folder
+			// , delete '!' read other 2 default folder . and ..
+			if (!(_fd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)) {
+				_names.push_back(_fd.cFileName);
+			}
+		} while (::FindNextFile(_hFind, &_fd));
+		::FindClose(_hFind);
+	}
+	return _names;
+}
+
+SongSelect::SongSelect(ID3D11Device* Device, ID3D11DeviceContext* DeviceContext, int ScreenHeight, int ScreenWidth, Input* input, Stats* stats, SoundManager* soundManager) : Screen(Device, DeviceContext, ScreenHeight, ScreenWidth, input)
 {
 	m_font = make_unique<SpriteFont>(Device, L"Resources/moonhouse.spritefont");
+	
+	//Set soundmanager
+	m_soundManager = soundManager;
+
+	//Get filenames for all songtxts
+	vector<string> _allSongFileNames = GetAllFilesNamesWithinFolder("Songs");
+
+	//Make a SongElement for each song
+	for (int i = 0; i < _allSongFileNames.size(); i++)
+	{
+		SongElement* _tempElement = new SongElement(_allSongFileNames[i], Device, ScreenHeight, ScreenWidth);
+		m_songElements.push_back(_tempElement);
+	}
 }
 
 SongSelect::~SongSelect()
 {
-
+	for (int i = 0; i < m_songElements.size(); i++)
+		delete m_songElements[i];
 }
 
 void SongSelect::Update(double time)
@@ -17,22 +52,6 @@ void SongSelect::Update(double time)
 
 void SongSelect::Render()
 {
-	/*
-	SimpleMath::Vector2 _scorePos, _livesPos, _comboPos;
-	_scorePos.x = m_screenWidth / 2;
-	_scorePos.y = 40;
-	_livesPos.x = 100;
-	_livesPos.y = m_screenHeight - 40;
-	_comboPos.x = m_screenWidth - 150, _comboPos.y = m_screenHeight - 40;
 
-	wstring _tempHighScore = L"High Score: " + m_score;
-	wstring _tempLives = L"Lives: " + m_livesLeft;
-	wstring _tempCombo = L"Combo: " + m_combo;
-	m_spriteBatch->Begin();
-	m_font->DrawString(m_spriteBatch.get(), _tempHighScore.c_str(), _scorePos, Colors::Crimson, 0.f, m_font->MeasureString(_tempHighScore.c_str()) / 2.f);
-	m_font->DrawString(m_spriteBatch.get(), _tempLives.c_str(), _livesPos, Colors::Crimson, 0.f, m_font->MeasureString(_tempLives.c_str()) / 2.f);
-	m_font->DrawString(m_spriteBatch.get(), _tempCombo.c_str(), _comboPos, Colors::Crimson, 0.f, m_font->MeasureString(_tempCombo.c_str()) / 2.f);
-	m_spriteBatch->End();
-	*/
 }
 

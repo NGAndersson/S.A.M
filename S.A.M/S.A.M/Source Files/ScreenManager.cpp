@@ -24,7 +24,7 @@ void ScreenManager::Update(double time)
 			break;
 	case MENU:
 		//Startscreen
-		m_screenMenu->Update();
+		m_screenMenu->Update(time);
 		if (m_input->CheckReturn())
 		{
 			m_current =	m_screenMenu->GetTargetMenu();
@@ -32,7 +32,7 @@ void ScreenManager::Update(double time)
 		break;
 	case GAME:
 		//Game
-		m_screenGame->Update();
+		m_screenGame->Update(time);
 		break;
 	case 3:
 		//HighScore

@@ -135,7 +135,7 @@ void Game::Update(double time)
 	if (m_screenManager->GetCurrentScreen() == GAME)
 	{
 		if(_prevScreen == MENU)
-			m_entityManager->InitMusic("Resources/PixieTrust.txt");
+			m_entityManager->InitMusic("Resources/Songs/PixieTrust.txt");
 		m_entityManager->Update(time);
 	}
 	//Updates space

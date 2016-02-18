@@ -140,6 +140,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source Files\Screens\SongElement.cpp" />
     <ClCompile Include="Source Files\Audio\BeatDetector.cpp" />
     <ClCompile Include="Source Files\Audio\SoundManager.cpp">
       <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">4996</DisableSpecificWarnings>
@@ -235,6 +236,7 @@
     <ClInclude Include="Header Files\Graphics\Renderer.h" />
     <ClInclude Include="Header Files\ScreenManager.h" />
     <ClInclude Include="Header Files\Graphics\ShaderHandler.h" />
+    <ClInclude Include="Header Files\Screens\SongElement.h" />
     <ClInclude Include="Header Files\SoundManager.h" />
     <ClInclude Include="Header Files\Gamelogic\Timer.h" />
   </ItemGroup>

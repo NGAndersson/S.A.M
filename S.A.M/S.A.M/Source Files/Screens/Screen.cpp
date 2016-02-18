@@ -19,7 +19,7 @@ Screen::Screen(ID3D11Device* Device, ID3D11DeviceContext* DeviceContext, int Scr
 	m_screenWidth = ScreenWidth;
 }
 
-void Screen::Update()
+void Screen::Update(double time)
 {
 
 }

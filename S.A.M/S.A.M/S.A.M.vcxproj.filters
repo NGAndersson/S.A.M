@@ -147,6 +147,9 @@
     <ClCompile Include="Source Files\Screens\Menu\SongSelect.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source Files\Screens\SongElement.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header Files\SoundManager.h">
@@ -294,6 +297,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Header Files\Screens\Menu\SongSelect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\Screens\SongElement.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
