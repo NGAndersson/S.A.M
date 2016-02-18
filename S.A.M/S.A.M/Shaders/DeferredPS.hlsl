@@ -49,7 +49,7 @@ float4 PS_main(PS_IN input) : SV_TARGET
 	{
 		if (LightRange[i].z == 0)	//pointLight
 		{
-			Light = Pos - LightPos[i].xyz;
+			Light = LightPos[i].xyz - Pos;
 			Distance = length(Light);
 			Attenuation = max(0, 1.0f - (Distance / LightRange[i].x));	//Dämpning
 
@@ -63,11 +63,8 @@ float4 PS_main(PS_IN input) : SV_TARGET
 
 		float NormalDotLight = saturate(dot(Normal, Light));
 		float3 Diffuse = NormalDotLight * LightColor[i].xyz * DiffuseLight;
-		float3 V = CameraPos.xyz - Pos;
-		float3 H = normalize(Light + V);
-		float3 SpecularL = pow(saturate(dot(Normal, H)), SpecularPower) * LightColor[i].xyz * SpecularAlbedo.xyz * NormalDotLight;
 
-		TotLight = ((Diffuse + SpecularL) * Attenuation) + TotLight;
+		TotLight = ((Diffuse) * Attenuation) + TotLight;
 	}
 	TotLight = TotLight + (float3(0.4, 0.4, 0.4) * DiffuseLight);
 

@@ -50,7 +50,7 @@ PS_OUT PS_main(PS_IN input)
 	output.DiffAlbedo = (float4(Diffuse, 1) * _depth) + (ObjTex.Sample(sampAni, input.Tex) * _depth);
 	output.SpecAlbedo = float4(0.16f, 0.16f, 0.16f, 1000.0f);
 	output.Pos = input.PosInW;
-	//output.Glow = ((float4(Diffuse, 1) * _depth) + (float4(ObjTex.Sample(sampAni, input.Tex).xyz, 1)  * _depth)) * 0;
+	output.Glow = ((float4(Diffuse, 1) * _depth) + (float4(ObjTex.Sample(sampAni, input.Tex).xyz, 1)  * _depth)) * 0;
 
 	return output;
 }

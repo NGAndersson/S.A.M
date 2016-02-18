@@ -31,7 +31,7 @@ PS_OUT PS_main(PS_IN input)
 	output.DiffAlbedo = (((PartTex.Sample(sampAni, input.Tex) * _depth) * _distance));
 	output.SpecAlbedo = float4(0.16f, 0.16f, 0.16f, 1000.0f);
 	output.Pos = float4(input.Position, 1.0f);
-	//output.Glow = ((PartTex.Sample(sampAni, input.Tex) * _depth) * _distance);
+	output.Glow = ((PartTex.Sample(sampAni, input.Tex) * _depth) * _distance);
 
 	return output;
 }
