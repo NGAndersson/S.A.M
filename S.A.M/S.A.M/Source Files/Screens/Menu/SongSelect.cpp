@@ -29,7 +29,7 @@ SongSelect::SongSelect(ID3D11Device* Device, ID3D11DeviceContext* DeviceContext,
 	m_soundManager = soundManager;
 
 	//Get filenames for all songtxts
-	vector<string> _allSongFileNames = GetAllFilesNamesWithinFolder("Songs");
+	vector<string> _allSongFileNames = GetAllFilesNamesWithinFolder("Resources/Songs");
 
 	//Make a SongElement for each song
 	for (int i = 0; i < _allSongFileNames.size(); i++)
