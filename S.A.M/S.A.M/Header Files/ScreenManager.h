@@ -27,6 +27,7 @@ public:
 	void Render();
 	//Returns the current screen
 	MenuScreens GetCurrentScreen() { return m_current; }
+	bool GetGameState() { return m_gameOngoing; }
 	void SetCurrentScreenPAUSE() { m_current = PAUSE; }
 	void SetCurrentScreenQUIT() { m_current = EXIT;}
 //----------------------------Attributes----------------------------------------
@@ -40,7 +41,7 @@ private:
 	Screen* m_screenPause;
 	Screen* m_screenHighScore;
 	Screen* m_endScreen;
-	bool m_keyDown = false;
+	bool m_keyDown = false, m_gameOngoing = false;
 	//input
 	Input* m_input;
 

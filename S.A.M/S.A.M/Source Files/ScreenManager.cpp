@@ -27,6 +27,10 @@ void ScreenManager::Update(double time)
 		if (m_input->CheckReturn())
 		{
 			m_current =	m_screenMenu->GetTargetMenu();
+			if (m_current == GAME)
+			{
+				m_gameOngoing = true;
+			}
 		}
 		break;
 	case GAME:
@@ -47,6 +51,10 @@ void ScreenManager::Update(double time)
 		if (m_input->CheckReturn())
 		{
 			m_current = m_screenPause->GetTargetMenu();
+			if (m_current == MENU)
+			{
+				m_gameOngoing = false;
+			}
 		}
 		break;
 	case 6:

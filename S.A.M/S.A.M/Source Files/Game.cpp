@@ -174,7 +174,7 @@ void Game::Render()
 	m_deferredBuffer.SetRenderTargets(m_deviceContext);
 	m_partShader.SetShaders(m_deviceContext);
 	m_backgroundPartSys->Render(m_deviceContext);
-	if (m_screenManager->GetCurrentScreen() == GAME||m_screenManager->GetCurrentScreen()==PAUSE)
+	if (m_screenManager->GetGameState() == true/*m_screenManager->GetCurrentScreen() == GAME || m_screenManager->GetCurrentScreen()==PAUSE*/)
 	{
 		m_entityManager->Render();
 	}
