@@ -14,28 +14,28 @@ ScreenManager::~ScreenManager()
 	delete m_endScreen;
 }
 
-void ScreenManager::Update( )
+void ScreenManager::Update(double time)
 {
 	//Checks input depending on what screen the user is in.
 	switch (m_current)
 	{
 	case MENU_DEFAULT:
-		break;
+			break;
 	case MENU:
 		//Startscreen
-		m_screenMenu->Update();
-		if (m_input->CheckReturn()&&m_keyDown==false)
+		m_screenMenu->Update(time);
+		if (m_input->CheckReturn())
 		{
 			m_current =	m_screenMenu->GetTargetMenu();
 		}
 		break;
 	case GAME:
 		//Game
-		m_screenGame->Update();
+		m_screenGame->Update(time);
 		break;
 	case 3:
 		//HighScore
-		m_screenHighScore->Update();
+		m_screenHighScore->Update(time);
 		break;
 	case 4:
 		//Options
@@ -43,7 +43,7 @@ void ScreenManager::Update( )
 		break;
 	case PAUSE:
 		//Pause
-		m_screenPause->Update();
+		m_screenPause->Update(time);
 		if (m_input->CheckReturn())
 		{
 			m_current = m_screenPause->GetTargetMenu();
@@ -51,7 +51,7 @@ void ScreenManager::Update( )
 		break;
 	case 6:
 		//Endscreen
-		m_endScreen->Update();
+		m_endScreen->Update(time);
 		if (m_input->CheckReturn())
 		{
 			m_current = m_screenPause->GetTargetMenu();
@@ -59,12 +59,10 @@ void ScreenManager::Update( )
 		break;
 	case EXIT:
 		//Do nothing will exit when going to update in game class
-			break;
+		break;
 	default:
 		break;
 	}
-
-
 }
 
 void ScreenManager::InitializeScreen(ID3D11Device* Device, ID3D11DeviceContext* DeviceContext, int ScreenHeight, int ScreenWidth, Input* input,Stats* stats)
@@ -119,6 +117,3 @@ void ScreenManager::Render()
 		break;
 	}
 }
-
-
-

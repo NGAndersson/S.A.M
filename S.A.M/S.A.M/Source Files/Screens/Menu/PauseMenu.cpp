@@ -30,7 +30,7 @@ PauseMenu::PauseMenu(ID3D11Device* Device, ID3D11DeviceContext* DeviceContext, i
 	m_currentFont = 0;
 }
 
-void PauseMenu::Update()
+void PauseMenu::Update(double time)
 {
 
 	InputType _inputReturn;

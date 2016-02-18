@@ -21,7 +21,7 @@ HighScoreMenu::HighScoreMenu(ID3D11Device* Device, ID3D11DeviceContext* DeviceCo
 	m_currentFont = 0;
 }
 
-void HighScoreMenu::Update()
+void HighScoreMenu::Update(double time)
 {
 	InputType _inputReturn;
 	_inputReturn = m_input->CheckKeyBoardInput();

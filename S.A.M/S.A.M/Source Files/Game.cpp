@@ -86,7 +86,7 @@ void Game::InitGame(Input* input, Display* disp)
 	m_backgroundPartSys->CreateBuffer(m_device, m_deviceContext, _texName);
 	m_partShader.CreateShadersPosOnly(m_device, "Shaders\\PartVS.hlsl", "Shaders\\PartGS.hlsl", "Shaders\\PartPS.hlsl");;
 	m_glowshader.CreateShadersCompute(m_device, "Shaders\\ComputeShader.hlsl");
-
+	
 	m_gaussianFilter = new GaussianBlur(m_device, m_deviceContext, &m_glowshader, WIDTH, HEIGHT);
 }
 
@@ -129,12 +129,19 @@ WPARAM Game::MainLoop()
 
 void Game::Update(double time)
 {
-	m_screenManager->Update();
+	static MenuScreens _prevScreen;
 
-	//RENDER particle system here 
+	m_screenManager->Update(time);
+
+	if ((m_screenManager->GetCurrentScreen() == PAUSE && _prevScreen == GAME) || m_screenManager->GetCurrentScreen() == GAME && _prevScreen == PAUSE)	//When switching from game to pause or vice versa, pause/resume the music
+		m_soundManager->PauseMusic();
+
 	if (m_screenManager->GetCurrentScreen() == GAME)
+	{
+		if (_prevScreen == MENU)
+			m_entityManager->InitMusic("Resources/Songs/PixieTrust.txt");
 		m_entityManager->Update(time);
-	
+	}
 	if (m_screenManager->GetCurrentScreen() == EXIT)
 	{
 		m_statsManager->SaveScore("PixieTrust.txt", "SomeNoob");
@@ -147,6 +154,8 @@ void Game::Update(double time)
 	// Update Entity Manager
 
 	//Do life-checks here with m_statManager->GetLives();
+
+	_prevScreen = m_screenManager->GetCurrentScreen();
 }
 
 void Game::Render()

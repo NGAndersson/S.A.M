@@ -127,12 +127,6 @@ void EntityManager::Initialize(SoundManager* soundManager, Input* input, ID3D11D
 	m_statsManager = statsManager;
 	m_statsManager->SetLives();
 
-	//Which song to load/play
-	InitMusic("Resources/PixieTrust.txt");
-
-	m_beatDetector = new BeatDetector(m_soundManager);
-	m_beatDetector->AudioProcess();
-
 	//Set the input class which will be passed down to Player
 	m_input = input;
 
@@ -195,10 +189,7 @@ void EntityManager::Initialize(SoundManager* soundManager, Input* input, ID3D11D
 	m_playerPartSys = new PlayerPart(2, 500, _playerVec);
 	m_playerPartSys->CreateBuffer(m_device, m_deviceContext, _texName);
 
-	m_soundManager->PlayMusic(0.5f);//TEMPORARY MUTE return to 0.5f when you want sound!
-	ChangeSongData(m_beatDetector->GetTempo());
-	m_doBeatDet = true;
-	m_beat = m_beatDetector->GetBeat();
+
 
 	//Create Light Buffer
 	m_light.InitializBuffer(m_device);
@@ -349,9 +340,10 @@ void EntityManager::Update(double time)
 		m_collision.CheckCollisionEntity(&m_bullet6, &_playerVec, BULLET6, PLAYER);
 		if (m_player->GetHealth() <= 0)
 		{
+			m_statsManager->ResetCombo();
 			m_player->SetDelete(true);				//Set player to run destruction update
 			m_statsManager->AddLives(-1);			//Reduce remaining lives
-	}
+		}
 	}
 	//Enemies
 	for (auto i = 0; i < m_enemy1.size(); i++)
@@ -387,7 +379,7 @@ void EntityManager::Update(double time)
 		m_bullet6[i]->Update(time);
 
 	if (!m_player->GetDelete())
-	m_player->Update(time);
+		m_player->Update(time);
 	else
 		m_player->Destroyed(time);
 	
@@ -541,6 +533,16 @@ void EntityManager::InitMusic(const std::string &filename)
 			}
 		}
 	}
+
+	//Init beatdetector
+	m_beatDetector = new BeatDetector(m_soundManager);
+	m_beatDetector->AudioProcess();
+
+	//Start playing music
+	m_soundManager->PlayMusic(0.5f);
+	ChangeSongData(m_beatDetector->GetTempo());
+	m_doBeatDet = true;				//Make this changable at song select
+	m_beat = m_beatDetector->GetBeat();
 }
 
 void EntityManager::BeatWasDetected()
@@ -552,23 +554,23 @@ void EntityManager::BeatWasDetected()
 	BulletType _bullet = m_input->CheckBullet();
 	switch (_bullet)
 	{
-	case INPUT_DEFAULT_BULLET:
-		SpawnEntity(BULLET1); //Default bullet
-		break;
-	case INPUT_BULLET2:
-		SpawnEntity(BULLET2);
-		break;
-	case INPUT_BULLET3:
-		SpawnEntity(BULLET3);
-		break;
-	case INPUT_BULLET4:
-		SpawnEntity(BULLET4);
-		break;
-	case INPUT_BULLET5:
-		SpawnEntity(BULLET5);
-		break;
-	default:
-		break;
+		case INPUT_DEFAULT_BULLET:
+			SpawnEntity(BULLET1); //Default bullet
+			break;
+		case INPUT_BULLET2:
+			SpawnEntity(BULLET2);
+			break;
+		case INPUT_BULLET3:
+			SpawnEntity(BULLET3);
+			break;
+		case INPUT_BULLET4:
+			SpawnEntity(BULLET4);
+			break;
+		case INPUT_BULLET5:
+			SpawnEntity(BULLET5);
+			break;
+		default:
+			break;
 	}
 	}
 
@@ -796,15 +798,15 @@ void EntityManager::CheckCombo()
 	// Check key presses near the beat, for combo
 	static bool _registeredCombo = true;
 	static BulletType _currentBulletType;
-	if (m_offsetCount > m_offset) {						//Only check for combos after the beats have actually started
+	static bool _spacebar = false;
+	if (m_offsetCount > m_offset && m_player->GetDelete() == false) {						//Only check for combos after the beats have actually started
 		if (m_timeSinceLastBeat < 25000 / m_currentBPM)
 		{
-			if (m_input->IsNewButtonPressed(_currentBulletType)) //If button is pressed
+			if (m_input->IsNewButtonPressed(_spacebar)) //If button is pressed
 			{
 				if (m_timeSinceLastBeat < BEATLENIENCY && _registeredCombo == false)	//If key was pressed during sweet spot and key hadn't been pressed earlier
 				{
 					m_statsManager->AddCombo();
-					OutputDebugStringA(to_string(m_statsManager->GetCombo()).c_str());		//DDDDDEBUGGG
 					_registeredCombo = true;
 				}
 				else					//Reset combo if pressed more than once or after sweetspot
@@ -819,12 +821,11 @@ void EntityManager::CheckCombo()
 			_registeredCombo = false;
 		else if (m_timeSinceLastBeat > 35000 / m_currentBPM)
 		{
-			if (m_input->IsNewButtonPressed(_currentBulletType)) //If button is pressed
+			if (m_input->IsNewButtonPressed(_spacebar)) //If button is pressed
 			{
 				if (m_timeSinceLastBeat > 60000 / m_currentBPM - BEATLENIENCY && _registeredCombo == false)	//If key was pressed during sweet spot and key hadn't been pressed earlier
 				{
 					m_statsManager->AddCombo();
-					OutputDebugStringA(to_string(m_statsManager->GetCombo()).c_str());		//DDDDDEBUGGG
 					_registeredCombo = true;
 				}
 				else					//Reset combo if pressed more than once or after sweetspot

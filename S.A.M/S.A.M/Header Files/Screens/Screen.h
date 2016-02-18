@@ -22,7 +22,7 @@ public:
 	Screen() {}
 	virtual ~Screen() {}
 	Screen(ID3D11Device* Device, ID3D11DeviceContext* DeviceContext, int ScreenHeight, int ScreenWidth, Input* input);
-	virtual void Update();
+	virtual void Update(double time);
 	virtual void Render();
 	virtual MenuScreens GetTargetMenu() { return m_currentTargetMenu; }
 protected:

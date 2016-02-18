@@ -39,10 +39,10 @@ private:
 	vector<Entity*> CheckIfAlive(const std::vector<Entity*> &bullet);
 	void RenderBullets();
 	vector<Entity*> RemoveEntity(int RemoveId, vector<Entity*> RemoveType);
-	void InitMusic(const std::string &filename);
 	void EnemyFire();
 	void RenderEnemies();
 	void CheckCombo();
+	void ChangeSongData(int bpm);
 
 public:
 	EntityManager();
@@ -50,7 +50,7 @@ public:
 	void Initialize(SoundManager* soundManager, Input* input, ID3D11Device* device, ID3D11DeviceContext* deviceContext, Stats* statsManager);
 	void Render();
 	void Update(double time);
-	void ChangeSongData(int bpm);
+	void InitMusic(const std::string &filename);
 
 	//Variables
 private:

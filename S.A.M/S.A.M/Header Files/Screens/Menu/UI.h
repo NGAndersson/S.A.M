@@ -12,15 +12,14 @@ private:
 
 public:
 	UI(ID3D11Device* Device, ID3D11DeviceContext* DeviceContext, int ScreenHeight, int ScreenWidth, Input* input,Stats* stats);
-	void Update();
+	void Update(double time);
 	void Render();
 
 private:
 	Stats* m_stats;
 	wstring m_score;
-	wstring m_high = L"HighScore: ";
 	wstring m_livesLeft;
-	wstring m_lives = L"Lives: ";
+	wstring m_combo;
 };
 
 

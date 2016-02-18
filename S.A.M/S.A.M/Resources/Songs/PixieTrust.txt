@@ -1,4 +1,10 @@
 # <-- Comment
+#### Meta
+songname=Pixie Trust
+artist=Dunderpatrullen
+arr=Group 3
+
+
 #### Soundfile
 music=Resources/Sound/PixieTrust.mp3
 

@@ -164,19 +164,35 @@ bool Input::CheckEsc()
 }
 
 //Return true if a new button is being pressed, not if a button is released
-bool Input::IsNewButtonPressed(BulletType& checkAgainst)
-{
-	BulletType _current = CheckBullet();
-	
-	if ((_current == INPUT_BULLET2 && checkAgainst != INPUT_BULLET2)
-		|| (_current == INPUT_BULLET3 && checkAgainst != INPUT_BULLET3)
-		|| (_current == INPUT_BULLET4 && checkAgainst != INPUT_BULLET4)
-		|| (_current == INPUT_BULLET5 && checkAgainst != INPUT_BULLET5))
-	{
-		checkAgainst = _current;
-		return true;
-	}
-	checkAgainst = _current;
-	return false;
-}
+//bool Input::IsNewButtonPressed(BulletType& checkAgainst)
+//{
+//	BulletType _current = CheckBullet();
+//	
+//	if ((_current == INPUT_BULLET2 && checkAgainst != INPUT_BULLET2)
+//		|| (_current == INPUT_BULLET3 && checkAgainst != INPUT_BULLET3)
+//		|| (_current == INPUT_BULLET4 && checkAgainst != INPUT_BULLET4)
+//		|| (_current == INPUT_BULLET5 && checkAgainst != INPUT_BULLET5))
+//	{
+//		checkAgainst = _current;
+//		return true;
+//	}
+//	checkAgainst = _current;
+//	return false;
+//}
 
+bool Input::IsNewButtonPressed(bool& checkAgainst)
+{
+	if (m_keyBoardState[DIK_SPACE] & 0x80)
+	{
+		if (checkAgainst == true)
+			return false;
+		else {
+			checkAgainst = true;
+			return true;
+		}
+	}
+	else {
+		checkAgainst = false;
+		return false;
+	}
+}
