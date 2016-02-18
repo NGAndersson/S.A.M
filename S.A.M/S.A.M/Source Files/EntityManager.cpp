@@ -836,3 +836,8 @@ void EntityManager::CheckCombo()
 		}
 	}
 }
+
+int EntityManager::GetPlayerHealth()
+{
+	return m_player->GetHealth();
+}

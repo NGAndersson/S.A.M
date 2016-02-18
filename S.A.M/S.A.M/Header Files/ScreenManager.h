@@ -41,6 +41,7 @@ private:
 	Screen* m_screenPause;
 	Screen* m_screenHighScore;
 	Screen* m_endScreen;
+	Stats* m_stats;
 	bool m_keyDown = false, m_gameOngoing = false;
 	//input
 	Input* m_input;

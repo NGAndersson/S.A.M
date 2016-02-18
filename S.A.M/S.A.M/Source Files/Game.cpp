@@ -147,6 +147,7 @@ void Game::Update(double time)
 		m_statsManager->SaveScore("PixieTrust.txt", "SomeNoob");
 		PostQuitMessage(0);
 	}
+	
 	//Updates space
 	m_backgroundPartSys->Update(m_deviceContext, time, 40);
 	

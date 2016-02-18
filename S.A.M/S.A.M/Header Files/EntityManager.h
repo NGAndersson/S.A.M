@@ -52,6 +52,8 @@ public:
 	void Update(double time);
 	void InitMusic(const std::string &filename);
 
+	int GetPlayerHealth();
+
 	//Variables
 private:
 	//Vectors with all the different types of entities

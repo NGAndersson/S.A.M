@@ -36,6 +36,10 @@ void ScreenManager::Update(double time)
 	case GAME:
 		//Game
 		m_screenGame->Update(time);
+		if (m_stats->GetLives() == 0)
+		{
+			m_current = ENDSCREEN;
+		}
 		break;
 	case 3:
 		//HighScore
@@ -73,8 +77,9 @@ void ScreenManager::Update(double time)
 	}
 }
 
-void ScreenManager::InitializeScreen(ID3D11Device* Device, ID3D11DeviceContext* DeviceContext, int ScreenHeight, int ScreenWidth, Input* input,Stats* stats)
+void ScreenManager::InitializeScreen(ID3D11Device* Device, ID3D11DeviceContext* DeviceContext, int ScreenHeight, int ScreenWidth, Input* input, Stats* stats)
 {
+	m_stats = stats;
 	//Starting all the otherClasses etc..
 
 	//Current screen is startscreen
