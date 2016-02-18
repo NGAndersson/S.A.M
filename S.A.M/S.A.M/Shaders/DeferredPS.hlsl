@@ -68,5 +68,5 @@ float4 PS_main(PS_IN input) : SV_TARGET
 	}
 	TotLight = TotLight + (float3(0.4, 0.4, 0.4) * DiffuseLight);
 
-	return float4(TotLight, 1.0f) + Glow;
+	return Glow + float4(TotLight, 1.0f);
 }
