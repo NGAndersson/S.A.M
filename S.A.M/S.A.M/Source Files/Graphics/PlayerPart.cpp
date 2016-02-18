@@ -108,8 +108,27 @@ void PlayerPart::Update(ID3D11DeviceContext* deviceContext, float time, float pa
 		}
 		else
 		{
-			m_sourcePos[i] = XMFLOAT4(m_sourcePos[i].x, m_sourcePos[i].y, m_sourcePos[i].z - (partSpeed * time), 1.0f);
-			m_partPos[i] = XMFLOAT4(m_partPos[i].x, m_partPos[i].y, m_partPos[i].z - (partSpeed * time), 1.0f);
+			float _x = ((float(rand() % 10000) / 9000) * time), _y = ((float(rand() % 10000) / 9000) * time);
+			if (m_sourcePos[i].x < 0 && m_sourcePos[i].y < 0)
+			{
+				m_sourcePos[i] = XMFLOAT4(m_sourcePos[i].x - _x, m_sourcePos[i].y - _y, m_sourcePos[i].z - (partSpeed * time), 1.0f);
+				m_partPos[i] = XMFLOAT4(m_partPos[i].x - _x, m_partPos[i].y - _y, m_partPos[i].z - (partSpeed * time), 1.0f);
+			}
+			else if (m_sourcePos[i].x > 0 && m_sourcePos[i].y < 0)
+			{
+				m_sourcePos[i] = XMFLOAT4(m_sourcePos[i].x + _x, m_sourcePos[i].y - _y, m_sourcePos[i].z - (partSpeed * time), 1.0f);
+				m_partPos[i] = XMFLOAT4(m_partPos[i].x + _x, m_partPos[i].y - _y, m_partPos[i].z - (partSpeed * time), 1.0f);
+			}
+			else if (m_sourcePos[i].x > 0 && m_sourcePos[i].y > 0)
+			{
+				m_sourcePos[i] = XMFLOAT4(m_sourcePos[i].x + _x, m_sourcePos[i].y + _y, m_sourcePos[i].z - (partSpeed * time), 1.0f);
+				m_partPos[i] = XMFLOAT4(m_partPos[i].x + _x, m_partPos[i].y + _y, m_partPos[i].z - (partSpeed * time), 1.0f);
+			}
+			else if (m_sourcePos[i].x < 0 && m_sourcePos[i].y > 0)
+			{
+				m_sourcePos[i] = XMFLOAT4(m_sourcePos[i].x - _x, m_sourcePos[i].y + _y, m_sourcePos[i].z - (partSpeed * time), 1.0f);
+				m_partPos[i] = XMFLOAT4(m_partPos[i].x - _x, m_partPos[i].y + _y, m_partPos[i].z - (partSpeed * time), 1.0f);
+			}
 			m_timeToLive[i] = m_timeToLive[i] - (((m_sourcePos[i].x * m_sourcePos[i].x) * 2) + ((m_sourcePos[i].y * m_sourcePos[i].y) * 2) + ((m_sourcePos[i].z * m_sourcePos[i].z) / 2) + (float(rand() % 2)) * (time / 2));
 		}
 	}
