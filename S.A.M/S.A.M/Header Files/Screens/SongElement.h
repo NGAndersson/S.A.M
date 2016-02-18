@@ -23,8 +23,8 @@ private:
 	std::wstring m_artist;
 	std::wstring m_arranger;
 	std::wstring m_file;
-	std::wstring m_bpm;			//Load music and get only when selected
-	std::wstring m_length;		//Load music and get only when selected
+	std::wstring m_bpm = L"N/A";			//Load music and get only when selected
+	std::wstring m_length = L"N/A";		//Load music and get only when selected
 	std::unique_ptr<DirectX::SpriteFont> m_font;
 	std::unique_ptr<DirectX::SpriteBatch> m_spriteBatch;
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> m_backGround;

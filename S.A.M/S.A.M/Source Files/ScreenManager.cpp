@@ -12,6 +12,7 @@ ScreenManager::~ScreenManager()
 	delete m_screenPause;
 	delete m_screenHighScore;
 	delete m_endScreen;
+	delete m_songSelect;
 }
 
 void ScreenManager::Update(double time)
@@ -65,7 +66,7 @@ void ScreenManager::Update(double time)
 	}
 }
 
-void ScreenManager::InitializeScreen(ID3D11Device* Device, ID3D11DeviceContext* DeviceContext, int ScreenHeight, int ScreenWidth, Input* input,Stats* stats)
+void ScreenManager::InitializeScreen(ID3D11Device* Device, ID3D11DeviceContext* DeviceContext, int ScreenHeight, int ScreenWidth, Input* input, Stats* stats, SoundManager* soundManager)
 {
 	//Starting all the otherClasses etc..
 
@@ -79,6 +80,7 @@ void ScreenManager::InitializeScreen(ID3D11Device* Device, ID3D11DeviceContext* 
 	m_screenPause = new PauseMenu(Device, DeviceContext, ScreenHeight, ScreenWidth, input);
 	m_screenHighScore = new HighScoreMenu(Device, DeviceContext, ScreenHeight, ScreenWidth, input);
 	m_endScreen = new EndScreen(Device, DeviceContext, ScreenHeight, ScreenWidth, input, stats);
+	m_songSelect = new SongSelect(Device, DeviceContext, ScreenHeight, ScreenWidth, input, stats, soundManager);
 }
 
 void ScreenManager::Render()

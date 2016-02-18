@@ -41,15 +41,23 @@ SongElement::~SongElement()
 
 void SongElement::Render(int offsetX, int offsetZ)
 {
-	DirectX::SimpleMath::Vector2 _namePos, _artistPos, _arrPos, _lengthPos, _bpmPos;
-	_namePos.x = 0, _namePos.y = 0;
+	DirectX::SimpleMath::Vector2 _bgPos, _songNamePos, _artistPos, _arrangerPos, _lengthPos, _bpmPos, _origin;
+	_bgPos.x = offsetX, _bgPos.y = offsetZ;
+	_songNamePos.x = 0, _songNamePos.y = 0;
 	_artistPos.x = 0, _artistPos.y = 70;
-	_arrPos.x = 400, _arrPos.y = 0;
+	_arrangerPos.x = 400, _arrangerPos.y = 0;
 	_lengthPos.x = 500, _lengthPos.y = 70;
 	_bpmPos.x = 550, _bpmPos.y = 70;
-
+	_origin.x = 0; _origin.y = 0;
 	
-
+	m_spriteBatch->Begin();
+	m_spriteBatch->Draw(m_backGround.Get(), _bgPos, nullptr);
+	m_font->DrawString(m_spriteBatch.get(), m_songName.c_str(), _songNamePos, DirectX::Colors::White, 0.f, _origin);
+	m_font->DrawString(m_spriteBatch.get(), m_artist.c_str(), _artistPos, DirectX::Colors::White, 0.f, _origin);
+	m_font->DrawString(m_spriteBatch.get(), m_arranger.c_str(), _arrangerPos, DirectX::Colors::White, 0.f, _origin);
+	m_font->DrawString(m_spriteBatch.get(), m_length.c_str(), _lengthPos, DirectX::Colors::White, 0.f, _origin);
+	m_font->DrawString(m_spriteBatch.get(), m_bpm.c_str(), _bpmPos, DirectX::Colors::White, 0.f, _origin);
+	m_spriteBatch->End();
 	/*
 	SimpleMath::Vector2 _scorePos, _livesPos, _comboPos;
 	_scorePos.x = m_screenWidth / 2;

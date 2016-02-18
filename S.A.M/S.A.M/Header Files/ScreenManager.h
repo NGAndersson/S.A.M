@@ -4,6 +4,7 @@
 #include "Gamelogic\Input.h"
 #include "Graphics\ModelHandler.h"
 #include "Gamelogic\Stats.h"
+#include "Audio\SoundManager.h"
 
 #include "Screens\Screen.h"
 #include "Screens\Menu\StartMenu.h"
@@ -11,6 +12,7 @@
 #include "Screens\Menu\PauseMenu.h"
 #include "Screens\Menu\HighscoreMenu.h"
 #include "Screens\EndScreen.h"
+#include "Screens\Menu\SongSelect.h"
 
 class ScreenManager
 {
@@ -22,7 +24,7 @@ public:
 	//Uppdate screens
 	void Update(double time);
 	//Initializing the screen manager
-	void InitializeScreen(ID3D11Device* Device, ID3D11DeviceContext* DeviceContext, int ScreenHeight, int ScreenWidth, Input* input,Stats* stats);
+	void InitializeScreen(ID3D11Device* Device, ID3D11DeviceContext* DeviceContext, int ScreenHeight, int ScreenWidth, Input* input,Stats* stats, SoundManager* soundManager);
 	//Rendercall
 	void Render();
 	//Returns the current screen
@@ -40,6 +42,7 @@ private:
 	Screen* m_screenPause;
 	Screen* m_screenHighScore;
 	Screen* m_endScreen;
+	Screen* m_songSelect;
 	bool m_keyDown = false;
 	//input
 	Input* m_input;

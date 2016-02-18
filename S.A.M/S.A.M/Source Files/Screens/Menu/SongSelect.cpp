@@ -37,6 +37,8 @@ SongSelect::SongSelect(ID3D11Device* Device, ID3D11DeviceContext* DeviceContext,
 		SongElement* _tempElement = new SongElement(_allSongFileNames[i], Device, ScreenHeight, ScreenWidth);
 		m_songElements.push_back(_tempElement);
 	}
+
+
 }
 
 SongSelect::~SongSelect()
