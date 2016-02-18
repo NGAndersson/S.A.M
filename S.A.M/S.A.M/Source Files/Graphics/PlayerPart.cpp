@@ -32,7 +32,7 @@ PlayerPart::PlayerPart(float offset, float lifeLenght, std::vector<Entity*> enti
 	m_partOffset = offset;
 	for (int i = 0; i < m_amountOfPart; i++)
 	{
-		m_partPos[i] = XMFLOAT4((((float(rand() % int(m_partOffset * 10000)) / 10000) + ((m_partOffset / 2)))), ((float(rand() % int(m_partOffset * 10000)) / 10000) + ((m_partOffset / 2))), (float(rand() % int(m_partOffset / 2))), 1.0f);
+		m_partPos[i] = XMFLOAT4((((float(rand() % int(m_partOffset * 10000)) / 10000) + ((m_partOffset / 2)))), ((float(rand() % int(m_partOffset * 10000)) / 10000) + ((m_partOffset / 2))), (float(rand() % int(m_partOffset / 2 * 10000)) / 10000), 1.0f);
 		if (((m_partPos[i].x * m_partPos[i].x) + (m_partPos[i].z * m_partPos[i].z)) <= (m_partOffset))
 		{
 			m_sourcePos[i] = m_partPos[i];
@@ -94,7 +94,7 @@ void PlayerPart::Update(ID3D11DeviceContext* deviceContext, float time, float pa
 	{
 		if (m_timeToLive[i] <= 0)
 		{
-			m_partPos[i] = XMFLOAT4((((float(rand() % int(m_partOffset * 10000)) / 10000) - ((m_partOffset / 2)))), (((float(rand() % int(m_partOffset * 10000)) / 10000) - ((m_partOffset / 2)))), float(rand() % int(m_partOffset / 2)), 1.0f);
+			m_partPos[i] = XMFLOAT4((((float(rand() % int(m_partOffset * 10000)) / 10000) - ((m_partOffset / 2)))), (((float(rand() % int(m_partOffset * 10000)) / 10000) - ((m_partOffset / 2)))), (float(rand() % int(m_partOffset / 2 * 10000)) / 10000), 1.0f);
 			if (((m_partPos[i].x * m_partPos[i].x) + (m_partPos[i].y * m_partPos[i].y)) < (m_partOffset / 2))
 			{
 				m_sourcePos[i] = m_partPos[i];
@@ -128,6 +128,11 @@ void PlayerPart::Update(ID3D11DeviceContext* deviceContext, float time, float pa
 			{
 				m_sourcePos[i] = XMFLOAT4(m_sourcePos[i].x - _x, m_sourcePos[i].y + _y, m_sourcePos[i].z - (partSpeed * time), 1.0f);
 				m_partPos[i] = XMFLOAT4(m_partPos[i].x - _x, m_partPos[i].y + _y, m_partPos[i].z - (partSpeed * time), 1.0f);
+			}
+			else
+			{
+				m_sourcePos[i] = XMFLOAT4(m_sourcePos[i].x, m_sourcePos[i].y, m_sourcePos[i].z - (partSpeed * time), 1.0f);
+				m_partPos[i] = XMFLOAT4(m_partPos[i].x, m_partPos[i].y, m_partPos[i].z - (partSpeed * time), 1.0f);
 			}
 			m_timeToLive[i] = m_timeToLive[i] - (((m_sourcePos[i].x * m_sourcePos[i].x) * 2) + ((m_sourcePos[i].y * m_sourcePos[i].y) * 2) + ((m_sourcePos[i].z * m_sourcePos[i].z) / 2) + (float(rand() % 2)) * (time / 2));
 		}
