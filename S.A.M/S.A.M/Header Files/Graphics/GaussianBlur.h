@@ -24,7 +24,8 @@ private:
 	ShaderHandler* m_shaderHandler;
 	ID3D11UnorderedAccessView* m_unAc;
 	ID3D11UnorderedAccessView* m_unAc2;
-	ID3D11ShaderResourceView* m_compShaderTexture;
+	ID3D11ShaderResourceView* m_compShaderTexture1;
+	ID3D11ShaderResourceView* m_compShaderTexture2;
 	UINT m_shaderTarget; //Targeted place for shader
 
 	int m_screenHeight,m_screenWidth;

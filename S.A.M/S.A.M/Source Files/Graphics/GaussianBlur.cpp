@@ -44,8 +44,8 @@ GaussianBlur::GaussianBlur(ID3D11Device* Device, ID3D11DeviceContext* DeviceCont
 	_gST.Texture2D.MipLevels = 1;
 	_gST.Texture2D.MostDetailedMip = 0;
 
-	_hr = Device->CreateShaderResourceView(_gausTex, &_gST, &m_compShaderTexture);
-
+	_hr = Device->CreateShaderResourceView(_gausTex, &_gST, &m_compShaderTexture1);
+	_hr = Device->CreateShaderResourceView(_gausTex2, &_gST, &m_compShaderTexture2);
 	D3D11_UNORDERED_ACCESS_VIEW_DESC UAVDesc;
 
 	UAVDesc.Format = _gausDesc.Format;
@@ -76,11 +76,11 @@ ID3D11ShaderResourceView* GaussianBlur::Blur(ID3D11Device* Device, ID3D11DeviceC
 	//Set Second pass Shader
 	m_shaderHandler->SetComputeShader(DeviceContext, 2);
 	DeviceContext->CSSetUnorderedAccessViews(0, 1, &m_unAc2, 0);
-	DeviceContext->CSSetShaderResources(ShaderTarget, 1, &m_compShaderTexture);
+	DeviceContext->CSSetShaderResources(ShaderTarget, 1, &m_compShaderTexture1);
 
 	DeviceContext->Dispatch(m_screenWidth, m_screenHeight / 16, 1);
 	DeviceContext->CSSetShaderResources(ShaderTarget, 1, &_temp);
 
-	DeviceContext->PSSetShaderResources(ShaderTarget, 1, &m_compShaderTexture);
-	return m_compShaderTexture;
+	DeviceContext->PSSetShaderResources(ShaderTarget, 1, &m_compShaderTexture2);
+	return m_compShaderTexture2;
 }

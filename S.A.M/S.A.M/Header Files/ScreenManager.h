@@ -28,6 +28,7 @@ public:
 	//Returns the current screen
 	MenuScreens GetCurrentScreen() { return m_current; }
 	void SetCurrentScreenPAUSE() { m_current = PAUSE; }
+	void SetCurrentScreenQUIT() { m_current = EXIT;}
 //----------------------------Attributes----------------------------------------
 private:
 	//Current status.
@@ -39,7 +40,7 @@ private:
 	Screen* m_screenPause;
 	Screen* m_screenHighScore;
 	Screen* m_endScreen;
-
+	bool m_keyDown = false;
 	//input
 	Input* m_input;
 

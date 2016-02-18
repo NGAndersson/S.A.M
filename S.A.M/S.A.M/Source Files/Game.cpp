@@ -189,8 +189,16 @@ void Game::Render()
 void Game::CheckInput()
 {
 	//InputType _returnInput = m_input->CheckKeyBoardInput();
-	if (m_input->CheckEsc()) {
-		m_screenManager->SetCurrentScreenPAUSE();
+	if (m_input->CheckEsc()) 
+	{
+		switch (m_screenManager->GetCurrentScreen())
+		{
+		case MENU:
+			break;
+		case GAME:
+			m_screenManager->SetCurrentScreenPAUSE();
+			break;
+		}
 	}
 	m_input->CheckMouseInput();
 }

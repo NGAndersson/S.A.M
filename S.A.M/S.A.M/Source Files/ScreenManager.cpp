@@ -24,7 +24,7 @@ void ScreenManager::Update( )
 	case MENU:
 		//Startscreen
 		m_screenMenu->Update();
-		if (m_input->CheckReturn())
+		if (m_input->CheckReturn()&&m_keyDown==false)
 		{
 			m_current =	m_screenMenu->GetTargetMenu();
 		}
