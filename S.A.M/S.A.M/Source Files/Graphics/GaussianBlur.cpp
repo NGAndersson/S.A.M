@@ -5,6 +5,7 @@ GaussianBlur::~GaussianBlur()
 	m_unAc->Release();
 	m_unAc2->Release();
 	m_compShaderTexture1->Release();
+	m_compShaderTexture2->Release();
 }
 
 GaussianBlur::GaussianBlur(ID3D11Device* Device, ID3D11DeviceContext* DeviceContext, ShaderHandler* shaderHandler, int width, int height)
@@ -83,6 +84,6 @@ ID3D11ShaderResourceView* GaussianBlur::Blur(ID3D11Device* Device, ID3D11DeviceC
 	//RESET SHIT
 	DeviceContext->CSSetShaderResources(ShaderTarget, 1, &_temp);
 
-
+	DeviceContext->PSSetShaderResources(ShaderTarget, 1, &m_compShaderTexture1);
 	return m_compShaderTexture2;
 }
