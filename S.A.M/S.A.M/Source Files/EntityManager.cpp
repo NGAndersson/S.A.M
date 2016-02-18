@@ -186,7 +186,7 @@ void EntityManager::Initialize(SoundManager* soundManager, Input* input, ID3D11D
 	m_rocketPartSys->CreateBuffer(m_device, m_deviceContext, _texName);
 
 	std::vector<Entity*> _playerVec = { m_player };
-	m_playerPartSys = new PlayerPart(2.5, 1000, _playerVec);
+	m_playerPartSys = new PlayerPart(2, 500, _playerVec);
 	m_playerPartSys->CreateBuffer(m_device, m_deviceContext, _texName);
 
 
@@ -407,7 +407,7 @@ void EntityManager::Update(double time)
 	//Update Particle System
 	std::vector<Entity*> _playerVec = { m_player };
 	m_rocketPartSys->Update(m_deviceContext, time, 10);
-	m_playerPartSys->Update(m_deviceContext, time, 60, _playerVec);
+	m_playerPartSys->Update(m_deviceContext, time, 35, _playerVec);
 }
 
 void EntityManager::ChangeSongData(int bpm)
@@ -415,7 +415,7 @@ void EntityManager::ChangeSongData(int bpm)
 	m_currentBPM = bpm;
 }
 
-void EntityManager::InitMusic(std::string filename)
+void EntityManager::InitMusic(const std::string &filename)
 {
 	vector<vector<XMFLOAT3>> _movPatterns;
 
@@ -575,7 +575,7 @@ void EntityManager::BeatWasDetected()
 	
 }
 
-vector<Entity*> EntityManager::CheckOutOfBounds(std::vector<Entity*> entity)
+vector<Entity*> EntityManager::CheckOutOfBounds(const std::vector<Entity*> &entity)
 {
 	//Out of bounds check, remove immediately
 	//bool removed = false;
@@ -746,7 +746,7 @@ void EntityManager::RenderBullets()
 
 }
 
-vector<Entity*> EntityManager::CheckIfAlive(std::vector<Entity*> bullet)
+vector<Entity*> EntityManager::CheckIfAlive(const std::vector<Entity*> &bullet)
 {
 	//If Alive check, remove immediately
 	bool removed = false;

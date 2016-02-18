@@ -45,6 +45,7 @@ Game::~Game()
 
 	delete m_backgroundPartSys;
 	delete m_statsManager;
+	delete m_gaussianFilter;
 }
 
 void Game::InitGame(Input* input, Display* disp)
@@ -65,7 +66,7 @@ void Game::InitGame(Input* input, Display* disp)
 
 	//Create and initialize ScreenManager
 	m_screenManager = new ScreenManager();
-	m_screenManager->InitializeScreen(m_device,m_deviceContext,HEIGHT,WIDTH,m_input,m_statsManager);
+	m_screenManager->InitializeScreen(m_device, m_deviceContext, HEIGHT, WIDTH, m_input, m_statsManager);
 
 	//Create and initialize EntityManager
 	m_entityManager = new EntityManager;
@@ -83,9 +84,10 @@ void Game::InitGame(Input* input, Display* disp)
 	wstring _texName = L"Resources\\Models\\star3.jpg";
 	m_backgroundPartSys = new SpacePart();
 	m_backgroundPartSys->CreateBuffer(m_device, m_deviceContext, _texName);
-	PartShader.CreateShadersPosOnly(m_device, "Shaders\\PartVS.hlsl", "Shaders\\PartGS.hlsl", "Shaders\\PartPS.hlsl");;
+	m_partShader.CreateShadersPosOnly(m_device, "Shaders\\PartVS.hlsl", "Shaders\\PartGS.hlsl", "Shaders\\PartPS.hlsl");;
+	m_glowshader.CreateShadersCompute(m_device, "Shaders\\ComputeShader.hlsl");
 	
-	//m_gaussianFilter = new GaussianBlur(m_device, m_deviceContext, PartShader, WIDTH, HEIGHT);
+	m_gaussianFilter = new GaussianBlur(m_device, m_deviceContext, &m_glowshader, WIDTH, HEIGHT);
 }
 
 WPARAM Game::MainLoop()
@@ -134,9 +136,14 @@ void Game::Update(double time)
 
 	if (m_screenManager->GetCurrentScreen() == GAME)
 	{
-		if(_prevScreen == MENU)
+		if (_prevScreen == MENU)
 			m_entityManager->InitMusic("Resources/Songs/PixieTrust.txt");
 		m_entityManager->Update(time);
+	}
+	if (m_screenManager->GetCurrentScreen() == EXIT)
+	{
+		m_statsManager->SaveScore("PixieTrust.txt", "SomeNoob");
+		PostQuitMessage(0);
 	}
 	//Updates space
 	m_backgroundPartSys->Update(m_deviceContext, time, 40);
@@ -163,16 +170,16 @@ void Game::Render()
 	m_deferredBuffer.SetCleanResource(m_deviceContext);
 	m_deferredBuffer.ClearRenderTargets(m_deviceContext);
 	m_deferredBuffer.SetRenderTargets(m_deviceContext);
-	PartShader.SetShaders(m_deviceContext);
+	m_partShader.SetShaders(m_deviceContext);
 	m_backgroundPartSys->Render(m_deviceContext);
-	if (m_screenManager->GetCurrentScreen() == GAME)
+	if (m_screenManager->GetCurrentScreen() == GAME||m_screenManager->GetCurrentScreen()==PAUSE)
 	{
 		m_entityManager->Render();
-
 	}
 
 	m_deviceContext->OMSetRenderTargets(1, &m_backbufferRTV, m_depthStencilView);
 	m_deferredBuffer.SetShaderResource(m_deviceContext);
+	m_gaussianFilter->Blur(m_device, m_deviceContext, 4, m_deferredBuffer.GetResourceView(4));
 	m_deferredRender.Render(m_deviceContext);
 	
 	m_screenManager->Render();
@@ -189,9 +196,16 @@ void Game::Render()
 void Game::CheckInput()
 {
 	//InputType _returnInput = m_input->CheckKeyBoardInput();
-	if (m_input->CheckEsc()) {
-		m_statsManager->SaveScore("PixieTrust.txt", "SomeNoob");
-		PostQuitMessage(0);
+	if (m_input->CheckEsc()) 
+	{
+		switch (m_screenManager->GetCurrentScreen())
+		{
+		case MENU:
+			break;
+		case GAME:
+			m_screenManager->SetCurrentScreenPAUSE();
+			break;
+		}
 	}
 	m_input->CheckMouseInput();
 }

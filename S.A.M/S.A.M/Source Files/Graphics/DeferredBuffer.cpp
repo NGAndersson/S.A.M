@@ -162,3 +162,14 @@ void DeferredBuffer::SetCleanResource(ID3D11DeviceContext* deviceContext)
 	deviceContext->PSSetShaderResources(3, 1, &m_cleanView);
 	deviceContext->PSSetShaderResources(4, 1, &m_cleanView);
 }
+
+void DeferredBuffer::SetResourceView(ID3D11DeviceContext* deviceContext, ID3D11ShaderResourceView* newResource, int tartgetResource)
+{
+	m_SRVA[tartgetResource] = newResource;
+	deviceContext->PSSetShaderResources(tartgetResource, 1, &m_SRVA[tartgetResource]);
+}
+
+ID3D11ShaderResourceView* DeferredBuffer::GetResourceView(int tartgetResource)
+{
+	return m_SRVA[tartgetResource];
+}

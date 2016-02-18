@@ -20,24 +20,16 @@ public:
 			return GAME;
 			break;
 		case 1:
-			return OPTION;
-			break;
-		case 2:
-			return HIGHSCORE;
-			break;
-		case 3:
 			return ENDSCREEN;
 			break;
 		}
 	}
 
 private:
-	const wchar_t* m_start = L"StartGame";
-	const wchar_t* m_options = L"Options";
-	const wchar_t* m_highScore = L"HighScore";
-	const wchar_t* m_exit = L"Quit";
+	const wstring m_start = L"Main Menu";
+	const wstring m_exit = L"Quit";
 	bool m_keyDown = false;
-	Font m_choices[4];
+	Font m_choices[2];
 
 	int m_currentFont;
 };

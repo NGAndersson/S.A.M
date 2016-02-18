@@ -171,7 +171,7 @@ bool ShaderHandler::CreateShadersCompute(ID3D11Device* device,string computeFile
 	ID3DBlob *_cs = nullptr;
 	D3DCompileFromFile(_cSTemp.c_str(), _first, NULL, "CS_main", "cs_5_0",D3DCOMPILE_DEBUG,NULL, &_cs, nullptr);
 	_hr = device->CreateComputeShader(_cs->GetBufferPointer(), _cs->GetBufferSize(), nullptr, &m_computeShaderPass1);
-	if (!_hr)
+	if (_hr != S_OK)
 	{
 		return false;
 	}
@@ -181,7 +181,7 @@ bool ShaderHandler::CreateShadersCompute(ID3D11Device* device,string computeFile
 	D3DCompileFromFile(_cSTemp.c_str(), NULL, NULL, "CS_main", "cs_5_0", D3DCOMPILE_DEBUG, NULL, &_cs, nullptr);
 	_hr = device->CreateComputeShader(_cs->GetBufferPointer(), _cs->GetBufferSize(), nullptr, &m_computeShaderPass2);
 	_cs->Release();
-	if (!_hr)
+	if (_hr != S_OK)
 	{
 		return false;
 	}

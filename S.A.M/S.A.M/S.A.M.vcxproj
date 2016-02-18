@@ -180,6 +180,7 @@
     <ClCompile Include="Source Files\ScreenManager.cpp" />
     <ClCompile Include="Source Files\Graphics\ShaderHandler.cpp" />
     <ClCompile Include="Source Files\Gamelogic\Timer.cpp" />
+    <ClCompile Include="Source Files\Screens\EndScreen.cpp" />
     <ClCompile Include="Source Files\Screens\Menu\HighscoreMenu.cpp" />
     <ClCompile Include="Source Files\Screens\Menu\OptionsMenu.cpp" />
     <ClCompile Include="Source Files\Screens\Menu\PauseMenu.cpp" />
@@ -224,6 +225,7 @@
     <ClInclude Include="Header Files\Graphics\ParticleSys.h" />
     <ClInclude Include="Header Files\Graphics\PlayerPart.h" />
     <ClInclude Include="Header Files\Graphics\SpacePart.h" />
+    <ClInclude Include="Header Files\Screens\EndScreen.h" />
     <ClInclude Include="Header Files\Screens\Menu\HighscoreMenu.h" />
     <ClInclude Include="Header Files\Screens\Menu\OptionsMenu.h" />
     <ClInclude Include="Header Files\Screens\Menu\PauseMenu.h" />
@@ -277,6 +279,7 @@
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">4.0</ShaderModel>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compute</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4.0</ShaderModel>
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CS_main</EntryPointName>
     </FxCompile>
     <FxCompile Include="Shaders\DeferredPS.hlsl">
       <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">PS_main</EntryPointName>

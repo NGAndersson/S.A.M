@@ -2,7 +2,7 @@
 
 Bullet_p3::Bullet_p3()
 {
-	
+	m_rotationValue = 0.0f;
 }
 
 Bullet_p3::Bullet_p3(SoundManager * SoundManager, int MapWidth, int MapLength, XMFLOAT3 Position, XMFLOAT3 Scale, int Health, XMFLOAT3 Color)
@@ -19,8 +19,7 @@ Bullet_p3::Bullet_p3(SoundManager * SoundManager, int MapWidth, int MapLength, X
 
 Bullet_p3::~Bullet_p3()
 {
-	if (m_light != nullptr)
-		delete m_light;
+	delete m_light;
 }
 
 void Bullet_p3::Update(double time)

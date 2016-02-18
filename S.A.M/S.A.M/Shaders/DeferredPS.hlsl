@@ -3,6 +3,7 @@ Texture2D NormalTex : register(t0);
 Texture2D DiffuseAlbedoTex : register(t1);
 Texture2D SpecularAlbedoTex : register(t2);
 Texture2D PositionTex : register(t3);
+Texture2D GlowMap : register(t4);
 
 //Constants
 cbuffer LightData : register(b1)
@@ -32,6 +33,7 @@ float4 PS_main(PS_IN input) : SV_TARGET
 	float3 DiffuseLight = DiffuseAlbedoTex.Load(ScreenPos).xyz;
 	float4 Specular = SpecularAlbedoTex.Load(ScreenPos);
 	float3 Pos = PositionTex.Load(ScreenPos).xyz;
+	float4 Glow = GlowMap.Load(ScreenPos);
 
 
 	float3 SpecularAlbedo = Specular.xyz;
@@ -43,12 +45,11 @@ float4 PS_main(PS_IN input) : SV_TARGET
 	float3 Light = float3(0, 0, 0);
 	float Distance;
 
-
 	for (int i = 0; i < LightRange[0].y; i++)
 	{
 		if (LightRange[i].z == 0)	//pointLight
 		{
-			Light = Pos - LightPos[i].xyz;
+			Light = LightPos[i].xyz - Pos;
 			Distance = length(Light);
 			Attenuation = max(0, 1.0f - (Distance / LightRange[i].x));	//Dämpning
 
@@ -62,13 +63,10 @@ float4 PS_main(PS_IN input) : SV_TARGET
 
 		float NormalDotLight = saturate(dot(Normal, Light));
 		float3 Diffuse = NormalDotLight * LightColor[i].xyz * DiffuseLight;
-		float3 V = CameraPos.xyz - Pos;
-		float3 H = normalize(Light + V);
-		float3 SpecularL = pow(saturate(dot(Normal, H)), SpecularPower) * LightColor[i].xyz * SpecularAlbedo.xyz * NormalDotLight;
 
-		TotLight = ((Diffuse + SpecularL) * Attenuation) + TotLight;
+		TotLight = ((Diffuse) * Attenuation) + TotLight;
 	}
 	TotLight = TotLight + (float3(0.4, 0.4, 0.4) * DiffuseLight);
 
-	return float4(TotLight, 1.0f);
+	return Glow + float4(TotLight, 1.0f);
 }

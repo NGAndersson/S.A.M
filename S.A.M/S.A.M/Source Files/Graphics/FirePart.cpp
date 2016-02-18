@@ -21,7 +21,7 @@ FirePart::~FirePart()
 
 FirePart::FirePart(float offset, float lifeLenght)
 {
-	m_amountOfPart = 6000;
+	m_amountOfPart = 2000;
 	m_partPos = new XMFLOAT4[m_amountOfPart];
 	m_partLifeLenght = lifeLenght;
 	m_timeToLive = new float[m_amountOfPart];
@@ -29,7 +29,7 @@ FirePart::FirePart(float offset, float lifeLenght)
 	for (int i = 0; i < m_amountOfPart; i++)
 	{
 		m_partPos[i] = XMFLOAT4((((float(rand() % int(m_partOffset * 10000)) / 10000) - ((m_partOffset / 2)))), ((float(rand() % int(m_partOffset * 10000)) / 10000) - ((m_partOffset / 2))), (float(rand() % int(m_partOffset / 2))), 1.0f);
-		if (((m_partPos[i].x * m_partPos[i].x) + (m_partPos[i].z * m_partPos[i].z)) < (m_partOffset * m_partOffset))
+		if (((m_partPos[i].x * m_partPos[i].x) + (m_partPos[i].z * m_partPos[i].z)) < (m_partOffset))
 		{
 			m_timeToLive[i] = m_partLifeLenght;
 		}
@@ -110,7 +110,7 @@ void FirePart::Update(ID3D11DeviceContext* deviceContext, float time, float part
 		else
 		{
 			m_partPos[i] = XMFLOAT4(m_partPos[i].x, m_partPos[i].y, m_partPos[i].z - (partSpeed * time), 1.0f);
-			m_timeToLive[i] = m_timeToLive[i] - ((m_partPos[i].x * m_partPos[i].x) * 70) - ((m_partPos[i].y * m_partPos[i].y) * 70) - ((m_partPos[i].z * m_partPos[i].z) * 10 - float(rand() % 200));
+			m_timeToLive[i] = m_timeToLive[i] - (((m_partPos[i].x * m_partPos[i].x) * 2) + ((m_partPos[i].y * m_partPos[i].y) * 2) + ((m_partPos[i].z * m_partPos[i].z) / 2) + (float(rand() % 2)) * (time / 2));
 		}
 	}
 

@@ -31,8 +31,7 @@ Bullet_p4::Bullet_p4(SoundManager * SoundManager, int MapWidth, int MapLength, X
 
 Bullet_p4::~Bullet_p4()
 {
-	if (m_light != nullptr)
-		delete m_light;
+	delete m_light;
 }
 
 void Bullet_p4::Update(double time)

@@ -23,7 +23,7 @@ PlayerPart::~PlayerPart()
 
 PlayerPart::PlayerPart(float offset, float lifeLenght, std::vector<Entity*> entity)
 {
-	m_amountOfPart = 6000;
+	m_amountOfPart = 2000;
 	m_partPos = new XMFLOAT4[m_amountOfPart];
 	m_inputData = new VertexInput[m_amountOfPart];
 	m_sourcePos = new XMFLOAT4[m_amountOfPart];
@@ -33,7 +33,7 @@ PlayerPart::PlayerPart(float offset, float lifeLenght, std::vector<Entity*> enti
 	for (int i = 0; i < m_amountOfPart; i++)
 	{
 		m_partPos[i] = XMFLOAT4((((float(rand() % int(m_partOffset * 10000)) / 10000) + ((m_partOffset / 2)))), ((float(rand() % int(m_partOffset * 10000)) / 10000) + ((m_partOffset / 2))), (float(rand() % int(m_partOffset / 2))), 1.0f);
-		if (((m_partPos[i].x * m_partPos[i].x) + (m_partPos[i].z * m_partPos[i].z)) < (m_partOffset * m_partOffset))
+		if (((m_partPos[i].x * m_partPos[i].x) + (m_partPos[i].z * m_partPos[i].z)) <= (m_partOffset))
 		{
 			m_sourcePos[i] = m_partPos[i];
 			m_partPos[i] = XMFLOAT4(m_partPos[i].x + entity[0]->GetPosition().x, m_partPos[i].y + entity[0]->GetPosition().y, m_partPos[i].z + entity[0]->GetPosition().z - 3.5, 1.0f);
@@ -95,7 +95,7 @@ void PlayerPart::Update(ID3D11DeviceContext* deviceContext, float time, float pa
 		if (m_timeToLive[i] <= 0)
 		{
 			m_partPos[i] = XMFLOAT4((((float(rand() % int(m_partOffset * 10000)) / 10000) - ((m_partOffset / 2)))), (((float(rand() % int(m_partOffset * 10000)) / 10000) - ((m_partOffset / 2)))), float(rand() % int(m_partOffset / 2)), 1.0f);
-			if (((m_partPos[i].x * m_partPos[i].x) + (m_partPos[i].y * m_partPos[i].y)) < (m_partOffset))
+			if (((m_partPos[i].x * m_partPos[i].x) + (m_partPos[i].y * m_partPos[i].y)) < (m_partOffset / 2))
 			{
 				m_sourcePos[i] = m_partPos[i];
 				m_partPos[i] = XMFLOAT4(m_partPos[i].x + entity[0]->GetPosition().x, m_partPos[i].y + entity[0]->GetPosition().y, m_partPos[i].z + entity[0]->GetPosition().z - 3.5, 1.0f);
@@ -108,9 +108,28 @@ void PlayerPart::Update(ID3D11DeviceContext* deviceContext, float time, float pa
 		}
 		else
 		{
-			m_sourcePos[i] = XMFLOAT4(m_sourcePos[i].x, m_sourcePos[i].y, m_sourcePos[i].z - (partSpeed * time), 1.0f);
-			m_partPos[i] = XMFLOAT4(m_partPos[i].x, m_partPos[i].y, m_partPos[i].z - (partSpeed * time), 1.0f);
-			m_timeToLive[i] = m_timeToLive[i] - ((m_sourcePos[i].x * m_sourcePos[i].x) * 120) - ((m_sourcePos[i].y * m_sourcePos[i].y) * 120) - ((m_sourcePos[i].z * m_sourcePos[i].z) * 10 - float(rand() % 200));
+			float _x = ((float(rand() % 10000) / 9000) * time), _y = ((float(rand() % 10000) / 9000) * time);
+			if (m_sourcePos[i].x < 0 && m_sourcePos[i].y < 0)
+			{
+				m_sourcePos[i] = XMFLOAT4(m_sourcePos[i].x - _x, m_sourcePos[i].y - _y, m_sourcePos[i].z - (partSpeed * time), 1.0f);
+				m_partPos[i] = XMFLOAT4(m_partPos[i].x - _x, m_partPos[i].y - _y, m_partPos[i].z - (partSpeed * time), 1.0f);
+			}
+			else if (m_sourcePos[i].x > 0 && m_sourcePos[i].y < 0)
+			{
+				m_sourcePos[i] = XMFLOAT4(m_sourcePos[i].x + _x, m_sourcePos[i].y - _y, m_sourcePos[i].z - (partSpeed * time), 1.0f);
+				m_partPos[i] = XMFLOAT4(m_partPos[i].x + _x, m_partPos[i].y - _y, m_partPos[i].z - (partSpeed * time), 1.0f);
+			}
+			else if (m_sourcePos[i].x > 0 && m_sourcePos[i].y > 0)
+			{
+				m_sourcePos[i] = XMFLOAT4(m_sourcePos[i].x + _x, m_sourcePos[i].y + _y, m_sourcePos[i].z - (partSpeed * time), 1.0f);
+				m_partPos[i] = XMFLOAT4(m_partPos[i].x + _x, m_partPos[i].y + _y, m_partPos[i].z - (partSpeed * time), 1.0f);
+			}
+			else if (m_sourcePos[i].x < 0 && m_sourcePos[i].y > 0)
+			{
+				m_sourcePos[i] = XMFLOAT4(m_sourcePos[i].x - _x, m_sourcePos[i].y + _y, m_sourcePos[i].z - (partSpeed * time), 1.0f);
+				m_partPos[i] = XMFLOAT4(m_partPos[i].x - _x, m_partPos[i].y + _y, m_partPos[i].z - (partSpeed * time), 1.0f);
+			}
+			m_timeToLive[i] = m_timeToLive[i] - (((m_sourcePos[i].x * m_sourcePos[i].x) * 2) + ((m_sourcePos[i].y * m_sourcePos[i].y) * 2) + ((m_sourcePos[i].z * m_sourcePos[i].z) / 2) + (float(rand() % 2)) * (time / 2));
 		}
 	}
 

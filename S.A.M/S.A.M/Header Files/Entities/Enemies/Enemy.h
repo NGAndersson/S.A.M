@@ -16,6 +16,7 @@ public:
 		XMVECTOR _rotzAxis{ 0,0,1,0 };
 		m_rotation = XMMatrixRotationAxis(_rotzAxis, 0.0f);
 		m_spline = new Spline(MovPattern);
+
 		
 		/*if (MovementPattern == MOVEMENT_1)
 			m_spline = new Spline(g_movementPattern1);
@@ -38,8 +39,8 @@ public:
 	//Attributes
 private:
 protected:
-	Spline* m_spline;
-	float m_age;
+	Spline* m_spline = nullptr;
+	float m_age = 0;
 public:
 };
 
