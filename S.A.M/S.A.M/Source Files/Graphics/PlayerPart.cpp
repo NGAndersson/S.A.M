@@ -23,7 +23,7 @@ PlayerPart::~PlayerPart()
 
 PlayerPart::PlayerPart(float offset, float lifeLenght, std::vector<Entity*> entity)
 {
-	m_amountOfPart = 6000;
+	m_amountOfPart = 2000;
 	m_partPos = new XMFLOAT4[m_amountOfPart];
 	m_inputData = new VertexInput[m_amountOfPart];
 	m_sourcePos = new XMFLOAT4[m_amountOfPart];
@@ -109,8 +109,8 @@ void PlayerPart::Update(ID3D11DeviceContext* deviceContext, float time, float pa
 		else
 		{
 			m_sourcePos[i] = XMFLOAT4(m_sourcePos[i].x, m_sourcePos[i].y, m_sourcePos[i].z - (partSpeed * time), 1.0f);
-			m_partPos[i] = XMFLOAT4(m_partPos[i].x, m_partPos[i].y, m_partPos[i].z - (partSpeed * time * (float(rand() % 100) / 100)), 1.0f);
-			m_timeToLive[i] = m_timeToLive[i] - (((m_sourcePos[i].x * m_sourcePos[i].x) * 2) + ((m_sourcePos[i].y * m_sourcePos[i].y) * 2) + ((m_sourcePos[i].z * m_sourcePos[i].z) / 2) + (float(rand() % 20)) * time);
+			m_partPos[i] = XMFLOAT4(m_partPos[i].x, m_partPos[i].y, m_partPos[i].z - (partSpeed * time), 1.0f);
+			m_timeToLive[i] = m_timeToLive[i] - (((m_sourcePos[i].x * m_sourcePos[i].x) * 2) + ((m_sourcePos[i].y * m_sourcePos[i].y) * 2) + ((m_sourcePos[i].z * m_sourcePos[i].z) / 2) + (float(rand() % 2)) * (time / 2));
 		}
 	}
 

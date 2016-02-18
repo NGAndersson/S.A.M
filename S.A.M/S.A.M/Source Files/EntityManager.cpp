@@ -192,7 +192,7 @@ void EntityManager::Initialize(SoundManager* soundManager, Input* input, ID3D11D
 	m_rocketPartSys->CreateBuffer(m_device, m_deviceContext, _texName);
 
 	std::vector<Entity*> _playerVec = { m_player };
-	m_playerPartSys = new PlayerPart(2.5, 10, _playerVec);
+	m_playerPartSys = new PlayerPart(2.5, 15, _playerVec);
 	m_playerPartSys->CreateBuffer(m_device, m_deviceContext, _texName);
 
 	m_soundManager->PlayMusic(0.5f);//TEMPORARY MUTE return to 0.5f when you want sound!
