@@ -340,6 +340,7 @@ void EntityManager::Update(double time)
 		m_collision.CheckCollisionEntity(&m_bullet6, &_playerVec, BULLET6, PLAYER);
 		if (m_player->GetHealth() <= 0)
 		{
+			m_statsManager->ResetCombo();
 			m_player->SetDelete(true);				//Set player to run destruction update
 			m_statsManager->AddLives(-1);			//Reduce remaining lives
 		}
@@ -378,7 +379,7 @@ void EntityManager::Update(double time)
 		m_bullet6[i]->Update(time);
 
 	if (!m_player->GetDelete())
-	m_player->Update(time);
+		m_player->Update(time);
 	else
 		m_player->Destroyed(time);
 	
@@ -786,15 +787,15 @@ void EntityManager::CheckCombo()
 	// Check key presses near the beat, for combo
 	static bool _registeredCombo = true;
 	static BulletType _currentBulletType;
-	if (m_offsetCount > m_offset) {						//Only check for combos after the beats have actually started
+	static bool _spacebar = false;
+	if (m_offsetCount > m_offset && m_player->GetDelete() == false) {						//Only check for combos after the beats have actually started
 		if (m_timeSinceLastBeat < 25000 / m_currentBPM)
 		{
-			if (m_input->IsNewButtonPressed(_currentBulletType)) //If button is pressed
+			if (m_input->IsNewButtonPressed(_spacebar)) //If button is pressed
 			{
 				if (m_timeSinceLastBeat < BEATLENIENCY && _registeredCombo == false)	//If key was pressed during sweet spot and key hadn't been pressed earlier
 				{
 					m_statsManager->AddCombo();
-					OutputDebugStringA(to_string(m_statsManager->GetCombo()).c_str());		//DDDDDEBUGGG
 					_registeredCombo = true;
 				}
 				else					//Reset combo if pressed more than once or after sweetspot
@@ -809,12 +810,11 @@ void EntityManager::CheckCombo()
 			_registeredCombo = false;
 		else if (m_timeSinceLastBeat > 35000 / m_currentBPM)
 		{
-			if (m_input->IsNewButtonPressed(_currentBulletType)) //If button is pressed
+			if (m_input->IsNewButtonPressed(_spacebar)) //If button is pressed
 			{
 				if (m_timeSinceLastBeat > 60000 / m_currentBPM - BEATLENIENCY && _registeredCombo == false)	//If key was pressed during sweet spot and key hadn't been pressed earlier
 				{
 					m_statsManager->AddCombo();
-					OutputDebugStringA(to_string(m_statsManager->GetCombo()).c_str());		//DDDDDEBUGGG
 					_registeredCombo = true;
 				}
 				else					//Reset combo if pressed more than once or after sweetspot

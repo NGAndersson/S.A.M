@@ -55,7 +55,8 @@ public:
 	void Update();
 	bool CheckReturn();
 	bool CheckEsc();
-	bool IsNewButtonPressed(BulletType& checkAgainst);
+	//bool IsNewButtonPressed(BulletType& checkAgainst);
+	bool IsNewButtonPressed(bool& checkAgainst);
 
 	//----------------------------Attributes----------------------------------------
 private:

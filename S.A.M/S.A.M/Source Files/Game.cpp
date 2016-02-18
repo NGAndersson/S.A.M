@@ -133,6 +133,8 @@ void Game::Update(double time)
 
 	m_screenManager->Update(time);
 
+	if ((m_screenManager->GetCurrentScreen() == PAUSE && _prevScreen == GAME) || m_screenManager->GetCurrentScreen() == GAME && _prevScreen == PAUSE)	//When switching from game to pause or vice versa, pause/resume the music
+		m_soundManager->PauseMusic();
 
 	if (m_screenManager->GetCurrentScreen() == GAME)
 	{
