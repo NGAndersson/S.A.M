@@ -197,10 +197,9 @@ bool OBJLoader::ReadColourCounts(int& kdCount, int& kaCount, int& tfCount, int& 
 }
 
 //loading color and tex
-ID3D11ShaderResourceView* OBJLoader::LoadColour(ID3D11Device* device, ID3D11DeviceContext* deviceContext, string fileName, XMFLOAT3 *RGBDeffuse, XMFLOAT3 *RGBAL, XMFLOAT3 *Tf, XMFLOAT3 *Ni)
+ID3D11ShaderResourceView* OBJLoader::LoadColour(ID3D11Device* device, ID3D11DeviceContext* deviceContext, string fileName, XMFLOAT3 *RGBDeffuse, XMFLOAT3 *RGBAL, XMFLOAT3 *Tf, XMFLOAT3 *Ni, ID3D11ShaderResourceView** ObjTex, ID3D11ShaderResourceView** GlowTex)
 {
 	ifstream _fin;
-	ID3D11ShaderResourceView *_ObjTex = nullptr;
 	char _input;
 	wstring _TexName;
 	int _kdIndex, _kaIndex, _tfIndex, _niIndex;
@@ -260,22 +259,49 @@ ID3D11ShaderResourceView* OBJLoader::LoadColour(ID3D11Device* device, ID3D11Devi
 		else if (_input == 'm')
 		{
 			_fin.get(_input);
-			while (_input != '\n' && _input != 'd')
+			while (_input != '\n' && _input != '_')
 			{
 				_fin.get(_input);
 			}
 			_fin.get(_input);
-			_fin.get(_input);
-
-			while (_input != '\n')
+			if (_input == 'K')
 			{
-				_TexName += _input;
 				_fin.get(_input);
+				if (_input == 'd')
+				{
+					_fin.get(_input);
+					_fin.get(_input);
+					while (_input != '\n')
+					{
+						_TexName += _input;
+						_fin.get(_input);
+					}
+
+					const wchar_t* _name = _TexName.c_str();
+
+					CreateWICTextureFromFile(device, deviceContext, _name, nullptr, ObjTex);
+					_TexName = L"";
+				}
 			}
+			else if (_input == 'G')
+			{
+				_fin.get(_input);
+				if (_input == 'l')
+				{
+					_fin.get(_input);
+					_fin.get(_input);
+					while (_input != '\n')
+					{
+						_TexName += _input;
+						_fin.get(_input);
+					}
 
-			const wchar_t* _name = _TexName.c_str();
-
-			CreateWICTextureFromFile(device, deviceContext, _name, nullptr, &_ObjTex);
+					const wchar_t* _name = _TexName.c_str();
+					CreateWICTextureFromFile(device, deviceContext, _name, nullptr, GlowTex);
+					_TexName = L"";
+				}
+			}
+			
 		}
 
 		while (_input != '\n')
@@ -284,10 +310,6 @@ ID3D11ShaderResourceView* OBJLoader::LoadColour(ID3D11Device* device, ID3D11Devi
 		}
 
 		_fin.get(_input);
-	}
-	if (_ObjTex != nullptr)
-	{
-		return _ObjTex;
 	}
 	return nullptr;
 }
