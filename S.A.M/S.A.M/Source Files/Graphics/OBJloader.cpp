@@ -55,7 +55,7 @@ VertexInputType* OBJLoader::LoadObj(int& vertexCount, int& textureCount, int& no
 				{
 					float txx, txz;
 					fileIn >> txx >> txz;
-					vTC.push_back(XMFLOAT2(txx, txz));
+					vTC.push_back(XMFLOAT2(txx, 1 - txz));
 					textureCount++;
 				}
 				if (_input == 'n')
