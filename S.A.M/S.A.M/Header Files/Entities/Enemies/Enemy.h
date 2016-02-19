@@ -13,8 +13,8 @@ protected:
 public:
 	Enemy() {}
 	Enemy(SoundManager* SoundManager, int MapWidth, int MapLength, XMFLOAT3 Position, XMFLOAT3 Scale, int Health, vector<XMFLOAT3> MovPattern) : Entity(SoundManager, MapWidth, MapLength, Position, Scale, Health) {
-		XMVECTOR _rotzAxis{ 0,0,1,0 };
-		m_rotation = XMMatrixRotationAxis(_rotzAxis, 0.0f);
+		XMVECTOR _rotyAxis{ 0,1,0,0 };
+		m_rotation = XMMatrixRotationAxis(_rotyAxis, XM_PI);
 		m_spline = new Spline(MovPattern);
 
 		

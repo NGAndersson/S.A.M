@@ -69,7 +69,7 @@ void EntityManager::SpawnEntity(HandlerIndex type)
 		break;
 	case(ENEMY1) :
 		//temptest = new Enemy_1(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(_tempX, 0.0f, 70.0f),XMFLOAT3(0.5f,0.5f,0.5f));
-		m_enemy1.push_back(new Enemy_1(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(_tempX, 0.0f, 110), XMFLOAT3(0.5f, 0.5f, 0.5f),1000,m_enemy1MovPatterns[0].second));
+		m_enemy1.push_back(new Enemy_1(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(_tempX, 0.0f, 110), XMFLOAT3(2.0f, 2.0f, 2.0f),1000,m_enemy1MovPatterns[0].second));
 		break;
 	//case(ENEMY2) :
 	//	Enemy2* tempEntity = new Enemy2;
@@ -173,7 +173,7 @@ void EntityManager::Initialize(SoundManager* soundManager, Input* input, ID3D11D
 	m_modelHandlers[BULLET6]->LoadOBJData("Resources/Models/EnemyBullet.obj", "Resources/Models/EnemyBullet.mtl", m_device, m_deviceContext);
 	m_modelHandlers[BULLET6]->CreateBuffers(m_device);
 	m_modelHandlers[ENEMY1] = new ModelHandler();
-	m_modelHandlers[ENEMY1]->LoadOBJData("Resources/Models/TestCube.obj", "Resources/Models/TestCube.mtl", m_device, m_deviceContext);
+	m_modelHandlers[ENEMY1]->LoadOBJData("Resources/Models/Ship_01.obj", "Resources/Models/Ship_01.mtl", m_device, m_deviceContext);
 	m_modelHandlers[ENEMY1]->CreateBuffers(m_device);
 	m_modelHandlers[ENEMY2] = new ModelHandler;
 	m_modelHandlers[ENEMY3] = new ModelHandler;
