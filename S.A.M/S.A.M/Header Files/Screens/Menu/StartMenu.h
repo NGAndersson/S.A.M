@@ -5,7 +5,6 @@
 
 class StartMenu : public Screen
 {
-
 public:
 	StartMenu(){}
 
@@ -26,7 +25,7 @@ public:
 			return HIGHSCORE;
 			break;
 		case 3:
-			return ENDSCREEN;
+			return EXIT;
 			break;
 		}
 	}
