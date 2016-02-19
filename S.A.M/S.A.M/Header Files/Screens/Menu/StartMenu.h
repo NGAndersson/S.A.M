@@ -17,7 +17,7 @@ public:
 		switch (m_currentFont)
 		{
 		case 0:
-			return GAME;
+			return SONGSELECT;
 			break;
 		case 1:
 			return OPTION;

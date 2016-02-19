@@ -53,21 +53,29 @@ SongElement::~SongElement()
 
 void SongElement::Render(int offsetX, int offsetZ)
 {
-	DirectX::SimpleMath::Vector2 _bgPos, _songNamePos, _artistPos, _arrangerPos, _lengthPos, _bpmPos;
+	DirectX::SimpleMath::Vector2 _bgPos, _songNamePos, _artistPos, _arrangerPos, _lengthAndBPMPos;
 	_bgPos.x = offsetX, _bgPos.y = offsetZ;
-	_songNamePos.x = 0, _songNamePos.y = 0;
+	_songNamePos.x = 0, _songNamePos.y = 20;
 	_artistPos.x = 0, _artistPos.y = 70;
-	_arrangerPos.x = 400, _arrangerPos.y = 0;
-	_lengthPos.x = 500, _lengthPos.y = 70;
-	_bpmPos.x = 550, _bpmPos.y = 70;
+	_arrangerPos.x = 500, _arrangerPos.y = 20;
+	_lengthAndBPMPos.x = 500, _lengthAndBPMPos.y = 70;
+	std::wstring _lengthAndBPM = m_length + L" " + m_bpm + L" BPM";
 	
+	DirectX::XMVECTOR _lengthAndBPMOrigin = m_font->MeasureString(m_length.c_str());
+	_lengthAndBPMOrigin = DirectX::XMVectorSetIntY(_lengthAndBPMOrigin, 0);
+
+	DirectX::XMVECTOR _arrangerOrigin = m_font->MeasureString(m_arranger.c_str());
+	_arrangerOrigin = DirectX::XMVectorSetIntY(_arrangerOrigin, 0);
+
+	DirectX::SimpleMath::Vector3 _scale;
+	_scale.x = 0.5f, _scale.y = 0.5f, _scale.z = 0.5f;
+
 	m_spriteBatch->Begin(DirectX::SpriteSortMode_Deferred, m_states->NonPremultiplied());
 	m_spriteBatch->Draw(m_backGround.Get(), _bgPos, nullptr, DirectX::Colors::White, 0.f);
 	m_font->DrawString(m_spriteBatch.get(), m_songName.c_str(), _songNamePos, DirectX::Colors::White, 0.f);
-	m_font->DrawString(m_spriteBatch.get(), m_artist.c_str(), _artistPos, DirectX::Colors::White, 0.f);
-	m_font->DrawString(m_spriteBatch.get(), m_arranger.c_str(), _arrangerPos, DirectX::Colors::White, 0.f);
-	m_font->DrawString(m_spriteBatch.get(), m_length.c_str(), _lengthPos, DirectX::Colors::White, 0.f, m_font->MeasureString(m_length.c_str()));
-	m_font->DrawString(m_spriteBatch.get(), m_bpm.c_str(), _bpmPos, DirectX::Colors::White, 0.f);
+	m_font->DrawString(m_spriteBatch.get(), m_artist.c_str(), _artistPos, DirectX::Colors::White, 0.f, DirectX::g_XMZero, _scale);
+	m_font->DrawString(m_spriteBatch.get(), m_arranger.c_str(), _arrangerPos, DirectX::Colors::White, 0.f, _arrangerOrigin, _scale);
+	m_font->DrawString(m_spriteBatch.get(), _lengthAndBPM.c_str(), _lengthAndBPMPos, DirectX::Colors::White, 0.f, _lengthAndBPMOrigin, _scale);
 	m_spriteBatch->End();
 	/*
 	SimpleMath::Vector2 _scorePos, _livesPos, _comboPos;

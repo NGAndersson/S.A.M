@@ -11,7 +11,7 @@
 #include "WICTextureLoader.h"
 #include "wrl.h"
 #include <CommonStates.h>
-using namespace DirectX;
+
 class SongElement {
 private:
 public:
