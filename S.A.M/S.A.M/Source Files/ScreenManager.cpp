@@ -28,11 +28,19 @@ void ScreenManager::Update(double time)
 		if (m_input->CheckReturn())
 		{
 			m_current =	m_screenMenu->GetTargetMenu();
+			if (m_current == GAME)
+			{
+				m_gameOngoing = true;
+		}
 		}
 		break;
 	case GAME:
 		//Game
 		m_screenGame->Update(time);
+		if (m_stats->GetLives() == 0)
+		{
+			m_current = ENDSCREEN;
+		}
 		break;
 	case 3:
 		//HighScore
@@ -48,6 +56,10 @@ void ScreenManager::Update(double time)
 		if (m_input->CheckReturn())
 		{
 			m_current = m_screenPause->GetTargetMenu();
+			if (m_current == MENU)
+			{
+				m_gameOngoing = false;
+			}
 		}
 		break;
 	case 6:
@@ -74,6 +86,7 @@ void ScreenManager::Update(double time)
 
 void ScreenManager::InitializeScreen(ID3D11Device* Device, ID3D11DeviceContext* DeviceContext, int ScreenHeight, int ScreenWidth, Input* input, Stats* stats, SoundManager* soundManager)
 {
+	m_stats = stats;
 	//Starting all the otherClasses etc..
 
 	//Current screen is startscreen

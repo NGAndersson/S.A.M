@@ -147,6 +147,7 @@ void Game::Update(double time)
 		m_statsManager->SaveScore("PixieTrust.txt", "SomeNoob");
 		PostQuitMessage(0);
 	}
+	
 	//Updates space
 	m_backgroundPartSys->Update(m_deviceContext, time, 40);
 	
@@ -174,7 +175,7 @@ void Game::Render()
 	m_deferredBuffer.SetRenderTargets(m_deviceContext);
 	m_partShader.SetShaders(m_deviceContext);
 	m_backgroundPartSys->Render(m_deviceContext);
-	if (m_screenManager->GetCurrentScreen() == GAME||m_screenManager->GetCurrentScreen()==PAUSE)
+	if (m_screenManager->GetGameState() == true/*m_screenManager->GetCurrentScreen() == GAME || m_screenManager->GetCurrentScreen()==PAUSE*/)
 	{
 		m_entityManager->Render();
 	}

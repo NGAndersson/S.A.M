@@ -182,7 +182,7 @@ void EntityManager::Initialize(SoundManager* soundManager, Input* input, ID3D11D
 	SpawnEntity(PLAYER);
 	//Temp, creates partsys
 	wstring _texName = L"Resources\\Models\\star.jpg";
-	m_rocketPartSys = new FirePart(2, 1000);
+	m_rocketPartSys = new FirePart(1, 500);
 	m_rocketPartSys->CreateBuffer(m_device, m_deviceContext, _texName);
 
 	std::vector<Entity*> _playerVec = { m_player };
@@ -407,8 +407,19 @@ void EntityManager::Update(double time)
 
 	//Update Particle System
 	std::vector<Entity*> _playerVec = { m_player };
-	m_rocketPartSys->Update(m_deviceContext, time, 10);
-	m_playerPartSys->Update(m_deviceContext, time, 35, _playerVec);
+	m_rocketPartSys->Update(m_deviceContext, time, 25);
+	if (m_input->CheckKeyBoardInput() == INPUT_MOVE_DOWN)
+	{
+		m_playerPartSys->Update(m_deviceContext, time, 75, _playerVec);
+	}
+	else if (m_input->CheckKeyBoardInput() == INPUT_MOVE_UP)
+	{
+		m_playerPartSys->Update(m_deviceContext, time, 35, _playerVec);
+	}
+	else 
+	{
+		m_playerPartSys->Update(m_deviceContext, time, 25, _playerVec);
+	}
 }
 
 void EntityManager::ChangeSongData(int bpm)
@@ -824,4 +835,9 @@ void EntityManager::CheckCombo()
 			}
 		}
 	}
+}
+
+int EntityManager::GetPlayerHealth()
+{
+	return m_player->GetHealth();
 }
