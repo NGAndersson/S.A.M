@@ -46,6 +46,7 @@ private:
 	Screen* m_endScreen;
 	Screen* m_songSelect;
 	Stats* m_stats;
+	SoundManager* m_soundManager;
 	bool m_keyDown = false, m_gameOngoing = false;
 	//input
 	Input* m_input;
