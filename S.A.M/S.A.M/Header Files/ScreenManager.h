@@ -12,6 +12,7 @@
 #include "Screens\Menu\PauseMenu.h"
 #include "Screens\Menu\HighscoreMenu.h"
 #include "Screens\EndScreen.h"
+#include "Screens\Menu\OptionsMenu.h"
 #include "Screens\Menu\SongSelect.h"
 
 class ScreenManager
@@ -45,6 +46,7 @@ private:
 	Screen* m_endScreen;
 	Screen* m_songSelect;
 	Stats* m_stats;
+	SoundManager* m_soundManager;
 	bool m_keyDown = false, m_gameOngoing = false;
 	//input
 	Input* m_input;
