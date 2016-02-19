@@ -65,7 +65,7 @@ void EntityManager::SpawnEntity(HandlerIndex type)
 
 	switch (type) {
 	case(PLAYER) :
-		m_player = new Player(m_soundManager, MAPWIDTH,MAPLENGTH,XMFLOAT3(MAPWIDTH / 2, 0.0f, MAPLENGTH / 2), XMFLOAT3(0.5f, 0.5f, 0.5f), 1, m_input);
+		m_player = new Player(m_soundManager, MAPWIDTH,MAPLENGTH,XMFLOAT3(MAPWIDTH / 2, 0.0f, MAPLENGTH / 2), XMFLOAT3(1.0f, 1.0f, 1.0f), 1, m_input);
 		break;
 	case(ENEMY1) :
 		//temptest = new Enemy_1(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(_tempX, 0.0f, 70.0f),XMFLOAT3(0.5f,0.5f,0.5f));
@@ -152,7 +152,7 @@ void EntityManager::Initialize(SoundManager* soundManager, Input* input, ID3D11D
 
 	//Create model handlers for each entity type
 	m_modelHandlers[PLAYER] = new ModelHandler();
-	m_modelHandlers[PLAYER]->LoadOBJData("Resources/Models/TestCube.obj", "Resources/Models/TestCube.mtl", m_device, m_deviceContext);
+	m_modelHandlers[PLAYER]->LoadOBJData("Resources/Models/Ship_02.obj", "Resources/Models/Ship_02.mtl", m_device, m_deviceContext);
 	m_modelHandlers[PLAYER]->CreateBuffers(m_device);
 	m_modelHandlers[BULLET1] = new ModelHandler();
 	m_modelHandlers[BULLET1]->LoadOBJData("Resources/Models/Bullet1.obj", "Resources/Models/Bullet1.mtl", m_device, m_deviceContext);
