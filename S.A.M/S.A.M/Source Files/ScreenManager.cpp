@@ -58,6 +58,12 @@ void ScreenManager::Update(double time)
 			m_current = m_screenPause->GetTargetMenu();
 		}
 		break;
+	case SONGSELECT:
+		m_songSelect->Update(time);
+		if (m_input->CheckReturn())
+		{
+			//m_current = GAME;
+		}
 	case EXIT:
 		//Do nothing will exit when going to update in game class
 		break;
@@ -115,6 +121,8 @@ void ScreenManager::Render()
 		//Endscreen
 		m_endScreen->Render();
 		break;
+	case SONGSELECT:
+		m_songSelect->Render();
 	default:
 		break;
 	}

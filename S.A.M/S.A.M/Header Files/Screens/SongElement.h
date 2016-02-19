@@ -10,12 +10,13 @@
 #include <memory>
 #include "WICTextureLoader.h"
 #include "wrl.h"
-
+#include <CommonStates.h>
+using namespace DirectX;
 class SongElement {
 private:
 public:
 	SongElement();
-	SongElement(std::string filename, ID3D11Device* device, int ScreenHeight, int ScreenWidth);
+	SongElement(std::string filename, ID3D11Device* device, ID3D11DeviceContext* DeviceContext,  int ScreenHeight, int ScreenWidth);
 	~SongElement();
 	void Render(int offsetX, int offsetZ);
 private:
@@ -27,6 +28,7 @@ private:
 	std::wstring m_length = L"N/A";		//Load music and get only when selected
 	std::unique_ptr<DirectX::SpriteFont> m_font;
 	std::unique_ptr<DirectX::SpriteBatch> m_spriteBatch;
+	std::unique_ptr<DirectX::CommonStates> m_states;
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> m_backGround;
 public:
 };

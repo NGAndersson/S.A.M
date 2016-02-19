@@ -1,7 +1,8 @@
 #include "..\..\Header Files\Screens\SongElement.h"
 
-SongElement::SongElement(std::string filename, ID3D11Device* device, int ScreenHeight, int ScreenWidth)
+SongElement::SongElement(std::string filename, ID3D11Device* device, ID3D11DeviceContext* DeviceContext, int ScreenHeight, int ScreenWidth)
 {
+	m_spriteBatch = std::make_unique<DirectX::SpriteBatch>(DeviceContext);
 	m_font = std::make_unique<DirectX::SpriteFont>(device, L"Resources/moonhouse.spritefont");
 
 
@@ -32,31 +33,41 @@ SongElement::SongElement(std::string filename, ID3D11Device* device, int ScreenH
 	}
 	//---------------
 	
-	DirectX::CreateWICTextureFromFile(device, L"Resources/SongElement.png", nullptr, m_backGround.ReleaseAndGetAddressOf());
+	Microsoft::WRL::ComPtr<ID3D11Resource> _resource;
+	DirectX::CreateWICTextureFromFile(device, L"Resources/SongElement.png", _resource.GetAddressOf(), m_backGround.ReleaseAndGetAddressOf());
+
+	Microsoft::WRL::ComPtr<ID3D11Texture2D> _bg;
+	_resource.As(&_bg);
+
+	CD3D11_TEXTURE2D_DESC _bgDesc;
+	_bg->GetDesc(&_bgDesc);
+
+	m_states = std::make_unique<DirectX::CommonStates>(device);
 }
 
 SongElement::~SongElement()
 {
+	m_backGround.Reset();
+	m_states.reset();
 }
 
 void SongElement::Render(int offsetX, int offsetZ)
 {
-	DirectX::SimpleMath::Vector2 _bgPos, _songNamePos, _artistPos, _arrangerPos, _lengthPos, _bpmPos, _origin;
+	DirectX::SimpleMath::Vector2 _bgPos, _songNamePos, _artistPos, _arrangerPos, _lengthPos, _bpmPos;
 	_bgPos.x = offsetX, _bgPos.y = offsetZ;
 	_songNamePos.x = 0, _songNamePos.y = 0;
 	_artistPos.x = 0, _artistPos.y = 70;
 	_arrangerPos.x = 400, _arrangerPos.y = 0;
 	_lengthPos.x = 500, _lengthPos.y = 70;
 	_bpmPos.x = 550, _bpmPos.y = 70;
-	_origin.x = 0; _origin.y = 0;
 	
-	m_spriteBatch->Begin();
-	m_spriteBatch->Draw(m_backGround.Get(), _bgPos, nullptr);
-	m_font->DrawString(m_spriteBatch.get(), m_songName.c_str(), _songNamePos, DirectX::Colors::White, 0.f, _origin);
-	m_font->DrawString(m_spriteBatch.get(), m_artist.c_str(), _artistPos, DirectX::Colors::White, 0.f, _origin);
-	m_font->DrawString(m_spriteBatch.get(), m_arranger.c_str(), _arrangerPos, DirectX::Colors::White, 0.f, _origin);
-	m_font->DrawString(m_spriteBatch.get(), m_length.c_str(), _lengthPos, DirectX::Colors::White, 0.f, _origin);
-	m_font->DrawString(m_spriteBatch.get(), m_bpm.c_str(), _bpmPos, DirectX::Colors::White, 0.f, _origin);
+	m_spriteBatch->Begin(DirectX::SpriteSortMode_Deferred, m_states->NonPremultiplied());
+	m_spriteBatch->Draw(m_backGround.Get(), _bgPos, nullptr, DirectX::Colors::White, 0.f);
+	m_font->DrawString(m_spriteBatch.get(), m_songName.c_str(), _songNamePos, DirectX::Colors::White, 0.f);
+	m_font->DrawString(m_spriteBatch.get(), m_artist.c_str(), _artistPos, DirectX::Colors::White, 0.f);
+	m_font->DrawString(m_spriteBatch.get(), m_arranger.c_str(), _arrangerPos, DirectX::Colors::White, 0.f);
+	m_font->DrawString(m_spriteBatch.get(), m_length.c_str(), _lengthPos, DirectX::Colors::White, 0.f, m_font->MeasureString(m_length.c_str()));
+	m_font->DrawString(m_spriteBatch.get(), m_bpm.c_str(), _bpmPos, DirectX::Colors::White, 0.f);
 	m_spriteBatch->End();
 	/*
 	SimpleMath::Vector2 _scorePos, _livesPos, _comboPos;

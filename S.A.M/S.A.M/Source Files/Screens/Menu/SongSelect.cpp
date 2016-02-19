@@ -34,7 +34,7 @@ SongSelect::SongSelect(ID3D11Device* Device, ID3D11DeviceContext* DeviceContext,
 	//Make a SongElement for each song
 	for (int i = 0; i < _allSongFileNames.size(); i++)
 	{
-		SongElement* _tempElement = new SongElement(_allSongFileNames[i], Device, ScreenHeight, ScreenWidth);
+		SongElement* _tempElement = new SongElement(_allSongFileNames[i], Device, DeviceContext, ScreenHeight, ScreenWidth);
 		m_songElements.push_back(_tempElement);
 	}
 
@@ -54,6 +54,7 @@ void SongSelect::Update(double time)
 
 void SongSelect::Render()
 {
-
+	for (int i = 0; i < m_songElements.size(); i++)
+		m_songElements[i]->Render(0, 0);
 }
 
