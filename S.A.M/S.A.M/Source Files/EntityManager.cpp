@@ -2,7 +2,7 @@
 #include <iostream>
 #define MAPWIDTH 77
 #define MAPLENGTH 103
-#define BEATLENIENCY 100
+#define BEATLENIENCY 200
 
 EntityManager::EntityManager()
 {

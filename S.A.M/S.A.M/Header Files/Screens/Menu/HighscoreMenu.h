@@ -17,10 +17,10 @@ public:
 		switch (m_currentFont)
 		{
 		case 0:
-			return GAME;
+			return MENU;
 			break;
 		case 1:
-			return ENDSCREEN;
+			return EXIT;
 			break;
 		}
 	}

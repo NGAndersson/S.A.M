@@ -45,6 +45,7 @@ void ScreenManager::Update(double time)
 		if (m_stats->GetLives() == 0)
 		{
 			m_current = ENDSCREEN;
+			m_soundManager->PauseMusic();
 			//m_stats->SavePoints()
 			//m_stats->ResetPointsAndLives()
 			//ResetGame()
@@ -53,13 +54,21 @@ void ScreenManager::Update(double time)
 	case 3:
 		//HighScore
 		m_screenHighScore->Update(time);
+		if (m_input->CheckReturn() && !m_keyDown)
+		{
+			m_keyDown = true;
+			m_current = m_screenHighScore->GetTargetMenu();
+		}
+		else if (!m_input->CheckReturn())
+			m_keyDown = false;
 		break;
 	case 4:
 		//Options
 		m_screenOptions->Update(time);
 		if (m_input->CheckReturn() && !m_keyDown)
 		{
-			m_current = m_screenPause->GetTargetMenu();
+			m_keyDown = true;
+			m_current = m_screenOptions->GetTargetMenu();
 		}
 		else if (!m_input->CheckReturn())
 			m_keyDown = false;
@@ -69,6 +78,7 @@ void ScreenManager::Update(double time)
 		m_screenPause->Update(time);
 		if (m_input->CheckReturn() && !m_keyDown)
 		{
+			m_keyDown = true;
 			m_current = m_screenPause->GetTargetMenu();
 			if (m_current == MENU)
 			{
@@ -93,6 +103,7 @@ void ScreenManager::Update(double time)
 		m_songSelect->Update(time);
 		if (m_input->CheckReturn() && !m_keyDown)
 		{
+			m_keyDown = true;
 			//m_current = GAME;
 		}
 		else if (!m_input->CheckReturn())
@@ -108,6 +119,7 @@ void ScreenManager::Update(double time)
 void ScreenManager::InitializeScreen(ID3D11Device* Device, ID3D11DeviceContext* DeviceContext, int ScreenHeight, int ScreenWidth, Input* input, Stats* stats, SoundManager* soundManager)
 {
 	m_stats = stats;
+	m_soundManager = soundManager;
 	//Starting all the otherClasses etc..
 
 	//Current screen is startscreen
