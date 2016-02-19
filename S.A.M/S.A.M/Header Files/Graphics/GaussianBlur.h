@@ -18,7 +18,7 @@ public:
 	GaussianBlur(){}
 	~GaussianBlur();
 	GaussianBlur(ID3D11Device* Device, ID3D11DeviceContext* DeviceContext, ShaderHandler* shaderHandler, int width, int height);
-	ID3D11ShaderResourceView* Blur(ID3D11Device* Device, ID3D11DeviceContext* DeviceContext, UINT ShaderTarget, ID3D11ShaderResourceView* shaderResource);
+	void Blur(ID3D11Device* Device, ID3D11DeviceContext* DeviceContext, UINT ShaderTarget, ID3D11ShaderResourceView* shaderResource);
 private:
 
 	ShaderHandler* m_shaderHandler;
