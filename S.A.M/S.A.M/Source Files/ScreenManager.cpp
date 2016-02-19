@@ -12,9 +12,10 @@ ScreenManager::~ScreenManager()
 	delete m_screenPause;
 	delete m_screenHighScore;
 	delete m_endScreen;
+	delete m_songSelect;
 }
 
-void ScreenManager::Update( )
+void ScreenManager::Update(double time)
 {
 	//Checks input depending on what screen the user is in.
 	switch (m_current)
@@ -23,19 +24,27 @@ void ScreenManager::Update( )
 		break;
 	case MENU:
 		//Startscreen
-		m_screenMenu->Update();
+		m_screenMenu->Update(time);
 		if (m_input->CheckReturn())
 		{
 			m_current =	m_screenMenu->GetTargetMenu();
+			if (m_current == GAME)
+			{
+				m_gameOngoing = true;
+		}
 		}
 		break;
 	case GAME:
 		//Game
-		m_screenGame->Update();
+		m_screenGame->Update(time);
+		if (m_stats->GetLives() == 0)
+		{
+			m_current = ENDSCREEN;
+		}
 		break;
 	case 3:
 		//HighScore
-		m_screenHighScore->Update();
+		m_screenHighScore->Update(time);
 		break;
 	case 4:
 		//Options
@@ -47,32 +56,41 @@ void ScreenManager::Update( )
 		break;
 	case PAUSE:
 		//Pause
-		m_screenPause->Update();
+		m_screenPause->Update(time);
 		if (m_input->CheckReturn())
 		{
 			m_current = m_screenPause->GetTargetMenu();
+			if (m_current == MENU)
+			{
+				m_gameOngoing = false;
+			}
 		}
 		break;
 	case 6:
 		//Endscreen
-		m_endScreen->Update();
+		m_endScreen->Update(time);
 		if (m_input->CheckReturn())
 		{
 			m_current = m_screenPause->GetTargetMenu();
 		}
 		break;
+	case SONGSELECT:
+		m_songSelect->Update(time);
+		if (m_input->CheckReturn())
+		{
+			//m_current = GAME;
+		}
 	case EXIT:
 		//Do nothing will exit when going to update in game class
 			break;
 	default:
 		break;
 	}
-
-
 }
 
-void ScreenManager::InitializeScreen(ID3D11Device* Device, ID3D11DeviceContext* DeviceContext, int ScreenHeight, int ScreenWidth, Input* input,Stats* stats)
+void ScreenManager::InitializeScreen(ID3D11Device* Device, ID3D11DeviceContext* DeviceContext, int ScreenHeight, int ScreenWidth, Input* input, Stats* stats, SoundManager* soundManager)
 {
+	m_stats = stats;
 	//Starting all the otherClasses etc..
 
 	//Current screen is startscreen
@@ -85,6 +103,7 @@ void ScreenManager::InitializeScreen(ID3D11Device* Device, ID3D11DeviceContext* 
 	m_screenPause = new PauseMenu(Device, DeviceContext, ScreenHeight, ScreenWidth, input);
 	m_screenHighScore = new HighScoreMenu(Device, DeviceContext, ScreenHeight, ScreenWidth, input);
 	m_endScreen = new EndScreen(Device, DeviceContext, ScreenHeight, ScreenWidth, input, stats);
+	m_songSelect = new SongSelect(Device, DeviceContext, ScreenHeight, ScreenWidth, input, stats, soundManager);
 	m_screenOptions = new OptionsMenu(Device, DeviceContext, ScreenHeight, ScreenWidth, input);
 }
 
@@ -120,10 +139,9 @@ void ScreenManager::Render()
 		//Endscreen
 		m_endScreen->Render();
 		break;
+	case SONGSELECT:
+		m_songSelect->Render();
 	default:
 		break;
 	}
 }
-
-
-

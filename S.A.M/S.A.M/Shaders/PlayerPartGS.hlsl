@@ -27,8 +27,8 @@ void GS_main(point GS_IN input[1], inout TriangleStream< GS_OUT > streamOutput)
 	float3 _Normal = normalize(float3(CameraPos.x - input[0].Pos.x, CameraPos.y - input[0].Pos.y, CameraPos.z - input[0].Pos.z));
 	float3 _VekRi = normalize(cross(float3(0, 1, 0), _Normal));
 	float3 _VekUp = normalize(cross(_Normal, _VekRi));
-	_VekUp = _VekUp / 10;
-	_VekRi = _VekRi / 10;
+	_VekUp = _VekUp / 5;
+	_VekRi = _VekRi / 5;
 
 	output.Pos = mul(float4(input[0].Pos.xyz + _VekRi - _VekUp, 1), ViewProjection);
 	output.Normal = _Normal;

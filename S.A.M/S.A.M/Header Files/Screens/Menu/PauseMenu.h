@@ -11,7 +11,7 @@ public:
 
 	~PauseMenu() {}
 	PauseMenu(ID3D11Device* Device, ID3D11DeviceContext* DeviceContext, int ScreenHeight, int ScreenWidth, Input* input);
-	void Update();
+	void Update(double time);
 	void Render();
 	virtual MenuScreens GetTargetMenu() {
 		switch (m_currentFont)
@@ -20,12 +20,15 @@ public:
 			return GAME;
 			break;
 		case 1:
-			return OPTION;
+			return MENU;
 			break;
 		case 2:
-			return HIGHSCORE;
+			return OPTION;
 			break;
 		case 3:
+			return HIGHSCORE;
+			break;
+		case 4:
 			return EXIT;
 			break;
 		}
@@ -33,11 +36,12 @@ public:
 
 private:
 	const wstring m_resume = L"Resume";
+	const wstring m_menu = L"Main menu";
 	const wstring m_options = L"Options";
 	const wstring m_highScore = L"HighScore";
 	const wstring m_exit = L"Quit";
 	bool m_keyDown = false;
-	Font m_choices[4];
+	Font m_choices[5];
 	int m_currentFont;
 };
 

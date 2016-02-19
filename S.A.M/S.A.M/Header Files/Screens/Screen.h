@@ -14,7 +14,7 @@ using namespace std;
 using namespace DirectX;
 using namespace Microsoft;
 using namespace WRL;
-enum MenuScreens {MENU_DEFAULT, MENU, GAME, HIGHSCORE, OPTION, PAUSE, ENDSCREEN ,EXIT};
+enum MenuScreens {MENU_DEFAULT, MENU, GAME, HIGHSCORE, OPTION, PAUSE, ENDSCREEN ,EXIT, SONGSELECT};
 
 class Screen
 {
@@ -22,7 +22,7 @@ public:
 	Screen() {}
 	virtual ~Screen() {}
 	Screen(ID3D11Device* Device, ID3D11DeviceContext* DeviceContext, int ScreenHeight, int ScreenWidth, Input* input);
-	virtual void Update();
+	virtual void Update(double time);
 	virtual void Render();
 	virtual MenuScreens GetTargetMenu() { return m_currentTargetMenu; }
 protected:

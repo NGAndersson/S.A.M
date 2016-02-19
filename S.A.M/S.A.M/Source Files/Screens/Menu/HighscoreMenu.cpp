@@ -21,7 +21,7 @@ HighScoreMenu::HighScoreMenu(ID3D11Device* Device, ID3D11DeviceContext* DeviceCo
 	m_currentFont = 0;
 }
 
-void HighScoreMenu::Update()
+void HighScoreMenu::Update(double time)
 {
 	InputType _inputReturn;
 	_inputReturn = m_input->CheckKeyBoardInput();
@@ -53,7 +53,7 @@ void HighScoreMenu::Render()
 {	
 	m_spriteBatch->Begin();
 	m_font->DrawString(m_spriteBatch.get(), m_start.c_str(), m_choices[0].m_position, m_choices[0].m_color, 0.f, m_choices[0].m_origin);
-	m_font->DrawString(m_spriteBatch.get(), m_exit.c_str(), m_choices[1].m_position, m_choices[1].m_color, 0.f, m_choices[3].m_origin);
+	m_font->DrawString(m_spriteBatch.get(), m_exit.c_str(), m_choices[1].m_position, m_choices[1].m_color, 0.f, m_choices[1].m_origin);
 	m_spriteBatch->End();
 }
 

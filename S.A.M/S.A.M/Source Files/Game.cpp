@@ -66,7 +66,7 @@ void Game::InitGame(Input* input, Display* disp)
 
 	//Create and initialize ScreenManager
 	m_screenManager = new ScreenManager();
-	m_screenManager->InitializeScreen(m_device, m_deviceContext, HEIGHT, WIDTH, m_input, m_statsManager);
+	m_screenManager->InitializeScreen(m_device, m_deviceContext, HEIGHT, WIDTH, m_input, m_statsManager, m_soundManager);
 
 	//Create and initialize EntityManager
 	m_entityManager = new EntityManager;
@@ -86,7 +86,7 @@ void Game::InitGame(Input* input, Display* disp)
 	m_backgroundPartSys->CreateBuffer(m_device, m_deviceContext, _texName);
 	m_partShader.CreateShadersPosOnly(m_device, "Shaders\\PartVS.hlsl", "Shaders\\PartGS.hlsl", "Shaders\\PartPS.hlsl");;
 	m_glowshader.CreateShadersCompute(m_device, "Shaders\\ComputeShader.hlsl");
-
+	
 	m_gaussianFilter = new GaussianBlur(m_device, m_deviceContext, &m_glowshader, WIDTH, HEIGHT);
 }
 
@@ -129,17 +129,25 @@ WPARAM Game::MainLoop()
 
 void Game::Update(double time)
 {
-	m_screenManager->Update();
+	static MenuScreens _prevScreen;
 
-	//RENDER particle system here 
+	m_screenManager->Update(time);
+
+	if ((m_screenManager->GetCurrentScreen() == PAUSE && _prevScreen == GAME) || m_screenManager->GetCurrentScreen() == GAME && _prevScreen == PAUSE)	//When switching from game to pause or vice versa, pause/resume the music
+		m_soundManager->PauseMusic();
+
 	if (m_screenManager->GetCurrentScreen() == GAME)
+	{
+		if (_prevScreen == MENU)
+			m_entityManager->InitMusic("Resources/Songs/PixieTrust.txt");
 		m_entityManager->Update(time);
-	
+	}
 	if (m_screenManager->GetCurrentScreen() == EXIT)
 	{
 		m_statsManager->SaveScore("PixieTrust.txt", "SomeNoob");
 		PostQuitMessage(0);
 	}
+	
 	//Updates space
 	m_backgroundPartSys->Update(m_deviceContext, time, 40);
 	
@@ -147,6 +155,8 @@ void Game::Update(double time)
 	// Update Entity Manager
 
 	//Do life-checks here with m_statManager->GetLives();
+
+	_prevScreen = m_screenManager->GetCurrentScreen();
 }
 
 void Game::Render()
@@ -165,7 +175,7 @@ void Game::Render()
 	m_deferredBuffer.SetRenderTargets(m_deviceContext);
 	m_partShader.SetShaders(m_deviceContext);
 	m_backgroundPartSys->Render(m_deviceContext);
-	if (m_screenManager->GetCurrentScreen() == GAME||m_screenManager->GetCurrentScreen()==PAUSE)
+	if (m_screenManager->GetGameState() == true/*m_screenManager->GetCurrentScreen() == GAME || m_screenManager->GetCurrentScreen()==PAUSE*/)
 	{
 		m_entityManager->Render();
 	}
@@ -189,8 +199,16 @@ void Game::Render()
 void Game::CheckInput()
 {
 	//InputType _returnInput = m_input->CheckKeyBoardInput();
-	if (m_input->CheckEsc()) {
-		m_screenManager->SetCurrentScreenPAUSE();
+	if (m_input->CheckEsc()) 
+	{
+		switch (m_screenManager->GetCurrentScreen())
+		{
+		case MENU:
+			break;
+		case GAME:
+			m_screenManager->SetCurrentScreenPAUSE();
+			break;
+		}
 	}
 	m_input->CheckMouseInput();
 }

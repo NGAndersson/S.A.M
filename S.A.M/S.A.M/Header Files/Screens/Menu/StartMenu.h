@@ -10,7 +10,7 @@ public:
 
 	~StartMenu(){}
 	StartMenu(ID3D11Device* Device, ID3D11DeviceContext* DeviceContext, int ScreenHeight, int ScreenWidth, Input* input);
-	void Update();
+	void Update(double time);
 	void Render();
 	virtual MenuScreens GetTargetMenu() { 
 		switch (m_currentFont)

@@ -1,5 +1,5 @@
 Texture2D input : register (t4);//first Shader Second UAV
-RWTexture2D<float> output : register (u0);//UAV 
+RWTexture2D<float3> output : register (u0);//UAV 
 
 float gausCalc(float x)
 {
@@ -12,7 +12,7 @@ void CS_main(uint3 DTid : SV_DispatchThreadID)
 {
 
 	float GaNo = 0;
-	float result = 0;
+	float3 result = 0;
 
 	//first run
 	for (int i = -8; i < 8; i++)
@@ -20,7 +20,7 @@ void CS_main(uint3 DTid : SV_DispatchThreadID)
 		GaNo += gausCalc(i);
 	}
 
-	for (int i = -8; i < 8; i++)
+	for (i = -8; i < 8; i++)
 	{
 		result += input[int2(DTid.x + i, DTid.y)] * (gausCalc(i) / GaNo);
 	}
@@ -32,7 +32,7 @@ void CS_main(uint3 DTid : SV_DispatchThreadID)
 void CS_main(uint3 DTid : SV_DispatchThreadID)
 {
 	float GaNo = 0;
-	float result = 0;
+	float3 result = 0;
 
 	//first run
 	for (int i = -8; i < 8; i++)
@@ -40,7 +40,7 @@ void CS_main(uint3 DTid : SV_DispatchThreadID)
 		GaNo += gausCalc(i);
 	}
 
-	for (int i = -8; i < 8; i++)
+	for (i = -8; i < 8; i++)
 	{
 		result += input[int2(DTid.x, DTid.y + i)] * (gausCalc(i) / GaNo);
 	}

@@ -11,8 +11,8 @@ Player::Player(SoundManager* SoundManager, int MapWidth, int MapLength,XMFLOAT3 
 	//Loading death sounds FIX LATER :)
 	//m_soundManager->LoadSound("DickbuttSound.mp3", "PlayerDeathSound", "PlayerSound", LOAD_MEMORY);
 
-	XMVECTOR _rotzAxis{ 0,0,1,0 };
-	m_rotation = XMMatrixRotationAxis(_rotzAxis, 0.0f);
+	XMVECTOR _rotzAxis{ 0,1,0,0 };
+	m_rotation = XMMatrixRotationAxis(_rotzAxis, XM_PI);
 }
 
 Player::~Player()

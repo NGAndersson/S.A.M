@@ -26,7 +26,7 @@ OptionsMenu::OptionsMenu(ID3D11Device* Device, ID3D11DeviceContext* DeviceContex
 	m_currentFont = 0;
 }
 
-void OptionsMenu::Update()
+void OptionsMenu::Update(double time)
 {
 	InputType _inputReturn;
 

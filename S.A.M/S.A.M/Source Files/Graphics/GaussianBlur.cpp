@@ -2,12 +2,10 @@
 
 GaussianBlur::~GaussianBlur()
 {
-	//m_unAc->Release();
-	//m_unAc2->Release();
-	//m_compShaderTexture1->Release;
-	//m_compShaderTexture2->Release;
-	//m_targetedShaderResourceView->Release();
-
+	m_unAc->Release();
+	m_unAc2->Release();
+	m_compShaderTexture1->Release();
+	m_compShaderTexture2->Release();
 }
 
 GaussianBlur::GaussianBlur(ID3D11Device* Device, ID3D11DeviceContext* DeviceContext, ShaderHandler* shaderHandler, int width, int height)
@@ -44,8 +42,8 @@ GaussianBlur::GaussianBlur(ID3D11Device* Device, ID3D11DeviceContext* DeviceCont
 	_gST.Texture2D.MipLevels = 1;
 	_gST.Texture2D.MostDetailedMip = 0;
 
-	_hr = Device->CreateShaderResourceView(_gausTex, &_gST, &m_compShaderTexture);
-
+	_hr = Device->CreateShaderResourceView(_gausTex, &_gST, &m_compShaderTexture1);
+	_hr = Device->CreateShaderResourceView(_gausTex2, &_gST, &m_compShaderTexture2);
 	D3D11_UNORDERED_ACCESS_VIEW_DESC UAVDesc;
 
 	UAVDesc.Format = _gausDesc.Format;
@@ -67,20 +65,25 @@ ID3D11ShaderResourceView* GaussianBlur::Blur(ID3D11Device* Device, ID3D11DeviceC
 	m_shaderHandler->SetComputeShader(DeviceContext, 1);
 	ID3D11ShaderResourceView* _temp = NULL; //No need to release if NULL
 
+	float _clearValue[4] = { 0.0,0.0,0.0,0.0 };
+	DeviceContext->ClearUnorderedAccessViewFloat(m_unAc, _clearValue);
+	DeviceContext->ClearUnorderedAccessViewFloat(m_unAc2, _clearValue);
 
 	//First pass
-	DeviceContext->CSSetUnorderedAccessViews(0, 1, &m_unAc,0);
+	DeviceContext->CSSetUnorderedAccessViews(0, 1, &m_unAc, 0);
 	DeviceContext->CSSetShaderResources(ShaderTarget, 1, &shaderResource);
 	DeviceContext->Dispatch(m_screenWidth / 16, m_screenHeight, 1);
 
 	//Set Second pass Shader
 	m_shaderHandler->SetComputeShader(DeviceContext, 2);
 	DeviceContext->CSSetUnorderedAccessViews(0, 1, &m_unAc2, 0);
-	DeviceContext->CSSetShaderResources(ShaderTarget, 1, &m_compShaderTexture);
-
+	DeviceContext->CSSetShaderResources(ShaderTarget, 1, &m_compShaderTexture1);
 	DeviceContext->Dispatch(m_screenWidth, m_screenHeight / 16, 1);
+	DeviceContext->PSSetShaderResources(ShaderTarget, 1, &m_compShaderTexture1);
+
+	//RESET SHIT
 	DeviceContext->CSSetShaderResources(ShaderTarget, 1, &_temp);
 
-	DeviceContext->PSSetShaderResources(ShaderTarget, 1, &m_compShaderTexture);
-	return m_compShaderTexture;
+	DeviceContext->PSSetShaderResources(ShaderTarget, 1, &m_compShaderTexture1);
+	return m_compShaderTexture2;
 }
