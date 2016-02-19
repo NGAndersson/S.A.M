@@ -2,6 +2,7 @@
 #define _OPTIONSMENU_H
 
 #include "../Screen.h"
+#include "DirectXMath.h"
 
 class OptionsMenu : public Screen
 {
@@ -19,25 +20,17 @@ public:
 		case 0:
 			return MENU;
 			break;
-		case 1:
-			return OPTION;
-			break;
-		case 2:
-			return HIGHSCORE;
-			break;
-		case 3:
-			return ENDSCREEN;
-			break;
 		}
 	}
 
 private:
-	const wchar_t* m_start = L"";
-	const wchar_t* m_options = L"";
-	const wchar_t* m_highScore = L"";
-	const wchar_t* m_exit = L"";
+	const wchar_t* m_menu = L"Return to Menu";
+	const wchar_t* m_option1 = L"Resolution";
+	const wchar_t* m_option2 = L"Volume";
 	bool m_keyDown = false;
-	Font m_choices[4];
+	Font m_choices[3];
+
+	Font m_options[2];
 
 	int m_currentFont;
 };

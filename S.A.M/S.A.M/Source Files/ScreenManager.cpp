@@ -21,17 +21,22 @@ void ScreenManager::Update(double time)
 	switch (m_current)
 	{
 	case MENU_DEFAULT:
-			break;
+		break;
 	case MENU:
 		//Startscreen
 		m_screenMenu->Update(time);
-		if (m_input->CheckReturn())
+		if (m_input->CheckReturn() && !m_keyDown)
 		{
+			m_keyDown = true;
 			m_current =	m_screenMenu->GetTargetMenu();
 			if (m_current == GAME)
 			{
 				m_gameOngoing = true;
+			}
 		}
+		else if (!m_input->CheckReturn())
+		{
+			m_keyDown = false;
 		}
 		break;
 	case GAME:
@@ -48,12 +53,18 @@ void ScreenManager::Update(double time)
 		break;
 	case 4:
 		//Options
-
+		m_screenOptions->Update(time);
+		if (m_input->CheckReturn() && !m_keyDown)
+		{
+			m_current = m_screenPause->GetTargetMenu();
+		}
+		else if (!m_input->CheckReturn())
+			m_keyDown = false;
 		break;
 	case PAUSE:
 		//Pause
 		m_screenPause->Update(time);
-		if (m_input->CheckReturn())
+		if (m_input->CheckReturn() && !m_keyDown)
 		{
 			m_current = m_screenPause->GetTargetMenu();
 			if (m_current == MENU)
@@ -61,24 +72,31 @@ void ScreenManager::Update(double time)
 				m_gameOngoing = false;
 			}
 		}
+		else if (!m_input->CheckReturn())
+			m_keyDown = false;
 		break;
-	case 6:
+	case ENDSCREEN:
 		//Endscreen
 		m_endScreen->Update(time);
-		if (m_input->CheckReturn())
+		if (m_input->CheckReturn() && !m_keyDown)
 		{
-			m_current = m_screenPause->GetTargetMenu();
+			m_keyDown = true;
+			m_current = m_endScreen->GetTargetMenu();
 		}
+		else if (!m_input->CheckReturn())
+			m_keyDown = false;
 		break;
 	case SONGSELECT:
 		m_songSelect->Update(time);
-		if (m_input->CheckReturn())
+		if (m_input->CheckReturn() && !m_keyDown)
 		{
 			//m_current = GAME;
 		}
+		else if (!m_input->CheckReturn())
+			m_keyDown = false;
 	case EXIT:
 		//Do nothing will exit when going to update in game class
-		break;
+			break;
 	default:
 		break;
 	}
@@ -90,7 +108,7 @@ void ScreenManager::InitializeScreen(ID3D11Device* Device, ID3D11DeviceContext* 
 	//Starting all the otherClasses etc..
 
 	//Current screen is startscreen
-	m_current = MENU;
+	m_current = ENDSCREEN;
 	//m_Current = USERINTERFACE;
 	//Create Modelhandlers...
 	m_input = input;
@@ -100,6 +118,7 @@ void ScreenManager::InitializeScreen(ID3D11Device* Device, ID3D11DeviceContext* 
 	m_screenHighScore = new HighScoreMenu(Device, DeviceContext, ScreenHeight, ScreenWidth, input);
 	m_endScreen = new EndScreen(Device, DeviceContext, ScreenHeight, ScreenWidth, input, stats);
 	m_songSelect = new SongSelect(Device, DeviceContext, ScreenHeight, ScreenWidth, input, stats, soundManager);
+	m_screenOptions = new OptionsMenu(Device, DeviceContext, ScreenHeight, ScreenWidth, input);
 }
 
 void ScreenManager::Render()
@@ -108,7 +127,6 @@ void ScreenManager::Render()
 	switch (m_current)
 	{
 	case MENU_DEFAULT:
-		
 		break;
 	case MENU:
 		//StartMenu
@@ -124,13 +142,13 @@ void ScreenManager::Render()
 		break;
 	case 4:
 		//Options
-
+		m_screenOptions->Render();
 		break;
 	case 5:
 		//Pause
 		m_screenPause->Render();
 		break;
-	case 6:
+	case ENDSCREEN:
 		//Endscreen
 		m_endScreen->Render();
 		break;

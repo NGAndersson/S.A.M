@@ -43,7 +43,7 @@ EndScreen::EndScreen(ID3D11Device* Device, ID3D11DeviceContext* DeviceContext, i
 	m_currentFont = 0;
 }
 
-void EndScreen::Update()
+void EndScreen::Update(double time)
 {
 	InputType _input;
 

@@ -5,7 +5,6 @@
 
 class StartMenu : public Screen
 {
-
 public:
 	StartMenu(){}
 
