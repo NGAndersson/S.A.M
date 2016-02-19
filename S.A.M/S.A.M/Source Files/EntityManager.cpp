@@ -186,7 +186,7 @@ void EntityManager::Initialize(SoundManager* soundManager, Input* input, ID3D11D
 	m_rocketPartSys->CreateBuffer(m_device, m_deviceContext, _texName);
 
 	std::vector<Entity*> _playerVec = { m_player };
-	m_playerPartSys = new PlayerPart(2, 500, _playerVec);
+	m_playerPartSys = new PlayerPart(1, 200, _playerVec);
 	m_playerPartSys->CreateBuffer(m_device, m_deviceContext, _texName);
 
 
@@ -206,6 +206,7 @@ void EntityManager::Render()
 	}
 
 	m_shaderLoad[SHADER_PLAYERPART]->SetShaders(m_deviceContext);
+	m_playerPartSys->SetBuffer(m_deviceContext);
 	m_playerPartSys->Render(m_deviceContext);
 
 
