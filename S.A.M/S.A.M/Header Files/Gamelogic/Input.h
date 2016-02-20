@@ -5,6 +5,8 @@
 #pragma comment(lib, "dxguid.lib")
 
 #include <dinput.h>
+#include <fstream>
+#include <sstream>
 
 enum InputType
 {
@@ -57,6 +59,7 @@ public:
 	bool CheckEsc();
 	//bool IsNewButtonPressed(BulletType& checkAgainst);
 	bool IsNewButtonPressed(bool& checkAgainst);
+	void ReadInputKeyBindings();
 
 	//----------------------------Attributes----------------------------------------
 private:

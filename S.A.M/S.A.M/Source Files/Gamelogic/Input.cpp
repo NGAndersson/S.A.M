@@ -152,11 +152,6 @@ MouseClicked Input::CheckMouseInput()
 
 bool Input::CheckEsc()
 {
-	BYTE m_keyBoardState[256];
-	ZeroMemory(&m_keyBoardState, sizeof(m_keyBoardState));
-
-	m_Keyboard->GetDeviceState(sizeof(m_keyBoardState), (LPVOID)&m_keyBoardState);
-
 	if (m_keyBoardState[DIK_ESCAPE] & 0x80)
 		return true;
 
@@ -179,6 +174,17 @@ bool Input::CheckEsc()
 //	checkAgainst = _current;
 //	return false;
 //}
+
+void Input::ReadInputKeyBindings()
+{
+	std::fstream _file;
+	_file.open("Options/KeyBindings.txt");
+
+	if (_file.is_open())
+	{
+
+	}
+}
 
 bool Input::IsNewButtonPressed(bool& checkAgainst)
 {
