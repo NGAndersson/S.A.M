@@ -33,6 +33,7 @@ public:
 	bool GetGameState() { return m_gameOngoing; }
 	void SetCurrentScreenPAUSE() { m_current = PAUSE; }
 	void SetCurrentScreenQUIT() { m_current = EXIT;}
+	string GetSelectedSongFile() { return m_songSelect->GetSelectedSongFile(); }
 //----------------------------Attributes----------------------------------------
 private:
 	//Current status.

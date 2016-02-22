@@ -6,9 +6,11 @@ SongElement::SongElement(std::string filename, ID3D11Device* device, ID3D11Devic
 	m_font = std::make_unique<DirectX::SpriteFont>(device, L"Resources/moonhouse.spritefont");
 	m_soundManager = soundManager;
 	std::wstring _filePath;
+	m_dataFile = "Resources/Songs/" + filename;
+
 	//Load meta-data
 	std::wfstream _file;
-	_file.open("Resources/Songs/"+filename);
+	_file.open(m_dataFile);
 
 	wchar_t _key[100];
 	wchar_t _value[100];
@@ -31,7 +33,8 @@ SongElement::SongElement(std::string filename, ID3D11Device* device, ID3D11Devic
 				_filePath = _value;
 		}
 	}
-	
+	_file.close();
+
 	size_t _fuckoff;
 	wcstombs_s(&_fuckoff, m_file, (size_t)200, _filePath.c_str(), (size_t)200);
 

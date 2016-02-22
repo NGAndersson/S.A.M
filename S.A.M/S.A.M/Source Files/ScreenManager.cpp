@@ -29,10 +29,6 @@ void ScreenManager::Update(double time)
 		{
 			m_keyDown = true;
 			m_current =	m_screenMenu->GetTargetMenu();
-			if (m_current == GAME)
-			{
-				m_gameOngoing = true;
-			}
 		}
 		else if (!m_input->CheckReturn())
 		{
@@ -104,7 +100,9 @@ void ScreenManager::Update(double time)
 		if (m_input->CheckReturn() && !m_keyDown)
 		{
 			m_keyDown = true;
-			//m_current = GAME;
+			m_gameOngoing = true;
+			m_soundManager->StopMusic();
+			m_current = GAME;
 		}
 		else if (!m_input->CheckReturn())
 			m_keyDown = false;

@@ -16,7 +16,7 @@ public:
 	SongSelect(ID3D11Device* Device, ID3D11DeviceContext* DeviceContext, int ScreenHeight, int ScreenWidth, Input* input, Stats* stats, SoundManager* soundManager);
 	void Update(double time);
 	void Render();
-
+	string GetSelectedSongFile() { return string(m_songElements[m_selection]->GetDataFile()); }
 private:
 	vector<SongElement*> m_songElements;
 	SongElement* m_visibleElements[5];
