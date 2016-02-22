@@ -38,7 +38,16 @@ SongSelect::SongSelect(ID3D11Device* Device, ID3D11DeviceContext* DeviceContext,
 		m_songElements.push_back(_tempElement);
 	}
 
-
+	//Position the visible songs
+	for (int i = -2; i < 3; i++)
+	{
+		int _visibleIndex = m_selection + i;	//visible songs are around the current selected song
+		if (_visibleIndex < 0)					//Wrap around on negative indexes
+			_visibleIndex += m_songElements.size();
+		if (_visibleIndex >= m_songElements.size())	//Wrap around on indexes above max
+			_visibleIndex -= m_songElements.size();
+		m_visibleElements[i + 2] = m_songElements[_visibleIndex];
+	}
 }
 
 SongSelect::~SongSelect()
@@ -49,12 +58,21 @@ SongSelect::~SongSelect()
 
 void SongSelect::Update(double time)
 {
-
+	//Position the visible songs
+	for (int i = -2; i < 3; i++)
+	{
+		int _visibleIndex = m_selection + i;	//visible songs are around the current selected song
+		if (_visibleIndex < 0)					//Wrap around on negative indexes
+			_visibleIndex += m_songElements.size();
+		if (_visibleIndex >= m_songElements.size())	//Wrap around on indexes above max
+			_visibleIndex -= m_songElements.size();
+		m_visibleElements[i + 2] = m_songElements[_visibleIndex];
+	}
 }
 
 void SongSelect::Render()
 {
-	for (int i = 0; i < m_songElements.size(); i++)
-		m_songElements[i]->Render(0, 0);
+	for (int i = 0; i < 5; i++)
+		m_visibleElements[i]->Render(100, i*100);
 }
 

@@ -55,13 +55,13 @@ void SongElement::Render(int offsetX, int offsetZ)
 {
 	DirectX::SimpleMath::Vector2 _bgPos, _songNamePos, _artistPos, _arrangerPos, _lengthAndBPMPos;
 	_bgPos.x = offsetX, _bgPos.y = offsetZ;
-	_songNamePos.x = 0, _songNamePos.y = 20;
-	_artistPos.x = 0, _artistPos.y = 70;
-	_arrangerPos.x = 500, _arrangerPos.y = 20;
-	_lengthAndBPMPos.x = 500, _lengthAndBPMPos.y = 70;
+	_songNamePos.x = 0 + offsetX, _songNamePos.y = 20 + offsetZ;
+	_artistPos.x = 0 + offsetX, _artistPos.y = 70 + offsetZ;
+	_arrangerPos.x = 600 + offsetX, _arrangerPos.y = 20 + offsetZ;
+	_lengthAndBPMPos.x = 600 + offsetX, _lengthAndBPMPos.y = 70 + offsetZ;
 	std::wstring _lengthAndBPM = m_length + L" " + m_bpm + L" BPM";
 	
-	DirectX::XMVECTOR _lengthAndBPMOrigin = m_font->MeasureString(m_length.c_str());
+	DirectX::XMVECTOR _lengthAndBPMOrigin = m_font->MeasureString(_lengthAndBPM.c_str());
 	_lengthAndBPMOrigin = DirectX::XMVectorSetIntY(_lengthAndBPMOrigin, 0);
 
 	DirectX::XMVECTOR _arrangerOrigin = m_font->MeasureString(m_arranger.c_str());
@@ -77,21 +77,4 @@ void SongElement::Render(int offsetX, int offsetZ)
 	m_font->DrawString(m_spriteBatch.get(), m_arranger.c_str(), _arrangerPos, DirectX::Colors::White, 0.f, _arrangerOrigin, _scale);
 	m_font->DrawString(m_spriteBatch.get(), _lengthAndBPM.c_str(), _lengthAndBPMPos, DirectX::Colors::White, 0.f, _lengthAndBPMOrigin, _scale);
 	m_spriteBatch->End();
-	/*
-	SimpleMath::Vector2 _scorePos, _livesPos, _comboPos;
-	_scorePos.x = m_screenWidth / 2;
-	_scorePos.y = 40;
-	_livesPos.x = 100;
-	_livesPos.y = m_screenHeight - 40;
-	_comboPos.x = m_screenWidth - 150, _comboPos.y = m_screenHeight - 40;
-
-	wstring _tempHighScore = L"High Score: " + m_score;
-	wstring _tempLives = L"Lives: " + m_livesLeft;
-	wstring _tempCombo = L"Combo: " + m_combo;
-	m_spriteBatch->Begin();
-	m_font->DrawString(m_spriteBatch.get(), _tempHighScore.c_str(), _scorePos, Colors::Crimson, 0.f, m_font->MeasureString(_tempHighScore.c_str()) / 2.f);
-	m_font->DrawString(m_spriteBatch.get(), _tempLives.c_str(), _livesPos, Colors::Crimson, 0.f, m_font->MeasureString(_tempLives.c_str()) / 2.f);
-	m_font->DrawString(m_spriteBatch.get(), _tempCombo.c_str(), _comboPos, Colors::Crimson, 0.f, m_font->MeasureString(_tempCombo.c_str()) / 2.f);
-	m_spriteBatch->End();
-	*/
 }

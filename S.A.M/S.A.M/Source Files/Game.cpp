@@ -122,7 +122,7 @@ WPARAM Game::MainLoop()
 
 		//Call Render Functions
 		Render();
-		m_swapChain->Present(0, 0);
+ 		m_swapChain->Present(0, 0);
 	}
 
 }

@@ -19,6 +19,8 @@ public:
 
 private:
 	vector<SongElement*> m_songElements;
+	SongElement* m_visibleElements[5];
+	int m_selection;
 	SoundManager* m_soundManager;
 };
 #endif
