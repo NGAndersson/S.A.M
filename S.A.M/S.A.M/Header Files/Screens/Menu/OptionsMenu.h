@@ -3,15 +3,21 @@
 
 #include "../Screen.h"
 #include "DirectXMath.h"
+#include "../../Audio/SoundManager.h"
+
+enum Options { MUSICVOLUME, SHOTSVOLUME, RESOLUTION, KEYBINDING, APPLY, MAINMENU };
 
 class OptionsMenu : public Screen
 {
 
 public:
-	OptionsMenu() {}
+	OptionsMenu() {
+		delete m_choices;
+		
+	}
 
 	~OptionsMenu() {}
-	OptionsMenu(ID3D11Device* Device, ID3D11DeviceContext* DeviceContext, int ScreenHeight, int ScreenWidth, Input* input);
+	OptionsMenu(ID3D11Device* Device, ID3D11DeviceContext* DeviceContext, int ScreenHeight, int ScreenWidth, Input* input, SoundManager* SoundManager);
 	void Update(double time);
 	void Render();
 	virtual MenuScreens GetTargetMenu() {
@@ -24,15 +30,17 @@ public:
 	}
 
 private:
-	wstring m_menu = L"Return to Menu";
-	wstring m_option1 = L"Resolution";
-	wstring m_option2 = L"Volume";
+	wstring m_menu;
+	wstring m_resolution;
+	wstring m_volumeMusic;
+	wstring m_volumeShots;
+	wstring m_keyBindings;
+	wstring m_apply;
 	bool m_keyDown = false;
-	Font m_choices[3];
-
-	Font m_options[2];
-
+	Font m_choices[6];
+	SoundManager* m_soundManager;
 	int m_currentFont;
+
 };
 
 

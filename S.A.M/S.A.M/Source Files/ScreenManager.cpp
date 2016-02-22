@@ -133,7 +133,7 @@ void ScreenManager::InitializeScreen(ID3D11Device* Device, ID3D11DeviceContext* 
 	m_screenHighScore = new HighScoreMenu(Device, DeviceContext, ScreenHeight, ScreenWidth, input);
 	m_endScreen = new EndScreen(Device, DeviceContext, ScreenHeight, ScreenWidth, input, stats);
 	m_songSelect = new SongSelect(Device, DeviceContext, ScreenHeight, ScreenWidth, input, stats, soundManager);
-	m_screenOptions = new OptionsMenu(Device, DeviceContext, ScreenHeight, ScreenWidth, input);
+	m_screenOptions = new OptionsMenu(Device, DeviceContext, ScreenHeight, ScreenWidth, input,soundManager);
 }
 
 void ScreenManager::Render()
