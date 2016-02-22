@@ -786,7 +786,7 @@ void EntityManager::EnemyFire()
 	for (auto i = 0; i < m_enemy1.size(); i++)
 	{
 		if (m_enemy1[i]->GetFireTime()>m_beatPerShot1){
-			m_bullet6.push_back(new Bullet_e(m_soundManager, MAPWIDTH, MAPLENGTH, m_enemy1[i]->GetPosition(), XMFLOAT3(0.5, 0.5, 0.5), 1, m_modelHandlers[BULLET6]->GetDeffuse()));
+			m_bullet6.push_back(new Bullet_e(m_soundManager, MAPWIDTH, MAPLENGTH, m_enemy1[i]->GetPosition(), XMFLOAT3(0.4, 0.4, 0.4), 1, m_modelHandlers[BULLET6]->GetDeffuse()));
 			m_enemy1[i]->SetFireTime(0);
 		}
 
