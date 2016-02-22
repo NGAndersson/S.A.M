@@ -1,0 +1,70 @@
+//FIGURE EIGHT
+#0 Enter-direction, needs to be attached to something
+mov=-10,70|0,70
+
+#1 Doing the shit
+mov=17,90|35,70|52,50|70,70|52,90|35,70|17,50
+
+#2 Exit-direction, needs to be attached to something
+mov=0,70|-30,70
+
+//DOWNWARD SLOPE
+#0 Enter-direction, needs to be attached to something
+mov=-10,90|0,90
+
+#1 Doing the shit
+mov=19,100|39,85|58,70
+
+#2 Exit-direction, needs to be attached to something
+mov=77,80|103,80
+
+//UPWARD SLOPE
+#0 Enter-direction, needs to be attached to something
+mov=-10,80|0,80
+
+#1 Doing the shit
+mov=19,70|39,85|58,100
+
+#2 Exit-direction, needs to be attached to something
+mov=77,90|103,90
+
+//COUNTER-CLOCK PARABOLA
+#0 Enter-direction, needs to be attached to something
+mov=10,113|10,103
+
+#1 Doing the shit
+mov=15,75|32,50|62,75
+
+#2 Exit-direction, needs to be attached to something
+mov=67,103|67,133
+
+
+//CLOCK PARABOLA
+#0 Enter-direction, needs to be attached to something
+mov=67,113|67,103
+
+#1 Doing the shit
+mov=62,75|32,50|15,75
+
+#2 Exit-direction, needs to be attached to something
+mov=10,103|10,133
+
+//RIGHT LOWER STAR
+#0 Enter-direction, needs to be attached to something
+mov=34,123|39,113
+
+#1 Doing the shit
+mov=58,70
+
+#2 Exit-direction, needs to be attached to something
+mov=0,103|-5,133
+
+//LEFT LOWER STAR
+#0 Enter-direction, needs to be attached to something
+mov=43,123|39,113
+
+#1 Doing the shit
+mov=19,70
+
+#2 Exit-direction, needs to be attached to something
+mov=77,103|82,133
