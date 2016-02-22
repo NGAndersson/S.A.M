@@ -34,12 +34,14 @@ class SoundManager
 		void PauseSound(char* soundName);
 		void LoadMusic(char* fileName);
 		void PlayMusic(float volume);
+		void StopMusic() { m_musicChannel->stop(); }
 		void PauseMusic();
 		void Update();
 		float* SpectrumAnalysis(char* soundName);
 		int* GetLeftData() { return m_dataLeftChannel; }
 		int* GetRightData() { return m_dataRightChannel; }
 		unsigned int GetLength() { return m_musicLength; }
+		unsigned int GetLengthMS() { unsigned int l; m_musicSound->getLength(&l, FMOD_TIMEUNIT_MS); return l;}
 		int GetCurrentMusicTimePCM();
 
 

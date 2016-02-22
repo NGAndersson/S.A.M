@@ -1,4 +1,9 @@
 # <-- Comment
+#### Meta
+songname=Ignition
+artist=R. Kelly
+arr=Group 3
+
 #### Soundfile
 music=Resources/Sound/Ignition.mp3
 
