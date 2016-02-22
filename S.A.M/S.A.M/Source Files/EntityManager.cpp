@@ -164,7 +164,7 @@ void EntityManager::Initialize(SoundManager* soundManager, Input* input, ID3D11D
 	m_modelHandlers[BULLET3]->LoadOBJData("Resources/Models/Bullet3.obj", "Resources/Models/Bullet3.mtl", m_device, m_deviceContext);
 	m_modelHandlers[BULLET3]->CreateBuffers(m_device);
 	m_modelHandlers[BULLET4] = new ModelHandler();
-	m_modelHandlers[BULLET4]->LoadOBJData("Resources/Models/Bullet4.obj", "Resources/Models/Bullet4.mtl", m_device, m_deviceContext);
+	m_modelHandlers[BULLET4]->LoadOBJData("Resources/Models/Rocket.obj", "Resources/Models/Rocket.mtl", m_device, m_deviceContext);
 	m_modelHandlers[BULLET4]->CreateBuffers(m_device);
 	m_modelHandlers[BULLET5] = new ModelHandler();
 	m_modelHandlers[BULLET5]->LoadOBJData("Resources/Models/Laser1.obj", "Resources/Models/Laser1.mtl", m_device, m_deviceContext);
