@@ -45,6 +45,37 @@ OptionsMenu::OptionsMenu(ID3D11Device* Device, ID3D11DeviceContext* DeviceContex
 	m_choices[MAINMENU].m_origin = m_font->MeasureString(m_menu.c_str()) / 2.f;
 	m_choices[MAINMENU].m_position.x = m_screenWidth / 2.f;
 	m_choices[MAINMENU].m_color = Colors::Crimson;
+	//The different Resolutions.
+	m_tempHeight[0] = 653;
+	m_tempHeight[1] = 980;
+	m_tempHeight[2] = 1080;
+	m_tempHeight[3] = 1440;
+
+	m_tempWidth[0] = 480;
+	m_tempWidth[1] = 720;
+	m_tempWidth[2] = 793;
+	m_tempWidth[3] = 1058;
+
+	m_res[0] = to_wstring(m_tempHeight[0]) + L" x " + to_wstring(m_tempWidth[0]);
+	m_res[1] = to_wstring(m_tempHeight[1]) + L" x " + to_wstring(m_tempWidth[1]);
+	m_res[2] = to_wstring(m_tempHeight[2]) + L" x " + to_wstring(m_tempWidth[2]);
+	m_res[3] = to_wstring(m_tempHeight[3]) + L" x " + to_wstring(m_tempWidth[3]);
+	//Determening what the current resolutions is. 
+	switch (m_screenHeight)
+	{
+	case 653:
+		m_currentRes = 0;
+		break;
+	case 980:
+		m_currentRes = 1;
+		break;
+	case 1080:
+		m_currentRes = 2;
+		break;
+	case 1440:
+		m_currentRes = 3;
+		break;
+	}
 
 	m_currentFont = 0;
 	m_soundManager = SoundManager;
@@ -53,8 +84,25 @@ OptionsMenu::OptionsMenu(ID3D11Device* Device, ID3D11DeviceContext* DeviceContex
 void OptionsMenu::Update(double time)
 {
 
-	InputType _inputReturn;
+	switch (m_currentRes)
+	{
+	case 0:
+		m_resolution = L"Resolution: " + m_res[0];
+		break;
+	case 1:
+		m_resolution = L"Resolution: " + m_res[1];
+		break;
+	case 2:
+		m_resolution = L"Resolution: " + m_res[2];
+		break;
+	case 3:
+		m_resolution = L"Resolution: " + m_res[3];
+		break;
+	default:
+		break;
+	}
 
+	InputType _inputReturn;
 	_inputReturn = m_input->CheckKeyBoardInput();
 	if (_inputReturn == INPUT_MOVE_DOWN&&!m_keyDown)
 	{
@@ -81,6 +129,8 @@ void OptionsMenu::Update(double time)
 	{
 		switch (m_currentFont)
 		{
+		case RESOLUTION:
+			m_currentRes = m_currentRes - 1 % 4;
 		default:
 			break;
 		}
