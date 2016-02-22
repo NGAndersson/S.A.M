@@ -8,7 +8,9 @@ Bullet_p2::Bullet_p2()
 Bullet_p2::Bullet_p2(SoundManager * SoundManager, int MapWidth, int MapLength, XMFLOAT3 Position, XMFLOAT3 Scale, int Health)
 {
 	XMVECTOR _rotzAxis{ 0,0,1,0 };
-	m_rotation = XMMatrixRotationAxis(_rotzAxis, 0.0f);
+	m_rotation = XMMatrixRotationAxis(_rotzAxis, XM_PI / 2);
+	XMVECTOR _rotzAxis2{ 0,1,0,0 };
+	m_rotation = m_rotation * XMMatrixRotationAxis(_rotzAxis2, XM_PI / 2);
 	m_scale = Scale;
 	m_position = Position;
 	m_health = Health;

@@ -36,7 +36,8 @@ void Renderer::Render(ModelHandler * model, XMFLOAT3 position, XMMATRIX &rotatio
 	XMMATRIX Scale = XMMatrixScaling(scale.x, scale.y, scale.z);
 	XMMATRIX Translation = XMMatrixTranslation(position.x, position.y, position.z);
 	m_worldStruct.worldMatrix = XMMatrixTranspose(Scale * rotation * Translation);
-	
+	m_worldStruct.worldRotation= XMMatrixTranspose(rotation);
+
 	m_deviceContext->UpdateSubresource(m_worldBuffer, 0, NULL, &m_worldStruct, 0, 0);
 	m_deviceContext->VSSetConstantBuffers(0, 1, &m_worldBuffer);
 
@@ -56,6 +57,7 @@ void Renderer::RenderInstanced(ModelHandler * model, vector<XMFLOAT3> position, 
 	//Set Worldmatrix and Position(float3) as a Vertexshader constant buffer
 
 	XMFLOAT4X4 _worldInstance;
+	XMFLOAT4X4 _worldRotation;
 
 	D3D11_MAPPED_SUBRESOURCE _mappedResource;
 
@@ -66,7 +68,9 @@ void Renderer::RenderInstanced(ModelHandler * model, vector<XMFLOAT3> position, 
 		Translation = XMMatrixTranslation(position[i].x, position[i].y, position[i].z);
 		Scale = XMMatrixScaling(scale[i].x, scale[i].y, scale[i].z);
 		XMStoreFloat4x4(&_worldInstance, XMMatrixTranspose(Scale * rotation[i] * Translation));
+		XMStoreFloat4x4(&_worldRotation, XMMatrixTranspose(rotation[i]));
 		m_worldStructInstanced.worldMatrix[i] = _worldInstance;
+		m_worldStructInstanced.worldRotation[i] = _worldRotation;
 	}
 
 	memcpy(_mappedResource.pData, &m_worldStructInstanced, sizeof(WorldStructInstanced));

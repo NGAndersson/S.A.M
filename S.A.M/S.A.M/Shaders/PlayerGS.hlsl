@@ -25,9 +25,7 @@ void GS_main(triangle GS_IN input[3], inout TriangleStream< GS_OUT > streamOutpu
 {
 	GS_OUT output = (GS_OUT)0;
 	
-	float3 Vec1 = normalize(input[1].PosInW - input[0].PosInW);
-	float3 Vec2 = normalize(input[2].PosInW - input[0].PosInW);
-	float3 Norm = cross(Vec1, Vec2);
+	float3 Norm = normalize(input[0].NormalInW.xyz + input[1].NormalInW.xyz + input[2].NormalInW.xyz);
 	float3 VnPosCam = float3(input[0].PosInW.x - CameraPos.x, input[0].PosInW.y - CameraPos.y, input[0].PosInW.z - CameraPos.z);
 	float dotNP = dot(VnPosCam, Norm);
 

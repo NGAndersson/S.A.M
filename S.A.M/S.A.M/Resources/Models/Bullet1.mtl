@@ -4,4 +4,5 @@ Kd 0.38 0.00 0.00
 Ka 0.00 0.00 0.00
 Tf 1.00 1.00 1.00
 map_Kd Resources\Models\Bullet1Tex.jpeg
+map_Gl Resources\Models\BulletGlowMap.png
 Ni 1.00
