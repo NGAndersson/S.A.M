@@ -24,9 +24,9 @@ public:
 	}
 
 private:
-	const wchar_t* m_menu = L"Return to Menu";
-	const wchar_t* m_option1 = L"Resolution";
-	const wchar_t* m_option2 = L"Volume";
+	wstring m_menu = L"Return to Menu";
+	wstring m_option1 = L"Resolution";
+	wstring m_option2 = L"Volume";
 	bool m_keyDown = false;
 	Font m_choices[3];
 

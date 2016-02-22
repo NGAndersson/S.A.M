@@ -62,7 +62,7 @@ void Input::Initialize(HINSTANCE hInstance,HWND& hwnd, int ScreenWidth, int Scre
 
 	m_ScreenHeight = ScreenHeight;
 	m_ScreenWidth = ScreenWidth;
-
+	ReadInputKeyBindings();
 
 }
 
@@ -71,16 +71,16 @@ BulletType Input::CheckBullet()
 	
 	BulletType _returnType = INPUT_DEFAULT_BULLET;
 
-	if (m_keyBoardState[DIK_Q] & 0x80)
+	if (m_keyBoardState[m_keyBindings[WEAPON_1]] & 0x80)
 		return	_returnType = INPUT_BULLET2;
 
-	if (m_keyBoardState[DIK_W] & 0x80)
+	if (m_keyBoardState[m_keyBindings[WEAPON_2]] & 0x80)
 		return	_returnType = INPUT_BULLET3;
 
-	if (m_keyBoardState[DIK_E] & 0x80)
+	if (m_keyBoardState[m_keyBindings[WEAPON_3]] & 0x80)
 		return	_returnType = INPUT_BULLET4;
 
-	if (m_keyBoardState[DIK_R] & 0x80)
+	if (m_keyBoardState[m_keyBindings[WEAPON_4]] & 0x80)
 		return	_returnType = INPUT_BULLET5;
 
 	return _returnType;
@@ -88,16 +88,16 @@ BulletType Input::CheckBullet()
 }
 InputType Input::CheckKeyBoardInput()
 {
-	if (m_keyBoardState[DIK_LEFT] & 0x80)
+	if (m_keyBoardState[m_keyBindings[MOVELEFT]] & 0x80)
 		return INPUT_MOVE_LEFT;
 
-	else if (m_keyBoardState[DIK_RIGHT] & 0x80)
+	else if (m_keyBoardState[m_keyBindings[MOVERIGHT]] & 0x80)
 		return INPUT_MOVE_RIGHT;
 
-	else if (m_keyBoardState[DIK_UP] & 0x80)
+	else if (m_keyBoardState[m_keyBindings[MOVEUP]] & 0x80)
 		return INPUT_MOVE_UP;
 
-	else if (m_keyBoardState[DIK_DOWN] & 0x80)
+	else if (m_keyBoardState[m_keyBindings[MOVEDOWN]] & 0x80)
 		return INPUT_MOVE_DOWN;
 
 	return INPUT_DEFAULT;
@@ -114,16 +114,16 @@ bool Input::CheckReturn()
 
 void Input::CheckKeyBoardInput(InputType* returnput)
 {
-	if (m_keyBoardState[DIK_LEFT] & 0x80)
+	if (m_keyBoardState[m_keyBindings[MOVELEFT]] & 0x80)
 		returnput[0] = INPUT_MOVE_LEFT;
 
-	if (m_keyBoardState[DIK_RIGHT] &0x80)
+	if (m_keyBoardState[m_keyBindings[MOVERIGHT]] &0x80)
 		returnput[1] = INPUT_MOVE_RIGHT;
 
-	if (m_keyBoardState[DIK_UP] & 0x80)
+	if (m_keyBoardState[m_keyBindings[MOVEUP]] & 0x80)
 		returnput[2] = INPUT_MOVE_UP;
 
-	if (m_keyBoardState[DIK_DOWN] & 0x80)
+	if (m_keyBoardState[m_keyBindings[MOVEDOWN]] & 0x80)
 		returnput[3] = INPUT_MOVE_DOWN;
 
 
@@ -174,21 +174,80 @@ bool Input::CheckEsc()
 //	checkAgainst = _current;
 //	return false;
 //}
+void Input::SaveInputKeyBindings()
+{
+	std::fstream _file;
+	_file.open("Options/KeyBindings.txt");
+
+	_file << "### KEYBINDINGS\n" << std::endl;
+	_file << "weapon1|" << m_keyBindings[WEAPON_1]<<std::endl;
+	_file << "weapon2|" << m_keyBindings[WEAPON_2] << std::endl;
+	_file << "weapon3|" << m_keyBindings[WEAPON_3] << std::endl;
+	_file << "weapon4|" << m_keyBindings[WEAPON_4] << std::endl;
+	_file << "moveleft|" << m_keyBindings[MOVELEFT] << std::endl;
+	_file << "moveright|" << m_keyBindings[MOVERIGHT] << std::endl;
+	_file << "movedown|" << m_keyBindings[MOVEDOWN] << std::endl;
+	_file << "moveup|" << m_keyBindings[MOVEUP] << std::endl;
+	_file << "combo|" << m_keyBindings[COMBO] << std::endl;
+	_file.close();
+}
 
 void Input::ReadInputKeyBindings()
 {
 	std::fstream _file;
 	_file.open("Options/KeyBindings.txt");
-
+	std::string _tempLine;
+	char _key[100];
+	char _value[100];
 	if (_file.is_open())
 	{
+		while (getline(_file, _tempLine))
+		{
+			int d;
+
+			std::istringstream _ss(_tempLine);
+			_ss.get(_key, 100, '|');
+			_ss.ignore();
+			if (_key[0] != '#')
+			{
+				_ss.get(_value, 100, '|');
+				if (std::string(_key) == "weapon1")
+					m_keyBindings[WEAPON_1] = atoi(_value);
+
+				else if (std::string(_key) == "weapon2")
+					m_keyBindings[WEAPON_2] = atoi(_value);
+
+				else if (std::string(_key) == "weapon3")
+					m_keyBindings[WEAPON_3] = atoi(_value);
+
+				else if (std::string(_key) == "weapon4")
+					m_keyBindings[WEAPON_4] = atoi(_value);
+
+				else if (std::string(_key) == "moveleft")
+					m_keyBindings[MOVELEFT] = atoi(_value);
+
+				else if (std::string(_key) == "moveright")
+					m_keyBindings[MOVERIGHT] = atoi(_value);
+
+				else if (std::string(_key) == "moveup")
+					m_keyBindings[MOVEUP] = atoi(_value);
+
+				else if (std::string(_key) == "movedown")
+					m_keyBindings[MOVEDOWN] = atoi(_value);
+
+				else if (std::string(_key) == "combo")
+					m_keyBindings[COMBO] = atoi(_value);
+
+			}
+		}
+		_file.close();
 
 	}
 }
 
 bool Input::IsNewButtonPressed(bool& checkAgainst)
 {
-	if (m_keyBoardState[DIK_SPACE] & 0x80)
+	if (m_keyBoardState[m_keyBindings[COMBO]] & 0x80)
 	{
 		if (checkAgainst == true)
 			return false;

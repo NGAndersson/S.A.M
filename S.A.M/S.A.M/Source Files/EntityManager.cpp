@@ -226,6 +226,7 @@ void EntityManager::Render()
 
 void EntityManager::Update(double time)
 {
+
 	CheckCombo();
 
 		//Regular BPM test

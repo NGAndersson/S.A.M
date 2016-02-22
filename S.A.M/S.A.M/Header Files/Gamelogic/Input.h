@@ -7,7 +7,8 @@
 #include <dinput.h>
 #include <fstream>
 #include <sstream>
-
+#include <iostream>
+enum SamKeyBindings {WEAPON_1,WEAPON_2,WEAPON_3,WEAPON_4,MOVELEFT,MOVERIGHT,MOVEUP,MOVEDOWN,COMBO};
 enum InputType
 {
 	INPUT_DEFAULT,
@@ -60,7 +61,8 @@ public:
 	//bool IsNewButtonPressed(BulletType& checkAgainst);
 	bool IsNewButtonPressed(bool& checkAgainst);
 	void ReadInputKeyBindings();
-
+	void SaveInputKeyBindings();
+	
 	//----------------------------Attributes----------------------------------------
 private:
 
@@ -70,7 +72,7 @@ private:
 	IDirectInputDevice8* m_Mouse;
 
 	DIMOUSESTATE m_LastState;
-
+	int m_keyBindings[9];
 	int m_ScreenHeight;
 	int m_ScreenWidth;
 	BYTE m_keyBoardState[256];
