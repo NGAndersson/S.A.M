@@ -72,10 +72,6 @@ void Game::InitGame(Input* input, Display* disp)
 	m_entityManager = new EntityManager;
 	m_entityManager->Initialize(m_soundManager, m_input, m_device, m_deviceContext, m_statsManager);
 
-	//FUN STUFF! REMOVE!
-	//m_soundManager->LoadSound("Resources/wave.mp3", "wave", "music", LOAD_STREAM);
-	//m_soundManager->LoadSound("Resources/Song.mp3", "gangnam", "music", LOAD_STREAM);
-
 	//Init defered buffer and render
 	m_deferredBuffer.Initialize(m_device, WIDTH, HEIGHT);
 	m_deferredRender.InitializeShader(m_device);

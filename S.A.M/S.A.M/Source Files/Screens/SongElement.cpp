@@ -1,11 +1,11 @@
 #include "..\..\Header Files\Screens\SongElement.h"
 
-SongElement::SongElement(std::string filename, ID3D11Device* device, ID3D11DeviceContext* DeviceContext, int ScreenHeight, int ScreenWidth)
+SongElement::SongElement(std::string filename, ID3D11Device* device, ID3D11DeviceContext* DeviceContext, SoundManager* soundManager)
 {
 	m_spriteBatch = std::make_unique<DirectX::SpriteBatch>(DeviceContext);
 	m_font = std::make_unique<DirectX::SpriteFont>(device, L"Resources/moonhouse.spritefont");
-
-
+	m_soundManager = soundManager;
+	std::wstring _filePath;
 	//Load meta-data
 	std::wfstream _file;
 	_file.open("Resources/Songs/"+filename);
@@ -28,9 +28,31 @@ SongElement::SongElement(std::string filename, ID3D11Device* device, ID3D11Devic
 			if (std::wstring(_key) == L"arr")
 				m_arranger = _value;		
 			if (std::wstring(_key) == L"music")
-				m_file = _value;
+				_filePath = _value;
 		}
 	}
+	
+	size_t _fuckoff;
+	wcstombs_s(&_fuckoff, m_file, (size_t)200, _filePath.c_str(), (size_t)200);
+
+	m_soundManager->LoadMusic(m_file);
+	BeatDetector _beatDetector(m_soundManager);
+	_beatDetector.AudioProcess();
+	
+	m_bpm = std::to_wstring(_beatDetector.GetTempo());
+
+	int _lengthMS = m_soundManager->GetLengthMS();
+	int _seconds = _lengthMS / 1000;
+	int _minutes = _seconds / 60;
+	_seconds = _seconds % 60;
+	std::wstring _secString;
+	if (_seconds < 10)
+		_secString = L"0" + std::to_wstring(_seconds);
+	else
+		_secString = std::to_wstring(_seconds);
+
+	m_length = std::to_wstring(_minutes) + L":" + _secString;
+
 	//---------------
 	
 	Microsoft::WRL::ComPtr<ID3D11Resource> _resource;
@@ -43,6 +65,8 @@ SongElement::SongElement(std::string filename, ID3D11Device* device, ID3D11Devic
 	_bg->GetDesc(&_bgDesc);
 
 	m_states = std::make_unique<DirectX::CommonStates>(device);
+
+
 }
 
 SongElement::~SongElement()
