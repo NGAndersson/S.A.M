@@ -130,7 +130,10 @@ void OptionsMenu::Update(double time)
 		switch (m_currentFont)
 		{
 		case RESOLUTION:
-			m_currentRes = m_currentRes - 1 % 4;
+			m_currentRes = (m_currentRes - 1) % 4;
+			if (m_currentRes < 0)
+				m_currentRes = 3;
+			m_keyDown = true;
 		default:
 			break;
 		}
@@ -139,6 +142,9 @@ void OptionsMenu::Update(double time)
 	{
 		switch (m_currentFont)
 		{
+		case RESOLUTION:
+			m_currentRes = (m_currentRes + 1) % 4;
+			m_keyDown = true;
 		default:
 			break;
 		}

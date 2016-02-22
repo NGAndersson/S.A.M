@@ -37,10 +37,11 @@ private:
 	wstring m_keyBindings;
 	wstring m_apply;
 	wstring m_res[4];
+
 	bool m_keyDown = false;
 	Font m_choices[6];
 	SoundManager* m_soundManager;
-	int m_currentFont,m_currentRes;
+	int m_currentFont,m_currentRes,m_currentMVol,m_currentSVol;
 	int m_tempWidth[4], m_tempHeight[4];
 
 
