@@ -13,6 +13,7 @@ Player::Player(SoundManager* SoundManager, int MapWidth, int MapLength,XMFLOAT3 
 
 	XMVECTOR _rotzAxis{ 0,1,0,0 };
 	m_rotation = XMMatrixRotationAxis(_rotzAxis, XM_PI);
+	m_entityBox.Extents = XMFLOAT3(2.5f, 0.0f, 2.5f);
 }
 
 Player::~Player()

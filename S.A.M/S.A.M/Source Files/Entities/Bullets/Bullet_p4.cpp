@@ -27,6 +27,7 @@ Bullet_p4::Bullet_p4(SoundManager * SoundManager, int MapWidth, int MapLength, X
 		m_rotation = XMMatrixRotationAxis(_rotzAxis, XM_PI + 0.3f);
 	}
 	m_light = new Light(XMFLOAT4(Position.x, Position.y, Position.z, 1.0f), XMFLOAT4(Color.x, Color.y, Color.z, 1.0f), XMFLOAT4(10, 1, 0, 0));
+	m_entityBox.Extents = XMFLOAT3(0.5f, 0.0f, 0.5f);
 }
 
 Bullet_p4::~Bullet_p4()

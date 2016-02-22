@@ -22,6 +22,7 @@ Bullet_p2::Bullet_p2(SoundManager * SoundManager, int MapWidth, int MapLength, X
 	}
 	m_health = Health;
 	m_speed = 100;
+	m_entityBox.Extents = XMFLOAT3(0.5f, 0.0f, 1.5f);
 }
 
 Bullet_p2::~Bullet_p2()
