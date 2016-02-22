@@ -97,7 +97,7 @@ void FirePart::Update(ID3D11DeviceContext* deviceContext, float time, float part
 	{
 		if (m_timeToLive[i] <= 0)
 		{
-			m_partPos[i] = XMFLOAT4((((float(rand() % int(m_partOffset * 10000)) / 10000) - ((m_partOffset / 2)))), ((float(rand() % int(m_partOffset * 10000)) / 10000) - ((m_partOffset / 2))), (float(rand() % int(m_partOffset / 2 * 10000)) / 10000), 1.0f);
+			m_partPos[i] = XMFLOAT4((((float(rand() % int(m_partOffset * 10000)) / 10000) - ((m_partOffset / 2)))), ((float(rand() % int(m_partOffset * 10000)) / 10000) - ((m_partOffset / 2))), (float(rand() % int((m_partOffset * 3) / 2 * 10000)) / 10000), 1.0f);
 			if (((m_partPos[i].x * m_partPos[i].x) + (m_partPos[i].y * m_partPos[i].y)) < (m_partOffset / 2))
 			{
 				m_timeToLive[i] = m_partLifeLenght;
@@ -109,7 +109,7 @@ void FirePart::Update(ID3D11DeviceContext* deviceContext, float time, float part
 		}
 		else
 		{
-			float _x = ((float(rand() % 10000) / 9000) * time), _y = ((float(rand() % 10000) / 9000) * time);
+			float _x = ((float(rand() % 10000) / 9500) * time), _y = ((float(rand() % 10000) / 9500) * time);
 			if (m_partPos[i].x < 0 && m_partPos[i].y < 0)
 			{
 				m_partPos[i] = XMFLOAT4(m_partPos[i].x - _x, m_partPos[i].y - _y, m_partPos[i].z - (partSpeed * time), 1.0f);
