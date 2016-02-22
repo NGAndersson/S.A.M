@@ -14,17 +14,17 @@ Bullet_p4::Bullet_p4(SoundManager * SoundManager, int MapWidth, int MapLength, X
 	if (bulletIndex == 0)
 	{
 		m_move = XMFLOAT3(-40, 0, 55);
-		m_rotation = XMMatrixRotationAxis(_rotzAxis, XM_PI * -0.2f);
+		m_rotation = XMMatrixRotationAxis(_rotzAxis, XM_PI - 0.3f);
 	}
 	else if (bulletIndex == 1)
 	{
 		m_move = XMFLOAT3(0, 0, 100);
-		m_rotation = XMMatrixRotationAxis(_rotzAxis, 0.0f);
+		m_rotation = XMMatrixRotationAxis(_rotzAxis, XM_PI);
 	}
 	else if (bulletIndex == 2)
 	{
 		m_move = XMFLOAT3(40, 0, 55);
-		m_rotation = XMMatrixRotationAxis(_rotzAxis, XM_PI * 0.2f);
+		m_rotation = XMMatrixRotationAxis(_rotzAxis, XM_PI + 0.3f);
 	}
 	m_light = new Light(XMFLOAT4(Position.x, Position.y, Position.z, 1.0f), XMFLOAT4(Color.x, Color.y, Color.z, 1.0f), XMFLOAT4(10, 1, 0, 0));
 }

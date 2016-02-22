@@ -93,7 +93,7 @@ void EntityManager::SpawnEntity(HandlerIndex type)
 		break;
 	case(BULLET2) :
 		//tempEntity = new Bullet_p2(m_soundManager, MAPWIDTH, MAPLENGTH, m_player->GetPosition(), XMFLOAT3(1, 1, 1));
-		m_bullet2.push_back(new Bullet_p2(m_soundManager, MAPWIDTH, MAPLENGTH, m_player->GetPosition(), XMFLOAT3(0.3, 0.3, 0.3),1));
+		m_bullet2.push_back(new Bullet_p2(m_soundManager, MAPWIDTH, MAPLENGTH, m_player->GetPosition(), XMFLOAT3(0.3, 0.3, 0.3), 1, m_beatNumber));
 		m_soundManager->PlayOneShotSound("Bullet_Q", 0.5f);
 		break;
 	case(BULLET3) :
@@ -248,6 +248,7 @@ void EntityManager::Update(double time)
 				m_modelHandlers[BULLET4]->beatBoost(true, time, -1, m_currentBPM);
 				m_modelHandlers[BULLET5]->beatBoost(true, time, -1, m_currentBPM);
 				m_modelHandlers[BULLET6]->beatBoost(true, time, -1, m_currentBPM);
+				m_beatNumber += 1;
 			}
 			else
 				m_offsetCount++;
@@ -278,6 +279,7 @@ void EntityManager::Update(double time)
 				m_modelHandlers[BULLET5]->beatBoost(true, time, m_timeSinceLastBeat/1000, 0);
 				m_modelHandlers[BULLET6]->beatBoost(true, time, m_timeSinceLastBeat/1000, 0);
 				m_timeSinceLastBeat = 0;
+				m_beatNumber += 1;
 				EnemyFire();
 				
 			}
