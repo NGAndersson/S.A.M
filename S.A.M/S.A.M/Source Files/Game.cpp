@@ -202,7 +202,7 @@ void Game::CheckInput()
 		case MENU:
 			break;
 		case GAME:
-			m_screenManager->SetCurrentScreenPAUSE();
+			m_screenManager->SetCurrentScreen(PAUSE);
 			break;
 		}
 	}

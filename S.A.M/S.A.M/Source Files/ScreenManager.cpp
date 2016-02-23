@@ -104,6 +104,12 @@ void ScreenManager::Update(double time)
 			m_soundManager->StopMusic();
 			m_current = GAME;
 		}
+		else if (m_input->CheckEsc() && !m_keyDown)
+		{
+			m_keyDown = true;
+			m_soundManager->StopMusic();
+			m_current = MENU;
+		}
 		else if (!m_input->CheckReturn())
 			m_keyDown = false;
 	case EXIT:
