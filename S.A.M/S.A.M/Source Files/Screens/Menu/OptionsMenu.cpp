@@ -10,13 +10,18 @@ OptionsMenu::OptionsMenu(ID3D11Device* Device, ID3D11DeviceContext* DeviceContex
 	_originV.x = 0;
 	_originV.y = 0;
 
-	m_volumeMusic = L"Music Volume: ";// + to_wstring(SoundManager->GetVolume());//fix getvolume in soundmanager
+	for (int i = 0; i < 10; i++)
+	{
+		m_volym[i] = i;
+	}
+
+	m_volumeMusic = L"Music Volume: ";
 	m_choices[MUSICVOLUME].m_position.y = m_screenHeight / 2 - _offsetV.y * 3;
 	m_choices[MUSICVOLUME].m_origin = _originV;
 	m_choices[MUSICVOLUME].m_position.x = m_choices[MUSICVOLUME].m_origin.x;
 	m_choices[MUSICVOLUME].m_color = Colors::White;
 
-	m_volumeShots = L"Shots Volume: ";// + to_wstring(SoundManager->GetVolume());//fix getvolume in soundmanager
+	m_volumeShots = L"Shots Volume: ";
 	m_choices[SHOTSVOLUME].m_position.y = m_screenHeight / 2 - _offsetV.y * 2;
 	m_choices[SHOTSVOLUME].m_origin = _originV;
 	m_choices[SHOTSVOLUME].m_position.x = m_choices[SHOTSVOLUME].m_origin.x;
@@ -83,7 +88,6 @@ OptionsMenu::OptionsMenu(ID3D11Device* Device, ID3D11DeviceContext* DeviceContex
 
 void OptionsMenu::Update(double time)
 {
-
 	switch (m_currentRes)
 	{
 	case 0:
@@ -100,6 +104,20 @@ void OptionsMenu::Update(double time)
 		break;
 	default:
 		break;
+	}
+
+	m_volumeMusic = L"Music Volume: " + to_wstring(m_volym[m_currentMVol]);
+	m_volumeShots = L"Shot Volume: " + to_wstring(m_volym[m_currentSVol]);
+
+	if (m_input->CheckReturn() && !m_keyDown)
+	{
+		if (m_currentFont == MAINMENU)
+		{
+			m_doneOption = true;
+			m_keyDown = true;
+			m_choices[MAINMENU].m_color = Colors::Crimson;
+			m_choices[0].m_color = Colors::White;
+		}
 	}
 
 	InputType _inputReturn;
@@ -121,10 +139,6 @@ void OptionsMenu::Update(double time)
 		m_choices[m_currentFont].m_color = Colors::White;
 		m_keyDown = true;
 	}
-	else if (_inputReturn == INPUT_ENTER && !m_keyDown)
-	{
-		
-	}
 	else if (_inputReturn == INPUT_MOVE_LEFT && !m_keyDown)
 	{
 		switch (m_currentFont)
@@ -134,6 +148,19 @@ void OptionsMenu::Update(double time)
 			if (m_currentRes < 0)
 				m_currentRes = 3;
 			m_keyDown = true;
+			break;
+		case MUSICVOLUME:
+			m_currentMVol = (m_currentMVol - 1) % 10;
+			if (m_currentMVol < 0)
+				m_currentMVol = 9;
+			m_keyDown = true;
+			break;
+		case SHOTSVOLUME:
+			m_currentSVol = (m_currentSVol - 1) % 10;
+			if (m_currentSVol < 0)
+				m_currentSVol = 9;
+			m_keyDown = true;
+			break;
 		default:
 			break;
 		}
@@ -145,6 +172,15 @@ void OptionsMenu::Update(double time)
 		case RESOLUTION:
 			m_currentRes = (m_currentRes + 1) % 4;
 			m_keyDown = true;
+			break;
+		case MUSICVOLUME:
+			m_currentMVol = (m_currentMVol + 1) % 10;
+			m_keyDown = true;
+			break;
+		case SHOTSVOLUME:
+			m_currentSVol = (m_currentSVol + 1) % 10;
+			m_keyDown = true;
+			break;
 		default:
 			break;
 		}

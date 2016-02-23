@@ -13,7 +13,9 @@ class OptionsMenu : public Screen
 public:
 	OptionsMenu() {
 		delete m_choices;
-		
+		delete m_tempWidth;
+		delete m_tempHeight;
+		delete m_volym;
 	}
 
 	~OptionsMenu() {}
@@ -21,13 +23,12 @@ public:
 	void Update(double time);
 	void Render();
 	virtual MenuScreens GetTargetMenu() {
-		switch (m_currentFont)
-		{
-		case 0:
+		if (m_doneOption)
 			return MENU;
-			break;
-		}
+		else
+			return OPTION;
 	}
+	void Reset() { m_doneOption = false; m_keyDown = true; m_currentFont = 0; }
 
 private:
 	wstring m_menu;
@@ -38,11 +39,12 @@ private:
 	wstring m_apply;
 	wstring m_res[4];
 
-	bool m_keyDown = false;
+	bool m_keyDown = false, m_doneOption = false;
 	Font m_choices[6];
 	SoundManager* m_soundManager;
 	int m_currentFont,m_currentRes,m_currentMVol,m_currentSVol;
 	int m_tempWidth[4], m_tempHeight[4];
+	int m_volym[10];
 
 
 };

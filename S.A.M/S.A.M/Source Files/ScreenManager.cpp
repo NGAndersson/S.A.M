@@ -62,31 +62,25 @@ void ScreenManager::Update(double time)
 		else if (!m_input->CheckReturn())
 			m_keyDown = false;
 		break;
-	case 4:
+	case OPTION:
 		//Options
 		m_screenOptions->Update(time);
-		if (m_input->CheckReturn() && !m_keyDown)
-		{
-			m_keyDown = true;
-			m_current = m_screenOptions->GetTargetMenu();
-		}
-		else if (!m_input->CheckReturn())
-			m_keyDown = false;
+		m_current = m_screenOptions->GetTargetMenu();
+		if (m_current == MENU)
+			m_screenOptions->Reset();
 		break;
 	case PAUSE:
 		//Pause
 		m_screenPause->Update(time);
-		if (m_input->CheckReturn() && !m_keyDown)
+		m_keyDown = true;
+		m_current = m_screenPause->GetTargetMenu();
+		if (m_current == MENU)
 		{
-			m_keyDown = true;
-			m_current = m_screenPause->GetTargetMenu();
-			if (m_current == MENU)
-			{
-				m_gameOngoing = false;
-			}
+			m_gameOngoing = false;
 		}
 		else if (!m_input->CheckReturn())
 			m_keyDown = false;
+		
 		break;
 	case ENDSCREEN:
 		//Endscreen

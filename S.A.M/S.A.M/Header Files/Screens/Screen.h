@@ -25,6 +25,8 @@ public:
 	virtual void Update(double time);
 	virtual void Render();
 	virtual MenuScreens GetTargetMenu() { return m_currentTargetMenu; }
+	virtual void SetTargetMenu(MenuScreens menu) { m_currentTargetMenu = menu; }
+	virtual void Reset(){}
 protected:
 	struct Font
 	{
@@ -49,6 +51,7 @@ protected:
 	ComPtr<ID3D11ShaderResourceView> m_backRound;
 	unique_ptr<SpriteFont> m_font;
 	SimpleMath::Vector2 m_fontPosition;
+
 };
 
 #endif
