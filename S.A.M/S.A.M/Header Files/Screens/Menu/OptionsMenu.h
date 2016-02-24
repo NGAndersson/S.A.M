@@ -39,9 +39,10 @@ private:
 	wstring m_volumeShots;
 	wstring m_keyBin;
 	wstring m_apply;
+	wstring m_unBound;
 	//Resolution
 	wstring m_res[4];
-	bool m_keyDown = false, m_doneOption = false;
+	bool m_keyDown = false, m_doneOption = false, m_unBoundKey = false;
 	//Choices for options
 	Font m_choices[6];
 	SoundManager* m_soundManager;

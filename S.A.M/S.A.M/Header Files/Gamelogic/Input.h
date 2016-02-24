@@ -62,6 +62,7 @@ public:
 		return L"Faulty Key";
 	}
 
+	int GetKeyBiningArray(int i) { return m_keyBindings[i]; }
 	void SetKeyBindings(int newKeyBindings[9])
 	{
 		for (int i = 0; i < 9;i++)

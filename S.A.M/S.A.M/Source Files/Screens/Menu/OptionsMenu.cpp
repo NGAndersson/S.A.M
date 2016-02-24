@@ -60,20 +60,25 @@ OptionsMenu::OptionsMenu(ID3D11Device* Device, ID3D11DeviceContext* DeviceContex
 	m_tempWidth[2] = 793;
 	m_tempWidth[3] = 1058;
 
+	m_unBound = L"Press a Key";
+
+	for (int i = 0; i < 9; i++)
+		m_keyBindings[i] = m_input->GetKeyBiningArray(i);
+
 	m_res[0] = to_wstring(m_tempHeight[0]) + L" x " + to_wstring(m_tempWidth[0]);
 	m_res[1] = to_wstring(m_tempHeight[1]) + L" x " + to_wstring(m_tempWidth[1]);
 	m_res[2] = to_wstring(m_tempHeight[2]) + L" x " + to_wstring(m_tempWidth[2]);
 	m_res[3] = to_wstring(m_tempHeight[3]) + L" x " + to_wstring(m_tempWidth[3]);
 	//Keybindings
-	m_keys[WEAPON_1] = L"Weapon 1:"+m_input->GetKeyBinding(WEAPON_1);
-	m_keys[WEAPON_2] = L"Weapon 2:" + m_input->GetKeyBinding(WEAPON_2);
-	m_keys[WEAPON_3] = L"Weapon 3:" + m_input->GetKeyBinding(WEAPON_3);
-	m_keys[WEAPON_4] = L"Weapon 4:" + m_input->GetKeyBinding(WEAPON_4);
-	m_keys[MOVELEFT] = L"Move Left:" + m_input->GetKeyBinding(MOVELEFT);
-	m_keys[MOVERIGHT] = L"Move Right:" + m_input->GetKeyBinding(MOVERIGHT);
-	m_keys[MOVEDOWN] = L"Move Down:" + m_input->GetKeyBinding(MOVEDOWN);
-	m_keys[MOVEUP] = L"Move up:" + m_input->GetKeyBinding(MOVEUP);
-	m_keys[COMBO] = L"Combo key:" + m_input->GetKeyBinding(COMBO);
+	m_keys[WEAPON_1] = L"Weapon 1:"+m_input->GetKeyBinding(     m_keyBindings[WEAPON_1]);
+	m_keys[WEAPON_2] = L"Weapon 2:" + m_input->GetKeyBinding(   m_keyBindings[WEAPON_2]);
+	m_keys[WEAPON_3] = L"Weapon 3:" + m_input->GetKeyBinding(   m_keyBindings[WEAPON_3]);
+	m_keys[WEAPON_4] = L"Weapon 4:" + m_input->GetKeyBinding(   m_keyBindings[WEAPON_4]);
+	m_keys[MOVELEFT] = L"Move Left:" + m_input->GetKeyBinding(  m_keyBindings[MOVELEFT]);
+	m_keys[MOVERIGHT] = L"Move Right:" + m_input->GetKeyBinding(m_keyBindings[MOVERIGHT]);
+	m_keys[MOVEDOWN] = L"Move Down:" + m_input->GetKeyBinding(  m_keyBindings[MOVEDOWN]);
+	m_keys[MOVEUP] = L"Move up:" + m_input->GetKeyBinding(      m_keyBindings[MOVEUP]);
+	m_keys[COMBO] = L"Combo key:" + m_input->GetKeyBinding(     m_keyBindings[COMBO]);
 
 	SimpleMath::Vector2 _offset(60.0, 30.0);
 	SimpleMath::Vector2 _origin(0.0, 30.0);
@@ -143,6 +148,7 @@ OptionsMenu::OptionsMenu(ID3D11Device* Device, ID3D11DeviceContext* DeviceContex
 	m_currentFont = 0;
 	m_soundManager = SoundManager;
 	m_ifKey = NOT_KEY;
+
 }
 
 void OptionsMenu::Update(double time)
@@ -188,10 +194,8 @@ void OptionsMenu::Update(double time)
 				m_ifKey = IN_KEY;
 			}
 		}
-		
-		if (m_currentFont == KEYBINDING && !m_keyDown)
+		else if (m_ifKey == IN_KEY && m_currentFont == KEYBINDING && !m_keyDown)
 		{
-
 			switch (m_currentKeyBinding)//Check what key the player want to unbind
 			{
 			case WEAPON_1:
@@ -201,6 +205,8 @@ void OptionsMenu::Update(double time)
 			default:
 				break;
 			}
+			m_keyDown = true;
+			m_unBoundKey = true;
 		}
 	}
 
@@ -218,7 +224,7 @@ void OptionsMenu::Update(double time)
 		break;
 		case IN_KEY:
 			m_keyChoice[m_currentKeyBinding].m_color = Colors::Crimson;
-			m_currentKeyBinding=(m_currentKeyBinding + 4) % 10;
+			m_currentKeyBinding=(m_currentKeyBinding + 4) % 9;
 			m_keyChoice[m_currentKeyBinding].m_color = Colors::White;
 			m_keyDown = true;
 			break;
@@ -241,7 +247,7 @@ void OptionsMenu::Update(double time)
 			break;
 		case IN_KEY:
 			m_keyChoice[m_currentKeyBinding].m_color = Colors::Crimson;
-			m_currentKeyBinding=(m_currentKeyBinding - 4) % 10;
+			m_currentKeyBinding=(m_currentKeyBinding - 4) % 9;
 			if (m_currentKeyBinding < 0)
 				m_currentKeyBinding + 4;
 			m_keyChoice[m_currentKeyBinding].m_color = Colors::White;
@@ -275,12 +281,15 @@ void OptionsMenu::Update(double time)
 			m_keyDown = true;
 			break;
 		case KEYBINDING:
-			m_keyChoice[m_currentKeyBinding].m_color = Colors::Crimson;
-			m_currentKeyBinding = (m_currentKeyBinding - 1) % 10;
-			if (m_currentKeyBinding < 0)
-				m_currentKeyBinding = 9;
-			m_keyChoice[m_currentKeyBinding].m_color = Colors::White;
-			m_keyDown = true;
+			if (m_ifKey == IN_KEY)
+			{
+				m_keyChoice[m_currentKeyBinding].m_color = Colors::Crimson;
+				m_currentKeyBinding = (m_currentKeyBinding - 1) % 9;
+				if (m_currentKeyBinding < 0)
+					m_currentKeyBinding = 8;
+				m_keyChoice[m_currentKeyBinding].m_color = Colors::White;
+				m_keyDown = true;
+			}
 			break;
 		default:
 			break;
@@ -303,10 +312,14 @@ void OptionsMenu::Update(double time)
 			m_keyDown = true;
 			break;
 		case KEYBINDING:
-			m_keyChoice[m_currentKeyBinding].m_color = Colors::Crimson;
-			m_currentKeyBinding = (m_currentKeyBinding + 1) % 10;
-			m_keyChoice[m_currentKeyBinding].m_color = Colors::White;
-			m_keyDown = true;
+			if (m_ifKey == IN_KEY)
+			{
+				m_keyChoice[m_currentKeyBinding].m_color = Colors::Crimson;
+				m_currentKeyBinding = (m_currentKeyBinding + 1) % 9;
+				m_keyChoice[m_currentKeyBinding].m_color = Colors::White;
+				m_keyDown = true;
+				
+			}
 			break;
 		default:
 			break;
@@ -367,6 +380,9 @@ void OptionsMenu::Render()
 	m_font->DrawString(m_spriteBatch.get(), m_resolution.c_str(), m_choices[RESOLUTION].m_position, m_choices[RESOLUTION].m_color, 0.f, m_choices[RESOLUTION].m_origin, _scale);
 	m_font->DrawString(m_spriteBatch.get(), m_keyBin.c_str(), m_choices[KEYBINDING].m_position, m_choices[KEYBINDING].m_color, 0.f, m_choices[KEYBINDING].m_origin,_scale);
 	//KEYBINDINGS BIT
+	if (m_unBoundKey == true)
+		m_font->DrawString(m_spriteBatch.get(), m_unBound.c_str(), m_keyChoice[m_currentKeyBinding].m_position, m_keyChoice[m_currentKeyBinding].m_color, 0.0f, m_keyChoice[m_currentKeyBinding].m_origin, _scaleKeys);
+	
 	m_font->DrawString(m_spriteBatch.get(), m_keys[WEAPON_1].c_str(), m_keyChoice[WEAPON_1].m_position, m_keyChoice[WEAPON_1].m_color, 0.0f, m_keyChoice[WEAPON_1].m_origin, _scaleKeys);
 	m_font->DrawString(m_spriteBatch.get(), m_keys[WEAPON_2].c_str(), m_keyChoice[WEAPON_2].m_position, m_keyChoice[WEAPON_2].m_color, 0.0f, m_keyChoice[WEAPON_2].m_origin, _scaleKeys);
 	m_font->DrawString(m_spriteBatch.get(), m_keys[WEAPON_3].c_str(), m_keyChoice[WEAPON_3].m_position, m_keyChoice[WEAPON_3].m_color, 0.0f, m_keyChoice[WEAPON_3].m_origin, _scaleKeys);

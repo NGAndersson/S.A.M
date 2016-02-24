@@ -185,7 +185,6 @@ InputType Input::CheckKeyBoardInput()
 		return INPUT_MOVE_DOWN;
 
 	return INPUT_DEFAULT;
-
 }
 
 bool Input::CheckReturn()
