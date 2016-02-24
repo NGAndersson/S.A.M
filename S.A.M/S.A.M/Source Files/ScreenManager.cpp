@@ -90,7 +90,6 @@ void ScreenManager::Update(double time)
 		if (m_input->CheckReturn() && !m_keyDown)
 		{
 			m_keyDown = true;
-			m_current = m_endScreen->GetTargetMenu();
 		}
 		else if (!m_input->CheckReturn())
 			m_keyDown = false;
@@ -105,7 +104,7 @@ void ScreenManager::Update(double time)
 			m_soundManager->StopMusic();
 			m_keyDown = true;
 			m_current = HIGHSCORE;
-			m_screenHighScore = new HighScoreMenu(m_device, m_deviceContext, m_screenHeight, m_screenWidth, m_input, m_stats, m_songSelect->GetScoreFile()); //Make new song-specific highscore screen
+			m_screenHighScore = new HighScoreMenu(m_device, m_deviceContext, m_screenHeight, m_screenWidth, m_input, m_stats); //Make new song-specific highscore screen
 		}
 		else if (m_input->CheckReturn() && !m_keyDown)		//Continue to GAME when pressing enter
 		{

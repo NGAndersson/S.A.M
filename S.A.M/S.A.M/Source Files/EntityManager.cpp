@@ -478,9 +478,6 @@ void EntityManager::InitMusic(const std::string &filename)
 			else if (std::string(_key) == "bulletR")
 				m_soundManager->LoadSound(_value, _value, "Laser_R", LOAD_MEMORY);
 
-			else if (std::string(_key) == "score")
-				m_statsManager->LoadScore(_value);
-
 			else if (std::string(_key) == "BeatPerShot1")
 				m_beatPerShot1 = atoi(_value);
 			else if (std::string(_key) == "BeatPerShot2")

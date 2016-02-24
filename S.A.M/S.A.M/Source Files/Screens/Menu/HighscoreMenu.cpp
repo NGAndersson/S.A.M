@@ -1,10 +1,9 @@
 #include "../../../Header Files/Screens/Menu/HighscoreMenu.h" 
 
-HighScoreMenu::HighScoreMenu(ID3D11Device* Device, ID3D11DeviceContext* DeviceContext, int ScreenHeight, int ScreenWidth, Input* input, Stats* stats, std::string scorepath) : Screen(Device, DeviceContext, ScreenHeight, ScreenWidth, input)
+HighScoreMenu::HighScoreMenu(ID3D11Device* Device, ID3D11DeviceContext* DeviceContext, int ScreenHeight, int ScreenWidth, Input* input, Stats* stats) : Screen(Device, DeviceContext, ScreenHeight, ScreenWidth, input)
 {
 	m_stats = stats;
-	m_scorePath = scorepath;
-	m_stats->LoadScore(scorepath);
+	m_stats->LoadScore();
 
 	m_highscore = m_stats->GetHighScores();	//receives 10
 
@@ -24,12 +23,12 @@ void HighScoreMenu::Render()
 	//Highscore list
 	for (int i = 0; i < 10; i++)
 	{
-		DirectX::XMVECTOR _nameOrigin = m_font->MeasureString(wstring(m_highscore[i].first.begin(), m_highscore[i].first.end()).c_str());
+		DirectX::XMVECTOR _nameOrigin = m_font->MeasureString(m_highscore[i].first.c_str());
 		_nameOrigin = DirectX::XMVectorSetIntY(_nameOrigin, 0);
 		
 		m_font->DrawString(
 			m_spriteBatch.get(),
-			wstring(m_highscore[i].first.begin(), m_highscore[i].first.end()).c_str(),
+			m_highscore[i].first.c_str(),
 			SimpleMath::Vector2(m_screenWidth / 2, m_screenHeight / 4 + i * m_screenHeight / 20),
 			Colors::Yellow,
 			0.f,

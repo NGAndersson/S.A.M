@@ -25,9 +25,8 @@ SongSelect::SongSelect(ID3D11Device* Device, ID3D11DeviceContext* DeviceContext,
 {
 	m_font = make_unique<SpriteFont>(Device, L"Resources/moonhouse.spritefont");
 	
-	//Set soundmanager
 	m_soundManager = soundManager;
-
+	m_stats = stats;
 	m_input = input;
 	m_screenHeight = ScreenHeight;
 	m_screenWidth = ScreenWidth;
@@ -108,6 +107,7 @@ void SongSelect::Update(double time)
 		m_visibleElements[i + 2] = m_songElements[_visibleIndex];
 	}
 
+	//Input
 	static bool _keyDown = false;
 	InputType _keyPressed = m_input->CheckKeyBoardInput();
 	switch(_keyPressed) {
@@ -137,8 +137,16 @@ void SongSelect::Update(double time)
 		m_soundManager->LoadMusic(m_songElements[m_selection]->GetFile());
 		m_soundManager->PlayMusic(0.5f);
 		break;
+	case (INPUT_MOVE_LEFT) :
+		m_stats->SetFile(m_songElements[m_selection]->GetScoreFile());
+		break;
 	default:
 		_keyDown = false;
+	}
+
+	if (m_input->CheckReturn()) {
+		m_stats->SetFile(m_songElements[m_selection]->GetScoreFile());
+		m_stats->LoadScore();
 	}
 
 	if (_movingUp == true)	//Selection is moving down, so choices are moving up

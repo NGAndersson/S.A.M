@@ -25,6 +25,7 @@ private:
 
 	SoundManager* m_soundManager;
 	Input* m_input;
+	Stats* m_stats;
 
 	int m_screenHeight, m_screenWidth;
 	
