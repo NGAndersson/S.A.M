@@ -34,7 +34,7 @@ private:
 	const wchar_t* m_start = L"StartGame";
 	const wchar_t* m_options = L"Options";
 	const wchar_t* m_highScore = L"HighScore";
-	const wchar_t* m_exit = L"Quit";
+	const wchar_t* m_exit = L"Quit to Desktop";
 	bool m_keyDown = false;
 	Font m_choices[4];
 

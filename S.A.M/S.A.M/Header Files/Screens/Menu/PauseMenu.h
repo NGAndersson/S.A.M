@@ -35,7 +35,7 @@ private:
 	const wstring m_resume = L"Resume";
 	const wstring m_menu = L"Main menu";
 	const wstring m_options = L"Options";
-	const wstring m_exit = L"Quit";
+	const wstring m_exit = L"Quit to Desktop";
 	bool m_keyDown = false;
 	Font m_choices[4];
 	int m_currentFont;
