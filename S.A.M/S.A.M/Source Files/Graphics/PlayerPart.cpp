@@ -73,6 +73,18 @@ bool PlayerPart::CreateBuffer(ID3D11Device* device, ID3D11DeviceContext* deviceC
 	//skapar constant buffer
 	device->CreateBuffer(&_rocketBufferDesc, NULL, &m_instancePartBuffer);
 
+	D3D11_BUFFER_DESC _lightShiftBufferDesc;
+	ZeroMemory(&_lightShiftBufferDesc, sizeof(D3D11_BUFFER_DESC));
+
+	_lightShiftBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
+	_lightShiftBufferDesc.ByteWidth = sizeof(XMFLOAT4);
+	_lightShiftBufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+	_lightShiftBufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+	_lightShiftBufferDesc.MiscFlags = 0;
+
+	//skapar constant buffer
+	device->CreateBuffer(&_lightShiftBufferDesc, NULL, &m_lightShiftPartBuffer);
+
 	const wchar_t* _name = texName.c_str();
 
 	CreateWICTextureFromFile(device, deviceContext, _name, nullptr, &m_partTex);
@@ -171,7 +183,7 @@ void PlayerPart::AddPartSys(std::vector<Entity*> entity, XMFLOAT4 addPos)
 
 void PlayerPart::SetBuffer(ID3D11DeviceContext* deviceContext)
 {
-	D3D11_MAPPED_SUBRESOURCE _mappedResource;
+	D3D11_MAPPED_SUBRESOURCE _mappedResource, _lightShiftMapRes;
 
 	m_rocketPos[0] = XMFLOAT4(-1.7, 0, -1, 0);
 	m_rocketPos[1] = XMFLOAT4(1.7, 0, -1, 0);
@@ -184,4 +196,12 @@ void PlayerPart::SetBuffer(ID3D11DeviceContext* deviceContext)
 	deviceContext->Unmap(m_instancePartBuffer, 0);
 
 	deviceContext->VSSetConstantBuffers(1, 1, &m_instancePartBuffer);
+
+	hr = deviceContext->Map(m_lightShiftPartBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &_lightShiftMapRes);
+	m_lightShift = XMFLOAT4(1, 1, 1, 1);
+	memcpy(_lightShiftMapRes.pData, &m_lightShift, sizeof(XMFLOAT4));
+
+	deviceContext->Unmap(m_lightShiftPartBuffer, 0);
+
+	deviceContext->PSSetConstantBuffers(3, 1, &m_lightShiftPartBuffer);
 }
