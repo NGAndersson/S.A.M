@@ -25,13 +25,8 @@ PauseMenu::PauseMenu(ID3D11Device* Device, ID3D11DeviceContext* DeviceContext, i
 
 	m_choices[3].m_position.y = m_screenHeight / 2 + _offsetV.y;
 	m_choices[3].m_position.x = m_screenWidth / 2;
-	m_choices[3].m_origin = m_font->MeasureString(m_highScore.c_str()) / 2.f;
+	m_choices[3].m_origin = m_font->MeasureString(m_exit.c_str()) / 2.f;
 	m_choices[3].m_color = Colors::Crimson;
-
-	m_choices[4].m_position.y = m_screenHeight / 2 + _offsetV.y * 2;
-	m_choices[4].m_position.x = m_screenWidth / 2;
-	m_choices[4].m_origin = m_font->MeasureString(m_exit.c_str()) / 2.f;
-	m_choices[4].m_color = Colors::Crimson;
 	m_currentFont = 0;
 }
 
@@ -45,16 +40,16 @@ void PauseMenu::Update(double time)
 	if (_inputReturn == INPUT_MOVE_DOWN&&!m_keyDown)
 	{
 		m_choices[m_currentFont].m_color = Colors::Crimson;
-		m_currentFont = (m_currentFont + 1) % 5;
+		m_currentFont = (m_currentFont + 1) % 4;
 		m_choices[m_currentFont].m_color = Colors::White;
 		m_keyDown = true;
 	}
 	else if (_inputReturn == INPUT_MOVE_UP&&!m_keyDown)
 	{
 		m_choices[m_currentFont].m_color = Colors::Crimson;
-		m_currentFont = (m_currentFont - 1) % 5;
+		m_currentFont = (m_currentFont - 1) % 4;
 		if (m_currentFont == -1)
-			m_currentFont = 4;
+			m_currentFont = 3;
 
 		m_choices[m_currentFont].m_color = Colors::White;
 		m_keyDown = true;
@@ -79,9 +74,7 @@ void PauseMenu::Render()
 
 	m_font->DrawString(m_spriteBatch.get(), m_options.c_str(), m_choices[2].m_position, m_choices[2].m_color, 0.f, m_choices[2].m_origin);
 
-	m_font->DrawString(m_spriteBatch.get(), m_highScore.c_str(), m_choices[3].m_position, m_choices[3].m_color, 0.f, m_choices[3].m_origin);
-
-	m_font->DrawString(m_spriteBatch.get(), m_exit.c_str(), m_choices[4].m_position, m_choices[4].m_color, 0.f, m_choices[4].m_origin);
+	m_font->DrawString(m_spriteBatch.get(), m_exit.c_str(), m_choices[3].m_position, m_choices[3].m_color, 0.f, m_choices[3].m_origin);
 
 	m_spriteBatch->End();
 }

@@ -51,6 +51,9 @@ private:
 	//input
 	Input* m_input;
 
+	ID3D11Device* m_device;
+	ID3D11DeviceContext* m_deviceContext;
+	int m_screenHeight, m_screenWidth;
 };
 
 #endif

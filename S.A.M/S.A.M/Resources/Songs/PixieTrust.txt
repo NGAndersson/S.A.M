@@ -9,7 +9,7 @@ arr=Group 3
 music=Resources/Sound/PixieTrust.mp3
 
 #### Scorefile
-score=PixieTrust.txt
+score=score/PixieTrust.txt
 
 #### Beginning offset
 offset=44

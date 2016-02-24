@@ -8,7 +8,7 @@ arr=Group 3
 music=Resources/Sound/Ignition.mp3
 
 #### Scorefile
-score=Ignition.txt
+score=score/Ignition.txt
 
 #### Beginning offset
 offset=0

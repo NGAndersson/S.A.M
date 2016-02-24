@@ -17,6 +17,7 @@ public:
 	void Update(double time);
 	void Render();
 	string GetSelectedSongFile() { return string(m_songElements[m_selection]->GetDataFile()); }
+	string GetScoreFile() { return m_songElements[m_selection]->GetScoreFile(); }
 private:
 	vector<SongElement*> m_songElements;
 	SongElement* m_visibleElements[5];
