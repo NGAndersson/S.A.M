@@ -91,7 +91,7 @@ bool Stats::LoadScore(std::string filename)
 		i++;
 	}
 
-	for (i = 0; i < 10 && _inData[i].second > 0; i++)
+	for (i = 0; i < 10; i++)
 		m_highScores[i] = _inData[i];
 
 	_file.close();
