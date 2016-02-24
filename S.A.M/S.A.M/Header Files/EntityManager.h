@@ -9,6 +9,7 @@
 #include "Graphics\FirePart.h"
 #include "Graphics\SpacePart.h"
 #include "Graphics\PlayerPart.h"
+//#include "Graphics\ExplosionPart.h"
 #include "Graphics\LightHandler.h"
 #include "Gamelogic\Input.h"
 #include "Audio\BeatDetector.h"
@@ -73,6 +74,7 @@ private:
 	std::vector<Entity*> m_enemy2;
 	std::vector<Entity*> m_enemy3;
 	std::vector<Entity*> m_enemy4;
+	std::vector<ExplosionPart*> m_explosion;
 	Entity* m_player;
 	FirePart* m_rocketPartSys;
 	PlayerPart* m_playerPartSys;
