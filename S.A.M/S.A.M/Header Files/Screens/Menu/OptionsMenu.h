@@ -6,7 +6,7 @@
 #include "../../Audio/SoundManager.h"
 
 enum Options { MUSICVOLUME, SHOTSVOLUME, RESOLUTION, KEYBINDING, APPLY, MAINMENU };
-
+enum InKey {NOT_KEY,IN_KEY};
 class OptionsMenu : public Screen
 {
 
@@ -31,20 +31,29 @@ public:
 	void Reset() { m_doneOption = false; m_keyDown = true; m_currentFont = 0; }
 
 private:
+	void setUpdateKeys();
+	void saveSettings();
 	wstring m_menu;
 	wstring m_resolution;
 	wstring m_volumeMusic;
 	wstring m_volumeShots;
-	wstring m_keyBindings;
+	wstring m_keyBin;
 	wstring m_apply;
+	//Resolution
 	wstring m_res[4];
-
 	bool m_keyDown = false, m_doneOption = false;
+	//Choices for options
 	Font m_choices[6];
 	SoundManager* m_soundManager;
-	int m_currentFont,m_currentRes,m_currentMVol,m_currentSVol;
+	//ints to check what shit we are on
+	int m_currentFont,m_currentRes,m_currentMVol,m_currentSVol,m_currentKeyBinding;
 	int m_tempWidth[4], m_tempHeight[4];
 	int m_volym[10];
+	//Shit for Keybindings
+	wstring m_keys[9];
+	Font m_keyChoice[9];
+	int m_keyBindings[9];
+	InKey m_ifKey;
 
 
 };

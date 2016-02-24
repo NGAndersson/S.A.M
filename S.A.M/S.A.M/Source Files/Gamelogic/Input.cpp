@@ -15,13 +15,6 @@ Input::~Input()
 		m_Keyboard = 0;
 	}
 
-	if (m_Mouse)
-	{
-		m_Mouse->Unacquire();
-		m_Mouse->Release();
-		m_Mouse = 0;
-	}
-
 	if (m_DirectInput)
 	{
 		m_DirectInput->Release();
@@ -36,10 +29,6 @@ void Input::Update()
 
 	ZeroMemory(&m_keyBoardState, sizeof(m_keyBoardState));
 	m_Keyboard->GetDeviceState(sizeof(m_keyBoardState), (LPVOID)&m_keyBoardState);
-
-	m_Mouse->Acquire();
-	m_Mouse->GetDeviceState(sizeof(DIMOUSESTATE), &m_CurrMouse);
-
 }
 
 void Input::Initialize(HINSTANCE hInstance,HWND& hwnd, int ScreenWidth, int ScreenHeight)
@@ -49,13 +38,9 @@ void Input::Initialize(HINSTANCE hInstance,HWND& hwnd, int ScreenWidth, int Scre
 	_hr = DirectInput8Create(hInstance, DIRECTINPUT_VERSION, IID_IDirectInput8, (void**)&m_DirectInput, NULL);
 	//Keyboard
 	_hr = m_DirectInput->CreateDevice(GUID_SysKeyboard, &m_Keyboard,NULL);
-	//mouse
-	_hr = m_DirectInput->CreateDevice(GUID_SysMouse, &m_Mouse, NULL);
 	//Setting the input data format for the keyboard as well as the mouse
 	_hr = m_Keyboard->SetDataFormat(&c_dfDIKeyboard);
 	_hr = m_Keyboard->SetCooperativeLevel(hwnd, DISCL_FOREGROUND | DISCL_NONEXCLUSIVE);
-	_hr = m_Mouse->SetDataFormat(&c_dfDIMouse);
-	_hr = m_Mouse->SetCooperativeLevel(hwnd, DISCL_NONEXCLUSIVE | DISCL_NOWINKEY | DISCL_FOREGROUND);
 
 
 	m_Hwnd = hwnd;
@@ -64,8 +49,107 @@ void Input::Initialize(HINSTANCE hInstance,HWND& hwnd, int ScreenWidth, int Scre
 	m_ScreenWidth = ScreenWidth;
 	ReadInputKeyBindings();
 
+	PairKeys();
 }
 
+void Input::PairKeys()
+{
+	m_dikToString[0].first = DIK_1;
+	m_dikToString[0].second = to_wstring(1);
+	m_dikToString[1].first = DIK_2;
+	m_dikToString[1].second = to_wstring(2);
+	m_dikToString[2].first = DIK_3;
+	m_dikToString[2].second = to_wstring(3);
+	m_dikToString[3].first = DIK_4;
+	m_dikToString[3].second = to_wstring(4);
+	m_dikToString[4].first = DIK_5;
+	m_dikToString[4].second = to_wstring(5);
+	m_dikToString[5].first = DIK_6;
+	m_dikToString[5].second = to_wstring(6);
+	m_dikToString[6].first = DIK_7;
+	m_dikToString[6].second = to_wstring(7);
+	m_dikToString[7].first = DIK_8;
+	m_dikToString[7].second = to_wstring(8);
+	m_dikToString[8].first = DIK_9;
+	m_dikToString[8].second = to_wstring(9);
+	m_dikToString[9].first = DIK_0;
+	m_dikToString[9].second = to_wstring(0);
+
+	m_dikToString[10].first = DIK_Q;
+	m_dikToString[10].second = L"Q";
+	m_dikToString[11].first = DIK_W;
+	m_dikToString[11].second = L"W";
+	m_dikToString[12].first = DIK_E;
+	m_dikToString[12].second = L"E";
+	m_dikToString[13].first = DIK_R;
+	m_dikToString[13].second = L"R";
+	m_dikToString[14].first = DIK_T;
+	m_dikToString[14].second = L"T";
+	m_dikToString[15].first = DIK_Y;
+	m_dikToString[15].second = L"Y";
+	m_dikToString[16].first = DIK_U;
+	m_dikToString[16].second = L"U";
+	m_dikToString[17].first = DIK_I;
+	m_dikToString[17].second = L"I";
+	m_dikToString[18].first = DIK_O;
+	m_dikToString[18].second = L"O";
+	m_dikToString[19].first = DIK_P;
+	m_dikToString[19].second = L"P";
+	m_dikToString[20].first = DIK_A;
+	m_dikToString[20].second = L"A";
+	m_dikToString[21].first = DIK_S;
+	m_dikToString[21].second = L"S";
+	m_dikToString[22].first = DIK_D;
+	m_dikToString[22].second = L"D";
+	m_dikToString[23].first = DIK_F;
+	m_dikToString[23].second = L"F";
+	m_dikToString[24].first = DIK_G;
+	m_dikToString[24].second = L"G";
+	m_dikToString[25].first = DIK_H;
+	m_dikToString[25].second = L"H";
+	m_dikToString[26].first = DIK_J;
+	m_dikToString[26].second = L"J";
+	m_dikToString[27].first = DIK_K;
+	m_dikToString[27].second = L"K";
+	m_dikToString[28].first = DIK_L;
+	m_dikToString[28].second = L"L";
+	m_dikToString[29].second = DIK_Z;
+	m_dikToString[29].second = L"Z";
+	m_dikToString[30].first = DIK_X;
+	m_dikToString[30].second = L"X";
+	m_dikToString[31].first = DIK_C;
+	m_dikToString[31].second = L"C";
+	m_dikToString[32].first = DIK_V;
+	m_dikToString[32].second = L"V";
+	m_dikToString[33].first = DIK_B;
+	m_dikToString[33].second = L"B";
+	m_dikToString[34].first = DIK_N;
+	m_dikToString[34].second = L"N";
+	m_dikToString[35].first = DIK_M;
+	m_dikToString[35].second = L"M";
+
+	m_dikToString[36].first = DIK_NUMPAD1;
+	m_dikToString[36].second = L"Numpad ";
+	m_dikToString[37].first = DIK_NUMPAD2;
+	m_dikToString[37].second = L"Numpad ";
+	m_dikToString[38].first = DIK_NUMPAD3;
+	m_dikToString[38].second = L"Numpad ";
+	m_dikToString[39].first = DIK_NUMPAD4;
+	m_dikToString[39].second = L"Numpad ";
+	m_dikToString[40].first = DIK_NUMPAD5;
+	m_dikToString[40].second = L"Numpad ";
+	m_dikToString[41].first = DIK_NUMPAD6;
+	m_dikToString[41].second = L"Numpad ";
+	m_dikToString[42].first = DIK_NUMPAD7;
+	m_dikToString[42].second = L"Numpad ";
+	m_dikToString[43].first = DIK_NUMPAD8;
+	m_dikToString[43].second = L"Numpad ";
+	m_dikToString[44].first = DIK_NUMPAD9;
+	m_dikToString[44].second = L"Numpad ";
+	m_dikToString[45].first = DIK_NUMPAD0;
+	m_dikToString[45].second = L"Numpad ";
+	
+}
 BulletType Input::CheckBullet()
 {
 	
@@ -127,27 +211,6 @@ void Input::CheckKeyBoardInput(InputType* returnput)
 		returnput[3] = INPUT_MOVE_DOWN;
 
 
-}
-
-MouseClicked Input::CheckMouseInput()
-{
-
-	MouseClicked _ReturnType;
-	_ReturnType.MouseAct = INPUT_DEFAULT;
-
-	POINT _p;
-	GetCursorPos(&_p);
-	ScreenToClient(m_Hwnd, &_p);
-
-	if (m_CurrMouse.rgbButtons[0] & 0x80)
-	{
-		_ReturnType.MouseAct = INPUT_MOUSE_LK;
-		_ReturnType.Mouse_Position_X = _p.x;
-		_ReturnType.Mouse_Position_Y = _p.y;
-
-	}
-
-	return _ReturnType;
 }
 
 bool Input::CheckEsc()
