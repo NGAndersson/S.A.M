@@ -21,6 +21,9 @@
 #include "Entities\Bullets\Bullet_e.h"
 #include "Entities\Enemies\Enemy.h"
 #include "Entities\Enemies\Enemy_1.h"
+#include "Entities/Enemies/Enemy_2.h"
+#include "Entities/Enemies/Enemy_3.h"
+#include "Entities/Enemies/Enemy_4.h"
 #include "Graphics\ShaderHandler.h"
 #include <random>
 #include "Collision.h"
@@ -79,10 +82,10 @@ private:
 	std::vector<std::pair<int, std::vector<XMFLOAT3>>> m_enemy2MovPatterns;
 	std::vector<std::pair<int, std::vector<XMFLOAT3>>> m_enemy3MovPatterns;
 	std::vector<std::pair<int, std::vector<XMFLOAT3>>> m_enemy4MovPatterns;
-	int m_beatPerShot1 = 3;
-	int m_beatPerShot2 = 3;
-	int m_beatPerShot3 = 3;
-	int m_beatPerShot4 = 3;
+	int m_beatPerShot1 = 4;
+	int m_beatPerShot2 = 8;
+	int m_beatPerShot3 = 6;
+	int m_beatPerShot4 = 4;
 
 	Stats* m_statsManager;
 
@@ -93,7 +96,7 @@ private:
 	ID3D11Device* m_device;
 	ID3D11DeviceContext* m_deviceContext;
 
-	int m_currentBPM;
+	int m_currentBPM, m_beatNumber = 0;
 	double m_timeSinceLastBeat = 0.0f;
 	int m_offset = 0;				//Beats to skip in the beginning (for intros without music etc)
 	int m_offsetCount = 0;			//If greater than m_offset, do stuff on the beat

@@ -5,16 +5,24 @@ Bullet_p2::Bullet_p2()
 	
 }
 
-Bullet_p2::Bullet_p2(SoundManager * SoundManager, int MapWidth, int MapLength, XMFLOAT3 Position, XMFLOAT3 Scale, int Health)
+Bullet_p2::Bullet_p2(SoundManager * SoundManager, int MapWidth, int MapLength, XMFLOAT3 Position, XMFLOAT3 Scale, int Health, int beatNumber)
 {
 	XMVECTOR _rotzAxis{ 0,0,1,0 };
 	m_rotation = XMMatrixRotationAxis(_rotzAxis, XM_PI / 2);
 	XMVECTOR _rotzAxis2{ 0,1,0,0 };
 	m_rotation = m_rotation * XMMatrixRotationAxis(_rotzAxis2, XM_PI / 2);
 	m_scale = Scale;
-	m_position = Position;
+	if (beatNumber % 2 == 0)
+	{
+		m_position = XMFLOAT3(Position.x - 1.3, Position.y, Position.z);
+	}
+	else
+	{
+		m_position = XMFLOAT3(Position.x + 1.3, Position.y, Position.z);
+	}
 	m_health = Health;
 	m_speed = 100;
+	m_entityBox.Extents = XMFLOAT3(0.5f, 0.0f, 1.5f);
 }
 
 Bullet_p2::~Bullet_p2()

@@ -12,7 +12,7 @@ Bullet_e::Bullet_e(SoundManager * SoundManager, int MapWidth, int MapLength, XMF
 	m_rotationValue = 0.0f;
 	m_scale = Scale;
 	m_position = Position;
-	m_entityBox.Extents = XMFLOAT3(2, 0, 2);
+	m_entityBox.Extents = XMFLOAT3(1, 0, 1);
 	m_health = Health;
 	m_speed = -28;
 	m_light = new Light(XMFLOAT4(Position.x, Position.y, Position.z, 1.0f), XMFLOAT4(Color.x, Color.y, Color.z, 1.0f), XMFLOAT4(10, 1, 0, 0));
