@@ -140,7 +140,7 @@ void Game::Update(double time)
 	}
 	if (m_screenManager->GetCurrentScreen() == EXIT)
 	{
-		m_statsManager->SaveScore("PixieTrust.txt", "SomeNoob");
+		m_statsManager->SaveScore("score/PixieTrust.txt", "SomeNoob");
 		PostQuitMessage(0);
 	}
 	
@@ -202,7 +202,7 @@ void Game::CheckInput()
 		case MENU:
 			break;
 		case GAME:
-			m_screenManager->SetCurrentScreenPAUSE();
+			m_screenManager->SetCurrentScreen(PAUSE);
 			break;
 		}
 	}

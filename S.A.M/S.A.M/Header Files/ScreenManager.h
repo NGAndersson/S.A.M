@@ -31,8 +31,7 @@ public:
 	//Returns the current screen
 	MenuScreens GetCurrentScreen() { return m_current; }
 	bool GetGameState() { return m_gameOngoing; }
-	void SetCurrentScreenPAUSE() { m_current = PAUSE; }
-	void SetCurrentScreenQUIT() { m_current = EXIT;}
+	void SetCurrentScreen(MenuScreens m) { m_current = m; }
 	string GetSelectedSongFile() { return m_songSelect->GetSelectedSongFile(); }
 //----------------------------Attributes----------------------------------------
 private:
@@ -52,6 +51,9 @@ private:
 	//input
 	Input* m_input;
 
+	ID3D11Device* m_device;
+	ID3D11DeviceContext* m_deviceContext;
+	int m_screenHeight, m_screenWidth;
 };
 
 #endif

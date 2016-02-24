@@ -23,7 +23,7 @@ void Stats::ResetScore()
 bool Stats::SaveScore(std::string filename, std::string playername)
 {
 	std::fstream _file;
-	std::string _filepath = "score/" + filename;		//Opens a file in a folder called score
+	std::string _filepath = filename;		//Opens a file in a folder called score
 	_file.open(_filepath);
 	if(!_file.is_open())		//If file failed to open, return false
 		return false;
@@ -66,7 +66,7 @@ bool Stats::SaveScore(std::string filename, std::string playername)
 bool Stats::LoadScore(std::string filename)
 {
 	std::fstream _file;
-	std::string _filepath = "score/" + filename;
+	std::string _filepath = filename;
 	_file.open(_filepath);
 
 	// If file is not empty, read all so we can sort them
@@ -91,7 +91,7 @@ bool Stats::LoadScore(std::string filename)
 		i++;
 	}
 
-	for (i = 0; i < 10 && _inData[i].second > 0; i++)
+	for (i = 0; i < 10; i++)
 		m_highScores[i] = _inData[i];
 
 	_file.close();

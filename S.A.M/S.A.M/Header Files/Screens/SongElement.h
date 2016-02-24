@@ -24,6 +24,7 @@ public:
 	void Render(int offsetX, int offsetZ);
 	char* GetFile() { return m_file; }
 	std::string GetDataFile() { return m_dataFile; }
+	std::string GetScoreFile() { return std::string(m_scoreFile); }
 private:
 	SoundManager* m_soundManager;
 	std::wstring m_songName;
@@ -31,6 +32,7 @@ private:
 	std::wstring m_arranger;
 	char* m_file = (char *)malloc(200);
 	std::string m_dataFile;
+	char* m_scoreFile = (char *)malloc(200);
 	std::wstring m_bpm = L"N/A";			//Load music and get only when selected
 	std::wstring m_length = L"N/A";		//Load music and get only when selected
 	std::unique_ptr<DirectX::SpriteFont> m_font;

@@ -6,6 +6,7 @@ SongElement::SongElement(std::string filename, ID3D11Device* device, ID3D11Devic
 	m_font = std::make_unique<DirectX::SpriteFont>(device, L"Resources/moonhouse.spritefont");
 	m_soundManager = soundManager;
 	std::wstring _filePath;
+	std::wstring _scorePath;
 	m_dataFile = "Resources/Songs/" + filename;
 
 	//Load meta-data
@@ -31,13 +32,15 @@ SongElement::SongElement(std::string filename, ID3D11Device* device, ID3D11Devic
 				m_arranger = _value;		
 			if (std::wstring(_key) == L"music")
 				_filePath = _value;
+			if (std::wstring(_key) == L"score")
+				_scorePath = _value;
 		}
 	}
 	_file.close();
 
-	size_t _fuckoff;
-	wcstombs_s(&_fuckoff, m_file, (size_t)200, _filePath.c_str(), (size_t)200);
-
+	size_t _numcharbullshit;
+	wcstombs_s(&_numcharbullshit, m_file, (size_t)200, _filePath.c_str(), (size_t)200);
+	wcstombs_s(&_numcharbullshit, m_scoreFile, (size_t)200, _scorePath.c_str(), (size_t)200);
 	m_soundManager->LoadMusic(m_file);
 	BeatDetector _beatDetector(m_soundManager);
 	_beatDetector.AudioProcess();
