@@ -3,6 +3,7 @@
 
 #include "../Screen.h"
 #include "../../Gamelogic/Stats.h"
+#include <CommonStates.h>
 
 class HighScoreMenu : public Screen
 {

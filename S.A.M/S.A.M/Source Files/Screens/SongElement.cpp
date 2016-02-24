@@ -62,14 +62,14 @@ SongElement::SongElement(std::string filename, ID3D11Device* device, ID3D11Devic
 	//---------------
 	
 	Microsoft::WRL::ComPtr<ID3D11Resource> _resource;
-	DirectX::CreateWICTextureFromFile(device, L"Resources/SongElement.png", _resource.GetAddressOf(), m_backGround.ReleaseAndGetAddressOf());
-
+	DirectX::CreateWICTextureFromFile(device, L"Resources/Sprites/SongElement.png", _resource.GetAddressOf(), m_backGround.ReleaseAndGetAddressOf());
+	
 	Microsoft::WRL::ComPtr<ID3D11Texture2D> _bg;
 	_resource.As(&_bg);
 
 	CD3D11_TEXTURE2D_DESC _bgDesc;
 	_bg->GetDesc(&_bgDesc);
-
+	
 	m_states = std::make_unique<DirectX::CommonStates>(device);
 
 

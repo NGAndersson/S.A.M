@@ -21,6 +21,7 @@ void HighScoreMenu::Render()
 {	
 	
 	m_spriteBatch->Begin();
+	//Highscore list
 	for (int i = 0; i < 10; i++)
 	{
 		DirectX::XMVECTOR _nameOrigin = m_font->MeasureString(wstring(m_highscore[i].first.begin(), m_highscore[i].first.end()).c_str());
