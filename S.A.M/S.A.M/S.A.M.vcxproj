@@ -140,6 +140,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source Files\Gamelogic\ShootingPatterns.cpp" />
     <ClCompile Include="Source Files\Graphics\ExplosionPart.cpp" />
     <ClCompile Include="Source Files\Screens\SongElement.cpp" />
     <ClCompile Include="Source Files\Audio\BeatDetector.cpp" />
@@ -195,6 +196,7 @@
     <ClInclude Include="Header Files\Audio\SoundManager.h" />
     <ClInclude Include="Header Files\Bullet_e.h" />
     <ClInclude Include="Header Files\Collision.h" />
+    <ClInclude Include="Header Files\Gamelogic\ShootingPatterns.h" />
     <ClInclude Include="Header Files\Gamelogic\Spline.h" />
     <ClInclude Include="Header Files\Gamelogic\Stats.h" />
     <ClInclude Include="Header Files\Graphics\Camera.h" />

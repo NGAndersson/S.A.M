@@ -25,6 +25,10 @@ ExplosionPart::~ExplosionPart()
 
 	if (m_instancePartBuffer != nullptr)
 		m_instancePartBuffer->Release();
+
+	delete m_movementVec;
+	if (m_lightShiftPartBuffer != nullptr)
+		m_lightShiftPartBuffer->Release();
 }
 
 ExplosionPart::ExplosionPart(float offset, float lifeLenght)
