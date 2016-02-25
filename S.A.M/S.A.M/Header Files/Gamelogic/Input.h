@@ -54,7 +54,7 @@ public:
 
 	void Initialize(HINSTANCE hInstance, HWND& hwnd,int ScreenWidth,int ScreenHeight);
 	wstring GetKeyBinding(int key) {
-		for (int i = 0; i < 46; i++)
+		for (int i = 0; i < 51; i++)
 		{
 			if (key == m_dikToString[i].first)
 				return m_dikToString[i].second;
@@ -68,6 +68,9 @@ public:
 		for (int i = 0; i < 9;i++)
 			m_keyBindings[i] = newKeyBindings[i];
 	}
+	bool CheckIfInput();
+	int CheckInputInt();
+	wstring CheckInputWString();
 	void CheckKeyBoardInput(InputType* returnput);
 	InputType CheckKeyBoardInput();
 	BulletType CheckBullet();
@@ -79,7 +82,7 @@ public:
 	void ReadInputKeyBindings();
 	void SaveInputKeyBindings();
 	void PairKeys();
-	std::pair<int, std::wstring> m_dikToString[46];
+	std::pair<int, std::wstring> m_dikToString[51];
 	//----------------------------Attributes----------------------------------------
 private:
 

@@ -148,8 +148,48 @@ void Input::PairKeys()
 	m_dikToString[44].second = L"Numpad ";
 	m_dikToString[45].first = DIK_NUMPAD0;
 	m_dikToString[45].second = L"Numpad ";
-	
+
+	m_dikToString[46].first = DIK_RIGHT;
+	m_dikToString[46].second = L"R_Arrow ";
+	m_dikToString[47].first = DIK_LEFT;
+	m_dikToString[47].second = L"L_Arrow ";
+	m_dikToString[48].first = DIK_UP;
+	m_dikToString[48].second = L"U_Arrow ";
+	m_dikToString[49].first = DIK_DOWN;
+	m_dikToString[49].second = L"D_Arrow ";
+	m_dikToString[50].first = DIK_SPACE;
+	m_dikToString[50].second = L"Space";
+
 }
+
+int Input::CheckInputInt()
+{
+	for (int i = 0; i < 51; i++)
+	{
+		if (m_keyBoardState[m_dikToString[i].first] & 0x80)
+			return m_dikToString[i].first;
+	}
+}
+
+wstring Input::CheckInputWString()
+{
+	for (int i = 0; i < 51; i++)
+	{
+		if (m_keyBoardState[m_dikToString[i].first] & 0x80)
+			return m_dikToString[i].second;
+	}
+}
+
+bool Input::CheckIfInput()
+{
+	for (int i = 0; i < 51; i++)
+	{
+		if (m_keyBoardState[m_dikToString[i].first] & 0x80)
+			return true;
+	}
+	return false;
+}
+
 BulletType Input::CheckBullet()
 {
 	
@@ -183,6 +223,8 @@ InputType Input::CheckKeyBoardInput()
 
 	else if (m_keyBoardState[m_keyBindings[MOVEDOWN]] & 0x80)
 		return INPUT_MOVE_DOWN;
+	else if (m_keyBoardState[DIK_RETURN] & 0x80)
+		return INPUT_ENTER;
 
 	return INPUT_DEFAULT;
 }
