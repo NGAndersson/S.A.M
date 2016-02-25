@@ -41,7 +41,7 @@ int BeatDetector::Energy(int* data, int offset, int window)
 
 void BeatDetector::Normalize(float* signal, int size, float max_val)
 {
-	float tempp[9000];
+	
 	// recherche de la valeur max du signal
 	float _max = 0.f;
 	for (int i = 0; i<size; i++)
@@ -53,7 +53,6 @@ void BeatDetector::Normalize(float* signal, int size, float max_val)
 	for (int i = 0; i<size; i++)
 	{
 		signal[i] = signal[i] * _ratio;
-		tempp[i] = signal[i];
 	}
 
 	int k = 0;
@@ -213,7 +212,7 @@ void BeatDetector::AudioProcess(void)
 	// les suivants
 	// vers la droite
 	int i = _maxConvPos + _TOccMax;
-	while ((i<m_length / 1024) && (m_conv[i]>0.f))
+	while ((i<m_length / 1024)/* && (m_conv[i]>0.f)*/)
 	{
 		// on cherche un max dans les parages
 		int conv_max_pos_loc = SearchMax(m_conv, i, 2);
@@ -229,6 +228,12 @@ void BeatDetector::AudioProcess(void)
 		m_beat[_convMaxPosLoc] = 1.f;
 		i = _convMaxPosLoc - _TOccMax;
 	}
+	float tempp[9000];
+	for (int i = 0; i < m_length / 1024; i++)
+		tempp[i] = m_beat[i];
+
+	int l = 0;
+
 }
 
 float* BeatDetector::GetEnergy1024(void)

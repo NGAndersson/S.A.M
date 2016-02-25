@@ -280,8 +280,6 @@ void EntityManager::Update(double time)
 				m_beatNumber += 1;
 				m_statsManager->AddBeat();
 				EnemyFire();
-				if (m_beatNumber > (m_soundManager->GetLengthMS()/60000.f)*m_beatDetector->GetTempo() - 0)			//FULHACK! Arbitrary beatnumber, move out of beat detection after this beat.
-					m_doBeatDet = false;
 			}
 			else {
 				m_timeSinceLastBeat = 0;
