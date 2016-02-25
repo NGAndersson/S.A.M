@@ -24,7 +24,6 @@ Renderer::~Renderer()
 
 	if (m_worldBufferInstance != nullptr)
 		m_worldBufferInstance->Release();
-
 }
 
 void Renderer::Render(ModelHandler * model, XMFLOAT3 position, XMMATRIX &rotation, XMFLOAT3 scale)

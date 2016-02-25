@@ -27,6 +27,14 @@ Game::~Game()
 	{
 		m_sampleState->Release();
 	}
+	if (m_blendState != nullptr)
+	{
+		m_blendState->Release();
+	}
+	if (m_depthStencilState != nullptr)
+	{
+		m_depthStencilState->Release();
+	}
 	if (m_deviceContext != nullptr)
 	{
 		m_deviceContext->Release();
