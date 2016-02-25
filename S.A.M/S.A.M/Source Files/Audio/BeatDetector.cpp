@@ -41,6 +41,7 @@ int BeatDetector::Energy(int* data, int offset, int window)
 
 void BeatDetector::Normalize(float* signal, int size, float max_val)
 {
+	float tempp[9000];
 	// recherche de la valeur max du signal
 	float _max = 0.f;
 	for (int i = 0; i<size; i++)
@@ -52,7 +53,10 @@ void BeatDetector::Normalize(float* signal, int size, float max_val)
 	for (int i = 0; i<size; i++)
 	{
 		signal[i] = signal[i] * _ratio;
+		tempp[i] = signal[i];
 	}
+
+	int k = 0;
 }
 
 int BeatDetector::SearchMax(float* signal, int pos, int window_half_size)
