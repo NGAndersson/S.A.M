@@ -996,7 +996,7 @@ int EntityManager::GetPlayerHealth()
 	return m_player->GetHealth();
 }
 
-int EntityManager::GetOffsetLeft()
+int EntityManager::GetOffset()
 {
-	return m_offset - m_offsetCount;
+	return m_offset;
 }

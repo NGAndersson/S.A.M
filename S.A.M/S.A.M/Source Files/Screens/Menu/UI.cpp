@@ -34,17 +34,21 @@ void UI::Render(int offset)
 	wstring _tempLives = L"Lives: " + m_livesLeft;
 	wstring _tempCombo = L"Combo: " + m_combo;
 	wstring _tempOffset;
-	if (offset > 0)
+	if (offset - m_stats->GetBeat() > 10)
 	{
-		_tempOffset = L"Beats until start: " + to_wstring(offset);
+		_tempOffset = L"Take a chill pill";
 	}
-	else if (offset > 3)
+	else if (offset - m_stats->GetBeat() > 0)
+	{
+		_tempOffset = L"Beats until start: " + to_wstring(offset - m_stats->GetBeat());
+	}
+	else if (offset - m_stats->GetBeat() > -4)
 	{
 		_tempOffset = L"Go Go Go";
 	}
 	wstring _tempBeat = L"Beat: " + to_wstring(m_stats->GetBeat());
 	m_spriteBatch->Begin();
-	if (offset >= -3)
+	if (offset - m_stats->GetBeat() >= -4)
 	{
 		m_font->DrawString(m_spriteBatch.get(), _tempOffset.c_str(), _offsetCountPos, Colors::Crimson, 0.f, m_font->MeasureString(_tempOffset.c_str()) / 2.f);
 	}
