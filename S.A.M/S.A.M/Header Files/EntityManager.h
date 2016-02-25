@@ -101,8 +101,7 @@ private:
 	int m_currentBPM, m_beatNumber = 0;
 	double m_timeSinceLastBeat = 0.0f;
 	int m_offset = 0;				//Beats to skip in the beginning (for intros without music etc)
-	int m_offsetCount = 0;			//If greater than m_offset, do stuff on the beat
-									//ADD ENDING OFFSETS
+									//ADD ENDING OFFSETS?
 	bool m_doBeatDet;
 	float* m_beat;
 	int m_level;

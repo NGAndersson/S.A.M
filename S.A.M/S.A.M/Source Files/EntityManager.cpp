@@ -234,7 +234,7 @@ void EntityManager::Update(double time)
 			m_timeSinceLastBeat -= 60000 / m_currentBPM;
 
 			//BEAT WAS DETECTED
-			if (m_offsetCount > m_offset)
+			if (m_beatNumber > m_offset)
 			{
 				BeatWasDetected();
 
@@ -245,10 +245,10 @@ void EntityManager::Update(double time)
 				m_modelHandlers[BULLET4]->beatBoost(true, time, -1, m_currentBPM);
 				m_modelHandlers[BULLET5]->beatBoost(true, time, -1, m_currentBPM);
 				m_modelHandlers[BULLET6]->beatBoost(true, time, -1, m_currentBPM);
-				m_beatNumber += 1;
+				m_beatNumber++;
 			}
 			else
-				m_offsetCount++;
+				m_beatNumber++;
 		}
 		else
 		{
@@ -263,36 +263,39 @@ void EntityManager::Update(double time)
 	else {
 		//BeatDet test
 		float _currentPos = m_soundManager->GetCurrentMusicTimePCM() / 1024.f;
-
+		m_statsManager->SetShit(m_beat[(int)_currentPos]);
 		if (m_beat[(int)_currentPos] > 0.0f && m_timeSinceLastBeat > 100)		//Small time buffer to prevent it from going off 50 times per beat 
 		{
 			//BEAT WAS DETECTED
-			if (m_offsetCount > m_offset) {
+			if (m_beatNumber > m_offset) {
 				BeatWasDetected();
-				m_light.beatBoost(true, time, m_timeSinceLastBeat/1000, 0);
-				m_modelHandlers[BULLET1]->beatBoost(true, time, m_timeSinceLastBeat/1000, 0);
-				m_modelHandlers[BULLET3]->beatBoost(true, time, m_timeSinceLastBeat/1000, 0);
-				m_modelHandlers[BULLET4]->beatBoost(true, time, m_timeSinceLastBeat/1000, 0);
-				m_modelHandlers[BULLET5]->beatBoost(true, time, m_timeSinceLastBeat/1000, 0);
-				m_modelHandlers[BULLET6]->beatBoost(true, time, m_timeSinceLastBeat/1000, 0);
+				//m_light.beatBoost(true, time, m_timeSinceLastBeat/1000, 0);
+				//m_modelHandlers[BULLET1]->beatBoost(true, time, m_timeSinceLastBeat/1000, 0);
+				//m_modelHandlers[BULLET3]->beatBoost(true, time, m_timeSinceLastBeat/1000, 0);
+				//m_modelHandlers[BULLET4]->beatBoost(true, time, m_timeSinceLastBeat/1000, 0);
+				//m_modelHandlers[BULLET5]->beatBoost(true, time, m_timeSinceLastBeat/1000, 0);
+				//m_modelHandlers[BULLET6]->beatBoost(true, time, m_timeSinceLastBeat/1000, 0);
 				m_timeSinceLastBeat = 0;
 				m_beatNumber += 1;
+				m_statsManager->AddBeat();
 				EnemyFire();
-				
+				if (m_beatNumber > (m_soundManager->GetLengthMS()/60000.f)*m_beatDetector->GetTempo() - 0)			//FULHACK! Arbitrary beatnumber, move out of beat detection after this beat.
+					m_doBeatDet = false;
 			}
 			else {
 				m_timeSinceLastBeat = 0;
-				m_offsetCount++;
+				m_beatNumber++;
+				m_statsManager->AddBeat();
 			}
 		}
 		else {
 			m_timeSinceLastBeat += time * 1000;
-			m_light.beatBoost(false, time, m_timeSinceLastBeat/1000, 0);
-			m_modelHandlers[BULLET1]->beatBoost(false, time, m_timeSinceLastBeat/1000, 0);
-			m_modelHandlers[BULLET3]->beatBoost(false, time, m_timeSinceLastBeat/1000, 0);
-			m_modelHandlers[BULLET4]->beatBoost(false, time, m_timeSinceLastBeat/1000, 0);
-			m_modelHandlers[BULLET5]->beatBoost(false, time, m_timeSinceLastBeat/1000, 0);
-			m_modelHandlers[BULLET6]->beatBoost(false, time, m_timeSinceLastBeat/1000, 0);
+			//m_light.beatBoost(false, time, m_timeSinceLastBeat/1000, 0);
+			//m_modelHandlers[BULLET1]->beatBoost(false, time, m_timeSinceLastBeat/1000, 0);
+			//m_modelHandlers[BULLET3]->beatBoost(false, time, m_timeSinceLastBeat/1000, 0);
+			//m_modelHandlers[BULLET4]->beatBoost(false, time, m_timeSinceLastBeat/1000, 0);
+			//m_modelHandlers[BULLET5]->beatBoost(false, time, m_timeSinceLastBeat/1000, 0);
+			//m_modelHandlers[BULLET6]->beatBoost(false, time, m_timeSinceLastBeat/1000, 0);
 		}
 	}
 
@@ -337,7 +340,7 @@ void EntityManager::Update(double time)
 	if (!m_player->GetInvulnerable())			//Only check if the player is alive and well
 	{
 		std::vector<Entity*> _playerVec = { m_player };
-		m_collision.CheckCollisionEntity(&m_bullet6, &_playerVec, BULLET6, PLAYER, &m_explosion, m_device, m_deviceContext);
+		//m_collision.CheckCollisionEntity(&m_bullet6, &_playerVec, BULLET6, PLAYER, &m_explosion, m_device, m_deviceContext);
 		if (m_player->GetHealth() <= 0)
 		{
 			m_statsManager->ResetCombo();
@@ -610,8 +613,8 @@ void EntityManager::Reset()
 	m_currentBPM, m_beatNumber = 0;
 	m_timeSinceLastBeat = 0.0f;
 	m_offset = 0;				
-	m_offsetCount = 0;		
 	m_player->SetDelete(true);
+	m_doBeatDet = true;
 }
 
 void EntityManager::BeatWasDetected()
@@ -939,7 +942,7 @@ void EntityManager::CheckCombo()
 	static bool _registeredCombo = true;
 	static BulletType _currentBulletType;
 	static bool _spacebar = false;
-	if (m_offsetCount > m_offset && m_player->GetDelete() == false) {						//Only check for combos after the beats have actually started
+	if (m_beatNumber > m_offset && m_player->GetDelete() == false) {						//Only check for combos after the beats have actually started
 		if (m_timeSinceLastBeat < 25000 / m_currentBPM)
 		{
 			if (m_input->IsNewButtonPressed(_spacebar)) //If button is pressed
