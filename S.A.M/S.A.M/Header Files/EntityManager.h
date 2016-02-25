@@ -54,7 +54,7 @@ public:
 	void Render();
 	void Update(double time);
 	void InitMusic(const std::string &filename);
-
+	void Reset();
 	int GetPlayerHealth();
 
 	//Variables

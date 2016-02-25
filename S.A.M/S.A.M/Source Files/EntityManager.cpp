@@ -65,7 +65,7 @@ void EntityManager::SpawnEntity(HandlerIndex type)
 
 	switch (type) {
 	case(PLAYER) :
-		m_player = new Player(m_soundManager, MAPWIDTH,MAPLENGTH,XMFLOAT3(MAPWIDTH / 2, 0.0f, MAPLENGTH / 2), XMFLOAT3(1.0f, 1.0f, 1.0f), 1, m_input);
+		m_player = new Player(m_soundManager, MAPWIDTH,MAPLENGTH,XMFLOAT3(MAPWIDTH / 2, 0.0f, MAPLENGTH / 4), XMFLOAT3(1.0f, 1.0f, 1.0f), 1, m_input);
 		break;
 	case(ENEMY1) :
 		m_enemy1.push_back(new Enemy_1(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(_tempX, 0.0f, 110), XMFLOAT3(2.0f, 2.0f, 2.0f), 1000,m_enemy1MovPatterns[0].second));
@@ -555,6 +555,63 @@ void EntityManager::InitMusic(const std::string &filename)
 	m_doBeatDet = true;				//Make this changable at song select
 	m_beat = m_beatDetector->GetBeat();
 	m_EnemyPatterns.LoadPatterns(filename);
+}
+
+void EntityManager::Reset()
+{
+	for (int i = 0; i < m_bullet1.size(); i++)
+		delete m_bullet1[i];
+
+	for (int i = 0; i < m_bullet2.size(); i++)
+		delete m_bullet2[i];
+
+	for (int i = 0; i < m_bullet3.size(); i++)
+		delete m_bullet3[i];
+
+	for (int i = 0; i < m_bullet4.size(); i++)
+		delete m_bullet4[i];
+
+	for (int i = 0; i < m_bullet5.size(); i++)
+		delete m_bullet5[i];
+
+	for (int i = 0; i < m_bullet6.size(); i++)
+		delete m_bullet6[i];
+
+	for (int i = 0; i < m_enemy1.size(); i++)
+		delete m_enemy1[i];
+
+	for (int i = 0; i < m_enemy2.size(); i++)
+		delete m_enemy2[i];
+
+	for (int i = 0; i < m_enemy3.size(); i++)
+		delete m_enemy3[i];
+
+	for (int i = 0; i < m_enemy4.size(); i++)
+		delete m_enemy4[i];
+
+	m_bullet1.clear();
+	m_bullet2.clear();
+	m_bullet3.clear();
+	m_bullet4.clear();
+	m_bullet5.clear();
+	m_bullet6.clear();
+	m_enemy1.clear();
+	m_enemy2.clear();
+	m_enemy3.clear();
+	m_enemy4.clear();
+	m_enemy1MovPatterns.clear();
+	m_enemy2MovPatterns.clear();
+	m_enemy3MovPatterns.clear();
+	m_enemy4MovPatterns.clear();
+	m_explosion.clear();
+	m_statsManager->ResetCombo();
+	m_statsManager->ResetScore();
+	m_statsManager->SetLives();
+	m_currentBPM, m_beatNumber = 0;
+	m_timeSinceLastBeat = 0.0f;
+	m_offset = 0;				
+	m_offsetCount = 0;		
+	m_player->SetDelete(true);
 }
 
 void EntityManager::BeatWasDetected()
