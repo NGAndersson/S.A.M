@@ -17,6 +17,8 @@ ExplosionPart::~ExplosionPart()
 {
 	delete[] m_timeToLive;
 	delete[] m_partPos;
+	delete[] m_sourcePos;
+	delete[] m_inputData;
 	if (m_partTex != nullptr)
 		m_partTex->Release();
 
@@ -36,8 +38,10 @@ ExplosionPart::ExplosionPart(float offset, float lifeLenght)
 	m_amountOfPart = 200;
 	m_partPos = new XMFLOAT4[m_amountOfPart];
 	m_partLifeLenght = lifeLenght;
+	m_sourcePos = new XMFLOAT4[m_amountOfPart];
 	m_timeToLive = new float[m_amountOfPart];
 	m_movementVec = new XMFLOAT3[m_amountOfPart];
+	m_inputData = new VertexInput[m_amountOfPart];
 	m_partOffset = offset;
 	for (int i = 0; i < m_amountOfPart; i++)
 	{
@@ -45,6 +49,7 @@ ExplosionPart::ExplosionPart(float offset, float lifeLenght)
 		if (((m_partPos[i].x * m_partPos[i].x) + (m_partPos[i].z * m_partPos[i].z)) < (m_partOffset))
 		{
 			m_movementVec[i] = NormalizeFloat3(XMFLOAT3(m_partPos[i].x, m_partPos[i].y, m_partPos[i].z));
+			m_sourcePos[i] = m_partPos[i];
 			m_timeToLive[i] = m_partLifeLenght;
 		}
 		else
@@ -61,7 +66,7 @@ bool ExplosionPart::CreateBuffer(ID3D11Device* device, ID3D11DeviceContext* devi
 	ZeroMemory(&_OBJvertexBufferDesc, sizeof(D3D11_BUFFER_DESC));
 	// description för vertex buffern
 	_OBJvertexBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
-	_OBJvertexBufferDesc.ByteWidth = sizeof(float) * (m_amountOfPart * 4);
+	_OBJvertexBufferDesc.ByteWidth = sizeof(float) * (m_amountOfPart * 8);
 	_OBJvertexBufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 	_OBJvertexBufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 	_OBJvertexBufferDesc.MiscFlags = 0;
@@ -102,7 +107,7 @@ bool ExplosionPart::CreateBuffer(ID3D11Device* device, ID3D11DeviceContext* devi
 
 bool ExplosionPart::Render(ID3D11DeviceContext* deviceContext)
 {
-	UINT32 vertexSize = sizeof(float) * 4;
+	UINT32 vertexSize = sizeof(float) * 8;
 	UINT32 offset = 0;
 	deviceContext->IASetVertexBuffers(0, 1, &m_vertexBuffer, &vertexSize, &offset);
 
@@ -130,7 +135,13 @@ void ExplosionPart::Update(ID3D11DeviceContext* deviceContext, float time, float
 	D3D11_MAPPED_SUBRESOURCE mappResource;
 	deviceContext->Map(m_vertexBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappResource);
 
-	memcpy(mappResource.pData, &m_partPos[0], sizeof(float) * (m_amountOfPart * 4));
+	for (int i = 0; i < m_amountOfPart; i++)
+	{
+		m_inputData[i].Pos = m_partPos[i];
+		m_inputData[i].Source = m_sourcePos[i];
+	}
+
+	memcpy(mappResource.pData, &m_inputData[0], sizeof(float) * (m_amountOfPart * 8));
 
 	deviceContext->Unmap(m_vertexBuffer, 0);
 }

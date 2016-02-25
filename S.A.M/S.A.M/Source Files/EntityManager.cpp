@@ -219,7 +219,7 @@ void EntityManager::Render()
 	//Render Enemies
 	m_shaderLoad[SHADER_ENEMY]->SetShaders(m_deviceContext);
 	RenderEnemies();
-	}
+}
 
 void EntityManager::Update(double time)
 {
