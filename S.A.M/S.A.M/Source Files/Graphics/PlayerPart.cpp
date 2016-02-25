@@ -19,6 +19,9 @@ PlayerPart::~PlayerPart()
 
 	if (m_instancePartBuffer != nullptr)
 		m_instancePartBuffer->Release();
+
+	if (m_lightShiftPartBuffer != nullptr)
+		m_lightShiftPartBuffer->Release();
 }
 
 PlayerPart::PlayerPart(float offset, float lifeLenght, std::vector<Entity*> entity)

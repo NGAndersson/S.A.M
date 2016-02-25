@@ -1,0 +1,11 @@
+###KeyBindings
+
+weapon1|16
+weapon2|17
+weapon3|18
+weapon4|19
+moveleft|203
+moveright|205
+moveup|200
+movedown|208
+combo|57

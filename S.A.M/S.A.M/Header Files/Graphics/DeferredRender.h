@@ -23,10 +23,10 @@ public:
 	bool InitializeBufferString(ID3D11Device* device);
 	void Render(ID3D11DeviceContext* deviceContext);
 private:
-	ID3D11InputLayout* m_vertexLayout;
-	ID3D11VertexShader* m_vertexShader;
-	ID3D11PixelShader* m_pixelShader;
-	ID3D11Buffer *m_vertexBuffer;
+	ID3D11InputLayout* m_vertexLayout = nullptr;
+	ID3D11VertexShader* m_vertexShader = nullptr;
+	ID3D11PixelShader* m_pixelShader = nullptr;
+	ID3D11Buffer *m_vertexBuffer = nullptr;
 };
 
 

@@ -5,6 +5,12 @@
 
 class ExplosionPart : public PartSys
 {
+private:
+	struct VertexInput
+	{
+		XMFLOAT4 Pos;
+		XMFLOAT4 Source;
+	};
 public:
 	ExplosionPart();
 	ExplosionPart(float offset, float lifeLenght);
@@ -20,6 +26,8 @@ private:
 	XMFLOAT3 *m_movementVec;
 	ID3D11Buffer* m_lightShiftPartBuffer;
 	XMFLOAT4 m_lightShift;
+	XMFLOAT4* m_sourcePos;
+	VertexInput* m_inputData;
 };
 
 
