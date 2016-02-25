@@ -71,7 +71,7 @@ void Renderer::RenderInstanced(ModelHandler * model, vector<XMFLOAT3> position, 
 		XMStoreFloat4x4(&_worldRotation, XMMatrixTranspose(rotation[i]));
 		m_worldStructInstanced.worldMatrix[i] = _worldInstance;
 		m_worldStructInstanced.worldRotation[i] = _worldRotation;
-		if (amountOfBullets >= 50)
+		if (amountOfBullets >= 100)
 		{
 			int fail = 1;
 		}

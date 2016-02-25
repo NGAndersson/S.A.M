@@ -63,11 +63,15 @@ int Collision::CheckCollisionEntity(vector<Entity*>* Entity_1, vector<Entity*>* 
 						(*Explosion)[Explosion->size() - 1]->CreateBuffer(device, deviceContext, _texName);
 						Entity_2 = RemoveEntity(j, Entity_2);
 						j--;
+						i--;
 					}
 					else
 					{
 						if ((*Entity_1)[i]->GetHealth() <= 0)
+						{
 							Entity_1 = RemoveEntity(i, Entity_1);
+							i--;
+						}
 					}
 					break;
 				}
