@@ -52,7 +52,7 @@ public:
 	Input();
 	~Input();
 
-	void Initialize(HINSTANCE hInstance, HWND& hwnd,int ScreenWidth,int ScreenHeight);
+	void Initialize(HINSTANCE hInstance, HWND& hwnd,int ScreenWidth,int ScreenHeight);//initializez the input class
 	wstring GetKeyBinding(int key) {
 		for (int i = 0; i < 51; i++)
 		{
@@ -60,23 +60,23 @@ public:
 				return m_dikToString[i].second;
 		}
 		return L"Faulty Key";
-	}
+	}//Returns a wstring depending on what DIK_ key that is sent into the function
 
-	int GetKeyBiningArray(int i) { return m_keyBindings[i]; }
+	int GetKeyBiningArray(int i) { return m_keyBindings[i]; }//Fetches the current keybinding array
 	void SetKeyBindings(int newKeyBindings[9])
 	{
 		for (int i = 0; i < 9;i++)
 			m_keyBindings[i] = newKeyBindings[i];
-	}
-	bool CheckIfInput();
-	int CheckInputInt();
-	wstring CheckInputWString();
+	}//Sets the keybinding array
+	bool CheckIfInput();//Checks if there is anny input and return true if there is.
+	int CheckInputInt();//Checks input and return the corresponing DIK_ key that is pressed
+	wstring CheckInputWString();////Checks input and return the corresponing wstring that is pressed
 	void CheckKeyBoardInput(InputType* returnput);
 	InputType CheckKeyBoardInput();
-	BulletType CheckBullet();
-	void Update();
-	bool CheckReturn();
-	bool CheckEsc();
+	BulletType CheckBullet();//Checks what kind of bullet the player want to shoot, returns a enum with the type
+	void Update();//Updates the keyboard array with the keys that have been pressed since last uppdate
+	bool CheckReturn();//Checks if the player presses Enter
+	bool CheckEsc();//Check if Esc is pressed 
 	//bool IsNewButtonPressed(BulletType& checkAgainst);
 	bool IsNewButtonPressed(bool& checkAgainst);
 	void ReadInputKeyBindings();
