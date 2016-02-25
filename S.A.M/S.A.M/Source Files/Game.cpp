@@ -143,7 +143,6 @@ void Game::Update(double time)
 	}
 	if (m_screenManager->GetCurrentScreen() == EXIT)
 	{
-		m_statsManager->SaveScore("score/PixieTrust.txt", "SomeNoob");
 		PostQuitMessage(0);
 	}
 	

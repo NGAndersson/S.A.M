@@ -11,7 +11,7 @@
 #include "Screens\Menu\UI.h"
 #include "Screens\Menu\PauseMenu.h"
 #include "Screens\Menu\HighscoreMenu.h"
-#include "Screens\EndScreen.h"
+#include "Screens\Menu\EndScreen.h"
 #include "Screens\Menu\OptionsMenu.h"
 #include "Screens\Menu\SongSelect.h"
 

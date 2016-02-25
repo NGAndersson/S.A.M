@@ -182,7 +182,7 @@
     <ClCompile Include="Source Files\ScreenManager.cpp" />
     <ClCompile Include="Source Files\Graphics\ShaderHandler.cpp" />
     <ClCompile Include="Source Files\Gamelogic\Timer.cpp" />
-    <ClCompile Include="Source Files\Screens\EndScreen.cpp" />
+    <ClCompile Include="Source Files\Screens\Menu\EndScreen.cpp" />
     <ClCompile Include="Source Files\Screens\Menu\HighscoreMenu.cpp" />
     <ClCompile Include="Source Files\Screens\Menu\OptionsMenu.cpp" />
     <ClCompile Include="Source Files\Screens\Menu\PauseMenu.cpp" />
@@ -229,7 +229,7 @@
     <ClInclude Include="Header Files\Graphics\ParticleSys.h" />
     <ClInclude Include="Header Files\Graphics\PlayerPart.h" />
     <ClInclude Include="Header Files\Graphics\SpacePart.h" />
-    <ClInclude Include="Header Files\Screens\EndScreen.h" />
+    <ClInclude Include="Header Files\Screens\Menu\EndScreen.h" />
     <ClInclude Include="Header Files\Screens\Menu\HighscoreMenu.h" />
     <ClInclude Include="Header Files\Screens\Menu\OptionsMenu.h" />
     <ClInclude Include="Header Files\Screens\Menu\PauseMenu.h" />
