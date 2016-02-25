@@ -7,7 +7,6 @@ class StartMenu : public Screen
 {
 public:
 	StartMenu(){}
-
 	~StartMenu(){}
 	StartMenu(ID3D11Device* Device, ID3D11DeviceContext* DeviceContext, int ScreenHeight, int ScreenWidth, Input* input);
 	void Update(double time);
@@ -31,10 +30,10 @@ public:
 	}
 
 private:
-	const wchar_t* m_start = L"StartGame";
-	const wchar_t* m_options = L"Options";
-	const wchar_t* m_highScore = L"HighScore";
-	const wchar_t* m_exit = L"Quit to Desktop";
+	wstring m_start = L"StartGame";
+	wstring m_options = L"Options";
+	wstring m_highScore = L"HighScore";
+	wstring m_exit = L"Quit";
 	bool m_keyDown = false;
 	Font m_choices[4];
 

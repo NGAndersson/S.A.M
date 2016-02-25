@@ -82,6 +82,10 @@ public:
 
 	 virtual Light* GetLight() { return m_light; }
 
+	 virtual int GetPatternNr() { return m_patternNr; }
+
+	 virtual void SetPatternNr(int NrOfPatterns) { m_patternNr = NrOfPatterns; }
+
 	//----------------------------Attributes----------------------------------------
 protected:
 	//Modelhandler
@@ -102,6 +106,7 @@ protected:
 	 bool m_delete = false;
 	 bool m_invulnerable = false;
 	 Light* m_light = nullptr;
+	 int m_patternNr = 0;
 
 	 int m_health;
 	 int m_score;
