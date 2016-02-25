@@ -205,7 +205,6 @@ void Game::CheckInput()
 			break;
 		}
 	}
-	m_input->CheckMouseInput();
 }
 
 void Game::SetViewport()
