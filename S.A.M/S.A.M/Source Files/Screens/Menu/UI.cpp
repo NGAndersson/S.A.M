@@ -34,15 +34,15 @@ void UI::Render(int offset)
 	wstring _tempLives = L"Lives: " + m_livesLeft;
 	wstring _tempCombo = L"Combo: " + m_combo;
 	wstring _tempOffset;
-	if (offset - m_stats->GetBeat() > 10)
+	if ((offset - m_stats->GetBeat() + 1) > 10)
 	{
 		_tempOffset = L"Take a chill pill";
 	}
-	else if (offset - m_stats->GetBeat() > 0)
+	else if ((offset - m_stats->GetBeat() + 1) > 0)
 	{
 		_tempOffset = L"Beats until start: " + to_wstring(offset - m_stats->GetBeat());
 	}
-	else if (offset - m_stats->GetBeat() > -4)
+	else if ((offset - m_stats->GetBeat() + 1) > -4)
 	{
 		_tempOffset = L"Go Go Go";
 	}
