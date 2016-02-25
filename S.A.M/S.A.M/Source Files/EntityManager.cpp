@@ -219,10 +219,11 @@ void EntityManager::Render()
 	//Render Enemies
 	m_shaderLoad[SHADER_ENEMY]->SetShaders(m_deviceContext);
 	RenderEnemies();
-	}
+}
 
 void EntityManager::Update(double time)
 {
+
 	CheckCombo();
 
 		//Regular BPM test
@@ -487,6 +488,16 @@ void EntityManager::InitMusic(const std::string &filename)
 			else if (std::string(_key) == "BeatPerShot4")
 				m_beatPerShot4 = atoi(_value);
 
+			else if (std::string(_key) == "EnemySpawnRateDivider1")
+				_enemySpawnRateDivider1 = atof(_value);
+			else if (std::string(_key) == "EnemySpawnRateDivider2")
+				_enemySpawnRateDivider2 = atof(_value);
+			else if (std::string(_key) == "EnemySpawnRateDivider3")
+				_enemySpawnRateDivider3 = atof(_value);
+			else if (std::string(_key) == "EnemySpawnRateDivider4")
+				_enemySpawnRateDivider4 = atof(_value);
+
+
 			else if (std::string(_key) == "mov")	//Mov patterns
 			{
 				vector<XMFLOAT3> _pattern;
@@ -649,7 +660,7 @@ void EntityManager::BeatWasDetected()
 
 	//use time and check that after 30 sec or so increse the level count by some.. int
 	
-	if (_enemySpawnRate1 == m_beatDetector->GetTempo() / 30)
+	if (_enemySpawnRate1 == int(m_beatDetector->GetTempo() * 1000) / int(_enemySpawnRateDivider1 * 1000))
 	{
 		SpawnEntity(ENEMY1);
 		_enemySpawnRate1 = 0;
@@ -657,7 +668,7 @@ void EntityManager::BeatWasDetected()
 	else
 		_enemySpawnRate1++;
 
-	if (_enemySpawnRate2 == m_beatDetector->GetTempo() / 15)
+	if (_enemySpawnRate2 == int(m_beatDetector->GetTempo() * 1000) / int(_enemySpawnRateDivider2 * 1000))
 	{
 		SpawnEntity(ENEMY2);
 		_enemySpawnRate2 = 0;
@@ -665,7 +676,7 @@ void EntityManager::BeatWasDetected()
 	else
 		_enemySpawnRate2++;
 
-	if (_enemySpawnRate3 == m_beatDetector->GetTempo() / 5)
+	if (_enemySpawnRate3 == int(m_beatDetector->GetTempo() * 1000) / int(_enemySpawnRateDivider3 * 1000))
 	{
 		SpawnEntity(ENEMY3);
 		_enemySpawnRate3 = 0;
@@ -673,7 +684,7 @@ void EntityManager::BeatWasDetected()
 	else
 		_enemySpawnRate3++;
 
-	if (_enemySpawnRate4 == m_beatDetector->GetTempo())
+	if (_enemySpawnRate4 == int(m_beatDetector->GetTempo() * 1000) / int(_enemySpawnRateDivider4 * 1000))
 	{
 		SpawnEntity(ENEMY4);
 		_enemySpawnRate4 = 0;
@@ -892,7 +903,7 @@ void EntityManager::EnemyFire()
 	{
 		if (m_enemy1[i]->GetFireTime() > m_beatPerShot1)
 		{
-			m_EnemyPatterns.AddShot(&m_bullet6, m_soundManager, MAPWIDTH, MAPLENGTH, m_enemy1[i]->GetPosition(), XMFLOAT3(0.4, 0.4, 0.4), 1, m_modelHandlers[BULLET6]->GetDeffuse(), 0);
+			m_enemy1[i]->SetPatternNr(m_EnemyPatterns.AddShot(&m_bullet6, m_soundManager, MAPWIDTH, MAPLENGTH, m_enemy1[i]->GetPosition(), XMFLOAT3(0.4, 0.4, 0.4), 1, m_modelHandlers[BULLET6]->GetDeffuse(), 0, m_enemy1[i]->GetPatternNr()));
 			m_enemy1[i]->SetFireTime(0);
 		}
 
@@ -903,7 +914,7 @@ void EntityManager::EnemyFire()
 	{
 		if (m_enemy2[i]->GetFireTime() > m_beatPerShot2) 
 		{
-			m_EnemyPatterns.AddShot(&m_bullet6, m_soundManager, MAPWIDTH, MAPLENGTH, m_enemy2[i]->GetPosition(), XMFLOAT3(0.4, 0.4, 0.4), 1, m_modelHandlers[BULLET6]->GetDeffuse(), 1);
+			m_enemy2[i]->SetPatternNr(m_EnemyPatterns.AddShot(&m_bullet6, m_soundManager, MAPWIDTH, MAPLENGTH, m_enemy2[i]->GetPosition(), XMFLOAT3(0.4, 0.4, 0.4), 1, m_modelHandlers[BULLET6]->GetDeffuse(), 1, m_enemy2[i]->GetPatternNr()));
 			m_enemy2[i]->SetFireTime(0);
 		}
 
@@ -914,7 +925,7 @@ void EntityManager::EnemyFire()
 	{
 		if (m_enemy3[i]->GetFireTime() > m_beatPerShot3) 
 		{
-			m_EnemyPatterns.AddShot(&m_bullet6, m_soundManager, MAPWIDTH, MAPLENGTH, m_enemy3[i]->GetPosition(), XMFLOAT3(0.4, 0.4, 0.4), 1, m_modelHandlers[BULLET6]->GetDeffuse(), 2);
+			m_enemy3[i]->SetPatternNr(m_EnemyPatterns.AddShot(&m_bullet6, m_soundManager, MAPWIDTH, MAPLENGTH, m_enemy3[i]->GetPosition(), XMFLOAT3(0.4, 0.4, 0.4), 1, m_modelHandlers[BULLET6]->GetDeffuse(), 2, m_enemy3[i]->GetPatternNr()));
 			m_enemy3[i]->SetFireTime(0);
 		}
 
@@ -925,7 +936,7 @@ void EntityManager::EnemyFire()
 	{
 		if (m_enemy4[i]->GetFireTime() > m_beatPerShot4) 
 		{
-			m_EnemyPatterns.AddShot(&m_bullet6, m_soundManager, MAPWIDTH, MAPLENGTH, m_enemy4[i]->GetPosition(), XMFLOAT3(0.4, 0.4, 0.4), 1, m_modelHandlers[BULLET6]->GetDeffuse(), 3);
+			m_enemy4[i]->SetPatternNr(m_EnemyPatterns.AddShot(&m_bullet6, m_soundManager, MAPWIDTH, MAPLENGTH, m_enemy4[i]->GetPosition(), XMFLOAT3(0.4, 0.4, 0.4), 1, m_modelHandlers[BULLET6]->GetDeffuse(), 3, m_enemy4[i]->GetPatternNr()));
 			m_enemy4[i]->SetFireTime(0);
 		}
 

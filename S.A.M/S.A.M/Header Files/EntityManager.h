@@ -75,10 +75,10 @@ private:
 	std::vector<Entity*> m_enemy4;
 	std::vector<ExplosionPart*> m_explosion;
 	Entity* m_player;
-	FirePart* m_rocketPartSys;
-	PlayerPart* m_playerPartSys;
+	FirePart* m_rocketPartSys;	//fire for the rockets
+	PlayerPart* m_playerPartSys;	//fire for player
 	Collision m_collision;
-	Shootingpatterns m_EnemyPatterns;
+	Shootingpatterns m_EnemyPatterns;	//holds the shooting patterns for enemies
 
 	std::vector<std::pair<int, std::vector<XMFLOAT3>>> m_enemy1MovPatterns;
 	std::vector<std::pair<int, std::vector<XMFLOAT3>>> m_enemy2MovPatterns;
@@ -88,6 +88,11 @@ private:
 	int m_beatPerShot2 = 3;
 	int m_beatPerShot3 = 3;
 	int m_beatPerShot4 = 3;
+
+	float _enemySpawnRateDivider1 = 1;
+	float _enemySpawnRateDivider2 = 1;
+	float _enemySpawnRateDivider3 = 1;
+	float _enemySpawnRateDivider4 = 1;
 
 	Stats* m_statsManager;
 

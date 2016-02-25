@@ -12,11 +12,11 @@
 #include "Gamelogic\Stats.h"
 #include "Graphics\GaussianBlur.h"
 
-#include <d3d11.h>	//temp
-#include <dxgidebug.h>
-
 #define WIDTH 720
 #define HEIGHT 980
+
+#include <d3d11.h>	//temp
+#include <dxgidebug.h>
 
 class Game
 {

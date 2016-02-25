@@ -8,7 +8,7 @@ LightHandler::LightHandler()
 
 LightHandler::~LightHandler()
 {
-	if(m_lightBuffer)
+	if(m_lightBuffer != nullptr)
 		m_lightBuffer->Release();
 	delete[] m_allLights;
 }
