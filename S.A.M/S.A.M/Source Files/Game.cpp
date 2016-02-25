@@ -72,10 +72,6 @@ void Game::InitGame(Input* input, Display* disp)
 	m_entityManager = new EntityManager;
 	m_entityManager->Initialize(m_soundManager, m_input, m_device, m_deviceContext, m_statsManager);
 
-	//FUN STUFF! REMOVE!
-	//m_soundManager->LoadSound("Resources/wave.mp3", "wave", "music", LOAD_STREAM);
-	//m_soundManager->LoadSound("Resources/Song.mp3", "gangnam", "music", LOAD_STREAM);
-
 	//Init defered buffer and render
 	m_deferredBuffer.Initialize(m_device, WIDTH, HEIGHT);
 	m_deferredRender.InitializeShader(m_device);
@@ -122,7 +118,7 @@ WPARAM Game::MainLoop()
 
 		//Call Render Functions
 		Render();
-		m_swapChain->Present(0, 0);
+ 		m_swapChain->Present(0, 0);
 	}
 
 }
@@ -138,13 +134,12 @@ void Game::Update(double time)
 
 	if (m_screenManager->GetCurrentScreen() == GAME)
 	{
-		if (_prevScreen == MENU)
-			m_entityManager->InitMusic("Resources/Songs/PixieTrust.txt");
+		if (_prevScreen == SONGSELECT)
+			m_entityManager->InitMusic(m_screenManager->GetSelectedSongFile());
 		m_entityManager->Update(time);
 	}
 	if (m_screenManager->GetCurrentScreen() == EXIT)
 	{
-		m_statsManager->SaveScore("PixieTrust.txt", "SomeNoob");
 		PostQuitMessage(0);
 	}
 	
@@ -206,7 +201,7 @@ void Game::CheckInput()
 		case MENU:
 			break;
 		case GAME:
-			m_screenManager->SetCurrentScreenPAUSE();
+			m_screenManager->SetCurrentScreen(PAUSE);
 			break;
 		}
 	}

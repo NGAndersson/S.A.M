@@ -1,59 +1,49 @@
 #include "../../../Header Files/Screens/Menu/HighscoreMenu.h" 
 
-HighScoreMenu::HighScoreMenu(ID3D11Device* Device, ID3D11DeviceContext* DeviceContext, int ScreenHeight, int ScreenWidth, Input* input) : Screen(Device, DeviceContext, ScreenHeight, ScreenWidth, input)
+HighScoreMenu::HighScoreMenu(ID3D11Device* Device, ID3D11DeviceContext* DeviceContext, int ScreenHeight, int ScreenWidth, Input* input, Stats* stats) : Screen(Device, DeviceContext, ScreenHeight, ScreenWidth, input)
 {
+	m_stats = stats;
+	m_stats->LoadScore();
+
+	m_highscore = m_stats->GetHighScores();	//receives 10
+
 	m_font = make_unique<SpriteFont>(Device, L"Resources/moonhouse.spritefont");
 
-	SimpleMath::Vector2 _offsetV;
-	_offsetV.x = 0.0f;
-	_offsetV.y = 50.f;
-
-	m_choices[0].m_position.y = m_screenHeight / 2 + _offsetV.y * 1;
-	m_choices[0].m_position.x = m_screenWidth / 2;
-	m_choices[0].m_origin = m_font->MeasureString(m_start.c_str()) / 2.f;
-	m_choices[0].m_color = Colors::White;
-
-	m_choices[1].m_position.y = m_screenHeight / 2 + _offsetV.y*2;
-	m_choices[1].m_position.x = m_screenWidth / 2;
-	m_choices[1].m_origin = m_font->MeasureString(m_exit.c_str()) / 2.f;
-	m_choices[1].m_color = Colors::Crimson;
-
-	m_currentFont = 0;
 }
 
 void HighScoreMenu::Update(double time)
 {
-	InputType _inputReturn;
-	_inputReturn = m_input->CheckKeyBoardInput();
-
-	if (_inputReturn == INPUT_MOVE_DOWN&&!m_keyDown)
-	{
-		m_choices[m_currentFont].m_color = Colors::Crimson;
-		m_currentFont = (m_currentFont + 1) % 2;
-		m_choices[m_currentFont].m_color = Colors::White;
-		m_keyDown = true;
-	}
-	else if (_inputReturn == INPUT_MOVE_UP&&!m_keyDown)
-	{
-		m_choices[m_currentFont].m_color = Colors::Crimson;
-		m_currentFont = (m_currentFont - 1) % 2;
-		if (m_currentFont == -1)
-			m_currentFont = 3;
-
-		m_choices[m_currentFont].m_color = Colors::White;
-		m_keyDown = true;
-	}
-	else if (_inputReturn == INPUT_DEFAULT)
-	{
-		m_keyDown = false;
-	}
+	//Don't do anything here
 }
 
 void HighScoreMenu::Render()
 {	
+	
 	m_spriteBatch->Begin();
-	m_font->DrawString(m_spriteBatch.get(), m_start.c_str(), m_choices[0].m_position, m_choices[0].m_color, 0.f, m_choices[0].m_origin);
-	m_font->DrawString(m_spriteBatch.get(), m_exit.c_str(), m_choices[1].m_position, m_choices[1].m_color, 0.f, m_choices[1].m_origin);
+	//Highscore list
+	for (int i = 0; i < 10; i++)
+	{
+		DirectX::XMVECTOR _nameOrigin = m_font->MeasureString(m_highscore[i].first.c_str());
+		_nameOrigin = DirectX::XMVectorSetIntY(_nameOrigin, 0);
+		
+		m_font->DrawString(
+			m_spriteBatch.get(),
+			m_highscore[i].first.c_str(),
+			SimpleMath::Vector2(m_screenWidth / 2, m_screenHeight / 4 + i * m_screenHeight / 20),
+			Colors::Yellow,
+			0.f,
+			_nameOrigin,
+			SimpleMath::Vector3(1.0-i*0.05)
+			);
+		m_font->DrawString(
+			m_spriteBatch.get(),
+			to_wstring(m_highscore[i].second).c_str(),
+			SimpleMath::Vector2(m_screenWidth / 2, m_screenHeight / 4 + i * m_screenHeight / 20),
+			Colors::Yellow,
+			0.f,
+			SimpleMath::Vector2(0.f),
+			SimpleMath::Vector3(1.0-i*0.05)
+			);
+	}
 	m_spriteBatch->End();
 }
-

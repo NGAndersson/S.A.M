@@ -2,7 +2,6 @@
 #define ENEMY_1_H
 #include "Entities\Enemies\Enemy.h"
 
-
 class Enemy_1 : public Enemy
 {
 	//Functions

@@ -18,11 +18,13 @@ class Renderer
 	//World buffer for VS
 	struct WorldStruct {
 		XMMATRIX worldMatrix;
+		XMMATRIX worldRotation;
 	};
 
 	//World buffer for VS
 	struct WorldStructInstanced {
 		XMFLOAT4X4 worldMatrix[50];
+		XMFLOAT4X4 worldRotation[50];
 	};
 
 //Functions

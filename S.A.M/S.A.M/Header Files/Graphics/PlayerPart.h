@@ -26,6 +26,9 @@ public:
 private:
 	XMFLOAT4* m_sourcePos;
 	VertexInput* m_inputData;
+	XMFLOAT4 m_rocketPos[20];
+	ID3D11Buffer* m_lightShiftPartBuffer;
+	XMFLOAT4 m_lightShift;
 };
 
 

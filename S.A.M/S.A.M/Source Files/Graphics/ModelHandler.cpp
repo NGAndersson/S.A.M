@@ -69,7 +69,7 @@ bool ModelHandler::LoadOBJData(string OBJFileName, string colourFileName, ID3D11
 	}
 
 	//Loads the colour data from file
-	m_ObjTex = m_OBJLoad.LoadColour(device, deviceContext, colourFileName, m_RGBDeffuse, m_RGBAL, m_Tf, m_Ni);
+	m_OBJLoad.LoadColour(device, deviceContext, colourFileName, m_RGBDeffuse, m_RGBAL, m_Tf, m_Ni, &m_ObjTex, &m_GlowTex);
 	return true;
 }
 
@@ -132,6 +132,7 @@ bool ModelHandler::SetBuffers(ID3D11DeviceContext* deviceContext)
 
 	deviceContext->PSSetConstantBuffers(0, 1, &m_OBJColourBuffer);
 	deviceContext->PSSetShaderResources(0, 1, &m_ObjTex);
+	deviceContext->PSSetShaderResources(5, 1, &m_GlowTex);
 
 	return true;
 }
@@ -153,7 +154,7 @@ void ModelHandler::beatBoost(bool beat, float time, float timeSinceLast, float B
 	}
 	else if (beat == false)
 	{
-		m_beatBoost += -time * m_beatTime * 1.6;
+		m_beatBoost += -time / m_beatTime;
 	}
 }
 

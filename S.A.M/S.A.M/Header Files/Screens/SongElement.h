@@ -11,19 +11,28 @@
 #include "WICTextureLoader.h"
 #include "wrl.h"
 #include <CommonStates.h>
-using namespace DirectX;
+#include "../Audio/SoundManager.h"
+#include "../Audio/BeatDetector.h"
+#include <stdlib.h>
+
 class SongElement {
 private:
 public:
 	SongElement();
-	SongElement(std::string filename, ID3D11Device* device, ID3D11DeviceContext* DeviceContext,  int ScreenHeight, int ScreenWidth);
+	SongElement(std::string filename, ID3D11Device* device, ID3D11DeviceContext* DeviceContext, SoundManager* soundManager);
 	~SongElement();
 	void Render(int offsetX, int offsetZ);
+	char* GetFile() { return m_file; }
+	std::string GetDataFile() { return m_dataFile; }
+	std::string GetScoreFile() { return std::string(m_scoreFile); }
 private:
+	SoundManager* m_soundManager;
 	std::wstring m_songName;
 	std::wstring m_artist;
 	std::wstring m_arranger;
-	std::wstring m_file;
+	char* m_file = (char *)malloc(200);
+	std::string m_dataFile;
+	char* m_scoreFile = (char *)malloc(200);
 	std::wstring m_bpm = L"N/A";			//Load music and get only when selected
 	std::wstring m_length = L"N/A";		//Load music and get only when selected
 	std::unique_ptr<DirectX::SpriteFont> m_font;
