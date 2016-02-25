@@ -9,18 +9,28 @@ OptionsMenu::OptionsMenu(ID3D11Device* Device, ID3D11DeviceContext* DeviceContex
 	_offsetV.y = 50.f;
 	_originV.x = 0;
 	_originV.y = 0;
-
+	m_soundManager = SoundManager;
 	for (int i = 0; i < 10; i++)
 	{
 		m_volym[i] = i;
 	}
+
+	for (int i = 0; i < 9; i++)
+	{
+		if (0.1f*m_volym[i] == m_soundManager->GetMusicVolume())
+			m_currentMVol = i;
+
+		if (0.1f*m_volym[i] == m_soundManager->GetEffectVolume())
+			m_currentSVol = i;
+	}
+
 	m_volumeMusic = L"Music Volume: ";
 	m_choices[MUSICVOLUME].m_position.y = m_screenHeight / 2 - _offsetV.y * 3;
 	m_choices[MUSICVOLUME].m_origin = _originV;
 	m_choices[MUSICVOLUME].m_position.x = m_choices[MUSICVOLUME].m_origin.x;
 	m_choices[MUSICVOLUME].m_color = Colors::White;
 
-	m_volumeShots = L"Shots Volume: ";
+	m_volumeEffect = L"Shots Volume: ";
 	m_choices[SHOTSVOLUME].m_position.y = m_screenHeight / 2 - _offsetV.y * 2;
 	m_choices[SHOTSVOLUME].m_origin = _originV;
 	m_choices[SHOTSVOLUME].m_position.x = m_choices[SHOTSVOLUME].m_origin.x;
@@ -146,7 +156,7 @@ OptionsMenu::OptionsMenu(ID3D11Device* Device, ID3D11DeviceContext* DeviceContex
 		break;
 	}
 	m_currentFont = 0;
-	m_soundManager = SoundManager;
+
 	m_ifKey = NOT_KEY;
 
 }
@@ -172,7 +182,7 @@ void OptionsMenu::Update(double time)
 	}
 
 	m_volumeMusic = L"Music Volume: " + to_wstring(m_volym[m_currentMVol]);
-	m_volumeShots = L"Shot Volume: " + to_wstring(m_volym[m_currentSVol]);
+	m_volumeEffect = L"Shot Volume: " + to_wstring(m_volym[m_currentSVol]);
 
 	if (m_unBoundKey&&!m_keyDown&&m_input->CheckIfInput())
 	{
@@ -235,14 +245,22 @@ void OptionsMenu::Update(double time)
 				m_keyDown = true;
 				m_ifKey = IN_KEY;
 			}
+			else if (m_currentFont == APPLY)
+			{
+				m_input->SetKeyBindings(m_keyBindings);
+				m_soundManager->SetMusicVolume(1.f/m_volym[m_currentMVol]);
+				m_soundManager->SetEffectVolume(1.f/m_volym[m_currentSVol]);
+				//Fix resolutions here laaaaaaater
+			}
 		}
 		else if (m_ifKey == IN_KEY && m_currentFont == KEYBINDING && !m_keyDown)
 		{
+
 			m_unBoundKey = true;
 			m_keyDown = true;
 		}
 	}
-
+	int _tempd;//used to reset m_currentKeyBindong if its < 0
 	InputType _inputReturn;
 	_inputReturn = m_input->CheckKeyBoardInput();
 	if (_inputReturn == INPUT_MOVE_DOWN&&!m_keyDown)
@@ -280,9 +298,11 @@ void OptionsMenu::Update(double time)
 			break;
 		case IN_KEY:
 			m_keyChoice[m_currentKeyBinding].m_color = Colors::Crimson;
+			_tempd = m_currentKeyBinding;
 			m_currentKeyBinding=(m_currentKeyBinding - 4) % 9;
 			if (m_currentKeyBinding < 0)
-				m_currentKeyBinding + 4;
+				m_currentKeyBinding =_tempd;
+
 			m_keyChoice[m_currentKeyBinding].m_color = Colors::White;
 			m_keyDown = true;
 			break;
@@ -413,7 +433,7 @@ void OptionsMenu::Render()
 //Get Volume and Resolution and add..
 	m_spriteBatch->Begin();
 	m_font->DrawString(m_spriteBatch.get(), m_volumeMusic.c_str(), m_choices[MUSICVOLUME].m_position, m_choices[MUSICVOLUME].m_color,0.f, m_choices[MUSICVOLUME].m_origin,_scale);
-	m_font->DrawString(m_spriteBatch.get(), m_volumeShots.c_str(), m_choices[SHOTSVOLUME].m_position, m_choices[SHOTSVOLUME].m_color, 0.f, m_choices[SHOTSVOLUME].m_origin,_scale);
+	m_font->DrawString(m_spriteBatch.get(), m_volumeEffect.c_str(), m_choices[SHOTSVOLUME].m_position, m_choices[SHOTSVOLUME].m_color, 0.f, m_choices[SHOTSVOLUME].m_origin,_scale);
 	m_font->DrawString(m_spriteBatch.get(), m_resolution.c_str(), m_choices[RESOLUTION].m_position, m_choices[RESOLUTION].m_color, 0.f, m_choices[RESOLUTION].m_origin, _scale);
 	m_font->DrawString(m_spriteBatch.get(), m_keyBin.c_str(), m_choices[KEYBINDING].m_position, m_choices[KEYBINDING].m_color, 0.f, m_choices[KEYBINDING].m_origin,_scale);
 	//KEYBINDINGS BIT
