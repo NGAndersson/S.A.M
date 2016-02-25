@@ -554,10 +554,6 @@ void EntityManager::InitMusic(const std::string &filename)
 	ChangeSongData(m_beatDetector->GetTempo());
 	m_doBeatDet = true;				//Make this changable at song select
 	m_beat = m_beatDetector->GetBeat();
-}
-
-void EntityManager::SetPatterns(const std::string &filename)
-{
 	m_EnemyPatterns.LoadPatterns(filename);
 }
 

@@ -135,10 +135,7 @@ void Game::Update(double time)
 	if (m_screenManager->GetCurrentScreen() == GAME)
 	{
 		if (_prevScreen == SONGSELECT)
-		{
 			m_entityManager->InitMusic(m_screenManager->GetSelectedSongFile());
-			m_entityManager->SetPatterns(m_screenManager->GetSelectedSongFile());
-		}
 		m_entityManager->Update(time);
 	}
 	if (m_screenManager->GetCurrentScreen() == EXIT)

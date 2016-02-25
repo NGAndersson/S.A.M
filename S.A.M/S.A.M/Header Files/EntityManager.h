@@ -56,7 +56,6 @@ public:
 	void InitMusic(const std::string &filename);
 
 	int GetPlayerHealth();
-	void SetPatterns(const std::string &filename);
 
 	//Variables
 private:
