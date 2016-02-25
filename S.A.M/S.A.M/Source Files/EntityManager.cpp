@@ -993,3 +993,8 @@ int EntityManager::GetPlayerHealth()
 {
 	return m_player->GetHealth();
 }
+
+int EntityManager::GetOffset()
+{
+	return m_offset;
+}

@@ -29,3 +29,8 @@ void Screen::Render()
 
 }
 
+void Screen::Render(int offset)
+{
+
+}
+

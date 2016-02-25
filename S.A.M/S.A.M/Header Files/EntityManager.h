@@ -56,6 +56,7 @@ public:
 	void InitMusic(const std::string &filename);
 	void Reset();
 	int GetPlayerHealth();
+	int GetOffset();
 
 	//Variables
 private:
