@@ -20,11 +20,10 @@ void Stats::ResetScore()
 	m_score = 0;
 }
 
-bool Stats::SaveScore(std::string filename, std::string playername)
+bool Stats::SaveScore(std::wstring playername)
 {
-	std::fstream _file;
-	std::string _filepath = "score/" + filename;		//Opens a file in a folder called score
-	_file.open(_filepath);
+	std::wfstream _file;
+	_file.open(m_filename);
 	if(!_file.is_open())		//If file failed to open, return false
 		return false;
 
@@ -35,11 +34,11 @@ bool Stats::SaveScore(std::string filename, std::string playername)
 	}
 	
 	_file.close();
-	LoadScore(filename);
-	_file.open(_filepath);
+	LoadScore();
+	_file.open(m_filename);
 
 	bool _placed = false;
-	std::pair<std::string, int> _outData[10] = { { "", 0 } };
+	std::pair<std::wstring, int> _outData[10] = { { L"", 0 } };
 	for (int i = 0, j = 0; i < 10; i++, j++)
 	{
 		if (m_score > m_highScores[i].second && !_placed)		//current score is bigger than score at pos i
@@ -63,22 +62,21 @@ bool Stats::SaveScore(std::string filename, std::string playername)
 	_file.close();
 }
 
-bool Stats::LoadScore(std::string filename)
+bool Stats::LoadScore()
 {
-	std::fstream _file;
-	std::string _filepath = "score/" + filename;
-	_file.open(_filepath);
+	std::wfstream _file;
+	_file.open(m_filename);
 
 	// If file is not empty, read all so we can sort them
-	std::pair<std::string, int> _inData[10] = { { "", 0 } };
+	std::pair<std::wstring, int> _inData[10] = { { L"", 0 } };
 
-	char _tempChars[100];
-	std::string _tempLine;
+	wchar_t _tempChars[100];
+	std::wstring _tempLine;
 	int i = 0;
 	while (getline(_file, _tempLine))				//Format:		1|Name|1000			Position|Name|Score
 	{
 		
-		std::istringstream _ss(_tempLine);
+		std::wistringstream _ss(_tempLine);
 		_ss.get(_tempChars, 100, '|');			//Throw away position and delim
 		_ss.ignore();
 
@@ -87,15 +85,14 @@ bool Stats::LoadScore(std::string filename)
 		_ss.ignore();
 
 		_ss.get(_tempChars, 100, '|');		//Get Score
-		_inData[i].second = std::atoi(_tempChars);
+		_inData[i].second = _wtoi(_tempChars);
 		i++;
 	}
 
-	for (i = 0; i < 10 && _inData[i].second > 0; i++)
+	for (i = 0; i < 10; i++)
 		m_highScores[i] = _inData[i];
 
 	_file.close();
 
-	//DO MORE SHIT WHEN WE KNOW WHAT MORE SHIT IS
 	return true;
 }

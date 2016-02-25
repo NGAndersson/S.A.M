@@ -18,13 +18,16 @@
 #include "Entities\Bullets\Bullet_p3.h"
 #include "Entities\Bullets\Bullet_p4.h"
 #include "Entities\Bullets\Bullet_p5.h"
-#include "Entities\Bullets\Bullet_e.h"
 #include "Entities\Enemies\Enemy.h"
 #include "Entities\Enemies\Enemy_1.h"
+#include "Entities/Enemies/Enemy_2.h"
+#include "Entities/Enemies/Enemy_3.h"
+#include "Entities/Enemies/Enemy_4.h"
 #include "Graphics\ShaderHandler.h"
 #include <random>
 #include "Collision.h"
 #include "Gamelogic\Stats.h"
+#include "Gamelogic/ShootingPatterns.h"
 
 #include <memory>
 enum ShaderIndexName { SHADER_PLAYER, SHADER_BULLET, SHADER_ENEMY, SHADER_MENU, SHADER_PLAYERPART, SHADER_ROCKETPART };
@@ -70,10 +73,12 @@ private:
 	std::vector<Entity*> m_enemy2;
 	std::vector<Entity*> m_enemy3;
 	std::vector<Entity*> m_enemy4;
+	std::vector<ExplosionPart*> m_explosion;
 	Entity* m_player;
 	FirePart* m_rocketPartSys;
 	PlayerPart* m_playerPartSys;
 	Collision m_collision;
+	Shootingpatterns m_EnemyPatterns;
 
 	std::vector<std::pair<int, std::vector<XMFLOAT3>>> m_enemy1MovPatterns;
 	std::vector<std::pair<int, std::vector<XMFLOAT3>>> m_enemy2MovPatterns;
@@ -93,7 +98,7 @@ private:
 	ID3D11Device* m_device;
 	ID3D11DeviceContext* m_deviceContext;
 
-	int m_currentBPM;
+	int m_currentBPM, m_beatNumber = 0;
 	double m_timeSinceLastBeat = 0.0f;
 	int m_offset = 0;				//Beats to skip in the beginning (for intros without music etc)
 	int m_offsetCount = 0;			//If greater than m_offset, do stuff on the beat

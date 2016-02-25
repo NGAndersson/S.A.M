@@ -3,25 +3,13 @@
 LightHandler::LightHandler()
 {
 	m_nummberOfLights = 0;
-	/*Light* _tempLight = nullptr;*/
-	/*m_light = new Light[m_nummberOfLights];
-
-	m_light[0] = Light(XMFLOAT4(0, -100, 0, 0), XMFLOAT4(0.2, 0.2, 0.2, 0), XMFLOAT4(5000, float(m_nummberOfLights), 1, 0));*/
-
 	m_allLights = new Light[200];
-	/*for (int i = 0; i < m_nummberOfLights; i++)
-	{
-		m_allLights[i].SetPos(m_light[i].GetPos());
-		m_allLights[i].SetColor(m_light[i].GetColor());
-		m_allLights[i].SetRange(m_light[i].GetRange());
-	}*/
 }
 
 LightHandler::~LightHandler()
 {
 	if(m_lightBuffer)
 		m_lightBuffer->Release();
-	//delete[] m_light;
 	delete[] m_allLights;
 }
 
@@ -108,6 +96,6 @@ void LightHandler::beatBoost(bool beat, float time, float timeSinceLast, float B
 	}
 	else if (beat == false)
 	{
-			m_beatBoost += -time * m_beatTime * 1.6;
+			m_beatBoost += -time / m_beatTime;
 	}
 }

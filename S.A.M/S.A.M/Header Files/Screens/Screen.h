@@ -27,6 +27,8 @@ public:
 	virtual MenuScreens GetTargetMenu() { return m_currentTargetMenu; }
 	virtual void SetTargetMenu(MenuScreens menu) { m_currentTargetMenu = menu; }
 	virtual void Reset(){}
+	virtual string GetSelectedSongFile() {	return "You shouldn't be here";}
+	virtual string GetScoreFile() { return "You shouldn't be here"; }
 protected:
 	struct Font
 	{

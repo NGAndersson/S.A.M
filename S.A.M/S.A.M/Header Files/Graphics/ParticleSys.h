@@ -29,6 +29,7 @@ public:
 	virtual void Update(ID3D11DeviceContext* deviceContext, float time, float partSpeed, std::vector<Entity*> entity) = 0;
 	virtual void SetBuffer(ID3D11DeviceContext* deviceContext) = 0;
 	virtual void AddPartSys(std::vector<Entity*> entity, XMFLOAT4 addPos) = 0;
+	virtual float* GetTimeToLive() { return m_timeToLive; }
 protected:
 	ID3D11ShaderResourceView* m_partTex = nullptr;
 	int m_amountOfPart, m_nrOfPositions = 0;

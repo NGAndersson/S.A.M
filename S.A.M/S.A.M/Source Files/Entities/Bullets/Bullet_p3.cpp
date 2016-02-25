@@ -15,6 +15,7 @@ Bullet_p3::Bullet_p3(SoundManager * SoundManager, int MapWidth, int MapLength, X
 	m_health = Health;
 	m_speed = 100;
 	m_light = new Light(XMFLOAT4(Position.x, Position.y, Position.z, 1.0f), XMFLOAT4(Color.x, Color.y, Color.z, 1.0f), XMFLOAT4(10, 1, 0, 0));
+	m_entityBox.Extents = XMFLOAT3(0.5f, 0.0f, 1.0f);
 }
 
 Bullet_p3::~Bullet_p3()

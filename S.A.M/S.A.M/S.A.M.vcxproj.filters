@@ -150,6 +150,15 @@
     <ClCompile Include="Source Files\Screens\SongElement.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source Files\Graphics\ExplosionPart.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\Screens\Menu\EndScreen.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\Gamelogic\ShootingPatterns.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header Files\SoundManager.h">
@@ -302,6 +311,15 @@
     <ClInclude Include="Header Files\Screens\SongElement.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Header Files\Graphics\ExplosionPart.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\Screens\Menu\EndScreen.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\Gamelogic\ShootingPatterns.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="fmodex.dll" />
@@ -333,5 +351,9 @@
     <FxCompile Include="Shaders\PlayerPartPS.hlsl" />
     <FxCompile Include="Shaders\PlayerPartVS.hlsl" />
     <FxCompile Include="Shaders\ComputeShader.hlsl" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\..\..\..\..\Desktop\Enemy Patterns.txt" />
+    <Text Include="Resources\Enemy Patterns.txt" />
   </ItemGroup>
 </Project>
