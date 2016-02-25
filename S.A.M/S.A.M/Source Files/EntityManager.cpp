@@ -489,13 +489,13 @@ void EntityManager::InitMusic(const std::string &filename)
 				m_beatPerShot4 = atoi(_value);
 
 			else if (std::string(_key) == "EnemySpawnRateDivider1")
-				_enemySpawnRateDivider1 = atoi(_value);
+				_enemySpawnRateDivider1 = atof(_value);
 			else if (std::string(_key) == "EnemySpawnRateDivider2")
-				_enemySpawnRateDivider2 = atoi(_value);
+				_enemySpawnRateDivider2 = atof(_value);
 			else if (std::string(_key) == "EnemySpawnRateDivider3")
-				_enemySpawnRateDivider3 = atoi(_value);
+				_enemySpawnRateDivider3 = atof(_value);
 			else if (std::string(_key) == "EnemySpawnRateDivider4")
-				_enemySpawnRateDivider4 = atoi(_value);
+				_enemySpawnRateDivider4 = atof(_value);
 
 
 			else if (std::string(_key) == "mov")	//Mov patterns
@@ -603,7 +603,7 @@ void EntityManager::BeatWasDetected()
 
 	//use time and check that after 30 sec or so increse the level count by some.. int
 	
-	if (_enemySpawnRate1 == (m_beatDetector->GetTempo() * 1000) / int(_enemySpawnRateDivider1 * 1000))
+	if (_enemySpawnRate1 == int(m_beatDetector->GetTempo() * 1000) / int(_enemySpawnRateDivider1 * 1000))
 	{
 		SpawnEntity(ENEMY1);
 		_enemySpawnRate1 = 0;
@@ -611,7 +611,7 @@ void EntityManager::BeatWasDetected()
 	else
 		_enemySpawnRate1++;
 
-	if (_enemySpawnRate2 == (m_beatDetector->GetTempo() * 1000) / int(_enemySpawnRateDivider2 * 1000))
+	if (_enemySpawnRate2 == int(m_beatDetector->GetTempo() * 1000) / int(_enemySpawnRateDivider2 * 1000))
 	{
 		SpawnEntity(ENEMY2);
 		_enemySpawnRate2 = 0;
@@ -619,7 +619,7 @@ void EntityManager::BeatWasDetected()
 	else
 		_enemySpawnRate2++;
 
-	if (_enemySpawnRate3 == (m_beatDetector->GetTempo() * 1000) / int(_enemySpawnRateDivider3 * 1000))
+	if (_enemySpawnRate3 == int(m_beatDetector->GetTempo() * 1000) / int(_enemySpawnRateDivider3 * 1000))
 	{
 		SpawnEntity(ENEMY3);
 		_enemySpawnRate3 = 0;
@@ -627,7 +627,7 @@ void EntityManager::BeatWasDetected()
 	else
 		_enemySpawnRate3++;
 
-	if (_enemySpawnRate4 == (m_beatDetector->GetTempo() * 1000) / int(_enemySpawnRateDivider4 * 1000))
+	if (_enemySpawnRate4 == int(m_beatDetector->GetTempo() * 1000) / int(_enemySpawnRateDivider4 * 1000))
 	{
 		SpawnEntity(ENEMY4);
 		_enemySpawnRate4 = 0;
