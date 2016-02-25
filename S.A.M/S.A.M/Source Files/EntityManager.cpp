@@ -269,12 +269,12 @@ void EntityManager::Update(double time)
 			//BEAT WAS DETECTED
 			if (m_beatNumber > m_offset) {
 				BeatWasDetected();
-				//m_light.beatBoost(true, time, m_timeSinceLastBeat/1000, 0);
-				//m_modelHandlers[BULLET1]->beatBoost(true, time, m_timeSinceLastBeat/1000, 0);
-				//m_modelHandlers[BULLET3]->beatBoost(true, time, m_timeSinceLastBeat/1000, 0);
-				//m_modelHandlers[BULLET4]->beatBoost(true, time, m_timeSinceLastBeat/1000, 0);
-				//m_modelHandlers[BULLET5]->beatBoost(true, time, m_timeSinceLastBeat/1000, 0);
-				//m_modelHandlers[BULLET6]->beatBoost(true, time, m_timeSinceLastBeat/1000, 0);
+				m_light.beatBoost(true, time, m_timeSinceLastBeat/1000, 0);
+				m_modelHandlers[BULLET1]->beatBoost(true, time, m_timeSinceLastBeat/1000, 0);
+				m_modelHandlers[BULLET3]->beatBoost(true, time, m_timeSinceLastBeat/1000, 0);
+				m_modelHandlers[BULLET4]->beatBoost(true, time, m_timeSinceLastBeat/1000, 0);
+				m_modelHandlers[BULLET5]->beatBoost(true, time, m_timeSinceLastBeat/1000, 0);
+				m_modelHandlers[BULLET6]->beatBoost(true, time, m_timeSinceLastBeat/1000, 0);
 				m_timeSinceLastBeat = 0;
 				m_beatNumber += 1;
 				m_statsManager->AddBeat();
@@ -290,12 +290,12 @@ void EntityManager::Update(double time)
 		}
 		else {
 			m_timeSinceLastBeat += time * 1000;
-			//m_light.beatBoost(false, time, m_timeSinceLastBeat/1000, 0);
-			//m_modelHandlers[BULLET1]->beatBoost(false, time, m_timeSinceLastBeat/1000, 0);
-			//m_modelHandlers[BULLET3]->beatBoost(false, time, m_timeSinceLastBeat/1000, 0);
-			//m_modelHandlers[BULLET4]->beatBoost(false, time, m_timeSinceLastBeat/1000, 0);
-			//m_modelHandlers[BULLET5]->beatBoost(false, time, m_timeSinceLastBeat/1000, 0);
-			//m_modelHandlers[BULLET6]->beatBoost(false, time, m_timeSinceLastBeat/1000, 0);
+			m_light.beatBoost(false, time, m_timeSinceLastBeat/1000, 0);
+			m_modelHandlers[BULLET1]->beatBoost(false, time, m_timeSinceLastBeat/1000, 0);
+			m_modelHandlers[BULLET3]->beatBoost(false, time, m_timeSinceLastBeat/1000, 0);
+			m_modelHandlers[BULLET4]->beatBoost(false, time, m_timeSinceLastBeat/1000, 0);
+			m_modelHandlers[BULLET5]->beatBoost(false, time, m_timeSinceLastBeat/1000, 0);
+			m_modelHandlers[BULLET6]->beatBoost(false, time, m_timeSinceLastBeat/1000, 0);
 		}
 	}
 
