@@ -20,6 +20,12 @@ bulletW=Resources/Sound/DefaultSoundBullet3.wav
 bulletE=Resources/Sound/DefaultSoundBullet4.wav
 bulletR=Resources/Sound/DefaultSoundBullet5.wav
 
+#### Spawn frequence divider, default is 0 if not defined here, divides the BPM
+EnemySpawnRateDivider1=14.00
+EnemySpawnRateDivider2=8.00
+EnemySpawnRateDivider3=1.00
+EnemySpawnRateDivider4=0.50
+
 #### Shooting Patterns
 Pa 0
 Vp -1.00 0.00 -1.00

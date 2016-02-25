@@ -27,6 +27,12 @@ BeatPerShot2=2
 BeatPerShot3=2
 BeatPerShot4=2
 
+#### Spawn frequence divider, default is 1 if not defined here, divides the BPM
+EnemySpawnRateDivider1=15.00
+EnemySpawnRateDivider2=10.00
+EnemySpawnRateDivider3=4.00
+EnemySpawnRateDivider4=1.00
+
 #### Shooting Patterns
 Pa 0
 Vp -1.00 0.00 -1.00
