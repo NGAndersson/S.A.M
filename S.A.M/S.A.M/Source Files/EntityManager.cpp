@@ -835,7 +835,7 @@ void EntityManager::EnemyFire()
 	{
 		if (m_enemy1[i]->GetFireTime() > m_beatPerShot1)
 		{
-			m_EnemyPatterns.AddShot(&m_bullet6, m_soundManager, MAPWIDTH, MAPLENGTH, m_enemy1[i]->GetPosition(), XMFLOAT3(0.4, 0.4, 0.4), 1, m_modelHandlers[BULLET6]->GetDeffuse(), 0);
+			m_enemy1[i]->SetPatternNr(m_EnemyPatterns.AddShot(&m_bullet6, m_soundManager, MAPWIDTH, MAPLENGTH, m_enemy1[i]->GetPosition(), XMFLOAT3(0.4, 0.4, 0.4), 1, m_modelHandlers[BULLET6]->GetDeffuse(), 0, m_enemy1[i]->GetPatternNr()));
 			m_enemy1[i]->SetFireTime(0);
 		}
 
@@ -846,7 +846,7 @@ void EntityManager::EnemyFire()
 	{
 		if (m_enemy2[i]->GetFireTime() > m_beatPerShot2) 
 		{
-			m_EnemyPatterns.AddShot(&m_bullet6, m_soundManager, MAPWIDTH, MAPLENGTH, m_enemy2[i]->GetPosition(), XMFLOAT3(0.4, 0.4, 0.4), 1, m_modelHandlers[BULLET6]->GetDeffuse(), 1);
+			m_enemy2[i]->SetPatternNr(m_EnemyPatterns.AddShot(&m_bullet6, m_soundManager, MAPWIDTH, MAPLENGTH, m_enemy2[i]->GetPosition(), XMFLOAT3(0.4, 0.4, 0.4), 1, m_modelHandlers[BULLET6]->GetDeffuse(), 1, m_enemy2[i]->GetPatternNr()));
 			m_enemy2[i]->SetFireTime(0);
 		}
 
@@ -857,7 +857,7 @@ void EntityManager::EnemyFire()
 	{
 		if (m_enemy3[i]->GetFireTime() > m_beatPerShot3) 
 		{
-			m_EnemyPatterns.AddShot(&m_bullet6, m_soundManager, MAPWIDTH, MAPLENGTH, m_enemy3[i]->GetPosition(), XMFLOAT3(0.4, 0.4, 0.4), 1, m_modelHandlers[BULLET6]->GetDeffuse(), 2);
+			m_enemy3[i]->SetPatternNr(m_EnemyPatterns.AddShot(&m_bullet6, m_soundManager, MAPWIDTH, MAPLENGTH, m_enemy3[i]->GetPosition(), XMFLOAT3(0.4, 0.4, 0.4), 1, m_modelHandlers[BULLET6]->GetDeffuse(), 2, m_enemy3[i]->GetPatternNr()));
 			m_enemy3[i]->SetFireTime(0);
 		}
 
@@ -868,7 +868,7 @@ void EntityManager::EnemyFire()
 	{
 		if (m_enemy4[i]->GetFireTime() > m_beatPerShot4) 
 		{
-			m_EnemyPatterns.AddShot(&m_bullet6, m_soundManager, MAPWIDTH, MAPLENGTH, m_enemy4[i]->GetPosition(), XMFLOAT3(0.4, 0.4, 0.4), 1, m_modelHandlers[BULLET6]->GetDeffuse(), 3);
+			m_enemy4[i]->SetPatternNr(m_EnemyPatterns.AddShot(&m_bullet6, m_soundManager, MAPWIDTH, MAPLENGTH, m_enemy4[i]->GetPosition(), XMFLOAT3(0.4, 0.4, 0.4), 1, m_modelHandlers[BULLET6]->GetDeffuse(), 3, m_enemy4[i]->GetPatternNr()));
 			m_enemy4[i]->SetFireTime(0);
 		}
 

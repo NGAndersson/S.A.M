@@ -21,28 +21,35 @@ Shootingpatterns::~Shootingpatterns()
 
 }
 
-void Shootingpatterns::AddShot(vector<Entity*>* Bullet, SoundManager * SoundManager, int MapWidth, int MapLength, XMFLOAT3 Position, XMFLOAT3 Scale, int Health, XMFLOAT3 Color, int Index)
+int Shootingpatterns::AddShot(vector<Entity*>* Bullet, SoundManager * SoundManager, int MapWidth, int MapLength, XMFLOAT3 Position, XMFLOAT3 Scale, int Health, XMFLOAT3 Color, int Index, int ShootNr)
 {
-	if (m_nrOfPatterns[Index] > 0)
+	if (m_nrOfPatterns[Index] > 0)	//if there is a pattern for this entity
 	{
-		for (auto i = 0; i < m_patterns[Index][m_bulletIndex[Index]]->m_vector.size(); i++)
+		for (auto i = 0; i < m_patterns[Index][ShootNr]->m_vector.size(); i++)
 		{
-			(*Bullet).push_back(new Bullet_e(SoundManager, MapWidth, MapLength, Position, Scale, Health, Color, m_patterns[Index][m_bulletIndex[Index]]->m_vector[i]));
+			if ((*Bullet).size() < 100)	//makes sure that there can't be more then 100 enemy bullets
+			{
+				(*Bullet).push_back(new Bullet_e(SoundManager, MapWidth, MapLength, Position, Scale, Health, Color, m_patterns[Index][ShootNr]->m_vector[i]));	//adds bullet
+			}
 		}
-		m_bulletIndex[Index]++;
-		if (m_bulletIndex[Index] > m_nrOfPatterns[Index] - 1)
-		{
-			m_bulletIndex[Index] = 0;
-		}
+		if (ShootNr < m_nrOfPatterns[Index] - 1)
+			return ShootNr + 1;
+		else
+			return 0;
 	}
-	else
+	else  //stright shoot down
 	{
-		(*Bullet).push_back(new Bullet_e(SoundManager, MapWidth, MapLength, Position, Scale, Health, Color, XMFLOAT3(0, 0, -1)));
+		if ((*Bullet).size() < 100)	//makes sure that there can't be more then 100 enemy bullets
+		{
+			(*Bullet).push_back(new Bullet_e(SoundManager, MapWidth, MapLength, Position, Scale, Health, Color, XMFLOAT3(0, 0, -1)));	//adds bullet
+		}
+		return 0;
 	}
 }
 
 void Shootingpatterns::LoadPatterns(const string &filename)
 {
+	//resets values if already set
 	for (auto k = 0; k < 4; k++)
 	{
 		if (m_nrOfPatterns[k] != 0)
@@ -55,12 +62,12 @@ void Shootingpatterns::LoadPatterns(const string &filename)
 			}
 			m_patterns[k] = _tempVec;
 			m_nrOfPatterns[k] = 0;
-			m_bulletIndex[k] = 0;
 		}
 	}
 	int _index = 0;
 	ifstream _fileIn;
 
+	//opens file by filename
 	_fileIn.open(filename, ifstream::in);
 
 	bool _loop = true;
@@ -69,7 +76,7 @@ void Shootingpatterns::LoadPatterns(const string &filename)
 	if (_fileIn.is_open())
 	{
 		_input = _fileIn.get();
-		while (_loop && !_fileIn.eof())
+		while (_loop && !_fileIn.eof())	//loops until end of file or error reading file
 		{
 			switch (_input)
 			{
@@ -82,34 +89,19 @@ void Shootingpatterns::LoadPatterns(const string &filename)
 					if (_input == ' ')
 					{
 						_input = _fileIn.get();
-						_index = _input - 48;
+						_index = _input - 48;	//reads in the index number -48 becuase of ascii
 						m_patterns[_index].push_back(new Pattern());
-						m_nrOfPatterns[_index]++;
+						m_nrOfPatterns[_index]++;	//adds to number of patterns
 					}
 				}
 				break;
-			/*case 'N':
-				_input = _fileIn.get();
-				if (_input == 'a')
-				{
-					string _name;
-					while (_input != '\n')
-					{
-						_name += _input;
-						_fileIn.get(_input);
-					}
-					m_patterns[m_nrOfPatterns - 1]->m_name = _name;
-					m_patterns.push_back(new Pattern());
-					m_nrOfPatterns++;
-				}
-				break;*/
 			case 'V':	
 				_input = _fileIn.get();
 				if (_input == 'p')
 				{
 					XMFLOAT3 _Vec;
-					_fileIn >> _Vec.x >> _Vec.y >> _Vec.z;
-					m_patterns[_index][m_nrOfPatterns[_index] - 1]->m_vector.push_back(SPNormalizeFloat3(_Vec));
+					_fileIn >> _Vec.x >> _Vec.y >> _Vec.z;	//reads the vectore
+					m_patterns[_index][m_nrOfPatterns[_index] - 1]->m_vector.push_back(SPNormalizeFloat3(_Vec));	//saves the vector to the patter vector
 				}
 				break;
 			}
@@ -122,4 +114,9 @@ void Shootingpatterns::LoadPatterns(const string &filename)
 
 		_fileIn.close();
 	}
+}
+
+int Shootingpatterns::GetNrOfPatterns(int index)
+{
+	return m_nrOfPatterns[index];
 }
