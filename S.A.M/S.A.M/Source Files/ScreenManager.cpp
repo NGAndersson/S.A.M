@@ -68,15 +68,17 @@ void ScreenManager::Update(double time)
 	case PAUSE:
 		//Pause
 		m_screenPause->Update(time);
-		m_keyDown = true;
-		m_current = m_screenPause->GetTargetMenu();
-		if (m_current == MENU)
+		if (m_input->CheckReturn() && !m_keyDown)
 		{
-			m_gameOngoing = false;
+			m_keyDown = true;
+			m_current = m_screenPause->GetTargetMenu();
+			if (m_current == MENU)
+			{
+				m_gameOngoing = false;
+			}
 		}
 		else if (!m_input->CheckReturn())
 			m_keyDown = false;
-		
 		break;
 	case ENDSCREEN:
 		//Endscreen
