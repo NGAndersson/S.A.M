@@ -237,6 +237,20 @@ void OptionsMenu::Update(double time)
 				m_choices[MAINMENU].m_color = Colors::Crimson;
 				m_currentFont = MUSICVOLUME;
 				m_choices[m_currentFont].m_color = Colors::White;
+
+				for (int i = 0; i < 9; i++)
+					m_keyBindings[i] = m_input->GetKeyBiningArray(i);
+
+				for (int i = 0; i < 9; i++)
+				{
+					if (0.1f*m_volym[i] == m_soundManager->GetMusicVolume())
+						m_currentMVol = i;
+
+					if (0.1f*m_volym[i] == m_soundManager->GetEffectVolume())
+						m_currentSVol = i;
+				}
+
+				setUpdateKeys();
 			}
 			else if (m_currentFont == KEYBINDING)
 			{
@@ -247,6 +261,12 @@ void OptionsMenu::Update(double time)
 			}
 			else if (m_currentFont == APPLY)
 			{
+				m_doneOption = true;
+				m_keyDown = true;
+				m_choices[MAINMENU].m_color = Colors::Crimson;
+				m_currentFont = MUSICVOLUME;
+				m_choices[m_currentFont].m_color = Colors::White;
+
 				m_input->SetKeyBindings(m_keyBindings);
 				m_soundManager->SetMusicVolume(1.f/m_volym[m_currentMVol]);
 				m_soundManager->SetEffectVolume(1.f/m_volym[m_currentSVol]);
