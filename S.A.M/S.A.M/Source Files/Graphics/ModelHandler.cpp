@@ -16,17 +16,21 @@ ModelHandler::~ModelHandler()
 	delete[] m_Ni;
 	delete[] m_faces;
 	delete[] m_vertexInput;
-	if (m_vertexBuffer)
+	if (m_vertexBuffer != nullptr)
 	{
 		m_vertexBuffer->Release();
 	}
-	if (m_OBJColourBuffer)
+	if (m_OBJColourBuffer != nullptr)
 	{
 		m_OBJColourBuffer->Release();
 	}
-	if (m_ObjTex)
+	if (m_ObjTex != nullptr)
 	{
 		m_ObjTex->Release();
+	}
+	if (m_GlowTex != nullptr)
+	{
+		m_GlowTex->Release();
 	}
 }
 

@@ -1,0 +1,23 @@
+#Patterns here are simple middle-step patterns that can be repeated several times
+#to either be added to a complete pattern, or to use with randomly generated entry and exit points
+
+//Diamond
+mov1=39,90|59,70|39,50|19,70
+
+//Counter-Clockwise Diamond
+mov1=39,90|19,70|39,50|59,70
+
+//Triangle
+mov1=19,60|39,100|59,60
+
+//Counter-Clockwise Triangle
+mov1=19,60|59,60|39,100
+
+//Square
+mov1=19,90|59,90|59,50|19,50
+
+//Counter-Clockwise Square
+mov1=19,90|19,50|59,50|59,90
+
+//Clock
+mov1=39,100|49,97|56,90|59,80|56,70|49,63|39,60|29,63|22,70|19,80|22,90|29,97

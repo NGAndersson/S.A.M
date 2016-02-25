@@ -27,6 +27,14 @@ Game::~Game()
 	{
 		m_sampleState->Release();
 	}
+	if (m_blendState != nullptr)
+	{
+		m_blendState->Release();
+	}
+	if (m_depthStencilState != nullptr)
+	{
+		m_depthStencilState->Release();
+	}
 	if (m_deviceContext != nullptr)
 	{
 		m_deviceContext->Release();
@@ -54,7 +62,7 @@ void Game::InitGame(Input* input, Display* disp)
 	m_display = disp;
 
 	//Create and initialize SoundManager
-	m_soundManager = new SoundManager();  //Initializes in constructor
+	m_soundManager = new SoundManager(0.5,0.5);  //Initializes in constructor
 
 	m_statsManager = new Stats;
 

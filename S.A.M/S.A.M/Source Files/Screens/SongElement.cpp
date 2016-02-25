@@ -79,6 +79,8 @@ SongElement::~SongElement()
 {
 	m_backGround.Reset();
 	m_states.reset();
+	free(m_file);
+	free(m_scoreFile);
 }
 
 void SongElement::Render(int offsetX, int offsetZ)

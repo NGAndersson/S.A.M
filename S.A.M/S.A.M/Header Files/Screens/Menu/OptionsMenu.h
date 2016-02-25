@@ -36,7 +36,7 @@ private:
 	wstring m_menu;
 	wstring m_resolution;
 	wstring m_volumeMusic;
-	wstring m_volumeShots;
+	wstring m_volumeEffect;
 	wstring m_keyBin;
 	wstring m_apply;
 	wstring m_unBound;

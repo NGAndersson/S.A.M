@@ -2,10 +2,14 @@
 
 GaussianBlur::~GaussianBlur()
 {
-	m_unAc->Release();
-	m_unAc2->Release();
-	m_compShaderTexture1->Release();
-	m_compShaderTexture2->Release();
+	if (m_unAc != nullptr)
+		m_unAc->Release();
+	if (m_unAc2 != nullptr)
+		m_unAc2->Release();
+	if (m_compShaderTexture1 != nullptr)
+		m_compShaderTexture1->Release();
+	if (m_compShaderTexture2 != nullptr)
+		m_compShaderTexture2->Release();
 }
 
 GaussianBlur::GaussianBlur(ID3D11Device* Device, ID3D11DeviceContext* DeviceContext, ShaderHandler* shaderHandler, int width, int height)
