@@ -27,12 +27,12 @@ private:
 public:
 	Shootingpatterns();
 	~Shootingpatterns();
-	void AddShot(vector<Entity*>* Bullet, SoundManager * SoundManager, int MapWidth, int MapLength, XMFLOAT3 Position, XMFLOAT3 Scale, int Health, XMFLOAT3 Color, int Index);
+	int AddShot(vector<Entity*>* Bullet, SoundManager * SoundManager, int MapWidth, int MapLength, XMFLOAT3 Position, XMFLOAT3 Scale, int Health, XMFLOAT3 Color, int Index, int ShootNr);
 	void LoadPatterns(const string &filename);
+	int GetNrOfPatterns(int index);
 
 private:
 	int m_nrOfPatterns[4];
-	int m_bulletIndex[4];
 	vector<Pattern*> m_patterns[4];
 };
 
