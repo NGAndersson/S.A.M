@@ -188,7 +188,7 @@ void Game::Render()
 	m_gaussianFilter->Blur(m_device, m_deviceContext, 4, m_deferredBuffer.GetResourceView(4));
 	m_deferredRender.Render(m_deviceContext);
 	
-	m_screenManager->Render();
+	m_screenManager->Render(m_entityManager->GetOffsetLeft());
 
 	//spritbatch goes retard and setts rendershit to 2D things... This is the reset for those things 
 	float _blendF[4] = { 0.0f,0.0f,0.0f,0.0f };
