@@ -62,7 +62,7 @@ void Game::InitGame(Input* input, Display* disp)
 	m_display = disp;
 
 	//Create and initialize SoundManager
-	m_soundManager = new SoundManager();  //Initializes in constructor
+	m_soundManager = new SoundManager(0.5,0.5);  //Initializes in constructor
 
 	m_statsManager = new Stats;
 
