@@ -26,7 +26,6 @@ SoundManager::~SoundManager()
 
 	delete[] m_dataRightChannel;
 	m_dataRightChannel = NULL;
-
 }
 
 void SoundManager::MessageBoxAndShutDown(std::stringstream* _ss) {

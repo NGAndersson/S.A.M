@@ -65,7 +65,7 @@ void EntityManager::SpawnEntity(HandlerIndex type)
 
 	switch (type) {
 	case(PLAYER) :
-		m_player = new Player(m_soundManager, MAPWIDTH,MAPLENGTH,XMFLOAT3(MAPWIDTH / 2, 0.0f, MAPLENGTH / 2), XMFLOAT3(1.0f, 1.0f, 1.0f), 1, m_input);
+		m_player = new Player(m_soundManager, MAPWIDTH,MAPLENGTH,XMFLOAT3(MAPWIDTH / 2, 0.0f, MAPLENGTH / 4), XMFLOAT3(1.0f, 1.0f, 1.0f), 1, m_input);
 		break;
 	case(ENEMY1) :
 		m_enemy1.push_back(new Enemy_1(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(_tempX, 0.0f, 110), XMFLOAT3(2.0f, 2.0f, 2.0f), 1000,m_enemy1MovPatterns[0].second));
@@ -219,7 +219,7 @@ void EntityManager::Render()
 	//Render Enemies
 	m_shaderLoad[SHADER_ENEMY]->SetShaders(m_deviceContext);
 	RenderEnemies();
-	}
+}
 
 void EntityManager::Update(double time)
 {
@@ -235,7 +235,7 @@ void EntityManager::Update(double time)
 			m_timeSinceLastBeat -= 60000 / m_currentBPM;
 
 			//BEAT WAS DETECTED
-			if (m_offsetCount > m_offset)
+			if (m_beatNumber > m_offset)
 			{
 				BeatWasDetected();
 
@@ -246,10 +246,10 @@ void EntityManager::Update(double time)
 				m_modelHandlers[BULLET4]->beatBoost(true, time, -1, m_currentBPM);
 				m_modelHandlers[BULLET5]->beatBoost(true, time, -1, m_currentBPM);
 				m_modelHandlers[BULLET6]->beatBoost(true, time, -1, m_currentBPM);
-				m_beatNumber += 1;
+				m_beatNumber++;
 			}
 			else
-				m_offsetCount++;
+				m_beatNumber++;
 		}
 		else
 		{
@@ -264,11 +264,11 @@ void EntityManager::Update(double time)
 	else {
 		//BeatDet test
 		float _currentPos = m_soundManager->GetCurrentMusicTimePCM() / 1024.f;
-
+		m_statsManager->SetShit(m_beat[(int)_currentPos]);
 		if (m_beat[(int)_currentPos] > 0.0f && m_timeSinceLastBeat > 100)		//Small time buffer to prevent it from going off 50 times per beat 
 		{
 			//BEAT WAS DETECTED
-			if (m_offsetCount > m_offset) {
+			if (m_beatNumber > m_offset) {
 				BeatWasDetected();
 				m_light.beatBoost(true, time, m_timeSinceLastBeat/1000, 0);
 				m_modelHandlers[BULLET1]->beatBoost(true, time, m_timeSinceLastBeat/1000, 0);
@@ -278,12 +278,15 @@ void EntityManager::Update(double time)
 				m_modelHandlers[BULLET6]->beatBoost(true, time, m_timeSinceLastBeat/1000, 0);
 				m_timeSinceLastBeat = 0;
 				m_beatNumber += 1;
+				m_statsManager->AddBeat();
 				EnemyFire();
-				
+				if (m_beatNumber > (m_soundManager->GetLengthMS()/60000.f)*m_beatDetector->GetTempo() - 0)			//FULHACK! Arbitrary beatnumber, move out of beat detection after this beat.
+					m_doBeatDet = false;
 			}
 			else {
 				m_timeSinceLastBeat = 0;
-				m_offsetCount++;
+				m_beatNumber++;
+				m_statsManager->AddBeat();
 			}
 		}
 		else {
@@ -338,7 +341,7 @@ void EntityManager::Update(double time)
 	if (!m_player->GetInvulnerable())			//Only check if the player is alive and well
 	{
 		std::vector<Entity*> _playerVec = { m_player };
-		m_collision.CheckCollisionEntity(&m_bullet6, &_playerVec, BULLET6, PLAYER, &m_explosion, m_device, m_deviceContext);
+		//m_collision.CheckCollisionEntity(&m_bullet6, &_playerVec, BULLET6, PLAYER, &m_explosion, m_device, m_deviceContext);
 		if (m_player->GetHealth() <= 0)
 		{
 			m_statsManager->ResetCombo();
@@ -488,6 +491,16 @@ void EntityManager::InitMusic(const std::string &filename)
 			else if (std::string(_key) == "BeatPerShot4")
 				m_beatPerShot4 = atoi(_value);
 
+			else if (std::string(_key) == "EnemySpawnRateDivider1")
+				_enemySpawnRateDivider1 = atof(_value);
+			else if (std::string(_key) == "EnemySpawnRateDivider2")
+				_enemySpawnRateDivider2 = atof(_value);
+			else if (std::string(_key) == "EnemySpawnRateDivider3")
+				_enemySpawnRateDivider3 = atof(_value);
+			else if (std::string(_key) == "EnemySpawnRateDivider4")
+				_enemySpawnRateDivider4 = atof(_value);
+
+
 			else if (std::string(_key) == "mov")	//Mov patterns
 			{
 				vector<XMFLOAT3> _pattern;
@@ -558,6 +571,63 @@ void EntityManager::InitMusic(const std::string &filename)
 	m_EnemyPatterns.LoadPatterns(filename);
 }
 
+void EntityManager::Reset()
+{
+	for (int i = 0; i < m_bullet1.size(); i++)
+		delete m_bullet1[i];
+
+	for (int i = 0; i < m_bullet2.size(); i++)
+		delete m_bullet2[i];
+
+	for (int i = 0; i < m_bullet3.size(); i++)
+		delete m_bullet3[i];
+
+	for (int i = 0; i < m_bullet4.size(); i++)
+		delete m_bullet4[i];
+
+	for (int i = 0; i < m_bullet5.size(); i++)
+		delete m_bullet5[i];
+
+	for (int i = 0; i < m_bullet6.size(); i++)
+		delete m_bullet6[i];
+
+	for (int i = 0; i < m_enemy1.size(); i++)
+		delete m_enemy1[i];
+
+	for (int i = 0; i < m_enemy2.size(); i++)
+		delete m_enemy2[i];
+
+	for (int i = 0; i < m_enemy3.size(); i++)
+		delete m_enemy3[i];
+
+	for (int i = 0; i < m_enemy4.size(); i++)
+		delete m_enemy4[i];
+
+	m_bullet1.clear();
+	m_bullet2.clear();
+	m_bullet3.clear();
+	m_bullet4.clear();
+	m_bullet5.clear();
+	m_bullet6.clear();
+	m_enemy1.clear();
+	m_enemy2.clear();
+	m_enemy3.clear();
+	m_enemy4.clear();
+	m_enemy1MovPatterns.clear();
+	m_enemy2MovPatterns.clear();
+	m_enemy3MovPatterns.clear();
+	m_enemy4MovPatterns.clear();
+	m_explosion.clear();
+	m_statsManager->ResetCombo();
+	m_statsManager->ResetScore();
+	m_statsManager->SetLives();
+	m_currentBPM, m_beatNumber = 0;
+	m_timeSinceLastBeat = 0.0f;
+	m_offset = 0;				
+	m_player->SetDelete(true);
+	m_doBeatDet = true;
+}
+
 void EntityManager::BeatWasDetected()
 {
 	static int _enemySpawnRate1;
@@ -593,7 +663,7 @@ void EntityManager::BeatWasDetected()
 
 	//use time and check that after 30 sec or so increse the level count by some.. int
 	
-	if (_enemySpawnRate1 == m_beatDetector->GetTempo() / 30)
+	if (_enemySpawnRate1 == int(m_beatDetector->GetTempo() * 1000) / int(_enemySpawnRateDivider1 * 1000))
 	{
 		SpawnEntity(ENEMY1);
 		_enemySpawnRate1 = 0;
@@ -601,7 +671,7 @@ void EntityManager::BeatWasDetected()
 	else
 		_enemySpawnRate1++;
 
-	if (_enemySpawnRate2 == m_beatDetector->GetTempo() / 15)
+	if (_enemySpawnRate2 == int(m_beatDetector->GetTempo() * 1000) / int(_enemySpawnRateDivider2 * 1000))
 	{
 		SpawnEntity(ENEMY2);
 		_enemySpawnRate2 = 0;
@@ -609,7 +679,7 @@ void EntityManager::BeatWasDetected()
 	else
 		_enemySpawnRate2++;
 
-	if (_enemySpawnRate3 == m_beatDetector->GetTempo() / 5)
+	if (_enemySpawnRate3 == int(m_beatDetector->GetTempo() * 1000) / int(_enemySpawnRateDivider3 * 1000))
 	{
 		SpawnEntity(ENEMY3);
 		_enemySpawnRate3 = 0;
@@ -617,7 +687,7 @@ void EntityManager::BeatWasDetected()
 	else
 		_enemySpawnRate3++;
 
-	if (_enemySpawnRate4 == m_beatDetector->GetTempo())
+	if (_enemySpawnRate4 == int(m_beatDetector->GetTempo() * 1000) / int(_enemySpawnRateDivider4 * 1000))
 	{
 		SpawnEntity(ENEMY4);
 		_enemySpawnRate4 = 0;
@@ -836,7 +906,7 @@ void EntityManager::EnemyFire()
 	{
 		if (m_enemy1[i]->GetFireTime() > m_beatPerShot1)
 		{
-			m_EnemyPatterns.AddShot(&m_bullet6, m_soundManager, MAPWIDTH, MAPLENGTH, m_enemy1[i]->GetPosition(), XMFLOAT3(0.4, 0.4, 0.4), 1, m_modelHandlers[BULLET6]->GetDeffuse(), 0);
+			m_enemy1[i]->SetPatternNr(m_EnemyPatterns.AddShot(&m_bullet6, m_soundManager, MAPWIDTH, MAPLENGTH, m_enemy1[i]->GetPosition(), XMFLOAT3(0.4, 0.4, 0.4), 1, m_modelHandlers[BULLET6]->GetDeffuse(), 0, m_enemy1[i]->GetPatternNr()));
 			m_enemy1[i]->SetFireTime(0);
 		}
 
@@ -847,7 +917,7 @@ void EntityManager::EnemyFire()
 	{
 		if (m_enemy2[i]->GetFireTime() > m_beatPerShot2) 
 		{
-			m_EnemyPatterns.AddShot(&m_bullet6, m_soundManager, MAPWIDTH, MAPLENGTH, m_enemy2[i]->GetPosition(), XMFLOAT3(0.4, 0.4, 0.4), 1, m_modelHandlers[BULLET6]->GetDeffuse(), 1);
+			m_enemy2[i]->SetPatternNr(m_EnemyPatterns.AddShot(&m_bullet6, m_soundManager, MAPWIDTH, MAPLENGTH, m_enemy2[i]->GetPosition(), XMFLOAT3(0.4, 0.4, 0.4), 1, m_modelHandlers[BULLET6]->GetDeffuse(), 1, m_enemy2[i]->GetPatternNr()));
 			m_enemy2[i]->SetFireTime(0);
 		}
 
@@ -858,7 +928,7 @@ void EntityManager::EnemyFire()
 	{
 		if (m_enemy3[i]->GetFireTime() > m_beatPerShot3) 
 		{
-			m_EnemyPatterns.AddShot(&m_bullet6, m_soundManager, MAPWIDTH, MAPLENGTH, m_enemy3[i]->GetPosition(), XMFLOAT3(0.4, 0.4, 0.4), 1, m_modelHandlers[BULLET6]->GetDeffuse(), 2);
+			m_enemy3[i]->SetPatternNr(m_EnemyPatterns.AddShot(&m_bullet6, m_soundManager, MAPWIDTH, MAPLENGTH, m_enemy3[i]->GetPosition(), XMFLOAT3(0.4, 0.4, 0.4), 1, m_modelHandlers[BULLET6]->GetDeffuse(), 2, m_enemy3[i]->GetPatternNr()));
 			m_enemy3[i]->SetFireTime(0);
 		}
 
@@ -869,7 +939,7 @@ void EntityManager::EnemyFire()
 	{
 		if (m_enemy4[i]->GetFireTime() > m_beatPerShot4) 
 		{
-			m_EnemyPatterns.AddShot(&m_bullet6, m_soundManager, MAPWIDTH, MAPLENGTH, m_enemy4[i]->GetPosition(), XMFLOAT3(0.4, 0.4, 0.4), 1, m_modelHandlers[BULLET6]->GetDeffuse(), 3);
+			m_enemy4[i]->SetPatternNr(m_EnemyPatterns.AddShot(&m_bullet6, m_soundManager, MAPWIDTH, MAPLENGTH, m_enemy4[i]->GetPosition(), XMFLOAT3(0.4, 0.4, 0.4), 1, m_modelHandlers[BULLET6]->GetDeffuse(), 3, m_enemy4[i]->GetPatternNr()));
 			m_enemy4[i]->SetFireTime(0);
 		}
 
@@ -883,7 +953,7 @@ void EntityManager::CheckCombo()
 	static bool _registeredCombo = true;
 	static BulletType _currentBulletType;
 	static bool _spacebar = false;
-	if (m_offsetCount > m_offset && m_player->GetDelete() == false) {						//Only check for combos after the beats have actually started
+	if (m_beatNumber > m_offset && m_player->GetDelete() == false) {						//Only check for combos after the beats have actually started
 		if (m_timeSinceLastBeat < 25000 / m_currentBPM)
 		{
 			if (m_input->IsNewButtonPressed(_spacebar)) //If button is pressed
@@ -924,4 +994,9 @@ void EntityManager::CheckCombo()
 int EntityManager::GetPlayerHealth()
 {
 	return m_player->GetHealth();
+}
+
+int EntityManager::GetOffset()
+{
+	return m_offset;
 }

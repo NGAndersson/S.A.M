@@ -27,6 +27,14 @@ Game::~Game()
 	{
 		m_sampleState->Release();
 	}
+	if (m_blendState != nullptr)
+	{
+		m_blendState->Release();
+	}
+	if (m_depthStencilState != nullptr)
+	{
+		m_depthStencilState->Release();
+	}
 	if (m_deviceContext != nullptr)
 	{
 		m_deviceContext->Release();
@@ -231,7 +239,10 @@ void Game::Update(double time, HINSTANCE hInstance, HINSTANCE hPrevInstance, LPS
 	if (m_screenManager->GetCurrentScreen() == GAME)
 	{
 		if (_prevScreen == SONGSELECT)
+		{
+			m_entityManager->Reset();
 			m_entityManager->InitMusic(m_screenManager->GetSelectedSongFile());
+		}
 		m_entityManager->Update(time);
 	}
 	if (m_screenManager->GetCurrentScreen() == EXIT)
@@ -273,7 +284,7 @@ void Game::Render()
 	m_gaussianFilter->Blur(m_device, m_deviceContext, 4, m_deferredBuffer.GetResourceView(4));
 	m_deferredRender.Render(m_deviceContext);
 	
-	m_screenManager->Render();
+	m_screenManager->Render(m_entityManager->GetOffset());
 
 	//spritbatch goes retard and setts rendershit to 2D things... This is the reset for those things 
 	float _blendF[4] = { 0.0f,0.0f,0.0f,0.0f };

@@ -150,7 +150,7 @@ void ScreenManager::InitializeScreen(ID3D11Device* Device, ID3D11DeviceContext* 
 
 }
 
-void ScreenManager::Render()
+void ScreenManager::Render(int offset)
 {
 	//Renders different things depending on what screen the user is in.
 	switch (m_current)
@@ -163,7 +163,7 @@ void ScreenManager::Render()
 		break;
 	case GAME:
 		//Userinterface
-		m_screenGame->Render();
+		m_screenGame->Render(offset);
 		break;
 	case 3:
 		//HighScore

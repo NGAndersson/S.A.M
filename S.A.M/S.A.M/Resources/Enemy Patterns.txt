@@ -1,3 +1,13 @@
+//FIRST PATTERN
+#0 Enter-direction, needs to be attached to something
+mov=38,133|38,103
+
+#1 Doing the shit
+mov=64,73|46,69|38,29
+
+#2 Exit-direction, needs to be attached to something
+mov=15,11|38,-20
+
 //FIGURE EIGHT
 #0 Enter-direction, needs to be attached to something
 mov=-10,70|0,70
@@ -68,3 +78,123 @@ mov=19,70
 
 #2 Exit-direction, needs to be attached to something
 mov=77,103|82,133
+
+//ONE
+#0 Enter-direction, needs to be attached to something
+mov=-10,70|0,80
+
+#1 Doing the shit
+mov=19,90
+
+#2 Exit-direction, needs to be attached to something
+mov=19,0|19,-30
+
+//ONE (mirrored)
+#0 Enter-direction, needs to be attached to something
+mov=-87,70|0,80
+
+#1 Doing the shit
+mov=58,90
+
+#2 Exit-direction, needs to be attached to something
+mov=58,0|58,-30
+
+//TWO
+#0 Enter-direction, needs to be attached to something
+mov=-10,60|0,70
+
+#1 Doing the shit
+mov=19,90|39,70|19,50|10,60
+
+#2 Exit-direction, needs to be attached to something
+mov=77,50|107,50
+
+//THREE
+#0 Enter-direction, needs to be attached to something
+mov=-10,90|0,90
+
+#1 Doing the shit
+mov=39,80|19,70|39,60|
+
+#2 Exit-direction, needs to be attached to something
+mov=0,50|-30,50
+
+//THREE (mirrored)
+#0 Enter-direction, needs to be attached to something
+mov=87,90|77,90
+
+#1 Doing the shit
+mov=39,80|59,70|39,60|
+
+#2 Exit-direction, needs to be attached to something
+mov=77,50|107,50
+
+//FOUR
+#0 Enter-direction, needs to be attached to something
+mov=19,113|19,103
+
+#1 Doing the shit
+mov=39,85|59,100
+
+#2 Exit-direction, needs to be attached to something
+mov=59,0|59,-30
+
+//FOUR (mirrored)
+#0 Enter-direction, needs to be attached to something
+mov=59,113|59,103
+
+#1 Doing the shit
+mov=39,85|19,100
+
+#2 Exit-direction, needs to be attached to something
+mov=19,0|19,-30
+
+//FIVE
+#0 Enter-direction, needs to be attached to something
+mov=87,90|77,90
+
+#1 Doing the shit
+mov=39,90|25,85|39,80|59,80|65,70|39,60
+
+#2 Exit-direction, needs to be attached to something
+mov=0,55|-30,55
+
+//FIVE (mirrored)
+#0 Enter-direction, needs to be attached to something
+mov=-10,90|0,90
+
+#1 Doing the shit
+mov=39,90|53,85|39,80|19,80|25,70|39,60
+
+#2 Exit-direction, needs to be attached to something
+mov=77,55|107,55
+
+//SIX
+#0 Enter-direction, needs to be attached to something
+mov=45,113|39, 103
+
+#1 Doing the shit
+mov=19,80|29,70|39,80|29,90|19,80|29,70
+
+#2 Exit-direction, needs to be attached to something
+mov=77,70|107,70
+
+//SEVEN
+#0 Enter-direction, needs to be attached to something
+mov=-10,90|0,90
+
+#1 Doing the shit
+mov=65,90|19,45
+
+#2 Exit-direction, needs to be attached to something
+mov=10,0|10,-30
+
+//SEVEN (mirrored)
+#0 Enter-direction, needs to be attached to something
+mov=87,90|77,90
+
+#1 Doing the shit
+mov=12,90|59,45
+
+#2 Exit-direction, needs to be attached to something
+mov=67,0|67,-30
