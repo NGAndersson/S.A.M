@@ -99,6 +99,9 @@ void Game::InitGame(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 	//Create and initialize SoundManager
 	m_soundManager = new SoundManager(0.5, 0.5);  //Initializes in constructor
 
+	 //Initialize Stats manager
+	m_statsManager = new Stats;
+
 	//Create and initialize ScreenManager
 	m_screenManager = new ScreenManager();
 	m_screenManager->InitializeScreen(m_device, m_deviceContext,m_height,m_width, m_input, m_statsManager, m_soundManager);
@@ -106,8 +109,6 @@ void Game::InitGame(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 	//Sets the viewport
 	SetViewport();
 
-	//Initialize Stats manager
-	m_statsManager = new Stats;
 
 	//Create and initialize EntityManager
 	m_entityManager = new EntityManager;
