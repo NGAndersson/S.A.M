@@ -69,8 +69,10 @@ newOptions ScreenManager::Update(double time)
 	case PAUSE:
 		//Pause
 		m_screenPause->Update(time);
+		
 		if (m_input->CheckReturn() && !m_keyDown)
 		{
+			m_current = m_screenPause->GetTargetMenu();
 			m_keyDown = true;
 		}
 		else if (!m_input->CheckReturn())
@@ -114,6 +116,7 @@ newOptions ScreenManager::Update(double time)
 		else if (!m_input->CheckReturn() && !m_input->CheckEsc())
 			m_keyDown = false;
 	}
+	break;
 	case NEWRES:
 		m_screenOptions->saveSettings();
 		return NEW_RES;
