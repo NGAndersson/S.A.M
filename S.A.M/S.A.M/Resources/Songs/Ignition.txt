@@ -85,3 +85,6 @@ mov=15,11|38,-20
 ### First number is "from this beat, do this compilation"	PUT MOVCOMPS IN THIS ORDER
 ### Each pipe is |NrOfRepeats,MovPatternNr|
 movcomp1=0|1,0|1,1|1,2
+movcomp2=0|0,1|0,2|2,1
+movcomp3=0|0,1|0,2|2,1
+movcomp4=0|0,1|0,2|2,1

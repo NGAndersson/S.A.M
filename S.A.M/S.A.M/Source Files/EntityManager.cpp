@@ -71,13 +71,13 @@ void EntityManager::SpawnEntity(HandlerIndex type)
 		m_enemy1.push_back(new Enemy_1(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(_tempX, 0.0f, 110), XMFLOAT3(2.0f, 2.0f, 2.0f), 1000,m_enemy1MovPatterns[0].second));
 		break;
 	case(ENEMY2) :
-		m_enemy2.push_back(new Enemy_2(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(_tempX, 0.0f, 110), XMFLOAT3(1.0f, 1.0f, 1.0f), 500, m_enemy1MovPatterns[0].second));
+		m_enemy2.push_back(new Enemy_2(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(_tempX, 0.0f, 110), XMFLOAT3(1.0f, 1.0f, 1.0f), 500, m_enemy2MovPatterns[0].second));
 		break;
 	case(ENEMY3) :
-		m_enemy3.push_back(new Enemy_3(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(_tempX, 0.0f, 110), XMFLOAT3(4.0f, 4.0f, 4.0f), 6000, m_enemy1MovPatterns[0].second));
+		m_enemy3.push_back(new Enemy_3(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(_tempX, 0.0f, 110), XMFLOAT3(4.0f, 4.0f, 4.0f), 6000, m_enemy3MovPatterns[0].second));
 		break;
 	case(ENEMY4) :
-		m_enemy4.push_back(new Enemy_4(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(_tempX, 0.0f, 110), XMFLOAT3(6.0f, 6.0f, 6.0f), 10000, m_enemy1MovPatterns[0].second));
+		m_enemy4.push_back(new Enemy_4(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(_tempX, 0.0f, 110), XMFLOAT3(6.0f, 6.0f, 6.0f), 10000, m_enemy4MovPatterns[0].second));
 		break;
 	case(BULLET1) :
 		m_bullet1.push_back(new Bullet_p1(m_soundManager, MAPWIDTH, MAPLENGTH, m_player->GetPosition(), XMFLOAT3(0.5, 0.5, 0.5), 1, m_modelHandlers[BULLET1]->GetDeffuse()));
