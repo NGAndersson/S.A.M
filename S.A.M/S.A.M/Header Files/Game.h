@@ -12,29 +12,30 @@
 #include "Gamelogic\Stats.h"
 #include "Graphics\GaussianBlur.h"
 
-#define WIDTH 720
-#define HEIGHT 980
-
 #include <d3d11.h>	//temp
 #include <dxgidebug.h>
 
 class Game
 {
 private:
-	void Update(double time);
+	void Update(double time, HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow);
 	void Render();
 	void CheckInput();
 	void SetViewport();
+	void ReadOptions();
 	HRESULT CreateDirect3DContext(HWND wndHandle);
 	HRESULT DepthStencilInitialicer();
 
 public:
 	Game();
 	~Game();
-	void InitGame(Input* input, Display* disp);
-	WPARAM MainLoop();
+	void InitGame(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow);
+	void InitGameRedo(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow);
+	WPARAM MainLoop(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow);
 
 private:
+	int m_width,m_height;
+
 	SoundManager* m_soundManager;
 	SpacePart* m_backgroundPartSys;
 	ShaderHandler m_partShader, m_glowshader;

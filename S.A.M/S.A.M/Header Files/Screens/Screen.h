@@ -14,7 +14,7 @@ using namespace std;
 using namespace DirectX;
 using namespace Microsoft;
 using namespace WRL;
-enum MenuScreens {MENU_DEFAULT, MENU, GAME, HIGHSCORE, OPTION, PAUSE, ENDSCREEN ,EXIT, SONGSELECT};
+enum MenuScreens {MENU_DEFAULT, MENU, GAME, HIGHSCORE, OPTION, PAUSE, ENDSCREEN ,EXIT, SONGSELECT,NEWRES};
 
 class Screen
 {
@@ -29,6 +29,7 @@ public:
 	virtual void Reset(){}
 	virtual string GetSelectedSongFile() {	return "You shouldn't be here";}
 	virtual string GetScoreFile() { return "You shouldn't be here"; }
+	virtual void saveSettings(){}
 protected:
 	struct Font
 	{

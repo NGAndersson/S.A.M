@@ -14,8 +14,9 @@ ScreenManager::~ScreenManager()
 	delete m_songSelect;
 }
 
-void ScreenManager::Update(double time)
+newOptions ScreenManager::Update(double time)
 {
+	int kock;
 	//Checks input depending on what screen the user is in.
 	switch (m_current)
 	{
@@ -116,12 +117,17 @@ void ScreenManager::Update(double time)
 		else if (!m_input->CheckReturn() && !m_input->CheckEsc())
 			m_keyDown = false;
 	}
+	case NEWRES:
+		m_screenOptions->saveSettings();
+		return NEW_RES;
+		break;
 	case EXIT:
 		//Do nothing will exit when going to update in game class
 			break;
 	default:
 		break;
 	}
+	return NO_NEW;
 }
 
 void ScreenManager::InitializeScreen(ID3D11Device* Device, ID3D11DeviceContext* DeviceContext, int ScreenHeight, int ScreenWidth, Input* input, Stats* stats, SoundManager* soundManager)
@@ -130,8 +136,6 @@ void ScreenManager::InitializeScreen(ID3D11Device* Device, ID3D11DeviceContext* 
 	m_soundManager = soundManager;
 	m_device = Device;
 	m_deviceContext = DeviceContext;
-	m_screenHeight = ScreenHeight;
-	m_screenWidth = ScreenWidth;
 	//Starting all the otherClasses etc..
 
 	//Current screen is startscreen
@@ -139,12 +143,14 @@ void ScreenManager::InitializeScreen(ID3D11Device* Device, ID3D11DeviceContext* 
 	//m_Current = USERINTERFACE;
 	//Create Modelhandlers...
 	m_input = input;
+
+	m_screenOptions = new OptionsMenu(Device, DeviceContext, ScreenHeight, ScreenWidth, input, soundManager);
 	m_screenMenu = new StartMenu(Device, DeviceContext, ScreenHeight, ScreenWidth, input);
 	m_screenGame = new UI(Device, DeviceContext, ScreenHeight, ScreenWidth, input, stats);
 	m_screenPause = new PauseMenu(Device, DeviceContext, ScreenHeight, ScreenWidth, input);
 	m_endScreen = new EndScreen(Device, DeviceContext, ScreenHeight, ScreenWidth, input, stats);
 	m_songSelect = new SongSelect(Device, DeviceContext, ScreenHeight, ScreenWidth, input, stats, soundManager);
-	m_screenOptions = new OptionsMenu(Device, DeviceContext, ScreenHeight, ScreenWidth, input,soundManager);
+
 }
 
 void ScreenManager::Render()
