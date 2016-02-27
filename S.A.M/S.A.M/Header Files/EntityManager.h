@@ -90,10 +90,20 @@ private:
 	int m_beatPerShot3 = 3;
 	int m_beatPerShot4 = 3;
 
-	float _enemySpawnRateDivider1 = 1;
-	float _enemySpawnRateDivider2 = 1;
-	float _enemySpawnRateDivider3 = 1;
-	float _enemySpawnRateDivider4 = 1;
+	float m_enemySpawnRateDivider1 = 1;
+	float m_enemySpawnRateDivider2 = 1;
+	float m_enemySpawnRateDivider3 = 1;
+	float m_enemySpawnRateDivider4 = 1;
+
+	XMFLOAT3 m_enemySize1 = { 1, 1, 1 };
+	XMFLOAT3 m_enemySize2 = { 1, 1, 1 };
+	XMFLOAT3 m_enemySize3 = { 1, 1, 1 };
+	XMFLOAT3 m_enemySize4 = { 1, 1, 1 };
+
+	int m_enemyHealth1 = 1000;
+	int m_enemyHealth2 = 1000;
+	int m_enemyHealth3 = 1000;
+	int m_enemyHealth4 = 1000;
 
 	Stats* m_statsManager;
 

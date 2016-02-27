@@ -1,7 +1,7 @@
 ### Settings
 
-ScreenHeight|980
-ScreenWidth|720
-MusicVolume|5
-EffectVolume|5
+ScreenHeight|1080
+ScreenWidth|793
+MusicVolume|2
+EffectVolume|2
 
