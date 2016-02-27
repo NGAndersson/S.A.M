@@ -91,12 +91,210 @@ mov=64,73|46,69|38,29
 #2 Exit-direction, needs to be attached to something
 mov=15,11|38,-20
 
+## FIGURE EIGHT
+#3 Enter-direction, needs to be attached to something
+mov=-10,70|0,70
+
+#4 Doing the shit
+mov=17,90|35,70|52,50|70,70|52,90|35,70|17,50
+
+#5 Exit-direction, needs to be attached to something
+mov=0,70|-30,70
+
+##DOWNWARD SLOPE
+#6 Enter-direction, needs to be attached to something
+mov=-10,90|0,90
+
+#7 Doing the shit
+mov=19,100|39,85|58,70
+
+#8 Exit-direction, needs to be attached to something
+mov=77,80|103,80
+
+##UPWARD SLOPE
+#9 Enter-direction, needs to be attached to something
+mov=-10,80|0,80
+
+#10 Doing the shit
+mov=19,70|39,85|58,100
+
+#11 Exit-direction, needs to be attached to something
+mov=77,90|103,90
+
+##COUNTER-CLOCK PARABOLA
+#12 Enter-direction, needs to be attached to something
+mov=10,113|10,103
+
+#13 Doing the shit
+mov=15,75|32,50|62,75
+
+#14 Exit-direction, needs to be attached to something
+mov=67,103|67,133
+
+##CLOCK PARABOLA
+#15 Enter-direction, needs to be attached to something
+mov=67,113|67,103
+
+#16 Doing the shit
+mov=62,75|32,50|15,75
+
+#17 Exit-direction, needs to be attached to something
+mov=10,103|10,133
+
+##RIGHT LOWER STAR
+#18 Enter-direction, needs to be attached to something
+mov=34,123|39,113
+
+#19 Doing the shit
+mov=58,70
+
+#20 Exit-direction, needs to be attached to something
+mov=0,103|-5,133
+
+##LEFT LOWER STAR
+#21 Enter-direction, needs to be attached to something
+mov=43,123|39,113
+
+#22 Doing the shit
+mov=19,70
+
+#23 Exit-direction, needs to be attached to something
+mov=77,103|82,133
+
+##ONE
+#24 Enter-direction, needs to be attached to something
+mov=-10,70|0,80
+
+#25 Doing the shit
+mov=19,90
+
+#26 Exit-direction, needs to be attached to something
+mov=19,0|19,-30
+
+##ONE (mirrored)
+#27 Enter-direction, needs to be attached to something
+mov=-87,70|0,80
+
+#28 Doing the shit
+mov=58,90
+
+#29 Exit-direction, needs to be attached to something
+mov=58,0|58,-30
+
+##TWO
+#30 Enter-direction, needs to be attached to something
+mov=-10,60|0,70
+
+#31 Doing the shit
+mov=19,90|39,70|19,50|10,60
+
+#32 Exit-direction, needs to be attached to something
+mov=77,50|107,50
+
+##THREE
+#33 Enter-direction, needs to be attached to something
+mov=-10,90|0,90
+
+#34 Doing the shit
+mov=39,80|19,70|39,60|
+
+#35 Exit-direction, needs to be attached to something
+mov=0,50|-30,50
+
+##THREE (mirrored)
+#36 Enter-direction, needs to be attached to something
+mov=87,90|77,90
+
+#37 Doing the shit
+mov=39,80|59,70|39,60|
+
+#38 Exit-direction, needs to be attached to something
+mov=77,50|107,50
+
+##FOUR
+#39 Enter-direction, needs to be attached to something
+mov=19,113|19,103
+
+#40 Doing the shit
+mov=39,85|59,100
+
+#41 Exit-direction, needs to be attached to something
+mov=59,0|59,-30
+
+##FOUR (mirrored)
+#42 Enter-direction, needs to be attached to something
+mov=59,113|59,103
+
+#43 Doing the shit
+mov=39,85|19,100
+
+#44 Exit-direction, needs to be attached to something
+mov=19,0|19,-30
+
+##FIVE
+#45 Enter-direction, needs to be attached to something
+mov=87,90|77,90
+
+#46 Doing the shit
+mov=39,90|25,85|39,80|59,80|65,70|39,60
+
+#47 Exit-direction, needs to be attached to something
+mov=0,55|-30,55
+
+##FIVE (mirrored)
+#48 Enter-direction, needs to be attached to something
+mov=-10,90|0,90
+
+#49 Doing the shit
+mov=39,90|53,85|39,80|19,80|25,70|39,60
+
+#50 Exit-direction, needs to be attached to something
+mov=77,55|107,55
+
+##SIX
+#51 Enter-direction, needs to be attached to something
+mov=45,113|39, 103
+
+#52 Doing the shit
+mov=19,80|29,70|39,80|29,90|19,80|29,70
+
+#53 Exit-direction, needs to be attached to something
+mov=77,70|107,70
+
+##SEVEN
+#54 Enter-direction, needs to be attached to something
+mov=-10,90|0,90
+
+#55 Doing the shit
+mov=65,90|19,45
+
+#56 Exit-direction, needs to be attached to something
+mov=10,0|10,-30
+
+##SEVEN (mirrored)
+#57 Enter-direction, needs to be attached to something
+mov=87,90|77,90
+
+#58 Doing the shit
+mov=12,90|59,45
+
+#59 Exit-direction, needs to be attached to something
+mov=67,0|67,-30
+
 #### Movement Compilations
 ### movcomp1 is for enemytype 1, movcomp2 for enemytype2 and so on
 ### Each compilation needs at least 4 total points from combined movement patterns
 ### First number is "from this beat, do this compilation"	PUT MOVCOMPS IN THIS ORDER
 ### Each pipe is |NrOfRepeats,MovPatternNr|
 movcomp1=0|1,0|1,1|1,2
-movcomp2=0|0,1|0,2|2,1
-movcomp3=0|0,1|0,2|2,1
-movcomp4=0|0,1|0,2|2,1
+movcomp1=150|1,57|1,58|1,59
+movcomp1=370|1,54|1,55|1,56
+movcomp2=0|1,3|1,4|1,5
+movcomp2=150|1,12|1,13|1,14
+movcomp2=370|1,15|1,16|1,17
+movcomp3=0|1,6|2,7|1,8
+movcomp3=150|1,18|2,19|1,20
+movcomp3=370|1,21|2,22|1,23
+movcomp4=0|1,9|3,10|2,11
+movcomp4=150|1,27|3,28|2,29
+movcomp4=370|1,24|3,25|2,26
