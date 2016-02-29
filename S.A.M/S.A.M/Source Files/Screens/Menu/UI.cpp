@@ -92,7 +92,6 @@ void UI::Render(int offset)
 	{
 		_tempOffset = L"Go Go Go";
 	}
-	wstring _tempBeat = L"Beat: " + to_wstring(m_stats->GetBeat());
 	m_spriteBatch->Begin();
 	if (offset - m_stats->GetBeat() >= -4)
 	{

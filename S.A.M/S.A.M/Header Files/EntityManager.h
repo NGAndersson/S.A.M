@@ -76,8 +76,10 @@ private:
 	std::vector<Entity*> m_enemy4;
 	std::vector<ExplosionPart*> m_explosion;
 	Entity* m_player;
+	bool m_renderPlayer = true;
 	FirePart* m_rocketPartSys;	//fire for the rockets
 	PlayerPart* m_playerPartSys;	//fire for player
+	bool m_renderFire = true;
 	Collision m_collision;
 	Shootingpatterns m_EnemyPatterns;	//holds the shooting patterns for enemies
 

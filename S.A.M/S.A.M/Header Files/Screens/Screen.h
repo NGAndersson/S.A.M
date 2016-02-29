@@ -28,14 +28,16 @@ public:
 	virtual MenuScreens GetTargetMenu() { return m_currentTargetMenu; }
 	virtual void SetTargetMenu(MenuScreens menu) { m_currentTargetMenu = menu; }
 	virtual void Reset(){}
-	virtual string GetSelectedSongFile() {	return "You shouldn't be here";}
-	virtual string GetScoreFile() { return "You shouldn't be here"; }
+	virtual string GetSelectedSongFile() {	return "Virtual function, you shouldn't see this";}
+	virtual string GetScoreFile() { return "Virtual function, you shouldn't see this"; }
+	virtual wstring GetPlayerName() { return L"Virtual function, you shouldn't see this"; }
 	virtual void saveSettings(){}
 protected:
 	struct Font
 	{
 		SimpleMath::Vector2 m_position;
 		SimpleMath::Vector2 m_origin;
+		SimpleMath::Vector2 m_length;
 		XMVECTORF32 m_color;
 	};
 

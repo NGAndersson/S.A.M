@@ -61,6 +61,13 @@ private:
 	int m_defRes;
 	int m_tempWidth[4], m_tempHeight[4];
 	int m_volym[10];
+
+	wstring m_boundKeys[9];
+	SimpleMath::Vector2 m_boundKeyPos[9];
+
+	SimpleMath::Vector3 m_scaleMenu;
+	SimpleMath::Vector3 m_scaleKey;
+
 	//Shit for Keybindings
 	wstring m_keys[9];
 	Font m_keyChoice[9];

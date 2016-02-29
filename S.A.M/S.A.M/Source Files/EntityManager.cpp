@@ -68,44 +68,16 @@ void EntityManager::SpawnEntity(HandlerIndex type)
 		m_player = new Player(m_soundManager, MAPWIDTH,MAPLENGTH,XMFLOAT3(MAPWIDTH / 2, 0.0f, MAPLENGTH / 4), XMFLOAT3(1.0f, 1.0f, 1.0f), 1, m_input);
 		break;
 	case(ENEMY1) :
-		for (auto i = 0; i < m_enemy1MovPatterns.size(); i++)
-		{
-			if (m_enemy1MovPatterns[m_enemy1MovPatterns.size() - 1 - i].first < m_statsManager->GetBeat())
-			{
-				m_enemy1.push_back(new Enemy_1(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(_tempX, 0.0f, 110), m_enemySize1, m_enemyHealth1, m_enemy1MovPatterns[m_enemy1MovPatterns.size() - 1 - i].second));
-				i = m_enemy1MovPatterns.size();
-			}	
-		}
+		m_enemy1.push_back(new Enemy_1(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(_tempX, 0.0f, 110), m_enemySize1, m_enemyHealth1,m_enemy1MovPatterns[0].second));
 		break;
 	case(ENEMY2) :
-		for (auto i = 0; i < m_enemy2MovPatterns.size(); i++)
-		{
-			if (m_enemy2MovPatterns[m_enemy2MovPatterns.size() - 1 - i].first < m_statsManager->GetBeat())
-			{
-				m_enemy2.push_back(new Enemy_2(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(_tempX, 0.0f, 110), m_enemySize2, m_enemyHealth2, m_enemy2MovPatterns[m_enemy2MovPatterns.size() - 1 - i].second));
-				i = m_enemy2MovPatterns.size();
-			}
-		}
+		m_enemy2.push_back(new Enemy_2(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(_tempX, 0.0f, 110), m_enemySize2, m_enemyHealth2, m_enemy2MovPatterns[0].second));
 		break;
 	case(ENEMY3) :
-		for (auto i = 0; i < m_enemy3MovPatterns.size(); i++)
-		{
-			if (m_enemy3MovPatterns[m_enemy3MovPatterns.size() - 1 - i].first < m_statsManager->GetBeat())
-			{
-				m_enemy3.push_back(new Enemy_3(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(_tempX, 0.0f, 110), m_enemySize3, m_enemyHealth3, m_enemy3MovPatterns[m_enemy3MovPatterns.size() - 1 - i].second));
-				i = m_enemy3MovPatterns.size();
-			}
-		}
+		m_enemy3.push_back(new Enemy_3(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(_tempX, 0.0f, 110), m_enemySize3, m_enemyHealth3, m_enemy3MovPatterns[0].second));
 		break;
 	case(ENEMY4) :
-		for (auto i = 0; i < m_enemy4MovPatterns.size(); i++)
-		{
-			if (m_enemy4MovPatterns[m_enemy4MovPatterns.size() - 1 - i].first < m_statsManager->GetBeat())
-			{
-				m_enemy4.push_back(new Enemy_4(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(_tempX, 0.0f, 110), m_enemySize4, m_enemyHealth4, m_enemy4MovPatterns[m_enemy4MovPatterns.size() - 1 - i].second));
-				i = m_enemy4MovPatterns.size();
-			}
-		}
+		m_enemy4.push_back(new Enemy_4(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(_tempX, 0.0f, 110), m_enemySize4, m_enemyHealth4, m_enemy4MovPatterns[0].second));
 		break;
 	case(BULLET1) :
 		m_bullet1.push_back(new Bullet_p1(m_soundManager, MAPWIDTH, MAPLENGTH, m_player->GetPosition(), XMFLOAT3(0.5, 0.5, 0.5), 1, m_modelHandlers[BULLET1]->GetDeffuse()));
@@ -210,7 +182,6 @@ void EntityManager::Initialize(SoundManager* soundManager, Input* input, ID3D11D
 	m_playerPartSys->CreateBuffer(m_device, m_deviceContext, _texName);
 
 
-
 	//Create Light Buffer
 	m_light.InitializBuffer(m_device);
 }
@@ -225,9 +196,12 @@ void EntityManager::Render()
 		m_rocketPartSys->Render(m_deviceContext);
 	}
 
-	m_shaderLoad[SHADER_PLAYERPART]->SetShaders(m_deviceContext);
-	m_playerPartSys->SetBuffer(m_deviceContext);
-	m_playerPartSys->Render(m_deviceContext);
+	if (m_renderFire == true)
+	{
+		m_shaderLoad[SHADER_PLAYERPART]->SetShaders(m_deviceContext);
+		m_playerPartSys->SetBuffer(m_deviceContext);
+		m_playerPartSys->Render(m_deviceContext);
+	}
 
 	for (int i = 0; i < m_explosion.size(); i++)
 	{
@@ -236,10 +210,13 @@ void EntityManager::Render()
 	}
 
 	//Render Player
-	if (m_player->GetHealth() > 0)			//Invulnerability-blinking
+	if (m_renderPlayer == true)
 	{
-		m_shaderLoad[SHADER_PLAYER]->SetShaders(m_deviceContext);
-		m_renderer->Render(m_modelHandlers[PLAYER], m_player->GetPosition(), m_player->GetRotation(), m_player->GetScale());
+		if (m_player->GetHealth() > 0)			//Invulnerability-blinking
+		{
+			m_shaderLoad[SHADER_PLAYER]->SetShaders(m_deviceContext);
+			m_renderer->Render(m_modelHandlers[PLAYER], m_player->GetPosition(), m_player->GetRotation(), m_player->GetScale());
+		}
 	}
 	m_shaderLoad[SHADER_BULLET]->SetShaders(m_deviceContext);
 	RenderBullets();
@@ -292,7 +269,6 @@ void EntityManager::Update(double time)
 	else {
 		//BeatDet test
 		float _currentPos = m_soundManager->GetCurrentMusicTimePCM() / 1024.f;
-		m_statsManager->SetShit(m_beat[(int)_currentPos]);
 		if (m_beat[(int)_currentPos] > 0.0f && m_timeSinceLastBeat > 100)		//Small time buffer to prevent it from going off 50 times per beat 
 		{
 			//BEAT WAS DETECTED
@@ -451,18 +427,23 @@ void EntityManager::Update(double time)
 
 	//Update Particle System
 	std::vector<Entity*> _playerVec = { m_player };
+
 	m_rocketPartSys->Update(m_deviceContext, time, 35);
-	if (m_input->CheckKeyBoardInput() == INPUT_MOVE_DOWN)
+	
+	if (m_playerPartSys != NULL)
 	{
-		m_playerPartSys->Update(m_deviceContext, time, 75, _playerVec);
-	}
-	else if (m_input->CheckKeyBoardInput() == INPUT_MOVE_UP)
-	{
-		m_playerPartSys->Update(m_deviceContext, time, 35, _playerVec);
-	}
-	else 
-	{
-		m_playerPartSys->Update(m_deviceContext, time, 25, _playerVec);
+		if (m_input->CheckKeyBoardInput() == INPUT_MOVE_DOWN)
+		{
+			m_playerPartSys->Update(m_deviceContext, time, 75, _playerVec);
+		}
+		else if (m_input->CheckKeyBoardInput() == INPUT_MOVE_UP)
+		{
+			m_playerPartSys->Update(m_deviceContext, time, 35, _playerVec);
+		}
+		else
+		{
+			m_playerPartSys->Update(m_deviceContext, time, 25, _playerVec);
+		}
 	}
 }
 
@@ -541,7 +522,7 @@ void EntityManager::InitMusic(const std::string &filename)
 					m_enemySpawnRateDivider4.push_back(_spawnDiv);
 			}
 
-			else if (std::string(_key) == "EnemySize1")	//Mov patterns
+			else if (std::string(_key) == "EnemySize1")
 			{
 				_ss = istringstream(_value);
 				string _floatVec;				//For keeping xmfloat3 string
@@ -559,7 +540,7 @@ void EntityManager::InitMusic(const std::string &filename)
 					m_enemySize1.z = stoi(_coord);
 				}
 			}
-			else if (std::string(_key) == "EnemySize2")	//Mov patterns
+			else if (std::string(_key) == "EnemySize2")
 			{
 				_ss = istringstream(_value);
 				string _floatVec;				//For keeping xmfloat3 string
@@ -577,7 +558,7 @@ void EntityManager::InitMusic(const std::string &filename)
 					m_enemySize2.z = stoi(_coord);
 				}
 			}
-			else if (std::string(_key) == "EnemySize3")	//Mov patterns
+			else if (std::string(_key) == "EnemySize3")
 			{
 				_ss = istringstream(_value);
 				string _floatVec;				//For keeping xmfloat3 string
@@ -595,7 +576,7 @@ void EntityManager::InitMusic(const std::string &filename)
 					m_enemySize3.z = stoi(_coord);
 				}
 			}
-			else if (std::string(_key) == "EnemySize4")	//Mov patterns
+			else if (std::string(_key) == "EnemySize4")
 			{
 				_ss = istringstream(_value);
 				string _floatVec;				//For keeping xmfloat3 string
@@ -691,6 +672,9 @@ void EntityManager::InitMusic(const std::string &filename)
 	m_doBeatDet = true;				//Make this changable at song select
 	m_beat = m_beatDetector->GetBeat();
 	m_EnemyPatterns.LoadPatterns(filename);
+
+	m_renderFire = true;
+	m_renderPlayer = true;
 }
 
 void EntityManager::Reset()
@@ -752,6 +736,8 @@ void EntityManager::Reset()
 	m_offset = 0;				
 	m_player->SetDelete(true);
 	m_doBeatDet = true;
+	m_renderFire = false;
+	m_renderPlayer = false;
 }
 
 void EntityManager::BeatWasDetected()

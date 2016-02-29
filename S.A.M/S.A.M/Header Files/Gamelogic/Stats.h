@@ -24,8 +24,6 @@ public:
 	int GetBeat() { return m_beat;}
 	void ResetBeat() { m_beat = 0; }
 	void AddBeat() { m_beat++; }
-	float GetShit() { return m_shit; }
-	void SetShit(float f) { m_shit = f; }
 private:
 	std::string m_filename;
 	int m_score;
@@ -33,7 +31,6 @@ private:
 	int m_lives;
 	int m_combo = 0;
 	int m_beat = 0;
-	float m_shit;
 public:
 };
 
