@@ -86,12 +86,12 @@ void LightHandler::beatBoost(bool beat, float time, float timeSinceLast, float B
 		if (timeSinceLast != -1)
 		{
 			m_beatBoost = 4;
-			m_beatTime = (timeSinceLast) * 3;
+			m_beatTime = (timeSinceLast) / 3;
 		}
 		else
 		{
 			m_beatBoost = 4;
-			m_beatTime = (60 / BPM) * 3;
+			m_beatTime = (60 / BPM) / 3;
 		}
 	}
 	else if (beat == false)
