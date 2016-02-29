@@ -36,6 +36,7 @@ protected:
 	{
 		SimpleMath::Vector2 m_position;
 		SimpleMath::Vector2 m_origin;
+		SimpleMath::Vector2 m_length;
 		XMVECTORF32 m_color;
 	};
 
