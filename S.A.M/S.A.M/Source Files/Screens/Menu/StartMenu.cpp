@@ -6,7 +6,7 @@ StartMenu::StartMenu(ID3D11Device* Device, ID3D11DeviceContext* DeviceContext, i
 	
 	SimpleMath::Vector2 _offsetV;
 	_offsetV.x = 0.0f;
-	_offsetV.y = 50.f;
+	_offsetV.y = 50.f * (float(m_screenHeight) / float(1440));
 
 	m_choices[0].m_position.y = m_screenHeight / 2 - _offsetV.y * 2;
 	m_choices[0].m_position.x = m_screenWidth / 2;
@@ -67,13 +67,13 @@ void StartMenu::Render()
 {
 	m_spriteBatch->Begin();
 
-	m_font->DrawString(m_spriteBatch.get(), m_start.c_str(), m_choices[0].m_position, m_choices[0].m_color, 0.f, m_choices[0].m_origin);
+	m_font->DrawString(m_spriteBatch.get(), m_start.c_str(), m_choices[0].m_position, m_choices[0].m_color, 0.f, m_choices[0].m_origin, float(m_screenWidth) / float(1058));
 
-	m_font->DrawString(m_spriteBatch.get(), m_options.c_str(), m_choices[1].m_position, m_choices[1].m_color, 0.f, m_choices[1].m_origin);
+	m_font->DrawString(m_spriteBatch.get(), m_options.c_str(), m_choices[1].m_position, m_choices[1].m_color, 0.f, m_choices[1].m_origin, float(m_screenWidth) / float(1058));
 
-	m_font->DrawString(m_spriteBatch.get(), m_highScore.c_str(), m_choices[2].m_position, m_choices[2].m_color, 0.f, m_choices[2].m_origin);
+	m_font->DrawString(m_spriteBatch.get(), m_highScore.c_str(), m_choices[2].m_position, m_choices[2].m_color, 0.f, m_choices[2].m_origin, float(m_screenWidth) / float(1058));
  
-	m_font->DrawString(m_spriteBatch.get(), m_exit.c_str(), m_choices[3].m_position, m_choices[3].m_color, 0.f, m_choices[3].m_origin);
+	m_font->DrawString(m_spriteBatch.get(), m_exit.c_str(), m_choices[3].m_position, m_choices[3].m_color, 0.f, m_choices[3].m_origin, float(m_screenWidth) / float(1058));
 
 	m_spriteBatch->End();
 }
