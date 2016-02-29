@@ -256,6 +256,17 @@ void SoundManager::LoadMusic(char * fileName)
 	void* _ptr2;
 	unsigned int _length1;
 	unsigned int _length2;
+	if (m_dataLeftChannel != nullptr)
+	{
+		delete m_dataLeftChannel;
+		m_dataLeftChannel = nullptr;
+	}
+	if (m_dataRightChannel != nullptr)
+	{
+		delete m_dataRightChannel;
+		m_dataRightChannel = nullptr;
+	}
+		
 	m_dataLeftChannel = new int[m_musicLength];
 	m_dataRightChannel = new int[m_musicLength];
 	m_musicSound->lock(0, m_musicLength, &_ptr1, &_ptr2, &_length1, &_length2);
