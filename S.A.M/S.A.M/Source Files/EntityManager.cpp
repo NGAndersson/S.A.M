@@ -329,37 +329,37 @@ void EntityManager::Update(double time)
 	//Do collision checks
 	int _addScore = 0;
 	//Check Bullet1 agains Enemies
-	_addScore += m_collision.CheckCollisionEntity(&m_bullet1, &m_enemy1,BULLET1, ENEMY1, &m_explosion, m_device, m_deviceContext);
-	_addScore += m_collision.CheckCollisionEntity(&m_bullet1, &m_enemy2,BULLET1, ENEMY2, &m_explosion, m_device, m_deviceContext);
-	_addScore += m_collision.CheckCollisionEntity(&m_bullet1, &m_enemy3,BULLET1, ENEMY3, &m_explosion, m_device, m_deviceContext);
-	_addScore += m_collision.CheckCollisionEntity(&m_bullet1, &m_enemy4,BULLET1, ENEMY4, &m_explosion, m_device, m_deviceContext);
+	_addScore += m_collision.CheckCollisionEntity(&m_bullet1, &m_enemy1,BULLET1, ENEMY1, &m_explosion, m_device, m_deviceContext, time);
+	_addScore += m_collision.CheckCollisionEntity(&m_bullet1, &m_enemy2,BULLET1, ENEMY2, &m_explosion, m_device, m_deviceContext, time);
+	_addScore += m_collision.CheckCollisionEntity(&m_bullet1, &m_enemy3,BULLET1, ENEMY3, &m_explosion, m_device, m_deviceContext, time);
+	_addScore += m_collision.CheckCollisionEntity(&m_bullet1, &m_enemy4,BULLET1, ENEMY4, &m_explosion, m_device, m_deviceContext, time);
 
 
 	//Check Bullet2 agains Enemies
-	_addScore += m_collision.CheckCollisionEntity(&m_bullet2, &m_enemy1,BULLET2, ENEMY1, &m_explosion, m_device, m_deviceContext);
-	_addScore += m_collision.CheckCollisionEntity(&m_bullet2, &m_enemy2,BULLET2, ENEMY2, &m_explosion, m_device, m_deviceContext);
-	_addScore += m_collision.CheckCollisionEntity(&m_bullet2, &m_enemy3,BULLET2, ENEMY3, &m_explosion, m_device, m_deviceContext);
-	_addScore += m_collision.CheckCollisionEntity(&m_bullet2, &m_enemy4,BULLET2, ENEMY4, &m_explosion, m_device, m_deviceContext);
+	_addScore += m_collision.CheckCollisionEntity(&m_bullet2, &m_enemy1,BULLET2, ENEMY1, &m_explosion, m_device, m_deviceContext, time);
+	_addScore += m_collision.CheckCollisionEntity(&m_bullet2, &m_enemy2,BULLET2, ENEMY2, &m_explosion, m_device, m_deviceContext, time);
+	_addScore += m_collision.CheckCollisionEntity(&m_bullet2, &m_enemy3,BULLET2, ENEMY3, &m_explosion, m_device, m_deviceContext, time);
+	_addScore += m_collision.CheckCollisionEntity(&m_bullet2, &m_enemy4,BULLET2, ENEMY4, &m_explosion, m_device, m_deviceContext, time);
 
 
 	//Check Bullet3 agains Enemies
-	_addScore += m_collision.CheckCollisionEntity(&m_bullet3, &m_enemy1,BULLET3, ENEMY1, &m_explosion, m_device, m_deviceContext);
-	_addScore += m_collision.CheckCollisionEntity(&m_bullet3, &m_enemy2,BULLET3, ENEMY2, &m_explosion, m_device, m_deviceContext);
-	_addScore += m_collision.CheckCollisionEntity(&m_bullet3, &m_enemy3,BULLET3, ENEMY3, &m_explosion, m_device, m_deviceContext);
-	_addScore += m_collision.CheckCollisionEntity(&m_bullet3, &m_enemy4,BULLET3, ENEMY4, &m_explosion, m_device, m_deviceContext);
+	_addScore += m_collision.CheckCollisionEntity(&m_bullet3, &m_enemy1,BULLET3, ENEMY1, &m_explosion, m_device, m_deviceContext, time);
+	_addScore += m_collision.CheckCollisionEntity(&m_bullet3, &m_enemy2,BULLET3, ENEMY2, &m_explosion, m_device, m_deviceContext, time);
+	_addScore += m_collision.CheckCollisionEntity(&m_bullet3, &m_enemy3,BULLET3, ENEMY3, &m_explosion, m_device, m_deviceContext, time);
+	_addScore += m_collision.CheckCollisionEntity(&m_bullet3, &m_enemy4,BULLET3, ENEMY4, &m_explosion, m_device, m_deviceContext, time);
 
 
 	//Check Bullet4 agains Enemies
-	_addScore += m_collision.CheckCollisionEntity(&m_bullet4, &m_enemy1,BULLET4, ENEMY1, &m_explosion, m_device, m_deviceContext);
-	_addScore += m_collision.CheckCollisionEntity(&m_bullet4, &m_enemy2,BULLET4, ENEMY2, &m_explosion, m_device, m_deviceContext);
-	_addScore += m_collision.CheckCollisionEntity(&m_bullet4, &m_enemy3,BULLET4, ENEMY3, &m_explosion, m_device, m_deviceContext);
-	_addScore += m_collision.CheckCollisionEntity(&m_bullet4, &m_enemy4,BULLET4, ENEMY4, &m_explosion, m_device, m_deviceContext);
+	_addScore += m_collision.CheckCollisionEntity(&m_bullet4, &m_enemy1,BULLET4, ENEMY1, &m_explosion, m_device, m_deviceContext, time);
+	_addScore += m_collision.CheckCollisionEntity(&m_bullet4, &m_enemy2,BULLET4, ENEMY2, &m_explosion, m_device, m_deviceContext, time);
+	_addScore += m_collision.CheckCollisionEntity(&m_bullet4, &m_enemy3,BULLET4, ENEMY3, &m_explosion, m_device, m_deviceContext, time);
+	_addScore += m_collision.CheckCollisionEntity(&m_bullet4, &m_enemy4,BULLET4, ENEMY4, &m_explosion, m_device, m_deviceContext, time);
 
 	//Check Bullet5 agains Enemies
-	_addScore += m_collision.CheckCollisionEntity(&m_bullet5, &m_enemy1,BULLET5, ENEMY1, &m_explosion, m_device, m_deviceContext);
-	_addScore += m_collision.CheckCollisionEntity(&m_bullet5, &m_enemy2,BULLET5, ENEMY2, &m_explosion, m_device, m_deviceContext);
-	_addScore += m_collision.CheckCollisionEntity(&m_bullet5, &m_enemy3,BULLET5, ENEMY3, &m_explosion, m_device, m_deviceContext);
-	_addScore += m_collision.CheckCollisionEntity(&m_bullet5, &m_enemy4,BULLET5, ENEMY4, &m_explosion, m_device, m_deviceContext);
+	_addScore += m_collision.CheckCollisionEntity(&m_bullet5, &m_enemy1,BULLET5, ENEMY1, &m_explosion, m_device, m_deviceContext, time);
+	_addScore += m_collision.CheckCollisionEntity(&m_bullet5, &m_enemy2,BULLET5, ENEMY2, &m_explosion, m_device, m_deviceContext, time);
+	_addScore += m_collision.CheckCollisionEntity(&m_bullet5, &m_enemy3,BULLET5, ENEMY3, &m_explosion, m_device, m_deviceContext, time);
+	_addScore += m_collision.CheckCollisionEntity(&m_bullet5, &m_enemy4,BULLET5, ENEMY4, &m_explosion, m_device, m_deviceContext, time);
 
 	m_statsManager->AddScore(_addScore*(m_statsManager->GetCombo()+1));
 
@@ -367,7 +367,7 @@ void EntityManager::Update(double time)
 	if (!m_player->GetInvulnerable())			//Only check if the player is alive and well
 	{
 		std::vector<Entity*> _playerVec = { m_player };
-		m_collision.CheckCollisionEntity(&m_bullet6, &_playerVec, BULLET6, PLAYER, &m_explosion, m_device, m_deviceContext);
+		m_collision.CheckCollisionEntity(&m_bullet6, &_playerVec, BULLET6, PLAYER, &m_explosion, m_device, m_deviceContext, time);
 		if (m_player->GetHealth() <= 0)
 		{
 			m_statsManager->ResetCombo();
