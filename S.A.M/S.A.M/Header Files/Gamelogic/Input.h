@@ -52,7 +52,7 @@ public:
 	Input();
 	~Input();
 
-	void Initialize(HINSTANCE hInstance, HWND& hwnd,int ScreenWidth,int ScreenHeight);//initializez the input class
+	void Initialize(HINSTANCE hInstance, HWND& hwnd);//initializez the input class
 	wstring GetKeyBinding(int key) {
 		for (int i = 0; i < 51; i++)
 		{

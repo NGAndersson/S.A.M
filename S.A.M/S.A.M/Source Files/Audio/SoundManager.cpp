@@ -6,8 +6,10 @@
 #include <time.h>
 #include <algorithm>
 
-SoundManager::SoundManager() 
+SoundManager::SoundManager(float musicVol,float effectvol) 
 {
+	m_musicVolume = musicVol;
+	m_effectVolume = effectvol;
 	InitFMOD();
 }
 
@@ -37,7 +39,6 @@ void SoundManager::MessageBoxAndShutDown(std::stringstream* _ss) {
 		MB_ICONERROR | MB_OK);
 	exit(-1);
 }
-
 
 void SoundManager::FindSoundIndex(char* soundName, int &groupIndex, int &soundIndex)
 {
@@ -225,7 +226,7 @@ void SoundManager::PlayOneShotSound(char* soundName, float volume)
 	if (_groupIndex != -1 && _soundIndex != -1) 
 	{
 		m_result = m_system->playSound(FMOD_CHANNEL_FREE, m_sounds[_groupIndex][_soundIndex], false, &m_soundChannels[_groupIndex][_soundIndex]);
-		m_soundChannels[_groupIndex][_soundIndex]->setVolume(volume);
+		m_soundChannels[_groupIndex][_soundIndex]->setVolume(m_effectVolume);
 		FMODErrorCheck(m_result);
 	}
 	else if (_groupIndex != -1) {
@@ -233,7 +234,7 @@ void SoundManager::PlayOneShotSound(char* soundName, float volume)
 		int _randomInt = rand() % m_sounds[_groupIndex].size();
 
 		m_result = m_system->playSound(FMOD_CHANNEL_FREE, m_sounds[_groupIndex][_randomInt], false, &m_soundChannels[_groupIndex][_randomInt]);
-		m_soundChannels[_groupIndex][_randomInt]->setVolume(volume);
+		m_soundChannels[_groupIndex][_randomInt]->setVolume(m_effectVolume);
 		FMODErrorCheck(m_result);
 	}
 
@@ -255,6 +256,17 @@ void SoundManager::LoadMusic(char * fileName)
 	void* _ptr2;
 	unsigned int _length1;
 	unsigned int _length2;
+	if (m_dataLeftChannel != nullptr)
+	{
+		delete m_dataLeftChannel;
+		m_dataLeftChannel = nullptr;
+	}
+	if (m_dataRightChannel != nullptr)
+	{
+		delete m_dataRightChannel;
+		m_dataRightChannel = nullptr;
+	}
+		
 	m_dataLeftChannel = new int[m_musicLength];
 	m_dataRightChannel = new int[m_musicLength];
 	m_musicSound->lock(0, m_musicLength, &_ptr1, &_ptr2, &_length1, &_length2);
@@ -274,7 +286,7 @@ void SoundManager::PlayMusic(float volume)
 	if (!_isPlaying)
 	{
 		m_result = m_system->playSound(FMOD_CHANNEL_FREE, m_musicSound, false, &m_musicChannel);
-		m_musicChannel->setVolume(volume);
+		m_musicChannel->setVolume(m_musicVolume);
 	}
 }
 

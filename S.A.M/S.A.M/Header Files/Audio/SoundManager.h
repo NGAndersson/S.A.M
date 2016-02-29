@@ -27,7 +27,7 @@ class SoundManager
 		void FindSoundIndex(char* soundName, int &groupIndex, int &soundIndex);	//Finds the sound and group index of a sound name
 		int FindGroupIndex(char* groupName);	//Same as FindSoundIndex() but only looks for matching groups
 	public:
-		SoundManager();
+		SoundManager(float musicVol, float effectvol);
 		~SoundManager();
 		void LoadSound(char* fileName, char* soundName, char* groupName, SoundFlags flags);	//Loads sound into array 
 		void PlayOneShotSound(char* soundName, float volume);				//Plays a sound with a specific name, at volume 0.0-1.0
@@ -43,7 +43,10 @@ class SoundManager
 		unsigned int GetLength() { return m_musicLength; }
 		unsigned int GetLengthMS() { unsigned int l; m_musicSound->getLength(&l, FMOD_TIMEUNIT_MS); return l;}
 		int GetCurrentMusicTimePCM();
-
+		void SetMusicVolume(float in) { m_musicVolume = in; }
+		void SetEffectVolume(float in) { m_effectVolume = in; }
+		float GetMusicVolume() { return m_musicVolume; }
+		float GetEffectVolume() {return m_effectVolume; }
 
 	//Variables
 	private:
@@ -54,6 +57,7 @@ class SoundManager
 		FMOD_SPEAKERMODE m_speakerMode;		//User speakermode
 		FMOD_CAPS m_caps;					//??? Soundcard capabilities ???
 		char m_name[256];					//Name of sound driver
+		float m_musicVolume =0.5,m_effectVolume = 0.5;//Volume
 
 		std::vector<std::vector<FMOD::Sound*>> m_sounds;	//Groups of sounds (for variation of the same kind of sound)
 		std::vector<std::vector<char*>> m_soundIndexes;		//Indexes of groups based on name
@@ -64,8 +68,8 @@ class SoundManager
 		FMOD::Sound* m_musicSound;
 		FMOD::Channel* m_musicChannel;
 		unsigned int m_musicLength;
-		int* m_dataLeftChannel;
-		int* m_dataRightChannel;
+		int* m_dataLeftChannel = nullptr;
+		int* m_dataRightChannel = nullptr;
 };
 
 #endif // !_SOUNDMANAGER_H_

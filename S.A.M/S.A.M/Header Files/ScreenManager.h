@@ -15,6 +15,8 @@
 #include "Screens\Menu\OptionsMenu.h"
 #include "Screens\Menu\SongSelect.h"
 
+enum newOptions { NO_NEW, NEW_RES };
+
 class ScreenManager
 {
 //----------------------------Functions----------------------------------------
@@ -23,11 +25,11 @@ public:
 	ScreenManager();
 	~ScreenManager();
 	//Uppdate screens
-	void Update(double time);
+	newOptions Update(double time);
 	//Initializing the screen manager
 	void InitializeScreen(ID3D11Device* Device, ID3D11DeviceContext* DeviceContext, int ScreenHeight, int ScreenWidth, Input* input,Stats* stats, SoundManager* soundManager);
 	//Rendercall
-	void Render();
+	void Render(int offset);
 	//Returns the current screen
 	MenuScreens GetCurrentScreen() { return m_current; }
 	bool GetGameState() { return m_gameOngoing; }

@@ -54,8 +54,9 @@ public:
 	void Render();
 	void Update(double time);
 	void InitMusic(const std::string &filename);
-
+	void Reset();
 	int GetPlayerHealth();
+	int GetOffset();
 
 	//Variables
 private:
@@ -75,10 +76,10 @@ private:
 	std::vector<Entity*> m_enemy4;
 	std::vector<ExplosionPart*> m_explosion;
 	Entity* m_player;
-	FirePart* m_rocketPartSys;
-	PlayerPart* m_playerPartSys;
+	FirePart* m_rocketPartSys;	//fire for the rockets
+	PlayerPart* m_playerPartSys;	//fire for player
 	Collision m_collision;
-	Shootingpatterns m_EnemyPatterns;
+	Shootingpatterns m_EnemyPatterns;	//holds the shooting patterns for enemies
 
 	std::vector<std::pair<int, std::vector<XMFLOAT3>>> m_enemy1MovPatterns;
 	std::vector<std::pair<int, std::vector<XMFLOAT3>>> m_enemy2MovPatterns;
@@ -88,6 +89,21 @@ private:
 	int m_beatPerShot2 = 3;
 	int m_beatPerShot3 = 3;
 	int m_beatPerShot4 = 3;
+
+	std::vector<std::pair<int, float>> m_enemySpawnRateDivider1;
+	std::vector<std::pair<int, float>> m_enemySpawnRateDivider2;
+	std::vector<std::pair<int, float>> m_enemySpawnRateDivider3;
+	std::vector<std::pair<int, float>> m_enemySpawnRateDivider4;
+
+	XMFLOAT3 m_enemySize1 = { 1, 1, 1 };
+	XMFLOAT3 m_enemySize2 = { 1, 1, 1 };
+	XMFLOAT3 m_enemySize3 = { 1, 1, 1 };
+	XMFLOAT3 m_enemySize4 = { 1, 1, 1 };
+
+	int m_enemyHealth1 = 1000;
+	int m_enemyHealth2 = 1000;
+	int m_enemyHealth3 = 1000;
+	int m_enemyHealth4 = 1000;
 
 	Stats* m_statsManager;
 
@@ -101,8 +117,7 @@ private:
 	int m_currentBPM, m_beatNumber = 0;
 	double m_timeSinceLastBeat = 0.0f;
 	int m_offset = 0;				//Beats to skip in the beginning (for intros without music etc)
-	int m_offsetCount = 0;			//If greater than m_offset, do stuff on the beat
-									//ADD ENDING OFFSETS
+									//ADD ENDING OFFSETS?
 	bool m_doBeatDet;
 	float* m_beat;
 	int m_level;

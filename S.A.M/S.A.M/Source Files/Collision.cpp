@@ -26,7 +26,7 @@ bool Collision::CheckCollision(BoundingBox Entitiy1, BoundingBox Entity2)
 	return false;
 }
 
-int Collision::CheckCollisionEntity(vector<Entity*>* Entity_1, vector<Entity*>* Entity_2, HandlerIndex EntityType1, HandlerIndex EntityType2, vector<ExplosionPart*>* Explosion, ID3D11Device* device, ID3D11DeviceContext* deviceContext)
+int Collision::CheckCollisionEntity(vector<Entity*>* Entity_1, vector<Entity*>* Entity_2, HandlerIndex EntityType1, HandlerIndex EntityType2, vector<ExplosionPart*>* Explosion, ID3D11Device* device, ID3D11DeviceContext* deviceContext, float time)
 {
 	int _returnScore = 0;
 	for (auto i = 0; i < Entity_1->size(); i++)
@@ -42,7 +42,7 @@ int Collision::CheckCollisionEntity(vector<Entity*>* Entity_1, vector<Entity*>* 
 						(*Entity_2)[j]->AddHealth(-1000);		//Normal bullets do 100 damage
 					}
 					else
-						(*Entity_2)[j]->AddHealth(-4);			//Laser does 1 damage (per-frame)
+						(*Entity_2)[j]->AddHealth(-2500 * time);			//Laser does 500 damage (per-shoot if all hit)
 
 					if ((*Entity_2)[j]->GetHealth() <= 0 && EntityType2 != PLAYER)
 					{

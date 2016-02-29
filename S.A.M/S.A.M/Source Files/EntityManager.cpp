@@ -65,19 +65,47 @@ void EntityManager::SpawnEntity(HandlerIndex type)
 
 	switch (type) {
 	case(PLAYER) :
-		m_player = new Player(m_soundManager, MAPWIDTH,MAPLENGTH,XMFLOAT3(MAPWIDTH / 2, 0.0f, MAPLENGTH / 2), XMFLOAT3(1.0f, 1.0f, 1.0f), 1, m_input);
+		m_player = new Player(m_soundManager, MAPWIDTH,MAPLENGTH,XMFLOAT3(MAPWIDTH / 2, 0.0f, MAPLENGTH / 4), XMFLOAT3(1.0f, 1.0f, 1.0f), 1, m_input);
 		break;
 	case(ENEMY1) :
-		m_enemy1.push_back(new Enemy_1(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(_tempX, 0.0f, 110), XMFLOAT3(2.0f, 2.0f, 2.0f), 1000,m_enemy1MovPatterns[0].second));
+		for (auto i = 0; i < m_enemy1MovPatterns.size(); i++)
+		{
+			if (m_enemy1MovPatterns[m_enemy1MovPatterns.size() - 1 - i].first < m_statsManager->GetBeat())
+			{
+				m_enemy1.push_back(new Enemy_1(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(_tempX, 0.0f, 110), m_enemySize1, m_enemyHealth1, m_enemy1MovPatterns[m_enemy1MovPatterns.size() - 1 - i].second));
+				i = m_enemy1MovPatterns.size();
+			}	
+		}
 		break;
 	case(ENEMY2) :
-		m_enemy2.push_back(new Enemy_2(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(_tempX, 0.0f, 110), XMFLOAT3(1.0f, 1.0f, 1.0f), 500, m_enemy1MovPatterns[0].second));
+		for (auto i = 0; i < m_enemy2MovPatterns.size(); i++)
+		{
+			if (m_enemy2MovPatterns[m_enemy2MovPatterns.size() - 1 - i].first < m_statsManager->GetBeat())
+			{
+				m_enemy2.push_back(new Enemy_2(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(_tempX, 0.0f, 110), m_enemySize2, m_enemyHealth2, m_enemy2MovPatterns[m_enemy2MovPatterns.size() - 1 - i].second));
+				i = m_enemy2MovPatterns.size();
+			}
+		}
 		break;
 	case(ENEMY3) :
-		m_enemy3.push_back(new Enemy_3(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(_tempX, 0.0f, 110), XMFLOAT3(4.0f, 4.0f, 4.0f), 6000, m_enemy1MovPatterns[0].second));
+		for (auto i = 0; i < m_enemy3MovPatterns.size(); i++)
+		{
+			if (m_enemy3MovPatterns[m_enemy3MovPatterns.size() - 1 - i].first < m_statsManager->GetBeat())
+			{
+				m_enemy3.push_back(new Enemy_3(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(_tempX, 0.0f, 110), m_enemySize3, m_enemyHealth3, m_enemy3MovPatterns[m_enemy3MovPatterns.size() - 1 - i].second));
+				i = m_enemy3MovPatterns.size();
+			}
+		}
 		break;
 	case(ENEMY4) :
-		m_enemy4.push_back(new Enemy_4(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(_tempX, 0.0f, 110), XMFLOAT3(6.0f, 6.0f, 6.0f), 10000, m_enemy1MovPatterns[0].second));
+		for (auto i = 0; i < m_enemy4MovPatterns.size(); i++)
+		{
+			if (m_enemy4MovPatterns[m_enemy4MovPatterns.size() - 1 - i].first < m_statsManager->GetBeat())
+			{
+				m_enemy4.push_back(new Enemy_4(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(_tempX, 0.0f, 110), m_enemySize4, m_enemyHealth4, m_enemy4MovPatterns[m_enemy4MovPatterns.size() - 1 - i].second));
+				i = m_enemy4MovPatterns.size();
+			}
+		}
 		break;
 	case(BULLET1) :
 		m_bullet1.push_back(new Bullet_p1(m_soundManager, MAPWIDTH, MAPLENGTH, m_player->GetPosition(), XMFLOAT3(0.5, 0.5, 0.5), 1, m_modelHandlers[BULLET1]->GetDeffuse()));
@@ -235,7 +263,7 @@ void EntityManager::Update(double time)
 			m_timeSinceLastBeat -= 60000 / m_currentBPM;
 
 			//BEAT WAS DETECTED
-			if (m_offsetCount > m_offset)
+			if (m_beatNumber > m_offset)
 			{
 				BeatWasDetected();
 
@@ -246,10 +274,10 @@ void EntityManager::Update(double time)
 				m_modelHandlers[BULLET4]->beatBoost(true, time, -1, m_currentBPM);
 				m_modelHandlers[BULLET5]->beatBoost(true, time, -1, m_currentBPM);
 				m_modelHandlers[BULLET6]->beatBoost(true, time, -1, m_currentBPM);
-				m_beatNumber += 1;
+				m_beatNumber++;
 			}
 			else
-				m_offsetCount++;
+				m_beatNumber++;
 		}
 		else
 		{
@@ -264,11 +292,11 @@ void EntityManager::Update(double time)
 	else {
 		//BeatDet test
 		float _currentPos = m_soundManager->GetCurrentMusicTimePCM() / 1024.f;
-
+		m_statsManager->SetShit(m_beat[(int)_currentPos]);
 		if (m_beat[(int)_currentPos] > 0.0f && m_timeSinceLastBeat > 100)		//Small time buffer to prevent it from going off 50 times per beat 
 		{
 			//BEAT WAS DETECTED
-			if (m_offsetCount > m_offset) {
+			if (m_beatNumber > m_offset) {
 				BeatWasDetected();
 				m_light.beatBoost(true, time, m_timeSinceLastBeat/1000, 0);
 				m_modelHandlers[BULLET1]->beatBoost(true, time, m_timeSinceLastBeat/1000, 0);
@@ -278,12 +306,13 @@ void EntityManager::Update(double time)
 				m_modelHandlers[BULLET6]->beatBoost(true, time, m_timeSinceLastBeat/1000, 0);
 				m_timeSinceLastBeat = 0;
 				m_beatNumber += 1;
+				m_statsManager->AddBeat();
 				EnemyFire();
-				
 			}
 			else {
 				m_timeSinceLastBeat = 0;
-				m_offsetCount++;
+				m_beatNumber++;
+				m_statsManager->AddBeat();
 			}
 		}
 		else {
@@ -300,37 +329,37 @@ void EntityManager::Update(double time)
 	//Do collision checks
 	int _addScore = 0;
 	//Check Bullet1 agains Enemies
-	_addScore += m_collision.CheckCollisionEntity(&m_bullet1, &m_enemy1,BULLET1, ENEMY1, &m_explosion, m_device, m_deviceContext);
-	_addScore += m_collision.CheckCollisionEntity(&m_bullet1, &m_enemy2,BULLET1, ENEMY2, &m_explosion, m_device, m_deviceContext);
-	_addScore += m_collision.CheckCollisionEntity(&m_bullet1, &m_enemy3,BULLET1, ENEMY3, &m_explosion, m_device, m_deviceContext);
-	_addScore += m_collision.CheckCollisionEntity(&m_bullet1, &m_enemy4,BULLET1, ENEMY4, &m_explosion, m_device, m_deviceContext);
+	_addScore += m_collision.CheckCollisionEntity(&m_bullet1, &m_enemy1,BULLET1, ENEMY1, &m_explosion, m_device, m_deviceContext, time);
+	_addScore += m_collision.CheckCollisionEntity(&m_bullet1, &m_enemy2,BULLET1, ENEMY2, &m_explosion, m_device, m_deviceContext, time);
+	_addScore += m_collision.CheckCollisionEntity(&m_bullet1, &m_enemy3,BULLET1, ENEMY3, &m_explosion, m_device, m_deviceContext, time);
+	_addScore += m_collision.CheckCollisionEntity(&m_bullet1, &m_enemy4,BULLET1, ENEMY4, &m_explosion, m_device, m_deviceContext, time);
 
 
 	//Check Bullet2 agains Enemies
-	_addScore += m_collision.CheckCollisionEntity(&m_bullet2, &m_enemy1,BULLET2, ENEMY1, &m_explosion, m_device, m_deviceContext);
-	_addScore += m_collision.CheckCollisionEntity(&m_bullet2, &m_enemy2,BULLET2, ENEMY2, &m_explosion, m_device, m_deviceContext);
-	_addScore += m_collision.CheckCollisionEntity(&m_bullet2, &m_enemy3,BULLET2, ENEMY3, &m_explosion, m_device, m_deviceContext);
-	_addScore += m_collision.CheckCollisionEntity(&m_bullet2, &m_enemy4,BULLET2, ENEMY4, &m_explosion, m_device, m_deviceContext);
+	_addScore += m_collision.CheckCollisionEntity(&m_bullet2, &m_enemy1,BULLET2, ENEMY1, &m_explosion, m_device, m_deviceContext, time);
+	_addScore += m_collision.CheckCollisionEntity(&m_bullet2, &m_enemy2,BULLET2, ENEMY2, &m_explosion, m_device, m_deviceContext, time);
+	_addScore += m_collision.CheckCollisionEntity(&m_bullet2, &m_enemy3,BULLET2, ENEMY3, &m_explosion, m_device, m_deviceContext, time);
+	_addScore += m_collision.CheckCollisionEntity(&m_bullet2, &m_enemy4,BULLET2, ENEMY4, &m_explosion, m_device, m_deviceContext, time);
 
 
 	//Check Bullet3 agains Enemies
-	_addScore += m_collision.CheckCollisionEntity(&m_bullet3, &m_enemy1,BULLET3, ENEMY1, &m_explosion, m_device, m_deviceContext);
-	_addScore += m_collision.CheckCollisionEntity(&m_bullet3, &m_enemy2,BULLET3, ENEMY2, &m_explosion, m_device, m_deviceContext);
-	_addScore += m_collision.CheckCollisionEntity(&m_bullet3, &m_enemy3,BULLET3, ENEMY3, &m_explosion, m_device, m_deviceContext);
-	_addScore += m_collision.CheckCollisionEntity(&m_bullet3, &m_enemy4,BULLET3, ENEMY4, &m_explosion, m_device, m_deviceContext);
+	_addScore += m_collision.CheckCollisionEntity(&m_bullet3, &m_enemy1,BULLET3, ENEMY1, &m_explosion, m_device, m_deviceContext, time);
+	_addScore += m_collision.CheckCollisionEntity(&m_bullet3, &m_enemy2,BULLET3, ENEMY2, &m_explosion, m_device, m_deviceContext, time);
+	_addScore += m_collision.CheckCollisionEntity(&m_bullet3, &m_enemy3,BULLET3, ENEMY3, &m_explosion, m_device, m_deviceContext, time);
+	_addScore += m_collision.CheckCollisionEntity(&m_bullet3, &m_enemy4,BULLET3, ENEMY4, &m_explosion, m_device, m_deviceContext, time);
 
 
 	//Check Bullet4 agains Enemies
-	_addScore += m_collision.CheckCollisionEntity(&m_bullet4, &m_enemy1,BULLET4, ENEMY1, &m_explosion, m_device, m_deviceContext);
-	_addScore += m_collision.CheckCollisionEntity(&m_bullet4, &m_enemy2,BULLET4, ENEMY2, &m_explosion, m_device, m_deviceContext);
-	_addScore += m_collision.CheckCollisionEntity(&m_bullet4, &m_enemy3,BULLET4, ENEMY3, &m_explosion, m_device, m_deviceContext);
-	_addScore += m_collision.CheckCollisionEntity(&m_bullet4, &m_enemy4,BULLET4, ENEMY4, &m_explosion, m_device, m_deviceContext);
+	_addScore += m_collision.CheckCollisionEntity(&m_bullet4, &m_enemy1,BULLET4, ENEMY1, &m_explosion, m_device, m_deviceContext, time);
+	_addScore += m_collision.CheckCollisionEntity(&m_bullet4, &m_enemy2,BULLET4, ENEMY2, &m_explosion, m_device, m_deviceContext, time);
+	_addScore += m_collision.CheckCollisionEntity(&m_bullet4, &m_enemy3,BULLET4, ENEMY3, &m_explosion, m_device, m_deviceContext, time);
+	_addScore += m_collision.CheckCollisionEntity(&m_bullet4, &m_enemy4,BULLET4, ENEMY4, &m_explosion, m_device, m_deviceContext, time);
 
 	//Check Bullet5 agains Enemies
-	_addScore += m_collision.CheckCollisionEntity(&m_bullet5, &m_enemy1,BULLET5, ENEMY1, &m_explosion, m_device, m_deviceContext);
-	_addScore += m_collision.CheckCollisionEntity(&m_bullet5, &m_enemy2,BULLET5, ENEMY2, &m_explosion, m_device, m_deviceContext);
-	_addScore += m_collision.CheckCollisionEntity(&m_bullet5, &m_enemy3,BULLET5, ENEMY3, &m_explosion, m_device, m_deviceContext);
-	_addScore += m_collision.CheckCollisionEntity(&m_bullet5, &m_enemy4,BULLET5, ENEMY4, &m_explosion, m_device, m_deviceContext);
+	_addScore += m_collision.CheckCollisionEntity(&m_bullet5, &m_enemy1,BULLET5, ENEMY1, &m_explosion, m_device, m_deviceContext, time);
+	_addScore += m_collision.CheckCollisionEntity(&m_bullet5, &m_enemy2,BULLET5, ENEMY2, &m_explosion, m_device, m_deviceContext, time);
+	_addScore += m_collision.CheckCollisionEntity(&m_bullet5, &m_enemy3,BULLET5, ENEMY3, &m_explosion, m_device, m_deviceContext, time);
+	_addScore += m_collision.CheckCollisionEntity(&m_bullet5, &m_enemy4,BULLET5, ENEMY4, &m_explosion, m_device, m_deviceContext, time);
 
 	m_statsManager->AddScore(_addScore*(m_statsManager->GetCombo()+1));
 
@@ -338,7 +367,7 @@ void EntityManager::Update(double time)
 	if (!m_player->GetInvulnerable())			//Only check if the player is alive and well
 	{
 		std::vector<Entity*> _playerVec = { m_player };
-		m_collision.CheckCollisionEntity(&m_bullet6, &_playerVec, BULLET6, PLAYER, &m_explosion, m_device, m_deviceContext);
+		m_collision.CheckCollisionEntity(&m_bullet6, &_playerVec, BULLET6, PLAYER, &m_explosion, m_device, m_deviceContext, time);
 		if (m_player->GetHealth() <= 0)
 		{
 			m_statsManager->ResetCombo();
@@ -488,6 +517,112 @@ void EntityManager::InitMusic(const std::string &filename)
 			else if (std::string(_key) == "BeatPerShot4")
 				m_beatPerShot4 = atoi(_value);
 
+			else if (std::string(_key).find("EnemySpawnRateDivider") != string::npos) //Mov compilations
+			{
+				pair<int, float> _spawnDiv;
+				_ss = istringstream(_value);
+
+				string _startBeat;
+				getline(_ss, _startBeat, '|');		// Get at what beat enemies will spawn with this compilation
+				_spawnDiv.first = stoi(_startBeat);
+
+				string _divider;
+				getline(_ss, _divider, ',');
+				_spawnDiv.second = stof(_divider);
+
+				//Add to the relevant final vector once done loading
+				if (std::string(_key) == "EnemySpawnRateDivider1")
+					m_enemySpawnRateDivider1.push_back(_spawnDiv);
+				if (std::string(_key) == "EnemySpawnRateDivider2")
+					m_enemySpawnRateDivider2.push_back(_spawnDiv);
+				if (std::string(_key) == "EnemySpawnRateDivider3")
+					m_enemySpawnRateDivider3.push_back(_spawnDiv);
+				if (std::string(_key) == "EnemySpawnRateDivider4")
+					m_enemySpawnRateDivider4.push_back(_spawnDiv);
+			}
+
+			else if (std::string(_key) == "EnemySize1")	//Mov patterns
+			{
+				_ss = istringstream(_value);
+				string _floatVec;				//For keeping xmfloat3 string
+				while (getline(_ss, _floatVec, '|'))
+				{
+					istringstream _ssfloatVec = istringstream(_floatVec);
+					string _coord;
+					getline(_ssfloatVec, _coord, ',');		//Get x coord
+					m_enemySize1.x = stoi(_coord);
+
+					getline(_ssfloatVec, _coord, ',');		//Get y coord
+					m_enemySize1.y = stoi(_coord);
+
+					getline(_ssfloatVec, _coord, ',');		//Get z coord
+					m_enemySize1.z = stoi(_coord);
+				}
+			}
+			else if (std::string(_key) == "EnemySize2")	//Mov patterns
+			{
+				_ss = istringstream(_value);
+				string _floatVec;				//For keeping xmfloat3 string
+				while (getline(_ss, _floatVec, '|'))
+				{
+					istringstream _ssfloatVec = istringstream(_floatVec);
+					string _coord;
+					getline(_ssfloatVec, _coord, ',');		//Get x coord
+					m_enemySize2.x = stoi(_coord);
+
+					getline(_ssfloatVec, _coord, ',');		//Get y coord
+					m_enemySize2.y = stoi(_coord);
+
+					getline(_ssfloatVec, _coord, ',');		//Get z coord
+					m_enemySize2.z = stoi(_coord);
+				}
+			}
+			else if (std::string(_key) == "EnemySize3")	//Mov patterns
+			{
+				_ss = istringstream(_value);
+				string _floatVec;				//For keeping xmfloat3 string
+				while (getline(_ss, _floatVec, '|'))
+				{
+					istringstream _ssfloatVec = istringstream(_floatVec);
+					string _coord;
+					getline(_ssfloatVec, _coord, ',');		//Get x coord
+					m_enemySize3.x = stoi(_coord);
+
+					getline(_ssfloatVec, _coord, ',');		//Get y coord
+					m_enemySize3.y = stoi(_coord);
+
+					getline(_ssfloatVec, _coord, ',');		//Get z coord
+					m_enemySize3.z = stoi(_coord);
+				}
+			}
+			else if (std::string(_key) == "EnemySize4")	//Mov patterns
+			{
+				_ss = istringstream(_value);
+				string _floatVec;				//For keeping xmfloat3 string
+				while (getline(_ss, _floatVec, '|'))
+				{
+					istringstream _ssfloatVec = istringstream(_floatVec);
+					string _coord;
+					getline(_ssfloatVec, _coord, ',');		//Get x coord
+					m_enemySize4.x = stoi(_coord);
+
+					getline(_ssfloatVec, _coord, ',');		//Get y coord
+					m_enemySize4.y = stoi(_coord);
+
+					getline(_ssfloatVec, _coord, ',');		//Get z coord
+					m_enemySize4.z = stoi(_coord);
+				}
+			}
+
+			else if (std::string(_key) == "EnemyHealth1")
+				m_enemyHealth1 = atoi(_value);
+			else if (std::string(_key) == "EnemyHealth2")
+				m_enemyHealth2 = atoi(_value);
+			else if (std::string(_key) == "EnemyHealth3")
+				m_enemyHealth3 = atoi(_value);
+			else if (std::string(_key) == "EnemyHealth4")
+				m_enemyHealth4 = atoi(_value);
+
 			else if (std::string(_key) == "mov")	//Mov patterns
 			{
 				vector<XMFLOAT3> _pattern;
@@ -558,6 +693,67 @@ void EntityManager::InitMusic(const std::string &filename)
 	m_EnemyPatterns.LoadPatterns(filename);
 }
 
+void EntityManager::Reset()
+{
+	for (int i = 0; i < m_bullet1.size(); i++)
+		delete m_bullet1[i];
+
+	for (int i = 0; i < m_bullet2.size(); i++)
+		delete m_bullet2[i];
+
+	for (int i = 0; i < m_bullet3.size(); i++)
+		delete m_bullet3[i];
+
+	for (int i = 0; i < m_bullet4.size(); i++)
+		delete m_bullet4[i];
+
+	for (int i = 0; i < m_bullet5.size(); i++)
+		delete m_bullet5[i];
+
+	for (int i = 0; i < m_bullet6.size(); i++)
+		delete m_bullet6[i];
+
+	for (int i = 0; i < m_enemy1.size(); i++)
+		delete m_enemy1[i];
+
+	for (int i = 0; i < m_enemy2.size(); i++)
+		delete m_enemy2[i];
+
+	for (int i = 0; i < m_enemy3.size(); i++)
+		delete m_enemy3[i];
+
+	for (int i = 0; i < m_enemy4.size(); i++)
+		delete m_enemy4[i];
+
+	m_bullet1.clear();
+	m_bullet2.clear();
+	m_bullet3.clear();
+	m_bullet4.clear();
+	m_bullet5.clear();
+	m_bullet6.clear();
+	m_enemy1.clear();
+	m_enemy2.clear();
+	m_enemy3.clear();
+	m_enemy4.clear();
+	m_enemy1MovPatterns.clear();
+	m_enemy2MovPatterns.clear();
+	m_enemy3MovPatterns.clear();
+	m_enemy4MovPatterns.clear();
+	m_enemySpawnRateDivider1.clear();
+	m_enemySpawnRateDivider2.clear();
+	m_enemySpawnRateDivider3.clear();
+	m_enemySpawnRateDivider4.clear();
+	m_explosion.clear();
+	m_statsManager->ResetCombo();
+	m_statsManager->ResetScore();
+	m_statsManager->SetLives();
+	m_currentBPM, m_beatNumber = 0;
+	m_timeSinceLastBeat = 0.0f;
+	m_offset = 0;				
+	m_player->SetDelete(true);
+	m_doBeatDet = true;
+}
+
 void EntityManager::BeatWasDetected()
 {
 	static int _enemySpawnRate1;
@@ -592,38 +788,77 @@ void EntityManager::BeatWasDetected()
 
 
 	//use time and check that after 30 sec or so increse the level count by some.. int
-	
-	if (_enemySpawnRate1 == m_beatDetector->GetTempo() / 30)
+	for (auto i = 0; i < m_enemySpawnRateDivider1.size(); i++)
 	{
-		SpawnEntity(ENEMY1);
-		_enemySpawnRate1 = 0;
+		if (m_enemySpawnRateDivider1[m_enemySpawnRateDivider1.size() - 1 - i].first < m_statsManager->GetBeat())
+		{
+			if (_enemySpawnRate1 == int(m_beatDetector->GetTempo() * 1000) / int(m_enemySpawnRateDivider1[m_enemySpawnRateDivider1.size() - 1 - i].second * 1000))
+			{
+				SpawnEntity(ENEMY1);
+				_enemySpawnRate1 = 0;
+				i = m_enemySpawnRateDivider1.size();
+			}
+			else
+			{
+				_enemySpawnRate1++;
+				i = m_enemySpawnRateDivider1.size();
+			}
+		}
 	}
-	else
-		_enemySpawnRate1++;
 
-	if (_enemySpawnRate2 == m_beatDetector->GetTempo() / 15)
+	for (auto i = 0; i < m_enemySpawnRateDivider2.size(); i++)
 	{
-		SpawnEntity(ENEMY2);
-		_enemySpawnRate2 = 0;
+		if (m_enemySpawnRateDivider2[m_enemySpawnRateDivider2.size() - 1 - i].first < m_statsManager->GetBeat())
+		{
+			if (_enemySpawnRate2 == int(m_beatDetector->GetTempo() * 1000) / int(m_enemySpawnRateDivider2[m_enemySpawnRateDivider2.size() - 1 - i].second * 1000))
+			{
+				SpawnEntity(ENEMY2);
+				_enemySpawnRate2 = 0;
+				i = m_enemySpawnRateDivider2.size();
+			}
+			else
+			{
+				_enemySpawnRate2++;
+				i = m_enemySpawnRateDivider2.size();
+			}
+		}
 	}
-	else
-		_enemySpawnRate2++;
 
-	if (_enemySpawnRate3 == m_beatDetector->GetTempo() / 5)
+	for (auto i = 0; i < m_enemySpawnRateDivider3.size(); i++)
 	{
-		SpawnEntity(ENEMY3);
-		_enemySpawnRate3 = 0;
+		if (m_enemySpawnRateDivider3[m_enemySpawnRateDivider3.size() - 1 - i].first < m_statsManager->GetBeat())
+		{
+			if (_enemySpawnRate3 == int(m_beatDetector->GetTempo() * 1000) / int(m_enemySpawnRateDivider3[m_enemySpawnRateDivider3.size() - 1 - i].second * 1000))
+			{
+				SpawnEntity(ENEMY3);
+				_enemySpawnRate3 = 0;
+				i = m_enemySpawnRateDivider3.size();
+			}
+			else
+			{
+				_enemySpawnRate3++;
+				i = m_enemySpawnRateDivider3.size();
+			}
+		}
 	}
-	else
-		_enemySpawnRate3++;
 
-	if (_enemySpawnRate4 == m_beatDetector->GetTempo())
+	for (auto i = 0; i < m_enemySpawnRateDivider4.size(); i++)
 	{
-		SpawnEntity(ENEMY4);
-		_enemySpawnRate4 = 0;
+		if (m_enemySpawnRateDivider4[m_enemySpawnRateDivider4.size() - 1 - i].first < m_statsManager->GetBeat())
+		{
+			if (_enemySpawnRate4 == int(m_beatDetector->GetTempo() * 1000) / int(m_enemySpawnRateDivider4[m_enemySpawnRateDivider4.size() - 1 - i].second * 1000))
+			{
+				SpawnEntity(ENEMY4);
+				_enemySpawnRate4 = 0;
+				i = m_enemySpawnRateDivider4.size();
+			}
+			else
+			{
+				_enemySpawnRate4++;
+				i = m_enemySpawnRateDivider4.size();
+			}
+		}
 	}
-	else
-		_enemySpawnRate4++;
 	
 }
 
@@ -883,7 +1118,7 @@ void EntityManager::CheckCombo()
 	static bool _registeredCombo = true;
 	static BulletType _currentBulletType;
 	static bool _spacebar = false;
-	if (m_offsetCount > m_offset && m_player->GetDelete() == false) {						//Only check for combos after the beats have actually started
+	if (m_beatNumber > m_offset && m_player->GetDelete() == false) {						//Only check for combos after the beats have actually started
 		if (m_timeSinceLastBeat < 25000 / m_currentBPM)
 		{
 			if (m_input->IsNewButtonPressed(_spacebar)) //If button is pressed
@@ -924,4 +1159,9 @@ void EntityManager::CheckCombo()
 int EntityManager::GetPlayerHealth()
 {
 	return m_player->GetHealth();
+}
+
+int EntityManager::GetOffset()
+{
+	return m_offset;
 }
