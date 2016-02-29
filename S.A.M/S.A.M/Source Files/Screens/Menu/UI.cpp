@@ -92,7 +92,6 @@ void UI::Render(int offset)
 	{
 		_tempOffset = L"Go Go Go";
 	}
-	wstring _tempBeat = L"Beat: " + to_wstring(m_stats->GetBeat());
 	m_spriteBatch->Begin();
 	if (offset - m_stats->GetBeat() >= -4)
 	{
@@ -105,8 +104,6 @@ void UI::Render(int offset)
 	m_font->DrawString(m_spriteBatch.get(), m_pressed2.c_str(), m_shotBinding[SHOT2].m_position, m_shotBinding[SHOT2].m_color, 0.f, m_font->MeasureString(m_pressed2.c_str()) / 2.f);
 	m_font->DrawString(m_spriteBatch.get(), m_pressed3.c_str(), m_shotBinding[SHOT3].m_position, m_shotBinding[SHOT3].m_color, 0.f, m_font->MeasureString(m_pressed3.c_str()) / 2.f);
 	m_font->DrawString(m_spriteBatch.get(), m_pressed4.c_str(), m_shotBinding[SHOT4].m_position, m_shotBinding[SHOT4].m_color, 0.f, m_font->MeasureString(m_pressed4.c_str()) / 2.f);
-	m_font->DrawString(m_spriteBatch.get(), _tempBeat.c_str(), SimpleMath::Vector2(0.f), Colors::Crimson, 0.f, SimpleMath::Vector2(0.f));
-	m_font->DrawString(m_spriteBatch.get(), to_wstring(m_stats->GetShit()).c_str(), SimpleMath::Vector2(0, 200), Colors::Crimson, 0.f, SimpleMath::Vector2(0.f));
 	m_spriteBatch->End();
 
 }
