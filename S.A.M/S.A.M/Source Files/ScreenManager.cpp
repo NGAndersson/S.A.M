@@ -77,6 +77,7 @@ newOptions ScreenManager::Update(double time)
 		if (m_current == MENU)
 		{
 			m_gameOngoing = false;
+			m_stats->ResetBeat();
 		}
 		else if (!m_input->CheckReturn())
 			m_keyDown = false;
