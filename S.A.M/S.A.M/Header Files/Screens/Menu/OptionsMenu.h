@@ -23,15 +23,24 @@ public:
 	void Update(double time);
 	void Render();
 	virtual MenuScreens GetTargetMenu() {
-		if (m_doneOption)
-			return MENU;
-		else
-			return OPTION;
+		return m_currentTargetMenu;
+		//if (m_doneOption)
+		//	return MENU;
+		//else
+		//	return OPTION;
 	}
-	void Reset() { m_doneOption = false; m_keyDown = true; m_currentFont = 0; }
+	void Reset() {
+		m_doneOption = false; m_keyDown = true;  
+		m_choices[m_currentFont].m_color = Colors::Crimson; 
+		m_currentFont = 0;	
+		m_choices[m_currentFont].m_color = Colors::White; 
+		m_currentTargetMenu = OPTION; 
+		m_currentKeyBinding = 0;
+	}
 
 private:
 	void setUpdateKeys();
+	void ReadSetttings();
 	void saveSettings();
 	wstring m_menu;
 	wstring m_resolution;
@@ -41,13 +50,15 @@ private:
 	wstring m_apply;
 	wstring m_unBound;
 	//Resolution
-	wstring m_res[4];
+	pair<int, wstring>m_res[4];
+	pair<int, int> m_resolutions[4];
 	bool m_keyDown = false, m_doneOption = false, m_unBoundKey = false;
 	//Choices for options
 	Font m_choices[6];
 	SoundManager* m_soundManager;
 	//ints to check what shit we are on
 	int m_currentFont,m_currentRes,m_currentMVol,m_currentSVol,m_currentKeyBinding;
+	int m_defRes;
 	int m_tempWidth[4], m_tempHeight[4];
 	int m_volym[10];
 	//Shit for Keybindings

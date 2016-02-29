@@ -50,55 +50,142 @@ Game::~Game()
 	m_screenManager = 0;
 	delete m_entityManager;
 	m_entityManager = 0;
-
+	delete m_display;
+	m_display = 0;
 	delete m_backgroundPartSys;
 	delete m_statsManager;
 	delete m_gaussianFilter;
+	delete m_input;
+	m_input = 0;
 }
 
-void Game::InitGame(Input* input, Display* disp)
+void Game::ReadOptions()
 {
-	m_input = input;
-	m_display = disp;
+	std::fstream _file;
+	_file.open("Options/Settings.txt");
+	std::string _tempLine;
+	char _key[100];
+	char _value[100];
+	if (_file.is_open())
+	{
+		while (getline(_file, _tempLine))
+		{
+			std::istringstream _ss(_tempLine);
+			_ss.get(_key, 100, '|');
+			_ss.ignore();
+			if (_key[0] != '#')
+			{
+				_ss.get(_value, 100, '|');
+				if (std::string(_key) == "ScreenHeight")
+					m_height = atoi(_value);
 
-	//Create and initialize SoundManager
-	m_soundManager = new SoundManager(0.5,0.5);  //Initializes in constructor
+				else if (std::string(_key) == "ScreenWidth")
+					m_width = atoi(_value);
 
-	m_statsManager = new Stats;
+			}
+		}
+		_file.close();
+	}
+}
+
+void Game::InitGame(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
+{
+
+	ReadOptions();
+	//Create inputclass
+	m_display = new Display(hInstance, hPrevInstance, lpCmdLine, nCmdShow, m_width, m_height);
+
+
+	HWND _hwnd = m_display->GethWnd();
+
+	m_input = new Input();
+	m_input->Initialize(hInstance, _hwnd);
 
 	//Create and initialize device/devicecontext/swapchain/depthstenciel
-	CreateDirect3DContext(disp->GethWnd());
+	CreateDirect3DContext(_hwnd);
+
+	//Create and initialize SoundManager
+	m_soundManager = new SoundManager(0.5, 0.5);  //Initializes in constructor
+
+	 //Initialize Stats manager
+	m_statsManager = new Stats;
+
+	//Create and initialize ScreenManager
+	m_screenManager = new ScreenManager();
+	m_screenManager->InitializeScreen(m_device, m_deviceContext,m_height,m_width, m_input, m_statsManager, m_soundManager);
 
 	//Sets the viewport
 	SetViewport();
 
-	//Create and initialize ScreenManager
-	m_screenManager = new ScreenManager();
-	m_screenManager->InitializeScreen(m_device, m_deviceContext, HEIGHT, WIDTH, m_input, m_statsManager, m_soundManager);
 
 	//Create and initialize EntityManager
 	m_entityManager = new EntityManager;
 	m_entityManager->Initialize(m_soundManager, m_input, m_device, m_deviceContext, m_statsManager);
 
-	//Init defered buffer and render
-	m_deferredBuffer.Initialize(m_device, WIDTH, HEIGHT);
-	m_deferredRender.InitializeShader(m_device);
-	m_deferredRender.InitializeBufferString(m_device);
-	
 	wstring _texName = L"Resources\\Models\\star3.jpg";
+
 	m_backgroundPartSys = new SpacePart();
 	m_backgroundPartSys->CreateBuffer(m_device, m_deviceContext, _texName);
 	m_partShader.CreateShadersPosOnly(m_device, "Shaders\\PartVS.hlsl", "Shaders\\PartGS.hlsl", "Shaders\\PartPS.hlsl");;
 	m_glowshader.CreateShadersCompute(m_device, "Shaders\\ComputeShader.hlsl");
-	
-	m_gaussianFilter = new GaussianBlur(m_device, m_deviceContext, &m_glowshader, WIDTH, HEIGHT);
+
+	//Init defered buffer and render
+	m_deferredBuffer.Initialize(m_device, m_width, m_height);
+
+	m_deferredRender.InitializeShader(m_device);
+	m_deferredRender.InitializeBufferString(m_device);
+
+	m_gaussianFilter = new GaussianBlur(m_device, m_deviceContext, &m_glowshader, m_width, m_height);
 }
 
-WPARAM Game::MainLoop()
+
+void Game::InitGameRedo(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
+{
+	HRESULT _hr;
+	ReadOptions();
+	ID3D11RenderTargetView* _nullViews[] = { nullptr };
+	m_deviceContext->OMSetRenderTargets(ARRAYSIZE(_nullViews), _nullViews, nullptr);
+	m_backbufferRTV->Release();
+	m_depthStencil->Release();
+	m_depthStencilView->Release();
+	//Resize for the new resolution
+	DXGI_MODE_DESC _newRes;
+	_newRes.Height = m_height;
+	_newRes.Width = m_width;
+
+	m_swapChain->ResizeBuffers(1, m_width, m_height, DXGI_FORMAT_R8G8B8A8_UNORM, NULL);
+	m_swapChain->ResizeTarget(&_newRes);
+
+	//Create and initialize ScreenManager
+	m_screenManager = new ScreenManager();
+	m_screenManager->InitializeScreen(m_device, m_deviceContext,m_height,m_width, m_input, m_statsManager, m_soundManager);
+
+	ID3D11Texture2D* _backBuffer = nullptr;
+	m_swapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&_backBuffer);
+
+	// use the back buffer address to create the render target
+	_hr = m_device->CreateRenderTargetView(_backBuffer, NULL, &m_backbufferRTV);
+	_backBuffer->Release();
+
+	//Sets the viewport
+	SetViewport();
+
+	DepthStencilInitialicer();
+	m_deferredBuffer.~DeferredBuffer();
+	//Init defered buffer and render
+	m_deferredBuffer.Initialize(m_device, m_width, m_height);//could be this little bastard 
+
+	m_gaussianFilter = new GaussianBlur(m_device, m_deviceContext, &m_glowshader, m_width, m_height);
+}
+
+WPARAM Game::MainLoop(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
 	Timer _time;
 	_time.StartTime();
 	_time.TimeCheck();
+
+	InitGame(hInstance,hPrevInstance,lpCmdLine,nCmdShow);//initialize the things that does not need ScreenWidh/m_height
+
 	while (TRUE) {
 		// Check to see if any messages are waiting in the queue
 		while (PeekMessage(&m_winMSG, NULL, 0, 0, PM_REMOVE))
@@ -116,13 +203,14 @@ WPARAM Game::MainLoop()
 		m_input->Update();
 		//Update FMOD
 		m_soundManager->Update();
+
 		//Get Time
 		float time = _time.TimeCheck();
 
 		CheckInput();
 
 		//Call update functions
-		Update(time);
+		Update(time, hInstance, hPrevInstance, lpCmdLine, nCmdShow);
 
 		//Call Render Functions
 		Render();
@@ -131,11 +219,19 @@ WPARAM Game::MainLoop()
 
 }
 
-void Game::Update(double time)
+void Game::Update(double time, HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
 	static MenuScreens _prevScreen;
 
-	m_screenManager->Update(time);
+	if( NEW_RES == m_screenManager->Update(time))
+	{
+		delete m_screenManager;
+		delete m_gaussianFilter;
+
+		InitGameRedo(hInstance, hPrevInstance, lpCmdLine, nCmdShow);
+	}
+	else
+	{
 
 	if ((m_screenManager->GetCurrentScreen() == PAUSE && _prevScreen == GAME) || m_screenManager->GetCurrentScreen() == GAME && _prevScreen == PAUSE)	//When switching from game to pause or vice versa, pause/resume the music
 		m_soundManager->PauseMusic();
@@ -153,16 +249,13 @@ void Game::Update(double time)
 	{
 		PostQuitMessage(0);
 	}
-	
+	_prevScreen = m_screenManager->GetCurrentScreen();
+
+	}
+
 	//Updates space
 	m_backgroundPartSys->Update(m_deviceContext, time, 40);
-	
-	//if(m_screenManager->GetCurrentScreen() == USERINTERFACE)
-	// Update Entity Manager
 
-	//Do life-checks here with m_statManager->GetLives();
-
-	_prevScreen = m_screenManager->GetCurrentScreen();
 }
 
 void Game::Render()
@@ -221,8 +314,8 @@ void Game::CheckInput()
 void Game::SetViewport()
 {
 	D3D11_VIEWPORT _viewport;
-	_viewport.Width = (float)WIDTH;
-	_viewport.Height = (float)HEIGHT;
+	_viewport.Width = (float)m_width;
+	_viewport.Height = (float)m_height;
 	_viewport.MinDepth = 0.0f;
 	_viewport.MaxDepth = 1.0f;
 	_viewport.TopLeftX = 0;
@@ -304,8 +397,8 @@ HRESULT Game::DepthStencilInitialicer()
 
 	//create the depth stencil
 	D3D11_TEXTURE2D_DESC _descDepth;
-	_descDepth.Width = WIDTH;
-	_descDepth.Height = HEIGHT;
+	_descDepth.Width = m_width;
+	_descDepth.Height = m_height;
 	_descDepth.MipLevels = 1;
 	_descDepth.ArraySize = 1;
 	_descDepth.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;

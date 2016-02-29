@@ -68,16 +68,44 @@ void EntityManager::SpawnEntity(HandlerIndex type)
 		m_player = new Player(m_soundManager, MAPWIDTH,MAPLENGTH,XMFLOAT3(MAPWIDTH / 2, 0.0f, MAPLENGTH / 4), XMFLOAT3(1.0f, 1.0f, 1.0f), 1, m_input);
 		break;
 	case(ENEMY1) :
-		m_enemy1.push_back(new Enemy_1(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(_tempX, 0.0f, 110), XMFLOAT3(2.0f, 2.0f, 2.0f), 1000,m_enemy1MovPatterns[0].second));
+		for (auto i = 0; i < m_enemy1MovPatterns.size(); i++)
+		{
+			if (m_enemy1MovPatterns[m_enemy1MovPatterns.size() - 1 - i].first < m_statsManager->GetBeat())
+			{
+				m_enemy1.push_back(new Enemy_1(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(_tempX, 0.0f, 110), m_enemySize1, m_enemyHealth1, m_enemy1MovPatterns[m_enemy1MovPatterns.size() - 1 - i].second));
+				i = m_enemy1MovPatterns.size();
+			}	
+		}
 		break;
 	case(ENEMY2) :
-		m_enemy2.push_back(new Enemy_2(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(_tempX, 0.0f, 110), XMFLOAT3(1.0f, 1.0f, 1.0f), 500, m_enemy1MovPatterns[0].second));
+		for (auto i = 0; i < m_enemy2MovPatterns.size(); i++)
+		{
+			if (m_enemy2MovPatterns[m_enemy2MovPatterns.size() - 1 - i].first < m_statsManager->GetBeat())
+			{
+				m_enemy2.push_back(new Enemy_2(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(_tempX, 0.0f, 110), m_enemySize2, m_enemyHealth2, m_enemy2MovPatterns[m_enemy2MovPatterns.size() - 1 - i].second));
+				i = m_enemy2MovPatterns.size();
+			}
+		}
 		break;
 	case(ENEMY3) :
-		m_enemy3.push_back(new Enemy_3(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(_tempX, 0.0f, 110), XMFLOAT3(4.0f, 4.0f, 4.0f), 6000, m_enemy1MovPatterns[0].second));
+		for (auto i = 0; i < m_enemy3MovPatterns.size(); i++)
+		{
+			if (m_enemy3MovPatterns[m_enemy3MovPatterns.size() - 1 - i].first < m_statsManager->GetBeat())
+			{
+				m_enemy3.push_back(new Enemy_3(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(_tempX, 0.0f, 110), m_enemySize3, m_enemyHealth3, m_enemy3MovPatterns[m_enemy3MovPatterns.size() - 1 - i].second));
+				i = m_enemy3MovPatterns.size();
+			}
+		}
 		break;
 	case(ENEMY4) :
-		m_enemy4.push_back(new Enemy_4(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(_tempX, 0.0f, 110), XMFLOAT3(6.0f, 6.0f, 6.0f), 10000, m_enemy1MovPatterns[0].second));
+		for (auto i = 0; i < m_enemy4MovPatterns.size(); i++)
+		{
+			if (m_enemy4MovPatterns[m_enemy4MovPatterns.size() - 1 - i].first < m_statsManager->GetBeat())
+			{
+				m_enemy4.push_back(new Enemy_4(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(_tempX, 0.0f, 110), m_enemySize4, m_enemyHealth4, m_enemy4MovPatterns[m_enemy4MovPatterns.size() - 1 - i].second));
+				i = m_enemy4MovPatterns.size();
+			}
+		}
 		break;
 	case(BULLET1) :
 		m_bullet1.push_back(new Bullet_p1(m_soundManager, MAPWIDTH, MAPLENGTH, m_player->GetPosition(), XMFLOAT3(0.5, 0.5, 0.5), 1, m_modelHandlers[BULLET1]->GetDeffuse()));
@@ -339,7 +367,7 @@ void EntityManager::Update(double time)
 	if (!m_player->GetInvulnerable())			//Only check if the player is alive and well
 	{
 		std::vector<Entity*> _playerVec = { m_player };
-		//m_collision.CheckCollisionEntity(&m_bullet6, &_playerVec, BULLET6, PLAYER, &m_explosion, m_device, m_deviceContext);
+		m_collision.CheckCollisionEntity(&m_bullet6, &_playerVec, BULLET6, PLAYER, &m_explosion, m_device, m_deviceContext);
 		if (m_player->GetHealth() <= 0)
 		{
 			m_statsManager->ResetCombo();
@@ -490,14 +518,95 @@ void EntityManager::InitMusic(const std::string &filename)
 				m_beatPerShot4 = atoi(_value);
 
 			else if (std::string(_key) == "EnemySpawnRateDivider1")
-				_enemySpawnRateDivider1 = atof(_value);
+				m_enemySpawnRateDivider1 = atof(_value);
 			else if (std::string(_key) == "EnemySpawnRateDivider2")
-				_enemySpawnRateDivider2 = atof(_value);
+				m_enemySpawnRateDivider2 = atof(_value);
 			else if (std::string(_key) == "EnemySpawnRateDivider3")
-				_enemySpawnRateDivider3 = atof(_value);
+				m_enemySpawnRateDivider3 = atof(_value);
 			else if (std::string(_key) == "EnemySpawnRateDivider4")
-				_enemySpawnRateDivider4 = atof(_value);
+				m_enemySpawnRateDivider4 = atof(_value);
 
+			else if (std::string(_key) == "EnemySize1")	//Mov patterns
+			{
+				_ss = istringstream(_value);
+				string _floatVec;				//For keeping xmfloat3 string
+				while (getline(_ss, _floatVec, '|'))
+				{
+					istringstream _ssfloatVec = istringstream(_floatVec);
+					string _coord;
+					getline(_ssfloatVec, _coord, ',');		//Get x coord
+					m_enemySize1.x = stoi(_coord);
+
+					getline(_ssfloatVec, _coord, ',');		//Get y coord
+					m_enemySize1.y = stoi(_coord);
+
+					getline(_ssfloatVec, _coord, ',');		//Get z coord
+					m_enemySize1.z = stoi(_coord);
+				}
+			}
+			else if (std::string(_key) == "EnemySize2")	//Mov patterns
+			{
+				_ss = istringstream(_value);
+				string _floatVec;				//For keeping xmfloat3 string
+				while (getline(_ss, _floatVec, '|'))
+				{
+					istringstream _ssfloatVec = istringstream(_floatVec);
+					string _coord;
+					getline(_ssfloatVec, _coord, ',');		//Get x coord
+					m_enemySize2.x = stoi(_coord);
+
+					getline(_ssfloatVec, _coord, ',');		//Get y coord
+					m_enemySize2.y = stoi(_coord);
+
+					getline(_ssfloatVec, _coord, ',');		//Get z coord
+					m_enemySize2.z = stoi(_coord);
+				}
+			}
+			else if (std::string(_key) == "EnemySize3")	//Mov patterns
+			{
+				_ss = istringstream(_value);
+				string _floatVec;				//For keeping xmfloat3 string
+				while (getline(_ss, _floatVec, '|'))
+				{
+					istringstream _ssfloatVec = istringstream(_floatVec);
+					string _coord;
+					getline(_ssfloatVec, _coord, ',');		//Get x coord
+					m_enemySize3.x = stoi(_coord);
+
+					getline(_ssfloatVec, _coord, ',');		//Get y coord
+					m_enemySize3.y = stoi(_coord);
+
+					getline(_ssfloatVec, _coord, ',');		//Get z coord
+					m_enemySize3.z = stoi(_coord);
+				}
+			}
+			else if (std::string(_key) == "EnemySize4")	//Mov patterns
+			{
+				_ss = istringstream(_value);
+				string _floatVec;				//For keeping xmfloat3 string
+				while (getline(_ss, _floatVec, '|'))
+				{
+					istringstream _ssfloatVec = istringstream(_floatVec);
+					string _coord;
+					getline(_ssfloatVec, _coord, ',');		//Get x coord
+					m_enemySize4.x = stoi(_coord);
+
+					getline(_ssfloatVec, _coord, ',');		//Get y coord
+					m_enemySize4.y = stoi(_coord);
+
+					getline(_ssfloatVec, _coord, ',');		//Get z coord
+					m_enemySize4.z = stoi(_coord);
+				}
+			}
+
+			else if (std::string(_key) == "EnemyHealth1")
+				m_enemyHealth1 = atoi(_value);
+			else if (std::string(_key) == "EnemyHealth2")
+				m_enemyHealth2 = atoi(_value);
+			else if (std::string(_key) == "EnemyHealth3")
+				m_enemyHealth3 = atoi(_value);
+			else if (std::string(_key) == "EnemyHealth4")
+				m_enemyHealth4 = atoi(_value);
 
 			else if (std::string(_key) == "mov")	//Mov patterns
 			{
@@ -661,7 +770,7 @@ void EntityManager::BeatWasDetected()
 
 	//use time and check that after 30 sec or so increse the level count by some.. int
 	
-	if (_enemySpawnRate1 == int(m_beatDetector->GetTempo() * 1000) / int(_enemySpawnRateDivider1 * 1000))
+	if (_enemySpawnRate1 == int(m_beatDetector->GetTempo() * 1000) / int(m_enemySpawnRateDivider1 * 1000))
 	{
 		SpawnEntity(ENEMY1);
 		_enemySpawnRate1 = 0;
@@ -669,7 +778,7 @@ void EntityManager::BeatWasDetected()
 	else
 		_enemySpawnRate1++;
 
-	if (_enemySpawnRate2 == int(m_beatDetector->GetTempo() * 1000) / int(_enemySpawnRateDivider2 * 1000))
+	if (_enemySpawnRate2 == int(m_beatDetector->GetTempo() * 1000) / int(m_enemySpawnRateDivider2 * 1000))
 	{
 		SpawnEntity(ENEMY2);
 		_enemySpawnRate2 = 0;
@@ -677,7 +786,7 @@ void EntityManager::BeatWasDetected()
 	else
 		_enemySpawnRate2++;
 
-	if (_enemySpawnRate3 == int(m_beatDetector->GetTempo() * 1000) / int(_enemySpawnRateDivider3 * 1000))
+	if (_enemySpawnRate3 == int(m_beatDetector->GetTempo() * 1000) / int(m_enemySpawnRateDivider3 * 1000))
 	{
 		SpawnEntity(ENEMY3);
 		_enemySpawnRate3 = 0;
@@ -685,7 +794,7 @@ void EntityManager::BeatWasDetected()
 	else
 		_enemySpawnRate3++;
 
-	if (_enemySpawnRate4 == int(m_beatDetector->GetTempo() * 1000) / int(_enemySpawnRateDivider4 * 1000))
+	if (_enemySpawnRate4 == int(m_beatDetector->GetTempo() * 1000) / int(m_enemySpawnRateDivider4 * 1000))
 	{
 		SpawnEntity(ENEMY4);
 		_enemySpawnRate4 = 0;

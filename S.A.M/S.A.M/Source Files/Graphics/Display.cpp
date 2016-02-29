@@ -50,7 +50,7 @@ Display::Display(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, 
 		NULL);    // used with multiple windows, NULL
 
 	ShowWindow(m_hWnd, nCmdShow);
-	ShowCursor(true);
+	ShowCursor(false);
 }
 
 Display::~Display()

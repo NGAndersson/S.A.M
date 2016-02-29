@@ -31,7 +31,7 @@ void Input::Update()
 	m_Keyboard->GetDeviceState(sizeof(m_keyBoardState), (LPVOID)&m_keyBoardState);
 }
 
-void Input::Initialize(HINSTANCE hInstance,HWND& hwnd, int ScreenWidth, int ScreenHeight)
+void Input::Initialize(HINSTANCE hInstance,HWND& hwnd)
 {
 	HRESULT _hr;
 	//Creating the DirectInput
@@ -42,11 +42,8 @@ void Input::Initialize(HINSTANCE hInstance,HWND& hwnd, int ScreenWidth, int Scre
 	_hr = m_Keyboard->SetDataFormat(&c_dfDIKeyboard);
 	_hr = m_Keyboard->SetCooperativeLevel(hwnd, DISCL_FOREGROUND | DISCL_NONEXCLUSIVE);
 
-
 	m_Hwnd = hwnd;
 
-	m_ScreenHeight = ScreenHeight;
-	m_ScreenWidth = ScreenWidth;
 	ReadInputKeyBindings();
 
 	PairKeys();
