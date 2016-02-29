@@ -27,37 +27,37 @@ OptionsMenu::OptionsMenu(ID3D11Device* Device, ID3D11DeviceContext* DeviceContex
 
 
 	m_volumeMusic = L"Music Volume: ";
-	m_choices[MUSICVOLUME].m_position.y = m_screenHeight / 2 - _offsetV.y * 3;
+	m_choices[MUSICVOLUME].m_position.y = m_screenHeight*1/10;
 	m_choices[MUSICVOLUME].m_origin = _originV;
 	m_choices[MUSICVOLUME].m_position.x = m_choices[MUSICVOLUME].m_origin.x;
 	m_choices[MUSICVOLUME].m_color = Colors::White;
 
 	m_volumeEffect = L"Shots Volume: ";
-	m_choices[SHOTSVOLUME].m_position.y = m_screenHeight / 2 - _offsetV.y * 2;
+	m_choices[SHOTSVOLUME].m_position.y = m_screenHeight*2/10;
 	m_choices[SHOTSVOLUME].m_origin = _originV;
 	m_choices[SHOTSVOLUME].m_position.x = m_choices[SHOTSVOLUME].m_origin.x;
 	m_choices[SHOTSVOLUME].m_color = Colors::Crimson;
 
 	m_resolution = L"Resolution: " + to_wstring(m_screenHeight) + L" x " + to_wstring(m_screenWidth);
-	m_choices[RESOLUTION].m_position.y = m_screenHeight / 2 - _offsetV.y;
+	m_choices[RESOLUTION].m_position.y = m_screenHeight*3/10;
 	m_choices[RESOLUTION].m_origin = _originV;
 	m_choices[RESOLUTION].m_position.x = m_choices[RESOLUTION].m_origin.x;
 	m_choices[RESOLUTION].m_color = Colors::Crimson;
 
 	m_keyBin = L"KeyBindings:";
-	m_choices[KEYBINDING].m_position.y = m_screenHeight / 2;
+	m_choices[KEYBINDING].m_position.y = m_screenHeight *4/10;
 	m_choices[KEYBINDING].m_origin = _originV;
 	m_choices[KEYBINDING].m_position.x = m_choices[KEYBINDING].m_origin.x;
 	m_choices[KEYBINDING].m_color = Colors::Crimson;
 
 	m_apply = L"Apply";
-	m_choices[APPLY].m_position.y = m_screenHeight * 6 / 7;
+	m_choices[APPLY].m_position.y = m_screenHeight* 8/10;
 	m_choices[APPLY].m_origin = m_font->MeasureString(m_apply.c_str()) / 2.f;
 	m_choices[APPLY].m_position.x = m_screenWidth / 2.f;
 	m_choices[APPLY].m_color = Colors::Crimson;
 
 	m_menu = L"Return to Main Menu";
-	m_choices[MAINMENU].m_position.y = m_screenHeight * 6 /7+_offsetV.y;
+	m_choices[MAINMENU].m_position.y = m_screenHeight*9/10 ;
 	m_choices[MAINMENU].m_origin = m_font->MeasureString(m_menu.c_str()) / 2.f;
 	m_choices[MAINMENU].m_position.x = m_screenWidth / 2.f;
 	m_choices[MAINMENU].m_color = Colors::Crimson;
@@ -167,17 +167,17 @@ OptionsMenu::OptionsMenu(ID3D11Device* Device, ID3D11DeviceContext* DeviceContex
 	for (auto i = 0; i < 4; i++)
 		_offset[i] = i*(m_resolutions[m_defRes].first / 4);
 
-	m_keyChoice[WEAPON_1].m_position = SimpleMath::Vector2(_offset[0], (m_screenHeight / 2) +30.f);
-	m_keyChoice[WEAPON_2].m_position = SimpleMath::Vector2(_offset[1], (m_screenHeight / 2) +30.f);
-	m_keyChoice[WEAPON_3].m_position = SimpleMath::Vector2(_offset[2], m_screenHeight / 2 +30.f);
-	m_keyChoice[WEAPON_4].m_position = SimpleMath::Vector2(_offset[3], m_screenHeight / 2 +30.f);
+	m_keyChoice[WEAPON_1].m_position = SimpleMath::Vector2(_offset[0], m_screenHeight *5/10 );
+	m_keyChoice[WEAPON_2].m_position = SimpleMath::Vector2(_offset[1], m_screenHeight *5/10 );
+	m_keyChoice[WEAPON_3].m_position = SimpleMath::Vector2(_offset[2], m_screenHeight *5/10 );
+	m_keyChoice[WEAPON_4].m_position = SimpleMath::Vector2(_offset[3], m_screenHeight *5/10 );
 
-	m_keyChoice[MOVELEFT].m_position = SimpleMath::Vector2(_offset[0], m_screenHeight / 2 +60.f);
-	m_keyChoice[MOVERIGHT].m_position = SimpleMath::Vector2(_offset[1], m_screenHeight / 2+60.f);
-	m_keyChoice[MOVEUP].m_position = SimpleMath::Vector2(_offset[2], m_screenHeight / 2   +60.f);
-	m_keyChoice[MOVEDOWN].m_position = SimpleMath::Vector2(_offset[3], m_screenHeight / 2 +60.f);
+	m_keyChoice[MOVELEFT].m_position = SimpleMath::Vector2(_offset[0], m_screenHeight *6/10 );
+	m_keyChoice[MOVERIGHT].m_position = SimpleMath::Vector2(_offset[1],m_screenHeight *6/10 );
+	m_keyChoice[MOVEUP].m_position = SimpleMath::Vector2(_offset[2],   m_screenHeight *6/10 );
+	m_keyChoice[MOVEDOWN].m_position = SimpleMath::Vector2(_offset[3], m_screenHeight *6/10 );
 
-	m_keyChoice[COMBO].m_position = SimpleMath::Vector2(_offset[0], (m_screenHeight / 2)+90.f);
+	m_keyChoice[COMBO].m_position = SimpleMath::Vector2(_offset[0],    m_screenHeight *7/10);
 
 	m_boundKeyPos[WEAPON_1] = m_keyChoice[WEAPON_1].m_position + m_keyChoice[WEAPON_1].m_length*m_scaleKey.x;
 	m_boundKeyPos[WEAPON_1].y = m_keyChoice[WEAPON_1].m_position.y;
@@ -585,17 +585,17 @@ void OptionsMenu::Render()
 	m_font->DrawString(m_spriteBatch.get(), m_keys[MOVEDOWN].c_str(), m_keyChoice[MOVEDOWN].m_position, m_keyChoice[MOVEDOWN].m_color, 0.0f, m_keyChoice[MOVEDOWN].m_origin, m_scaleKey);
 	m_font->DrawString(m_spriteBatch.get(), m_keys[MOVEUP].c_str(), m_keyChoice[MOVEUP].m_position, m_keyChoice[MOVEUP].m_color, 0.0f, m_keyChoice[MOVEUP].m_origin,m_scaleKey);
 	m_font->DrawString(m_spriteBatch.get(), m_keys[COMBO].c_str(), m_keyChoice[COMBO].m_position, m_keyChoice[COMBO].m_color, 0.0f, m_keyChoice[COMBO].m_origin, m_scaleKey);
-
+	
 	// THE BOUND KEYS HEEERERERE
-	m_font->DrawString(m_spriteBatch.get(), m_boundKeys[WEAPON_1].c_str(), m_boundKeyPos[WEAPON_1], Colors::Violet, 0.0f,SimpleMath::Vector2(0.0f,0.0f),m_scaleKey);
-	m_font->DrawString(m_spriteBatch.get(), m_boundKeys[WEAPON_2].c_str(), m_boundKeyPos[WEAPON_2], Colors::Violet, 0.0f,SimpleMath::Vector2(0.0f,0.0f),m_scaleKey);
-	m_font->DrawString(m_spriteBatch.get(), m_boundKeys[WEAPON_3].c_str(), m_boundKeyPos[WEAPON_3], Colors::Violet, 0.0f,SimpleMath::Vector2(0.0f,0.0f),m_scaleKey);
-	m_font->DrawString(m_spriteBatch.get(), m_boundKeys[WEAPON_4].c_str(), m_boundKeyPos[WEAPON_4], Colors::Violet, 0.0f,SimpleMath::Vector2(0.0f,0.0f),m_scaleKey);
-	m_font->DrawString(m_spriteBatch.get(), m_boundKeys[MOVELEFT].c_str(), m_boundKeyPos[MOVELEFT], Colors::Violet, 0.0f,SimpleMath::Vector2(0.0f,0.0f),m_scaleKey);
-	m_font->DrawString(m_spriteBatch.get(), m_boundKeys[MOVERIGHT].c_str(),m_boundKeyPos[MOVERIGHT],Colors::Violet, 0.0f,SimpleMath::Vector2(0.0f,0.0f),m_scaleKey);
-	m_font->DrawString(m_spriteBatch.get(), m_boundKeys[MOVEDOWN].c_str(), m_boundKeyPos[MOVEDOWN], Colors::Violet, 0.0f,SimpleMath::Vector2(0.0f,0.0f),m_scaleKey);
-	m_font->DrawString(m_spriteBatch.get(), m_boundKeys[MOVEUP].c_str(),   m_boundKeyPos[MOVEUP],   Colors::Violet, 0.0f,SimpleMath::Vector2(0.0f,0.0f),m_scaleKey);
-	m_font->DrawString(m_spriteBatch.get(), m_boundKeys[COMBO].c_str(),    m_boundKeyPos[COMBO],    Colors::Violet, 0.0f,SimpleMath::Vector2(0.0f,0.0f),m_scaleKey);
+	m_font->DrawString(m_spriteBatch.get(), m_boundKeys[WEAPON_1].c_str(), m_boundKeyPos[WEAPON_1], Colors::BlueViolet, 0.0f,SimpleMath::Vector2(0.0f,0.0f),m_scaleKey);
+	m_font->DrawString(m_spriteBatch.get(), m_boundKeys[WEAPON_2].c_str(), m_boundKeyPos[WEAPON_2], Colors::BlueViolet, 0.0f,SimpleMath::Vector2(0.0f,0.0f),m_scaleKey);
+	m_font->DrawString(m_spriteBatch.get(), m_boundKeys[WEAPON_3].c_str(), m_boundKeyPos[WEAPON_3], Colors::BlueViolet, 0.0f,SimpleMath::Vector2(0.0f,0.0f),m_scaleKey);
+	m_font->DrawString(m_spriteBatch.get(), m_boundKeys[WEAPON_4].c_str(), m_boundKeyPos[WEAPON_4], Colors::BlueViolet, 0.0f,SimpleMath::Vector2(0.0f,0.0f),m_scaleKey);
+	m_font->DrawString(m_spriteBatch.get(), m_boundKeys[MOVELEFT].c_str(), m_boundKeyPos[MOVELEFT], Colors::BlueViolet, 0.0f,SimpleMath::Vector2(0.0f,0.0f),m_scaleKey);
+	m_font->DrawString(m_spriteBatch.get(), m_boundKeys[MOVERIGHT].c_str(),m_boundKeyPos[MOVERIGHT],Colors::BlueViolet, 0.0f,SimpleMath::Vector2(0.0f,0.0f),m_scaleKey);
+	m_font->DrawString(m_spriteBatch.get(), m_boundKeys[MOVEDOWN].c_str(), m_boundKeyPos[MOVEDOWN], Colors::BlueViolet, 0.0f,SimpleMath::Vector2(0.0f,0.0f),m_scaleKey);
+	m_font->DrawString(m_spriteBatch.get(), m_boundKeys[MOVEUP].c_str(),   m_boundKeyPos[MOVEUP],   Colors::BlueViolet, 0.0f,SimpleMath::Vector2(0.0f,0.0f),m_scaleKey);
+	m_font->DrawString(m_spriteBatch.get(), m_boundKeys[COMBO].c_str(),    m_boundKeyPos[COMBO],    Colors::BlueViolet, 0.0f,SimpleMath::Vector2(0.0f,0.0f),m_scaleKey);
 
 	//NOT KEYBINDINGS ANYMORE
 	m_font->DrawString(m_spriteBatch.get(), m_apply.c_str(), m_choices[APPLY].m_position, m_choices[APPLY].m_color, 0.f, m_choices[APPLY].m_origin);
