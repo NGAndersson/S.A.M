@@ -46,8 +46,8 @@ EnemySize4=4.00,4.00,4.00
 #### Healt of the enemys, deafault is 1000, bullets do 1000 dmg
 EnemyHealth1=2000
 EnemyHealth2=1000
-EnemyHealth3=5000
-EnemyHealth4=8000
+EnemyHealth3=8000
+EnemyHealth4=14000
 
 #### Shooting Patterns
 Pa 0
