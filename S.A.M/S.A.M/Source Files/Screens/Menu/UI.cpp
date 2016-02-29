@@ -76,6 +76,9 @@ void UI::Render(int offset)
 	_comboPos.x = m_screenWidth - 150 * (float(m_screenWidth) / float(1058)), _comboPos.y = m_screenHeight - 40 * (float(m_screenHeight) / float(1440));
 	_offsetCountPos.x = m_screenWidth / 2, _offsetCountPos.y = m_screenHeight / 2;
 
+	DirectX::SimpleMath::Vector3 _scale;
+	_scale.x = float(m_screenWidth) / float(1058), _scale.y = (float(m_screenHeight) / float(1440)), _scale.z = (float(m_screenHeight) / float(1440));
+
 	wstring _tempHighScore = L"High Score: " + m_score;
 	wstring _tempLives = L"Lives: " + m_livesLeft;
 	wstring _tempCombo = L"Combo: " + m_combo;
@@ -95,17 +98,15 @@ void UI::Render(int offset)
 	m_spriteBatch->Begin();
 	if (offset - m_stats->GetBeat() >= -4)
 	{
-		m_font->DrawString(m_spriteBatch.get(), _tempOffset.c_str(), _offsetCountPos, Colors::Crimson, 0.f, m_font->MeasureString(_tempOffset.c_str()) / 2.f, float(m_screenWidth) / float(1058));
+		m_font->DrawString(m_spriteBatch.get(), _tempOffset.c_str(), _offsetCountPos, Colors::Crimson, 0.f, m_font->MeasureString(_tempOffset.c_str()) / 2.f, _scale);
 	}
-	m_font->DrawString(m_spriteBatch.get(), _tempHighScore.c_str(),_scorePos, Colors::Crimson, 0.f, m_font->MeasureString(_tempHighScore.c_str()) / 2.f, float(m_screenWidth) / float(1058));
-	m_font->DrawString(m_spriteBatch.get(), _tempLives.c_str(), _livesPos, Colors::Crimson, 0.f, m_font->MeasureString(_tempLives.c_str()) / 2.f, float(m_screenWidth) / float(1058));
-	m_font->DrawString(m_spriteBatch.get(), _tempCombo.c_str(), _comboPos, Colors::Crimson, 0.f, m_font->MeasureString(_tempCombo.c_str()) / 2.f, float(m_screenWidth) / float(1058));
-	m_font->DrawString(m_spriteBatch.get(), m_pressed1.c_str(), m_shotBinding[SHOT1].m_position, m_shotBinding[SHOT1].m_color, 0.f, m_font->MeasureString(m_pressed1.c_str()) / 2.f, float(m_screenWidth) / float(1058));
-	m_font->DrawString(m_spriteBatch.get(), m_pressed2.c_str(), m_shotBinding[SHOT2].m_position, m_shotBinding[SHOT2].m_color, 0.f, m_font->MeasureString(m_pressed2.c_str()) / 2.f, float(m_screenWidth) / float(1058));
-	m_font->DrawString(m_spriteBatch.get(), m_pressed3.c_str(), m_shotBinding[SHOT3].m_position, m_shotBinding[SHOT3].m_color, 0.f, m_font->MeasureString(m_pressed3.c_str()) / 2.f, float(m_screenWidth) / float(1058));
-	m_font->DrawString(m_spriteBatch.get(), m_pressed4.c_str(), m_shotBinding[SHOT4].m_position, m_shotBinding[SHOT4].m_color, 0.f, m_font->MeasureString(m_pressed4.c_str()) / 2.f, float(m_screenWidth) / float(1058));
-	m_font->DrawString(m_spriteBatch.get(), _tempBeat.c_str(), SimpleMath::Vector2(0.f), Colors::Crimson, 0.f, SimpleMath::Vector2(0.f), float(m_screenWidth) / float(1058));
-	m_font->DrawString(m_spriteBatch.get(), to_wstring(m_stats->GetShit()).c_str(), SimpleMath::Vector2(0, 200), Colors::Crimson, 0.f, SimpleMath::Vector2(0.f), float(m_screenWidth) / float(1058));
+	m_font->DrawString(m_spriteBatch.get(), _tempHighScore.c_str(),_scorePos, Colors::Crimson, 0.f, m_font->MeasureString(_tempHighScore.c_str()) / 2.f, _scale);
+	m_font->DrawString(m_spriteBatch.get(), _tempLives.c_str(), _livesPos, Colors::Crimson, 0.f, m_font->MeasureString(_tempLives.c_str()) / 2.f, _scale);
+	m_font->DrawString(m_spriteBatch.get(), _tempCombo.c_str(), _comboPos, Colors::Crimson, 0.f, m_font->MeasureString(_tempCombo.c_str()) / 2.f, _scale);
+	m_font->DrawString(m_spriteBatch.get(), m_pressed1.c_str(), m_shotBinding[SHOT1].m_position, m_shotBinding[SHOT1].m_color, 0.f, m_font->MeasureString(m_pressed1.c_str()) / 2.f, _scale);
+	m_font->DrawString(m_spriteBatch.get(), m_pressed2.c_str(), m_shotBinding[SHOT2].m_position, m_shotBinding[SHOT2].m_color, 0.f, m_font->MeasureString(m_pressed2.c_str()) / 2.f, _scale);
+	m_font->DrawString(m_spriteBatch.get(), m_pressed3.c_str(), m_shotBinding[SHOT3].m_position, m_shotBinding[SHOT3].m_color, 0.f, m_font->MeasureString(m_pressed3.c_str()) / 2.f, _scale);
+	m_font->DrawString(m_spriteBatch.get(), m_pressed4.c_str(), m_shotBinding[SHOT4].m_position, m_shotBinding[SHOT4].m_color, 0.f, m_font->MeasureString(m_pressed4.c_str()) / 2.f, _scale);
 	m_spriteBatch->End();
 
 }

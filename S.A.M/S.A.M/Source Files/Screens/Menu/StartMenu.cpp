@@ -60,13 +60,15 @@ void StartMenu::Update(double time)
 
 void StartMenu::Render()
 {
+	DirectX::SimpleMath::Vector3 _scale;
+	_scale.x = float(m_screenWidth) / float(1058), _scale.y = (float(m_screenHeight) / float(1440)), _scale.z = (float(m_screenHeight) / float(1440));
 	m_spriteBatch->Begin();
 
-	m_font->DrawString(m_spriteBatch.get(), m_start.c_str(), m_choices[0].m_position, m_choices[0].m_color, 0.f, m_choices[0].m_origin, float(m_screenWidth) / float(1058));
+	m_font->DrawString(m_spriteBatch.get(), m_start.c_str(), m_choices[0].m_position, m_choices[0].m_color, 0.f, m_choices[0].m_origin, _scale);
 
-	m_font->DrawString(m_spriteBatch.get(), m_options.c_str(), m_choices[1].m_position, m_choices[1].m_color, 0.f, m_choices[1].m_origin, float(m_screenWidth) / float(1058));
+	m_font->DrawString(m_spriteBatch.get(), m_options.c_str(), m_choices[1].m_position, m_choices[1].m_color, 0.f, m_choices[1].m_origin, _scale);
 
-	m_font->DrawString(m_spriteBatch.get(), m_exit.c_str(), m_choices[2].m_position, m_choices[2].m_color, 0.f, m_choices[2].m_origin);
+	m_font->DrawString(m_spriteBatch.get(), m_exit.c_str(), m_choices[2].m_position, m_choices[2].m_color, 0.f, m_choices[2].m_origin, _scale);
 
 	m_spriteBatch->End();
 }
