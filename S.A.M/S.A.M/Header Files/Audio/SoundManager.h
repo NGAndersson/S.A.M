@@ -68,8 +68,8 @@ class SoundManager
 		FMOD::Sound* m_musicSound;
 		FMOD::Channel* m_musicChannel;
 		unsigned int m_musicLength;
-		int* m_dataLeftChannel;
-		int* m_dataRightChannel;
+		int* m_dataLeftChannel = nullptr;
+		int* m_dataRightChannel = nullptr;
 };
 
 #endif // !_SOUNDMANAGER_H_
