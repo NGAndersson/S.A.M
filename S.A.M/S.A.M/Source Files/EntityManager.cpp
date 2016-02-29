@@ -182,7 +182,6 @@ void EntityManager::Initialize(SoundManager* soundManager, Input* input, ID3D11D
 	m_playerPartSys->CreateBuffer(m_device, m_deviceContext, _texName);
 
 
-
 	//Create Light Buffer
 	m_light.InitializBuffer(m_device);
 }
@@ -197,9 +196,12 @@ void EntityManager::Render()
 		m_rocketPartSys->Render(m_deviceContext);
 	}
 
-	m_shaderLoad[SHADER_PLAYERPART]->SetShaders(m_deviceContext);
-	m_playerPartSys->SetBuffer(m_deviceContext);
-	m_playerPartSys->Render(m_deviceContext);
+	if (m_renderFire == true)
+	{
+		m_shaderLoad[SHADER_PLAYERPART]->SetShaders(m_deviceContext);
+		m_playerPartSys->SetBuffer(m_deviceContext);
+		m_playerPartSys->Render(m_deviceContext);
+	}
 
 	for (int i = 0; i < m_explosion.size(); i++)
 	{
@@ -208,10 +210,13 @@ void EntityManager::Render()
 	}
 
 	//Render Player
-	if (m_player->GetHealth() > 0)			//Invulnerability-blinking
+	if (m_renderPlayer == true)
 	{
-		m_shaderLoad[SHADER_PLAYER]->SetShaders(m_deviceContext);
-		m_renderer->Render(m_modelHandlers[PLAYER], m_player->GetPosition(), m_player->GetRotation(), m_player->GetScale());
+		if (m_player->GetHealth() > 0)			//Invulnerability-blinking
+		{
+			m_shaderLoad[SHADER_PLAYER]->SetShaders(m_deviceContext);
+			m_renderer->Render(m_modelHandlers[PLAYER], m_player->GetPosition(), m_player->GetRotation(), m_player->GetScale());
+		}
 	}
 	m_shaderLoad[SHADER_BULLET]->SetShaders(m_deviceContext);
 	RenderBullets();
@@ -339,7 +344,7 @@ void EntityManager::Update(double time)
 	if (!m_player->GetInvulnerable())			//Only check if the player is alive and well
 	{
 		std::vector<Entity*> _playerVec = { m_player };
-		//m_collision.CheckCollisionEntity(&m_bullet6, &_playerVec, BULLET6, PLAYER, &m_explosion, m_device, m_deviceContext);
+		m_collision.CheckCollisionEntity(&m_bullet6, &_playerVec, BULLET6, PLAYER, &m_explosion, m_device, m_deviceContext);
 		if (m_player->GetHealth() <= 0)
 		{
 			m_statsManager->ResetCombo();
@@ -423,18 +428,23 @@ void EntityManager::Update(double time)
 
 	//Update Particle System
 	std::vector<Entity*> _playerVec = { m_player };
+
 	m_rocketPartSys->Update(m_deviceContext, time, 35);
-	if (m_input->CheckKeyBoardInput() == INPUT_MOVE_DOWN)
+	
+	if (m_playerPartSys != NULL)
 	{
-		m_playerPartSys->Update(m_deviceContext, time, 75, _playerVec);
-	}
-	else if (m_input->CheckKeyBoardInput() == INPUT_MOVE_UP)
-	{
-		m_playerPartSys->Update(m_deviceContext, time, 35, _playerVec);
-	}
-	else 
-	{
-		m_playerPartSys->Update(m_deviceContext, time, 25, _playerVec);
+		if (m_input->CheckKeyBoardInput() == INPUT_MOVE_DOWN)
+		{
+			m_playerPartSys->Update(m_deviceContext, time, 75, _playerVec);
+		}
+		else if (m_input->CheckKeyBoardInput() == INPUT_MOVE_UP)
+		{
+			m_playerPartSys->Update(m_deviceContext, time, 35, _playerVec);
+		}
+		else
+		{
+			m_playerPartSys->Update(m_deviceContext, time, 25, _playerVec);
+		}
 	}
 }
 
@@ -498,7 +508,7 @@ void EntityManager::InitMusic(const std::string &filename)
 			else if (std::string(_key) == "EnemySpawnRateDivider4")
 				m_enemySpawnRateDivider4 = atof(_value);
 
-			else if (std::string(_key) == "EnemySize1")	//Mov patterns
+			else if (std::string(_key) == "EnemySize1")
 			{
 				_ss = istringstream(_value);
 				string _floatVec;				//For keeping xmfloat3 string
@@ -516,7 +526,7 @@ void EntityManager::InitMusic(const std::string &filename)
 					m_enemySize1.z = stoi(_coord);
 				}
 			}
-			else if (std::string(_key) == "EnemySize2")	//Mov patterns
+			else if (std::string(_key) == "EnemySize2")
 			{
 				_ss = istringstream(_value);
 				string _floatVec;				//For keeping xmfloat3 string
@@ -534,7 +544,7 @@ void EntityManager::InitMusic(const std::string &filename)
 					m_enemySize2.z = stoi(_coord);
 				}
 			}
-			else if (std::string(_key) == "EnemySize3")	//Mov patterns
+			else if (std::string(_key) == "EnemySize3")
 			{
 				_ss = istringstream(_value);
 				string _floatVec;				//For keeping xmfloat3 string
@@ -552,7 +562,7 @@ void EntityManager::InitMusic(const std::string &filename)
 					m_enemySize3.z = stoi(_coord);
 				}
 			}
-			else if (std::string(_key) == "EnemySize4")	//Mov patterns
+			else if (std::string(_key) == "EnemySize4")
 			{
 				_ss = istringstream(_value);
 				string _floatVec;				//For keeping xmfloat3 string
@@ -648,6 +658,9 @@ void EntityManager::InitMusic(const std::string &filename)
 	m_doBeatDet = true;				//Make this changable at song select
 	m_beat = m_beatDetector->GetBeat();
 	m_EnemyPatterns.LoadPatterns(filename);
+
+	m_renderFire = true;
+	m_renderPlayer = true;
 }
 
 void EntityManager::Reset()
@@ -705,6 +718,8 @@ void EntityManager::Reset()
 	m_offset = 0;				
 	m_player->SetDelete(true);
 	m_doBeatDet = true;
+	m_renderFire = false;
+	m_renderPlayer = false;
 }
 
 void EntityManager::BeatWasDetected()

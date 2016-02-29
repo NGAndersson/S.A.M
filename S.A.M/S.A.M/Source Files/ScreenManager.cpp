@@ -84,7 +84,10 @@ newOptions ScreenManager::Update(double time)
 		m_endScreen->Update(time);
 		if (m_input->CheckReturn() && !m_keyDown)
 		{
+			m_stats->SaveScore(m_endScreen->GetPlayerName());
 			m_keyDown = true;
+			m_current = HIGHSCORE;
+			m_screenHighScore = new HighScoreMenu(m_device, m_deviceContext, m_screenHeight, m_screenWidth, m_input, m_stats); //Make new song-specific highscore screen
 		}
 		else if (!m_input->CheckReturn())
 			m_keyDown = false;
