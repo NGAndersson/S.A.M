@@ -221,8 +221,12 @@ InputType Input::CheckKeyBoardInput()
 
 	else if (m_keyBoardState[m_keyBindings[MOVEDOWN]] & 0x80)
 		return INPUT_MOVE_DOWN;
+
 	else if (m_keyBoardState[DIK_RETURN] & 0x80)
 		return INPUT_ENTER;
+
+	else if (m_keyBoardState[DIK_ESCAPE] & 0x80)
+		return INPUT_ESC;
 
 	return INPUT_DEFAULT;
 }

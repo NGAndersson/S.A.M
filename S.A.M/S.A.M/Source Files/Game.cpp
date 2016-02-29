@@ -245,6 +245,7 @@ void Game::Update(double time, HINSTANCE hInstance, HINSTANCE hPrevInstance, LPS
 		}
 		m_entityManager->Update(time);
 	}
+
 	if (m_screenManager->GetCurrentScreen() == EXIT)
 	{
 		PostQuitMessage(0);

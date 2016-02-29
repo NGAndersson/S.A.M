@@ -479,7 +479,7 @@ void OptionsMenu::Update(double time)
 		m_keyDown = false;
 	}
 
-	if (m_input->CheckEsc())
+	if (m_input->CheckEsc() && !m_keyDown)
 	{
 		switch (m_ifKey)
 		{
@@ -503,15 +503,15 @@ void OptionsMenu::setUpdateKeys()
 	//	m_keyBindings[i] = m_input->GetKeyBiningArray(i);
 
 	//Keybindings
-	m_keys[WEAPON_1] = L"Weapon 1:" + m_input->GetKeyBinding(m_keyBindings[WEAPON_1]);
-	m_keys[WEAPON_2] = L"Weapon 2:" + m_input->GetKeyBinding(m_keyBindings[WEAPON_2]);
-	m_keys[WEAPON_3] = L"Weapon 3:" + m_input->GetKeyBinding(m_keyBindings[WEAPON_3]);
-	m_keys[WEAPON_4] = L"Weapon 4:" + m_input->GetKeyBinding(m_keyBindings[WEAPON_4]);
-	m_keys[MOVELEFT] = L"Move Left:" + m_input->GetKeyBinding(m_keyBindings[MOVELEFT]);
-	m_keys[MOVERIGHT] = L"Move Right:" + m_input->GetKeyBinding(m_keyBindings[MOVERIGHT]);
-	m_keys[MOVEDOWN] = L"Move Down:" + m_input->GetKeyBinding(m_keyBindings[MOVEDOWN]);
-	m_keys[MOVEUP] = L"Move up:" + m_input->GetKeyBinding(m_keyBindings[MOVEUP]);
-	m_keys[COMBO] = L"Combo key:" + m_input->GetKeyBinding(m_keyBindings[COMBO]);
+	m_boundKeys[WEAPON_1] = m_input->GetKeyBinding(m_keyBindings[WEAPON_1]);
+	m_boundKeys[WEAPON_2] = m_input->GetKeyBinding(m_keyBindings[WEAPON_2]);
+	m_boundKeys[WEAPON_3] = m_input->GetKeyBinding(m_keyBindings[WEAPON_3]);
+	m_boundKeys[WEAPON_4] = m_input->GetKeyBinding(m_keyBindings[WEAPON_4]);
+	m_boundKeys[MOVELEFT] = m_input->GetKeyBinding(m_keyBindings[MOVELEFT]);
+	m_boundKeys[MOVERIGHT] = m_input->GetKeyBinding(m_keyBindings[MOVERIGHT]);
+	m_boundKeys[MOVEDOWN] = m_input->GetKeyBinding(m_keyBindings[MOVEDOWN]);
+	m_boundKeys[MOVEUP] = m_input->GetKeyBinding(m_keyBindings[MOVEUP]);
+	m_boundKeys[COMBO] = m_input->GetKeyBinding(m_keyBindings[COMBO]);
 
 
 }
