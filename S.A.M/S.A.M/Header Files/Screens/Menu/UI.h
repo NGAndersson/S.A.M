@@ -4,6 +4,7 @@
 #include "../Screen.h"
 #include "../../Gamelogic/Stats.h"
 
+enum KeyBindings { SHOT1, SHOT2, SHOT3, SHOT4 };
 class UI : public Screen
 {
 private:
@@ -20,6 +21,13 @@ private:
 	wstring m_score;
 	wstring m_livesLeft;
 	wstring m_combo;
+	wstring m_pressed1;
+	wstring m_pressed2;
+	wstring m_pressed3;
+	wstring m_pressed4;
+	Input* m_input;
+
+	Font m_shotBinding[4];
 };
 
 
