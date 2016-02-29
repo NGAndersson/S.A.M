@@ -92,10 +92,10 @@ private:
 	int m_beatPerShot3 = 3;
 	int m_beatPerShot4 = 3;
 
-	float m_enemySpawnRateDivider1 = 1;
-	float m_enemySpawnRateDivider2 = 1;
-	float m_enemySpawnRateDivider3 = 1;
-	float m_enemySpawnRateDivider4 = 1;
+	std::vector<std::pair<int, float>> m_enemySpawnRateDivider1;
+	std::vector<std::pair<int, float>> m_enemySpawnRateDivider2;
+	std::vector<std::pair<int, float>> m_enemySpawnRateDivider3;
+	std::vector<std::pair<int, float>> m_enemySpawnRateDivider4;
 
 	XMFLOAT3 m_enemySize1 = { 1, 1, 1 };
 	XMFLOAT3 m_enemySize2 = { 1, 1, 1 };
