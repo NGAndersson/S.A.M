@@ -517,14 +517,29 @@ void EntityManager::InitMusic(const std::string &filename)
 			else if (std::string(_key) == "BeatPerShot4")
 				m_beatPerShot4 = atoi(_value);
 
-			else if (std::string(_key) == "EnemySpawnRateDivider1")
-				m_enemySpawnRateDivider1 = atof(_value);
-			else if (std::string(_key) == "EnemySpawnRateDivider2")
-				m_enemySpawnRateDivider2 = atof(_value);
-			else if (std::string(_key) == "EnemySpawnRateDivider3")
-				m_enemySpawnRateDivider3 = atof(_value);
-			else if (std::string(_key) == "EnemySpawnRateDivider4")
-				m_enemySpawnRateDivider4 = atof(_value);
+			else if (std::string(_key).find("EnemySpawnRateDivider") != string::npos) //Mov compilations
+			{
+				pair<int, float> _spawnDiv;
+				_ss = istringstream(_value);
+
+				string _startBeat;
+				getline(_ss, _startBeat, '|');		// Get at what beat enemies will spawn with this compilation
+				_spawnDiv.first = stoi(_startBeat);
+
+				string _divider;
+				getline(_ss, _divider, ',');
+				_spawnDiv.second = stof(_divider);
+
+				//Add to the relevant final vector once done loading
+				if (std::string(_key) == "EnemySpawnRateDivider1")
+					m_enemySpawnRateDivider1.push_back(_spawnDiv);
+				if (std::string(_key) == "EnemySpawnRateDivider2")
+					m_enemySpawnRateDivider2.push_back(_spawnDiv);
+				if (std::string(_key) == "EnemySpawnRateDivider3")
+					m_enemySpawnRateDivider3.push_back(_spawnDiv);
+				if (std::string(_key) == "EnemySpawnRateDivider4")
+					m_enemySpawnRateDivider4.push_back(_spawnDiv);
+			}
 
 			else if (std::string(_key) == "EnemySize1")	//Mov patterns
 			{
@@ -724,6 +739,10 @@ void EntityManager::Reset()
 	m_enemy2MovPatterns.clear();
 	m_enemy3MovPatterns.clear();
 	m_enemy4MovPatterns.clear();
+	m_enemySpawnRateDivider1.clear();
+	m_enemySpawnRateDivider2.clear();
+	m_enemySpawnRateDivider3.clear();
+	m_enemySpawnRateDivider4.clear();
 	m_explosion.clear();
 	m_statsManager->ResetCombo();
 	m_statsManager->ResetScore();
@@ -769,38 +788,77 @@ void EntityManager::BeatWasDetected()
 
 
 	//use time and check that after 30 sec or so increse the level count by some.. int
-	
-	if (_enemySpawnRate1 == int(m_beatDetector->GetTempo() * 1000) / int(m_enemySpawnRateDivider1 * 1000))
+	for (auto i = 0; i < m_enemySpawnRateDivider1.size(); i++)
 	{
-		SpawnEntity(ENEMY1);
-		_enemySpawnRate1 = 0;
+		if (m_enemySpawnRateDivider1[m_enemySpawnRateDivider1.size() - 1 - i].first < m_statsManager->GetBeat())
+		{
+			if (_enemySpawnRate1 == int(m_beatDetector->GetTempo() * 1000) / int(m_enemySpawnRateDivider1[m_enemySpawnRateDivider1.size() - 1 - i].second * 1000))
+			{
+				SpawnEntity(ENEMY1);
+				_enemySpawnRate1 = 0;
+				i = m_enemySpawnRateDivider1.size();
+			}
+			else
+			{
+				_enemySpawnRate1++;
+				i = m_enemySpawnRateDivider1.size();
+			}
+		}
 	}
-	else
-		_enemySpawnRate1++;
 
-	if (_enemySpawnRate2 == int(m_beatDetector->GetTempo() * 1000) / int(m_enemySpawnRateDivider2 * 1000))
+	for (auto i = 0; i < m_enemySpawnRateDivider2.size(); i++)
 	{
-		SpawnEntity(ENEMY2);
-		_enemySpawnRate2 = 0;
+		if (m_enemySpawnRateDivider2[m_enemySpawnRateDivider2.size() - 1 - i].first < m_statsManager->GetBeat())
+		{
+			if (_enemySpawnRate2 == int(m_beatDetector->GetTempo() * 1000) / int(m_enemySpawnRateDivider2[m_enemySpawnRateDivider2.size() - 1 - i].second * 1000))
+			{
+				SpawnEntity(ENEMY2);
+				_enemySpawnRate2 = 0;
+				i = m_enemySpawnRateDivider2.size();
+			}
+			else
+			{
+				_enemySpawnRate2++;
+				i = m_enemySpawnRateDivider2.size();
+			}
+		}
 	}
-	else
-		_enemySpawnRate2++;
 
-	if (_enemySpawnRate3 == int(m_beatDetector->GetTempo() * 1000) / int(m_enemySpawnRateDivider3 * 1000))
+	for (auto i = 0; i < m_enemySpawnRateDivider3.size(); i++)
 	{
-		SpawnEntity(ENEMY3);
-		_enemySpawnRate3 = 0;
+		if (m_enemySpawnRateDivider3[m_enemySpawnRateDivider3.size() - 1 - i].first < m_statsManager->GetBeat())
+		{
+			if (_enemySpawnRate3 == int(m_beatDetector->GetTempo() * 1000) / int(m_enemySpawnRateDivider3[m_enemySpawnRateDivider3.size() - 1 - i].second * 1000))
+			{
+				SpawnEntity(ENEMY3);
+				_enemySpawnRate3 = 0;
+				i = m_enemySpawnRateDivider3.size();
+			}
+			else
+			{
+				_enemySpawnRate3++;
+				i = m_enemySpawnRateDivider3.size();
+			}
+		}
 	}
-	else
-		_enemySpawnRate3++;
 
-	if (_enemySpawnRate4 == int(m_beatDetector->GetTempo() * 1000) / int(m_enemySpawnRateDivider4 * 1000))
+	for (auto i = 0; i < m_enemySpawnRateDivider4.size(); i++)
 	{
-		SpawnEntity(ENEMY4);
-		_enemySpawnRate4 = 0;
+		if (m_enemySpawnRateDivider4[m_enemySpawnRateDivider4.size() - 1 - i].first < m_statsManager->GetBeat())
+		{
+			if (_enemySpawnRate4 == int(m_beatDetector->GetTempo() * 1000) / int(m_enemySpawnRateDivider4[m_enemySpawnRateDivider4.size() - 1 - i].second * 1000))
+			{
+				SpawnEntity(ENEMY4);
+				_enemySpawnRate4 = 0;
+				i = m_enemySpawnRateDivider4.size();
+			}
+			else
+			{
+				_enemySpawnRate4++;
+				i = m_enemySpawnRateDivider4.size();
+			}
+		}
 	}
-	else
-		_enemySpawnRate4++;
 	
 }
 

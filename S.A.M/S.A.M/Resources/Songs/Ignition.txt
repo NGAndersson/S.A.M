@@ -21,10 +21,10 @@ bulletE=Resources/Sound/DefaultSoundBullet4.wav
 bulletR=Resources/Sound/DefaultSoundBullet5.wav
 
 #### Spawn frequence divider, default is 0 if not defined here, divides the BPM
-EnemySpawnRateDivider1=14.00
-EnemySpawnRateDivider2=8.00
-EnemySpawnRateDivider3=1.00
-EnemySpawnRateDivider4=0.50
+EnemySpawnRateDivider1=0|14.00
+EnemySpawnRateDivider2=0|8.00
+EnemySpawnRateDivider3=0|1.00
+EnemySpawnRateDivider4=0|0.50
 
 #### Size of the enemys, there scaling deafualt is (1, 1, 1)
 EnemySize1=2.00,2.00,2.00
