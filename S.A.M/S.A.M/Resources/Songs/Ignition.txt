@@ -21,18 +21,23 @@ bulletE=Resources/Sound/DefaultSoundBullet4.wav
 bulletR=Resources/Sound/DefaultSoundBullet5.wav
 
 #### Spawn frequence divider, default is 0 if not defined here, divides the BPM
-EnemySpawnRateDivider1=0|14.00
-EnemySpawnRateDivider2=0|8.00
+EnemySpawnRateDivider1=0|16.00
+EnemySpawnRateDivider1=165|18.00
+EnemySpawnRateDivider2=0|10.00
+EnemySpawnRateDivider2=165|12.00
 EnemySpawnRateDivider3=0|1.00
-EnemySpawnRateDivider4=0|0.50
+EnemySpawnRateDivider3=165|0.01
+EnemySpawnRateDivider4=0|0.40
+
+
 
 #### Size of the enemys, there scaling deafualt is (1, 1, 1)
 EnemySize1=2.00,2.00,2.00
 EnemySize2=1.00,1.00,1.00
-EnemySize3=3.00,3.00,3.00
-EnemySize4=4.00,4.00,4.00
+EnemySize3=4.00,4.00,4.00
+EnemySize4=8.00,8.00,8.00
 
-#### Healt of the enemys, deafault is 1000, bullets do 1000 dmg
+#### Healt of the enemys, deafault is 1000, bullets do 1000 dmg, laser do 500 at full hit
 EnemyHealth1=2000
 EnemyHealth2=1000
 EnemyHealth3=5000
@@ -286,15 +291,14 @@ mov=67,0|67,-30
 ### Each compilation needs at least 4 total points from combined movement patterns
 ### First number is "from this beat, do this compilation"	PUT MOVCOMPS IN THIS ORDER
 ### Each pipe is |NrOfRepeats,MovPatternNr|
-movcomp1=0|1,0|1,1|1,2
-movcomp1=150|1,57|1,58|1,59
-movcomp1=370|1,54|1,55|1,56
-movcomp2=0|1,3|1,4|1,5
-movcomp2=150|1,12|1,13|1,14
-movcomp2=370|1,15|1,16|1,17
-movcomp3=0|1,6|2,7|1,8
-movcomp3=150|1,18|2,19|1,20
-movcomp3=370|1,21|2,22|1,23
-movcomp4=0|1,9|3,10|2,11
-movcomp4=150|1,27|3,28|2,29
-movcomp4=370|1,24|3,25|2,26
+movcomp1=0|1,6|1,7|1,8
+movcomp1=64|1,57|1,58|1,59
+movcomp1=130|1,54|1,55|1,56
+movcomp1=160|1,51|1,52|1,53
+movcomp2=0|1,39|4,40|1,41
+movcomp2=66|1,42|4,43|1,44
+movcomp2=130|1,45|2,46|1,47
+movcomp2=160|1,48|4,49|1,50
+movcomp3=0|1,3|4,4|1,5
+movcomp3=67|1,15|4,16|1,17
+movcomp4=0|1,9|6,10|2,11
