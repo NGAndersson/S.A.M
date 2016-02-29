@@ -69,21 +69,29 @@ newOptions ScreenManager::Update(double time)
 	case PAUSE:
 		//Pause
 		m_screenPause->Update(time);
-		
 		if (m_input->CheckReturn() && !m_keyDown)
 		{
 			m_current = m_screenPause->GetTargetMenu();
 			m_keyDown = true;
+		}	
+		if (m_current == MENU)
+		{
+			m_gameOngoing = false;
+			m_stats->ResetBeat();
 		}
 		else if (!m_input->CheckReturn())
 			m_keyDown = false;
+		
 		break;
 	case ENDSCREEN:
 		//Endscreen
 		m_endScreen->Update(time);
 		if (m_input->CheckReturn() && !m_keyDown)
 		{
+			m_stats->SaveScore(m_endScreen->GetPlayerName());
 			m_keyDown = true;
+			m_current = HIGHSCORE;
+			m_screenHighScore = new HighScoreMenu(m_device, m_deviceContext, m_screenHeight, m_screenWidth, m_input, m_stats); //Make new song-specific highscore screen
 		}
 		else if (!m_input->CheckReturn())
 			m_keyDown = false;

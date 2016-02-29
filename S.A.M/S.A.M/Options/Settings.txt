@@ -5,3 +5,4 @@ ScreenWidth|720
 MusicVolume|2
 EffectVolume|2
 
+

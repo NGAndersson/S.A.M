@@ -77,6 +77,7 @@ public:
 	void Update();//Updates the keyboard array with the keys that have been pressed since last uppdate
 	bool CheckReturn();//Checks if the player presses Enter
 	bool CheckEsc();//Check if Esc is pressed 
+	bool CheckBackspace();
 	//bool IsNewButtonPressed(BulletType& checkAgainst);
 	bool IsNewButtonPressed(bool& checkAgainst);
 	void ReadInputKeyBindings();
