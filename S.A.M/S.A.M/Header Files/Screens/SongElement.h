@@ -21,7 +21,7 @@ public:
 	SongElement();
 	SongElement(std::string filename, ID3D11Device* device, ID3D11DeviceContext* DeviceContext, SoundManager* soundManager);
 	~SongElement();
-	void Render(int offsetX, int offsetZ);
+	void Render(int offsetX, int offsetZ, int screenWidth, int screenHeight);
 	char* GetFile() { return m_file; }
 	std::string GetDataFile() { return m_dataFile; }
 	std::string GetScoreFile() { return std::string(m_scoreFile); }

@@ -104,7 +104,7 @@ void EndScreen::Render()
 		DirectX::Colors::Crimson, 
 		0.f, 
 		_origin/2, 
-		SimpleMath::Vector3(1.5f));
+		SimpleMath::Vector3(1.5f) * float(m_screenWidth) / float(1058));
 
 	_origin = m_font->MeasureString(_scoreMessage.c_str());			//Score amount
 	_origin = XMVectorSetY(_origin, 0);
@@ -113,7 +113,8 @@ void EndScreen::Render()
 		SimpleMath::Vector2(m_screenWidth / 2, m_screenHeight / 3 + 60),
 		DirectX::Colors::Crimson,
 		0.f,
-		_origin / 2);
+		_origin / 2,
+		float(m_screenWidth) / float(1058));
 
 	_origin = m_font->MeasureString(L"Input Name: ");				//"Input Name:" 
 	_origin = XMVectorSetY(_origin, 0);
@@ -122,7 +123,8 @@ void EndScreen::Render()
 		SimpleMath::Vector2(m_screenWidth / 2, m_screenHeight / 2),
 		DirectX::Colors::Crimson,
 		0.f,
-		_origin);
+		_origin,
+		float(m_screenWidth) / float(1058));
 
 	m_font->DrawString(m_spriteBatch.get(),
 		m_playerName.c_str(),
