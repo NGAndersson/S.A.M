@@ -127,7 +127,7 @@ void ExplosionPart::Update(ID3D11DeviceContext* deviceContext, float time, float
 	for (int i = 0; i < m_amountOfPart; i++)
 	{
 		
-		m_partPos[i] = XMFLOAT4(m_partPos[i].x + (m_movementVec[i].x * partSpeed * time), m_partPos[i].y + (m_movementVec[i].y * partSpeed * time), m_partPos[i].z + (m_movementVec[i].z * partSpeed * time), 1.0f);
+		m_partPos[i] = XMFLOAT4(m_partPos[i].x + (m_movementVec[i].x * partSpeed * time), m_partPos[i].y + (m_movementVec[i].y * partSpeed * time), m_partPos[i].z + (m_movementVec[i].z * partSpeed * time) - ((partSpeed * 5) * time), 1.0f);
 		m_timeToLive[i] = m_timeToLive[i] - (time);
 
 	}
