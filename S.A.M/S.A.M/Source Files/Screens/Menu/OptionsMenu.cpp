@@ -18,10 +18,11 @@ OptionsMenu::OptionsMenu(ID3D11Device* Device, ID3D11DeviceContext* DeviceContex
 
 	for (int i = 0; i < 9; i++)
 	{
-		if (0.1f*m_volym[i] == m_soundManager->GetMusicVolume())
+		if (m_volym[i] == 10*m_soundManager->GetMusicVolume())
+
 			m_currentMVol = i;
 
-		if (0.1f*m_volym[i] == m_soundManager->GetEffectVolume())
+		if (m_volym[i] == 10*m_soundManager->GetEffectVolume())
 			m_currentSVol = i;
 	}
 
@@ -338,9 +339,16 @@ void OptionsMenu::Update(double time)
 				m_choices[m_currentFont].m_color = Colors::White;
 
 				m_input->SetKeyBindings(m_keyBindings);
-				m_soundManager->SetMusicVolume(1.f/m_volym[m_currentMVol]);
-				m_soundManager->SetEffectVolume(1.f/m_volym[m_currentSVol]);
-				//Fix resolutions here laaaaaaater
+
+				if (m_volym[m_currentMVol] == 0)
+					m_soundManager->SetMusicVolume(0);
+				else
+					m_soundManager->SetMusicVolume(m_volym[m_currentMVol]/10.f);
+
+				if (m_volym[m_currentSVol] == 0)
+					m_soundManager->SetEffectVolume(0);
+				else
+					m_soundManager->SetEffectVolume(m_volym[m_currentSVol] / 10.f);
 				
 				if (m_res[m_currentRes].first != m_screenWidth)
 					m_currentTargetMenu = NEWRES;
