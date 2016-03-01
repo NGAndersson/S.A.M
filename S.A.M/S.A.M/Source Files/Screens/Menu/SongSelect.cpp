@@ -161,10 +161,10 @@ void SongSelect::Render()
 	//Render song elements
 	for (int i = 0; i < 5; i++)
 	{
-		int _xpos = 400;
+		int _xpos = 700;
 		if (i == 2)
-			_xpos = 100;
-		m_visibleElements[i]->Render(_xpos, (i * 100) + (m_screenHeight / 2 - 250), m_screenWidth, m_screenHeight);		//Get it centered, y-wise
+			_xpos = 450;
+		m_visibleElements[i]->Render(_xpos, (i * 100) + (m_screenHeight / 2 - 250 * float(m_screenHeight) / 1440.f), m_screenWidth, m_screenHeight);		//Get it centered, y-wise
 
 	}
 
