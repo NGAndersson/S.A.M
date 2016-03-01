@@ -145,6 +145,8 @@ void ScreenManager::InitializeScreen(ID3D11Device* Device, ID3D11DeviceContext* 
 	m_device = Device;
 	m_deviceContext = DeviceContext;
 	//Starting all the otherClasses etc..
+	m_screenHeight = ScreenHeight;
+	m_screenWidth = ScreenWidth;
 
 	//Current screen is startscreen
 	m_current = MENU;

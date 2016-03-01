@@ -21,6 +21,8 @@ void HighScoreMenu::Render()
 	
 	m_spriteBatch->Begin();
 	//Highscore list
+	DirectX::SimpleMath::Vector3 _scale;
+	_scale.x = float(m_screenWidth) / float(1058), _scale.y = (float(m_screenHeight) / float(1440)), _scale.z = (float(m_screenHeight) / float(1440));
 	for (int i = 0; i < 10; i++)
 	{
 		DirectX::XMVECTOR _nameOrigin = m_font->MeasureString(m_highscore[i].first.c_str());
@@ -33,7 +35,7 @@ void HighScoreMenu::Render()
 			Colors::Yellow,
 			0.f,
 			_nameOrigin,
-			SimpleMath::Vector3(1.0-i*0.05)
+			SimpleMath::Vector3(1.0-i*0.05) * _scale
 			);
 		m_font->DrawString(
 			m_spriteBatch.get(),
@@ -42,7 +44,7 @@ void HighScoreMenu::Render()
 			Colors::Yellow,
 			0.f,
 			SimpleMath::Vector2(0.f),
-			SimpleMath::Vector3(1.0-i*0.05)
+			SimpleMath::Vector3(1.0-i*0.05) * _scale
 			);
 	}
 	m_spriteBatch->End();
