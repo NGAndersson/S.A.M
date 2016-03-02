@@ -181,6 +181,7 @@ void EntityManager::Initialize(SoundManager* soundManager, Input* input, ID3D11D
 	m_playerPartSys = new PlayerPart(1, 200, _playerVec);
 	m_playerPartSys->CreateBuffer(m_device, m_deviceContext, _texName);
 
+	EnemyHealthColourBuffer();
 
 	//Create Light Buffer
 	m_light.InitializBuffer(m_device);
@@ -864,12 +865,29 @@ vector<Entity*> EntityManager::CheckOutOfBounds(const std::vector<Entity*> &enti
 	}
 	return _tempVec;
 }
+
+void EntityManager::EnemyHealthColourBuffer()
+{
+	D3D11_BUFFER_DESC _HealthColourDesc;
+
+	ZeroMemory(&_HealthColourDesc, sizeof(D3D11_BUFFER_DESC));
+
+	_HealthColourDesc.Usage = D3D11_USAGE_DYNAMIC;
+	_HealthColourDesc.ByteWidth = sizeof(XMFLOAT4) * 100;
+	_HealthColourDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+	_HealthColourDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+	_HealthColourDesc.MiscFlags = 0;
+
+	//skapar constant buffer
+	m_device->CreateBuffer(&_HealthColourDesc, NULL, &m_enemyHealthColourBuffer);
+}
 	
 void EntityManager::RenderEnemies()
 {
 	vector<XMFLOAT3> _instancePosition;
 	vector<XMMATRIX> _instanceRotation;
 	vector<XMFLOAT3> _instanceScale;
+	XMFLOAT4 _healthColour[100];
 
 	_instancePosition.clear();
 	_instanceScale.clear();
@@ -882,8 +900,17 @@ void EntityManager::RenderEnemies()
 			_instancePosition.push_back(m_enemy1[i]->GetPosition());
 			_instanceScale.push_back(m_enemy1[i]->GetScale());
 			_instanceRotation.push_back(m_enemy1[i]->GetRotation());
-
+			_healthColour[i] = XMFLOAT4(1.f - (float(m_enemy1[i]->GetHealth()) / float(m_enemyHealth1)), (float(m_enemy1[i]->GetHealth()) / float(m_enemyHealth1)), (float(m_enemy1[i]->GetHealth()) / float(m_enemyHealth1)), 1);
+			float hej = 1 - (m_enemy1[i]->GetHealth() / m_enemyHealth1);
 		}
+		D3D11_MAPPED_SUBRESOURCE _mappedResource;
+
+		HRESULT hr = m_deviceContext->Map(m_enemyHealthColourBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &_mappedResource);
+
+		memcpy(_mappedResource.pData, &_healthColour, sizeof(XMFLOAT4) * 100);
+
+		m_deviceContext->Unmap(m_enemyHealthColourBuffer, 0);
+		m_deviceContext->VSSetConstantBuffers(2, 1, &m_enemyHealthColourBuffer);
 		m_modelHandlers[ENEMY1]->SetBuffers(m_deviceContext);
 		m_renderer->RenderInstanced(m_modelHandlers[ENEMY1], _instancePosition, _instanceRotation, m_enemy1.size(), _instanceScale);
 	}
@@ -900,7 +927,16 @@ void EntityManager::RenderEnemies()
 			_instanceScale.push_back(m_enemy2[i]->GetScale());
 			_instanceRotation.push_back(m_enemy2[i]->GetRotation());
 
+			_healthColour[i] = XMFLOAT4(1.f - (float(m_enemy2[i]->GetHealth()) / float(m_enemyHealth2)), (float(m_enemy2[i]->GetHealth()) / float(m_enemyHealth2)), (float(m_enemy2[i]->GetHealth()) / float(m_enemyHealth2)), 1);
 		}
+		D3D11_MAPPED_SUBRESOURCE _mappedResource;
+
+		HRESULT hr = m_deviceContext->Map(m_enemyHealthColourBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &_mappedResource);
+
+		memcpy(_mappedResource.pData, &_healthColour, sizeof(XMFLOAT4) * 100);
+
+		m_deviceContext->Unmap(m_enemyHealthColourBuffer, 0);
+		m_deviceContext->VSSetConstantBuffers(2, 1, &m_enemyHealthColourBuffer);
 		m_modelHandlers[ENEMY2]->SetBuffers(m_deviceContext);
 		m_renderer->RenderInstanced(m_modelHandlers[ENEMY2], _instancePosition, _instanceRotation, m_enemy2.size(), _instanceScale);
 	}
@@ -917,7 +953,16 @@ void EntityManager::RenderEnemies()
 			_instanceScale.push_back(m_enemy3[i]->GetScale());
 			_instanceRotation.push_back(m_enemy3[i]->GetRotation());
 
+			_healthColour[i] = XMFLOAT4(1.f - (float(m_enemy3[i]->GetHealth()) / m_enemyHealth3), (float(m_enemy3[i]->GetHealth()) / float(m_enemyHealth3)), (float(m_enemy3[i]->GetHealth()) / float(m_enemyHealth3)), 1);
 		}
+		D3D11_MAPPED_SUBRESOURCE _mappedResource;
+
+		HRESULT hr = m_deviceContext->Map(m_enemyHealthColourBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &_mappedResource);
+
+		memcpy(_mappedResource.pData, &_healthColour, sizeof(XMFLOAT4) * 100);
+
+		m_deviceContext->Unmap(m_enemyHealthColourBuffer, 0);
+		m_deviceContext->VSSetConstantBuffers(2, 1, &m_enemyHealthColourBuffer);
 		m_modelHandlers[ENEMY3]->SetBuffers(m_deviceContext);
 		m_renderer->RenderInstanced(m_modelHandlers[ENEMY3], _instancePosition, _instanceRotation, m_enemy3.size(), _instanceScale);
 
@@ -935,7 +980,16 @@ void EntityManager::RenderEnemies()
 			_instanceScale.push_back(m_enemy4[i]->GetScale());
 			_instanceRotation.push_back(m_enemy4[i]->GetRotation());
 
+			_healthColour[i] = XMFLOAT4(1.f - (float(m_enemy4[i]->GetHealth()) / float(m_enemyHealth4)), (float(m_enemy4[i]->GetHealth()) / float(m_enemyHealth4)), (float(m_enemy4[i]->GetHealth()) / float(m_enemyHealth4)), 1);
 		}
+		D3D11_MAPPED_SUBRESOURCE _mappedResource;
+
+		HRESULT hr = m_deviceContext->Map(m_enemyHealthColourBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &_mappedResource);
+
+		memcpy(_mappedResource.pData, &_healthColour, sizeof(XMFLOAT4) * 100);
+
+		m_deviceContext->Unmap(m_enemyHealthColourBuffer, 0);
+		m_deviceContext->VSSetConstantBuffers(2, 1, &m_enemyHealthColourBuffer);
 		m_modelHandlers[ENEMY4]->SetBuffers(m_deviceContext);
 		m_renderer->RenderInstanced(m_modelHandlers[ENEMY4], _instancePosition, _instanceRotation, m_enemy4.size(), _instanceScale);
 
