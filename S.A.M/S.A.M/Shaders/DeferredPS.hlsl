@@ -64,7 +64,12 @@ float4 PS_main(PS_IN input) : SV_TARGET
 		float NormalDotLight = saturate(dot(Normal, Light));
 		float3 Diffuse = NormalDotLight * LightColor[i].xyz * DiffuseLight;
 
-		TotLight = ((Diffuse) * Attenuation) + TotLight;
+		//Calculate specular term
+		float3 V = CameraPos - Pos;
+		float3 H = normalize(Light + V);
+		float3 specular = pow(saturate(dot(Normal, H)), SpecularPower) * LightColor[i].xyz * SpecularAlbedo * NormalDotLight;
+
+		TotLight = ((Diffuse/* + specular*/) * Attenuation) + TotLight;
 	}
 	TotLight = TotLight + (float3(0.4, 0.4, 0.4) * DiffuseLight);
 

@@ -73,7 +73,7 @@ bool ModelHandler::LoadOBJData(string OBJFileName, string colourFileName, ID3D11
 	}
 
 	//Loads the colour data from file
-	m_OBJLoad.LoadColour(device, deviceContext, colourFileName, m_RGBDeffuse, m_RGBAL, m_Tf, m_Ni, &m_ObjTex, &m_GlowTex);
+	m_OBJLoad.LoadColour(device, deviceContext, colourFileName, m_RGBDeffuse, m_RGBAL, m_Tf, m_Ni, &m_ObjTex, &m_GlowTex, &m_SpecTex);
 	return true;
 }
 
@@ -137,6 +137,7 @@ bool ModelHandler::SetBuffers(ID3D11DeviceContext* deviceContext)
 	deviceContext->PSSetConstantBuffers(0, 1, &m_OBJColourBuffer);
 	deviceContext->PSSetShaderResources(0, 1, &m_ObjTex);
 	deviceContext->PSSetShaderResources(5, 1, &m_GlowTex);
+	deviceContext->PSSetShaderResources(6, 1, &m_SpecTex);
 
 	return true;
 }
