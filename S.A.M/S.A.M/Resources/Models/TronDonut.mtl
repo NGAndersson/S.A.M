@@ -1,7 +1,6 @@
 newmtl lambert2SG
 illum 4
-Kd 0.20 0.20 0.70
+Kd 0.00 0.70 0.82
 Ka 0.00 0.00 0.00
 Tf 1.00 1.00 1.00
-map_Gl Resources\Models\BulletGlowMap.png
 Ni 1.00

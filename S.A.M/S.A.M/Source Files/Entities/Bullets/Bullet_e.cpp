@@ -29,7 +29,7 @@ void Bullet_e::Update(double time)
 	m_position.x += m_travelVec.x * m_speed * time;
 	m_position.y += m_travelVec.y * m_speed * time;
 	m_position.z += m_travelVec.z * m_speed * time;
-	XMVECTOR _rotzAxis{ 0,0,1,0 };
+	XMVECTOR _rotzAxis{ m_travelVec.x, m_travelVec.y, m_travelVec.z,0 };
 	m_rotationValue += time;
 	m_rotation = XMMatrixRotationAxis(_rotzAxis, XM_PI * m_rotationValue);
 	m_light->SetPos(XMFLOAT4(m_position.x, m_position.y, m_position.z, 1.0f));
