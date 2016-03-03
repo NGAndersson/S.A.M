@@ -37,53 +37,64 @@ EnemySize2=1.00,1.00,1.00
 EnemySize3=4.00,4.00,4.00
 EnemySize4=8.00,8.00,8.00
 
-#### Healt of the enemys, deafault is 1000, bullets do 1000 dmg, laser do 500 at full hit
+#### Health of the enemies, default is 1000, bullets do 1000 dmg, laser do 500 at full hit
 EnemyHealth1=2000
 EnemyHealth2=1000
 EnemyHealth3=5000
 EnemyHealth4=8000
 
-#### Shooting Patterns
-Pa 0
-Vp -1.00 0.00 -1.00
-Vp 0.00 0.00 -1.00
-Vp 1.00 0.00 -1.00
-Pa 0
-Vp 0.00 0.00 -1.00
-Pa 0
-Vp 0.00 0.00 -1.00
+#### Shooting Patterns   	
+#Pa= New pattern for enemytype X
+#Vp= X and Z vector direction for a bullet in the pattern (Y is always 0)
+
 Pa 1
-Vp -0.50 0.00 -0.50
-Vp 0.50 0.00 -0.50
+Vp -1.00 -1.00
+Vp 0.00 -1.00
+Vp 1.00 -1.00
+
 Pa 1
-Vp 0.00 0.00 -1.00
+Vp 0.00 -1.00
+
+Pa 0
+Vp 0.00 -1.00
+
 Pa 2
-Vp 0.00 0.00 -1.00
-Vp 0.00 0.00 1.00
-Vp -1.00 0.00 0.00
-Vp 1.00 0.00 0.00
+Vp -0.50 -0.50
+Vp 0.50 -0.50
+
 Pa 2
-Vp 1.00 0.00 -1.00
-Vp -1.00 0.00 -1.00
-Vp -1.00 0.00 1.00
-Vp 1.00 0.00 1.00
+Vp 0.00 -1.00
+
 Pa 3
-Vp 0.00 0.00 -1.00
-Vp 1.00 0.00 -1.00
-Vp -1.00 0.00 -1.00
-Vp 0.00 0.00 1.00
-Vp 1.00 0.00 1.00
-Vp -1.00 0.00 1.00
-Vp 1.00 0.00 0.00
-Vp -1.00 0.00 0.00
+Vp 0.00 -1.00
+Vp 0.00 1.00
+Vp -1.00 0.00
+Vp 1.00 0.00
+
 Pa 3
-Vp 0.00 0.00 -1.00
-Vp 1.00 0.00 -1.00
-Vp -1.00 0.00 -1.00
-Vp 0.75 0.00 -1.00
-Vp -0.75 0.00 -1.00
-Vp 0.50 0.00 -1.00
-Vp -0.50 0.00 -1.00
+Vp 1.00 -1.00
+Vp -1.00 -1.00
+Vp -1.00 1.00
+Vp 1.00 1.00
+
+Pa 4
+Vp 0.00 -1.00
+Vp 1.00 -1.00
+Vp -1.00 -1.00
+Vp 0.00 1.00
+Vp 1.00 1.00
+Vp -1.00 1.00
+Vp 1.00 0.00
+Vp -1.00 0.00
+
+Pa 4
+Vp 0.00 -1.00
+Vp 1.00 -1.00
+Vp -1.00 -1.00
+Vp 0.75 -1.00
+Vp -0.75 -1.00
+Vp 0.50 -1.00
+Vp -0.50 -1.00
 
 #### Movement Patterns.		Map Width = 0 to 77, Map Length = 0 to 103
 ### |Xcoord,Zcoord|
