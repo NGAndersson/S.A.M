@@ -20,7 +20,7 @@ void Enemy_2::Update(double time)
 	}
 	m_position = m_spline->GetPathPosition(m_age);
 	m_entityBox.Center = m_position;
-	m_entityBox.Extents = XMFLOAT3(m_scale.x, 0.0f, m_scale.z);
+	m_entityBox.Extents = XMFLOAT3(m_scale.x * 4, 0.0f, m_scale.z * 4);
 }
 
 void Enemy_2::Destroyed(double time)
