@@ -34,7 +34,7 @@ EnemySpawnRateDivider4=0|30
 #### Size of the enemys, there scaling deafualt is (1, 1, 1)
 EnemySize1=2.00,2.00,2.00
 EnemySize2=1.00,1.00,1.00
-EnemySize3=4.00,4.00,4.00
+EnemySize3=1.00,1.00,1.00
 EnemySize4=8.00,8.00,8.00
 
 #### Health of the enemies, default is 1000, bullets do 1000 dmg, laser do 500 at full hit

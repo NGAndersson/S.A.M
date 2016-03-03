@@ -98,7 +98,42 @@ void EntityManager::SpawnEntity(HandlerIndex type)
 		m_soundManager->PlayOneShotSound("Bullet_E", 0.5f);
 		break;
 	case(BULLET5) :
-		m_bullet5.push_back(new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z + 60), XMFLOAT3(0.5, 0.5, 20),1));
+		m_bullet5.push_back(new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(2.0, 2.0, 5.0), 0, XMFLOAT3(-0.55f, 0.0f, 5.0f)));
+		m_bullet5.push_back(new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(2.0, 2.0, 5.0), 1, XMFLOAT3(0.55f, 0.0f, 5.0f)));
+		m_bullet5.push_back(new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(2.0, 2.0, 5.0), 0, XMFLOAT3(-0.55f, 0.0f, 11.0f)));
+		m_bullet5.push_back(new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(2.0, 2.0, 5.0), 1, XMFLOAT3(0.55f, 0.0f, 11.0f)));
+		m_bullet5.push_back(new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(2.0, 2.0, 5.0), 0, XMFLOAT3(-0.55f, 0.0f, 17.0f)));
+		m_bullet5.push_back(new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(2.0, 2.0, 5.0), 1, XMFLOAT3(0.55f, 0.0f, 17.0f)));
+		m_bullet5.push_back(new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(2.0, 2.0, 5.0), 0, XMFLOAT3(-0.55f, 0.0f, 23.0f)));
+		m_bullet5.push_back(new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(2.0, 2.0, 5.0), 1, XMFLOAT3(0.55f, 0.0f, 23.0f)));
+		m_bullet5.push_back(new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(2.0, 2.0, 5.0), 0, XMFLOAT3(-0.55f, 0.0f, 29.0f)));
+		m_bullet5.push_back(new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(2.0, 2.0, 5.0), 1, XMFLOAT3(0.55f, 0.0f, 29.0f)));
+		m_bullet5.push_back(new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(2.0, 2.0, 5.0), 0, XMFLOAT3(-0.55f, 0.0f, 35.0f)));
+		m_bullet5.push_back(new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(2.0, 2.0, 5.0), 1, XMFLOAT3(0.55f, 0.0f, 35.0f)));
+		m_bullet5.push_back(new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(2.0, 2.0, 5.0), 0, XMFLOAT3(-0.55f, 0.0f, 41.0f)));
+		m_bullet5.push_back(new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(2.0, 2.0, 5.0), 1, XMFLOAT3(0.55f, 0.0f, 41.0f)));
+		m_bullet5.push_back(new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(2.0, 2.0, 5.0), 0, XMFLOAT3(-0.55f, 0.0f, 47.0f)));
+		m_bullet5.push_back(new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(2.0, 2.0, 5.0), 1, XMFLOAT3(0.55f, 0.0f, 47.0f)));
+		m_bullet5.push_back(new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(2.0, 2.0, 5.0), 0, XMFLOAT3(-0.55f, 0.0f, 53.0f)));
+		m_bullet5.push_back(new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(2.0, 2.0, 5.0), 1, XMFLOAT3(0.55f, 0.0f, 53.0f)));
+		m_bullet5.push_back(new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(2.0, 2.0, 5.0), 0, XMFLOAT3(-0.55f, 0.0f, 59.0f)));
+		m_bullet5.push_back(new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(2.0, 2.0, 5.0), 1, XMFLOAT3(0.55f, 0.0f, 59.0f)));
+		m_bullet5.push_back(new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(2.0, 2.0, 5.0), 0, XMFLOAT3(-0.55f, 0.0f, 65.0f)));
+		m_bullet5.push_back(new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(2.0, 2.0, 5.0), 1, XMFLOAT3(0.55f, 0.0f, 65.0f)));
+		m_bullet5.push_back(new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(2.0, 2.0, 5.0), 0, XMFLOAT3(-0.55f, 0.0f, 71.0f)));
+		m_bullet5.push_back(new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(2.0, 2.0, 5.0), 1, XMFLOAT3(0.55f, 0.0f, 71.0f)));
+		m_bullet5.push_back(new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(2.0, 2.0, 5.0), 0, XMFLOAT3(-0.55f, 0.0f, 77.0f)));
+		m_bullet5.push_back(new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(2.0, 2.0, 5.0), 1, XMFLOAT3(0.55f, 0.0f, 77.0f)));
+		m_bullet5.push_back(new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(2.0, 2.0, 5.0), 0, XMFLOAT3(-0.55f, 0.0f, 83.0f)));
+		m_bullet5.push_back(new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(2.0, 2.0, 5.0), 1, XMFLOAT3(0.55f, 0.0f, 83.0f)));
+		m_bullet5.push_back(new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(2.0, 2.0, 5.0), 0, XMFLOAT3(-0.55f, 0.0f, 89.0f)));
+		m_bullet5.push_back(new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(2.0, 2.0, 5.0), 1, XMFLOAT3(0.55f, 0.0f, 89.0f)));
+		m_bullet5.push_back(new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(2.0, 2.0, 5.0), 0, XMFLOAT3(-0.55f, 0.0f, 95.0f)));
+		m_bullet5.push_back(new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(2.0, 2.0, 5.0), 1, XMFLOAT3(0.55f, 0.0f, 95.0f)));
+		m_bullet5.push_back(new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(2.0, 2.0, 5.0), 0, XMFLOAT3(-0.55f, 0.0f, 101.0f)));
+		m_bullet5.push_back(new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(2.0, 2.0, 5.0), 1, XMFLOAT3(0.55f, 0.0f, 101.0f)));
+		m_bullet5.push_back(new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(2.0, 2.0, 5.0), 0, XMFLOAT3(-0.55f, 0.0f, 107.0f)));
+		m_bullet5.push_back(new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(2.0, 2.0, 5.0), 1, XMFLOAT3(0.55f, 0.0f, 107.0f)));
 		m_soundManager->PlayOneShotSound("Laser_R", 0.5f);
 		break;
 	}
@@ -138,7 +173,7 @@ void EntityManager::Initialize(SoundManager* soundManager, Input* input, ID3D11D
 
 	//Create model handlers for each entity type
 	m_modelHandlers[PLAYER] = new ModelHandler();
-	m_modelHandlers[PLAYER]->LoadOBJData("Resources/Models/Ship_02.obj", "Resources/Models/Ship_02.mtl", m_device, m_deviceContext);
+	m_modelHandlers[PLAYER]->LoadOBJData("Resources/Models/Player.obj", "Resources/Models/Player.mtl", m_device, m_deviceContext);
 	m_modelHandlers[PLAYER]->CreateBuffers(m_device);
 	m_modelHandlers[BULLET1] = new ModelHandler();
 	m_modelHandlers[BULLET1]->LoadOBJData("Resources/Models/Bullet1.obj", "Resources/Models/Bullet1.mtl", m_device, m_deviceContext);
@@ -153,7 +188,7 @@ void EntityManager::Initialize(SoundManager* soundManager, Input* input, ID3D11D
 	m_modelHandlers[BULLET4]->LoadOBJData("Resources/Models/Bullet4.obj", "Resources/Models/Bullet4.mtl", m_device, m_deviceContext);
 	m_modelHandlers[BULLET4]->CreateBuffers(m_device);
 	m_modelHandlers[BULLET5] = new ModelHandler();
-	m_modelHandlers[BULLET5]->LoadOBJData("Resources/Models/Laser1.obj", "Resources/Models/Laser1.mtl", m_device, m_deviceContext);
+	m_modelHandlers[BULLET5]->LoadOBJData("Resources/Models/Note_01.obj", "Resources/Models/Note_01.mtl", m_device, m_deviceContext);
 	m_modelHandlers[BULLET5]->CreateBuffers(m_device);
 	m_modelHandlers[BULLET6] = new ModelHandler();
 	m_modelHandlers[BULLET6]->LoadOBJData("Resources/Models/EnemyBullet.obj", "Resources/Models/EnemyBullet.mtl", m_device, m_deviceContext);
@@ -162,10 +197,10 @@ void EntityManager::Initialize(SoundManager* soundManager, Input* input, ID3D11D
 	m_modelHandlers[ENEMY1]->LoadOBJData("Resources/Models/Ship_01.obj", "Resources/Models/Ship_01.mtl", m_device, m_deviceContext);
 	m_modelHandlers[ENEMY1]->CreateBuffers(m_device);
 	m_modelHandlers[ENEMY2] = new ModelHandler;
-	m_modelHandlers[ENEMY2]->LoadOBJData("Resources/Models/Ship_01.obj", "Resources/Models/Ship_01.mtl", m_device, m_deviceContext);
+	m_modelHandlers[ENEMY2]->LoadOBJData("Resources/Models/Ship_02.obj", "Resources/Models/Ship_02.mtl", m_device, m_deviceContext);
 	m_modelHandlers[ENEMY2]->CreateBuffers(m_device);
 	m_modelHandlers[ENEMY3] = new ModelHandler;
-	m_modelHandlers[ENEMY3]->LoadOBJData("Resources/Models/Ship_01.obj", "Resources/Models/Ship_01.mtl", m_device, m_deviceContext);
+	m_modelHandlers[ENEMY3]->LoadOBJData("Resources/Models/Ship_03.obj", "Resources/Models/Ship_03.mtl", m_device, m_deviceContext);
 	m_modelHandlers[ENEMY3]->CreateBuffers(m_device);
 	m_modelHandlers[ENEMY4] = new ModelHandler;
 	m_modelHandlers[ENEMY4]->LoadOBJData("Resources/Models/Ship_01.obj", "Resources/Models/Ship_01.mtl", m_device, m_deviceContext);
@@ -246,6 +281,7 @@ void EntityManager::Update(double time)
 				BeatWasDetected();
 				m_light.beatBoost(true, time, -1, m_currentBPM);
 				m_modelHandlers[BULLET1]->beatBoost(true, time, -1, m_currentBPM);
+				m_modelHandlers[BULLET2]->beatBoost(true, time, -1, m_currentBPM);
 				m_modelHandlers[BULLET3]->beatBoost(true, time, -1, m_currentBPM);
 				m_modelHandlers[BULLET4]->beatBoost(true, time, -1, m_currentBPM);
 				m_modelHandlers[BULLET5]->beatBoost(true, time, -1, m_currentBPM);
@@ -259,6 +295,7 @@ void EntityManager::Update(double time)
 		{
 			m_light.beatBoost(false, time, -1, m_currentBPM);
 			m_modelHandlers[BULLET1]->beatBoost(false, time, -1, m_currentBPM);
+			m_modelHandlers[BULLET2]->beatBoost(false, time, -1, m_currentBPM);
 			m_modelHandlers[BULLET3]->beatBoost(false, time, -1, m_currentBPM);
 			m_modelHandlers[BULLET4]->beatBoost(false, time, -1, m_currentBPM);
 			m_modelHandlers[BULLET5]->beatBoost(false, time, -1, m_currentBPM);
@@ -275,6 +312,7 @@ void EntityManager::Update(double time)
 				BeatWasDetected();
 				m_light.beatBoost(true, time, m_timeSinceLastBeat/1000, 0);
 				m_modelHandlers[BULLET1]->beatBoost(true, time, m_timeSinceLastBeat/1000, 0);
+				m_modelHandlers[BULLET2]->beatBoost(true, time, m_timeSinceLastBeat / 1000, 0);
 				m_modelHandlers[BULLET3]->beatBoost(true, time, m_timeSinceLastBeat/1000, 0);
 				m_modelHandlers[BULLET4]->beatBoost(true, time, m_timeSinceLastBeat/1000, 0);
 				m_modelHandlers[BULLET5]->beatBoost(true, time, m_timeSinceLastBeat/1000, 0);
@@ -294,6 +332,7 @@ void EntityManager::Update(double time)
 			m_timeSinceLastBeat += time * 1000;
 			m_light.beatBoost(false, time, m_timeSinceLastBeat/1000, 0);
 			m_modelHandlers[BULLET1]->beatBoost(false, time, m_timeSinceLastBeat/1000, 0);
+			m_modelHandlers[BULLET2]->beatBoost(false, time, m_timeSinceLastBeat / 1000, 0);
 			m_modelHandlers[BULLET3]->beatBoost(false, time, m_timeSinceLastBeat/1000, 0);
 			m_modelHandlers[BULLET4]->beatBoost(false, time, m_timeSinceLastBeat/1000, 0);
 			m_modelHandlers[BULLET5]->beatBoost(false, time, m_timeSinceLastBeat/1000, 0);
@@ -377,6 +416,7 @@ void EntityManager::Update(double time)
 	for (int i = 0; i < m_bullet4.size(); i++)
 		m_bullet4[i]->Update(time);
 	//Update every entity of Bullet5
+	m_bullet5 = CheckIfAlive(m_bullet5);
 	for (int i = 0; i < m_bullet5.size(); i++)
 		m_bullet5[i]->Update(time);
 	//Update every entity of Bullet6
@@ -413,7 +453,6 @@ void EntityManager::Update(double time)
 	m_bullet2 = CheckOutOfBounds(m_bullet2);
 	m_bullet3 = CheckOutOfBounds(m_bullet3);
 	m_bullet4 = CheckOutOfBounds(m_bullet4);
-	m_bullet5 = CheckIfAlive(m_bullet5);
 	m_bullet6 = CheckOutOfBounds(m_bullet6);
 
 	m_light.addLights(m_bullet1);
@@ -1034,18 +1073,19 @@ vector<Entity*> EntityManager::CheckIfAlive(const std::vector<Entity*> &bullet)
 	//If Alive check, remove immediately
 	bool removed = false;
 	vector<Entity*> _tempVec = bullet;			//Can't use the member variable for some reason
-	for (int i = 0; i < _tempVec.size() && removed == false; i++) 
+	for (int i = 0; i < _tempVec.size() /*&& removed == false*/; i++) 
 	{
 		bool _temp = _tempVec[i]->GetDelete();
 		if (_temp == true) 
 		{
 			delete _tempVec[i];
 			_tempVec.erase(_tempVec.begin() + i);
-			removed = true;
+			i--;
+			/*removed = true;*/
 		}
 		else
 		{
-			_tempVec[i]->SetPosition(XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z + 60));
+			_tempVec[i]->SetPosition(XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z));
 		}
 	}
 	return _tempVec;

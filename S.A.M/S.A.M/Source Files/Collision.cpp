@@ -42,7 +42,7 @@ int Collision::CheckCollisionEntity(vector<Entity*>* Entity_1, vector<Entity*>* 
 						(*Entity_2)[j]->AddHealth(-1000);		//Normal bullets do 100 damage
 					}
 					else
-						(*Entity_2)[j]->AddHealth(-2500 * time);			//Laser does 500 damage (per-shoot if all hit)
+						(*Entity_2)[j]->AddHealth(-500 * time);			//Laser does 100 damage (per-bullet if full hit)
 
 					if ((*Entity_2)[j]->GetHealth() <= 0 && EntityType2 != PLAYER)
 					{
