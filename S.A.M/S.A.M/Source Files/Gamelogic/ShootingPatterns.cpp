@@ -89,7 +89,7 @@ void Shootingpatterns::LoadPatterns(const string &filename)
 					if (_input == ' ')
 					{
 						_input = _fileIn.get();
-						_index = _input - 48;	//reads in the index number -48 becuase of ascii
+						_index = _input - 48 - 1;	//reads in the index number -48 becuase of ascii, -1 because enemytypes are 1-4 in file not 0-3
 						m_patterns[_index].push_back(new Pattern());
 						m_nrOfPatterns[_index]++;	//adds to number of patterns
 					}
@@ -99,9 +99,14 @@ void Shootingpatterns::LoadPatterns(const string &filename)
 				_input = _fileIn.get();
 				if (_input == 'p')
 				{
-					XMFLOAT3 _Vec;
-					_fileIn >> _Vec.x >> _Vec.y >> _Vec.z;	//reads the vectore
-					m_patterns[_index][m_nrOfPatterns[_index] - 1]->m_vector.push_back(SPNormalizeFloat3(_Vec));	//saves the vector to the patter vector
+					_input = _fileIn.get();
+					if (_input == ' ')
+					{
+						XMFLOAT3 _Vec;
+						_Vec.y = 0.0f;
+						_fileIn >> _Vec.x >> _Vec.z;	//reads the vector
+						m_patterns[_index][m_nrOfPatterns[_index] - 1]->m_vector.push_back(SPNormalizeFloat3(_Vec));	//saves the vector to the patter vector
+					}
 				}
 				break;
 			}

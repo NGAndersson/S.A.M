@@ -25,71 +25,85 @@ bulletR=Resources/Sound/DefaultSoundBullet5.wav
 BeatPerShot1=2
 BeatPerShot2=2
 BeatPerShot3=2
-BeatPerShot4=2
+BeatPerShot4=1
 
-#### Spawn frequence divider, default is 1 if not defined here, divides the BPM
-EnemySpawnRateDivider1=0|15.00
-EnemySpawnRateDivider2=0|10.00
-EnemySpawnRateDivider3=0|4.00
-EnemySpawnRateDivider4=0|1.00
-EnemySpawnRateDivider1=300|18.00
-EnemySpawnRateDivider2=300|12.00
-EnemySpawnRateDivider3=300|6.00
-EnemySpawnRateDivider4=300|1.00
+#### Spawn frequency. FromBeat|BeatsBetweenSpawns
+EnemySpawnRate1=0|8
+EnemySpawnRate2=0|12
+EnemySpawnRate3=0|20
+EnemySpawnRate4=0|0
+EnemySpawnRate1=300|6
+EnemySpawnRate2=300|12
+EnemySpawnRate3=300|18
+EnemySpawnRate1=436|0
+EnemySpawnRate2=436|0
+EnemySpawnRate3=436|0
+EnemySpawnRate4=436|1
+EnemySpawnRate4=437|0
 
 #### Size of the enemys, there scaling deafualt is (1, 1, 1)
 EnemySize1=2.00,2.00,2.00
 EnemySize2=1.00,1.00,1.00
 EnemySize3=3.00,3.00,3.00
-EnemySize4=4.00,4.00,4.00
+EnemySize4=10.00,10.00,10.00
 
 #### Healt of the enemys, deafault is 1000, bullets do 1000 dmg
 EnemyHealth1=2000
 EnemyHealth2=1000
 EnemyHealth3=8000
-EnemyHealth4=14000
+EnemyHealth4=140000
 
-#### Shooting Patterns
-Pa 0
-Vp -1.00 0.00 -1.00
-Vp 0.00 0.00 -1.00
-Vp 1.00 0.00 -1.00
-Pa 0
-Vp 0.00 0.00 -1.00
-Pa 0
-Vp 0.00 0.00 -1.00
+#### Shooting Patterns   	
+#Pa= New pattern for enemytype X
+#Vp= X and Z vector direction for a bullet in the pattern (Y is always 0)
 Pa 1
-Vp -0.50 0.00 -0.50
-Vp 0.50 0.00 -0.50
+Vp -1.00 -1.00
+Vp 0.00 -1.00
+Vp 1.00 -1.00
+
 Pa 1
-Vp 0.00 0.00 -1.00
+Vp 0.00 -1.00
+
 Pa 2
-Vp 0.00 0.00 -1.00
-Vp 0.00 0.00 1.00
-Vp -1.00 0.00 0.00
-Vp 1.00 0.00 0.00
+Vp 0.00 -1.00
+
 Pa 2
-Vp 1.00 0.00 -1.00
-Vp -1.00 0.00 -1.00
-Vp -1.00 0.00 1.00
-Vp 1.00 0.00 1.00
+Vp -0.50 -0.50
+Vp 0.50 -0.50
+
 Pa 3
-Vp 0.00 0.00 -1.00
-Vp 1.00 0.00 -1.00
-Vp -1.00 0.00 -1.00
-Vp 0.00 0.00 1.00
-Vp 1.00 0.00 1.00
-Vp -1.00 0.00 1.00
-Vp 1.00 0.00 0.00
-Vp -1.00 0.00 0.00
+Vp 0.00 -1.00
+
 Pa 3
-Vp 0.00 0.00 -1.00
-Vp 1.00 0.00 -1.00
-Vp -1.00 0.00 -1.00
-Vp 0.75 0.00 -1.00
-Vp -0.75 0.00 -1.00
-Vp 0.50 0.00 -1.00
-Vp -0.50 0.00 -1.00
+Vp 0.00 -1.00
+Vp 0.00 1.00
+Vp -1.00 0.00
+Vp 1.00 0.00
+
+Pa 3
+Vp 1.00 -1.00
+Vp -1.00 -1.00
+Vp -1.00 1.00
+Vp 1.00 1.00
+
+Pa 4
+Vp 0.00 -1.00
+Vp 1.00 -1.00
+Vp -1.00 -1.00
+Vp 0.00 1.00
+Vp 1.00 1.00
+Vp -1.00 1.00
+Vp 1.00 0.00
+Vp -1.00 0.00
+
+Pa 4
+Vp 0.00 -1.00
+Vp 1.00 -1.00
+Vp -1.00 -1.00
+Vp 0.75 -1.00
+Vp -0.75 -1.00
+Vp 0.50 -1.00
+Vp -0.50 -1.00
 
 #### Movement Patterns.		Map Width = 0 to 77, Map Length = 0 to 103
 ### |Xcoord,Zcoord|
@@ -111,6 +125,9 @@ mov=46,90|25,23|23,23|15,45
 #5
 mov=12,90|24,45|53,45|12,23
 
+#6 Figure Eight
+mov=17,90|35,70|52,50|70,70|52,90|35,70|17,50
+
 #### Movement Compilations
 ### movcomp1 is for enemytype 1, movcomp2 for enemytype2 and so on
 ### Each compilation needs at least 4 total points from combined movement patterns
@@ -119,4 +136,4 @@ mov=12,90|24,45|53,45|12,23
 movcomp1=0|1,0|1,1|1,2
 movcomp2=0|1,0|1,3|1,1
 movcomp3=0|1,0|2,4|1,1
-movcomp4=0|1,0|3,5|2,1
+movcomp4=0|1,0|3,6|1,2

@@ -181,6 +181,7 @@ void Game::InitGameRedo(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCm
 WPARAM Game::MainLoop(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
 	Timer _time;
+	static float _frameTime = 0.f;
 	_time.StartTime();
 	_time.TimeCheck();
 
@@ -206,15 +207,18 @@ WPARAM Game::MainLoop(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdL
 
 		//Get Time
 		float time = _time.TimeCheck();
-
+		_frameTime += time;
 		CheckInput();
 
 		//Call update functions
 		Update(time, hInstance, hPrevInstance, lpCmdLine, nCmdShow);
 
 		//Call Render Functions
-		Render();
- 		m_swapChain->Present(0, 0);
+		if (_frameTime*1000.f >= 16.6f) {
+			Render();
+			m_swapChain->Present(0, 0);
+			_frameTime = 0.f;
+		}
 	}
 
 }
