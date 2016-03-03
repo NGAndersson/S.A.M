@@ -197,7 +197,7 @@ bool OBJLoader::ReadColourCounts(int& kdCount, int& kaCount, int& tfCount, int& 
 }
 
 //loading color and tex
-ID3D11ShaderResourceView* OBJLoader::LoadColour(ID3D11Device* device, ID3D11DeviceContext* deviceContext, string fileName, XMFLOAT3 *RGBDeffuse, XMFLOAT3 *RGBAL, XMFLOAT3 *Tf, XMFLOAT3 *Ni, ID3D11ShaderResourceView** ObjTex, ID3D11ShaderResourceView** GlowTex)
+ID3D11ShaderResourceView* OBJLoader::LoadColour(ID3D11Device* device, ID3D11DeviceContext* deviceContext, string fileName, XMFLOAT3 *RGBDeffuse, XMFLOAT3 *RGBAL, XMFLOAT3 *Tf, XMFLOAT3 *Ni, ID3D11ShaderResourceView** ObjTex, ID3D11ShaderResourceView** GlowTex, ID3D11ShaderResourceView** SpecTex)
 {
 	ifstream _fin;
 	char _input;
@@ -298,6 +298,24 @@ ID3D11ShaderResourceView* OBJLoader::LoadColour(ID3D11Device* device, ID3D11Devi
 
 					const wchar_t* _name = _TexName.c_str();
 					CreateWICTextureFromFile(device, deviceContext, _name, nullptr, GlowTex);
+					_TexName = L"";
+				}
+			}
+			else if (_input == 'S')
+			{
+				_fin.get(_input);
+				if (_input == 'p')
+				{
+					_fin.get(_input);
+					_fin.get(_input);
+					while (_input != '\n')
+					{
+						_TexName += _input;
+						_fin.get(_input);
+					}
+
+					const wchar_t* _name = _TexName.c_str();
+					CreateWICTextureFromFile(device, deviceContext, _name, nullptr, SpecTex);
 					_TexName = L"";
 				}
 			}

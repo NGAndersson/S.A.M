@@ -88,7 +88,7 @@ void EntityManager::SpawnEntity(HandlerIndex type)
 		m_soundManager->PlayOneShotSound("Bullet_Q", 0.5f);
 		break;
 	case(BULLET3) :
-		m_bullet3.push_back(new Bullet_p3(m_soundManager, MAPWIDTH, MAPLENGTH, m_player->GetPosition(), XMFLOAT3(0.5, 0.5, 0.5),1 , m_modelHandlers[BULLET3]->GetDeffuse()));
+		m_bullet3.push_back(new Bullet_p3(m_soundManager, MAPWIDTH, MAPLENGTH, m_player->GetPosition(), XMFLOAT3(2.0, 2.0, 2.0),1 , m_modelHandlers[BULLET3]->GetDeffuse()));
 		m_soundManager->PlayOneShotSound("Bullet_W", 0.5f);
 		break;
 	case(BULLET4) :
@@ -147,7 +147,7 @@ void EntityManager::Initialize(SoundManager* soundManager, Input* input, ID3D11D
 	m_modelHandlers[BULLET2]->LoadOBJData("Resources/Models/Rocket.obj", "Resources/Models/Rocket.mtl", m_device, m_deviceContext);
 	m_modelHandlers[BULLET2]->CreateBuffers(m_device);
 	m_modelHandlers[BULLET3] = new ModelHandler();
-	m_modelHandlers[BULLET3]->LoadOBJData("Resources/Models/Bullet3.obj", "Resources/Models/Bullet3.mtl", m_device, m_deviceContext);
+	m_modelHandlers[BULLET3]->LoadOBJData("Resources/Models/TronDonut.obj", "Resources/Models/TronDonut.mtl", m_device, m_deviceContext);
 	m_modelHandlers[BULLET3]->CreateBuffers(m_device);
 	m_modelHandlers[BULLET4] = new ModelHandler();
 	m_modelHandlers[BULLET4]->LoadOBJData("Resources/Models/Bullet4.obj", "Resources/Models/Bullet4.mtl", m_device, m_deviceContext);

@@ -15,7 +15,7 @@ Bullet_p3::Bullet_p3(SoundManager * SoundManager, int MapWidth, int MapLength, X
 	m_health = Health;
 	m_speed = 100;
 	m_light = new Light(XMFLOAT4(Position.x, Position.y, Position.z, 1.0f), XMFLOAT4(Color.x, Color.y, Color.z, 1.0f), XMFLOAT4(10, 1, 0, 0));
-	m_entityBox.Extents = XMFLOAT3(0.5f, 0.0f, 1.0f);
+	m_entityBox.Extents = XMFLOAT3(Scale.x, 0.0f, Scale.z);
 }
 
 Bullet_p3::~Bullet_p3()
@@ -27,8 +27,7 @@ void Bullet_p3::Update(double time)
 {
 	m_position.z += m_speed * time;
 	XMVECTOR _rotzAxis{ 0,0,1,0 };
-	m_rotationValue += time;
-	m_rotation = XMMatrixRotationAxis(_rotzAxis, XM_PI * m_rotationValue);
+	m_rotation = XMMatrixRotationAxis(_rotzAxis, 0);
 	m_light->SetPos(XMFLOAT4(m_position.x, m_position.y, m_position.z, 1.0f));
 
 	m_entityBox.Center = m_position;
