@@ -31,10 +31,7 @@ public:
 	}
 	virtual ~Enemy(){}
 	virtual void Update(double time) = 0;
-	virtual void Destroyed(double time) = 0;
-	void SetEnemyPatterm(EnemyMovementPattern NewPattern) {
-		//Swap movementpattern here
-	}
+
 
 	//Attributes
 private:

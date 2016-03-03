@@ -18,10 +18,3 @@ void Enemy_1::Update(double time)
 	m_entityBox.Center = m_position;
 	m_entityBox.Extents = XMFLOAT3(m_scale.x, 0, m_scale.z);
 }
-
-void Enemy_1::Destroyed(double time)
-{
-	//PlaySound of DEATH
-
-
-}

@@ -23,7 +23,3 @@ void Enemy_2::Update(double time)
 	m_entityBox.Extents = XMFLOAT3(m_scale.x, 0.0f, m_scale.z);
 }
 
-void Enemy_2::Destroyed(double time)
-{
-
-}
