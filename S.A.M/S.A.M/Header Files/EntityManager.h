@@ -46,6 +46,7 @@ private:
 	void RenderEnemies();
 	void CheckCombo();
 	void ChangeSongData(int bpm);
+	void EnemyHealthColourBuffer();
 
 public:
 	EntityManager();
@@ -76,8 +77,10 @@ private:
 	std::vector<Entity*> m_enemy4;
 	std::vector<ExplosionPart*> m_explosion;
 	Entity* m_player;
+	bool m_renderPlayer = true;
 	FirePart* m_rocketPartSys;	//fire for the rockets
 	PlayerPart* m_playerPartSys;	//fire for player
+	bool m_renderFire = true;
 	Collision m_collision;
 	Shootingpatterns m_EnemyPatterns;	//holds the shooting patterns for enemies
 
@@ -113,6 +116,8 @@ private:
 	Input* m_input;
 	ID3D11Device* m_device;
 	ID3D11DeviceContext* m_deviceContext;
+	ID3D11Buffer* m_enemyHealthColourBuffer = nullptr;
+
 
 	int m_currentBPM, m_beatNumber = 0;
 	double m_timeSinceLastBeat = 0.0f;

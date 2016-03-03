@@ -6,24 +6,24 @@ UI::UI(ID3D11Device* Device, ID3D11DeviceContext* DeviceContext, int ScreenHeigh
 	m_stats = stats;
 	m_input = input;
 
-	CreateWICTextureFromFile(Device, L"Resources/Sprites/Bullet1.png", nullptr, m_bSprite1.ReleaseAndGetAddressOf());
+	m_pressed1 = L"1";
 	m_shotBinding[SHOT1].m_color = Colors::Crimson;
 	m_shotBinding[SHOT1].m_origin = DirectX::SimpleMath::Vector2(97, 305);
-	m_shotBinding[SHOT1].m_position = DirectX::SimpleMath::Vector2(20, m_screenHeight - 100);
+	m_shotBinding[SHOT1].m_position = DirectX::SimpleMath::Vector2(20 * (float(m_screenWidth) / float(1058)), m_screenHeight - 100 * (float(m_screenWidth) / float(1440)));
 
 	CreateWICTextureFromFile(Device, L"Resources/Sprites/Bullet2.png", nullptr, m_bSprite2.ReleaseAndGetAddressOf());
 	m_shotBinding[SHOT2].m_color = Colors::Crimson;
 	m_shotBinding[SHOT2].m_origin = DirectX::SimpleMath::Vector2(67, 158);
-	m_shotBinding[SHOT2].m_position = DirectX::SimpleMath::Vector2(40, m_screenHeight - 100);
+	m_shotBinding[SHOT2].m_position = DirectX::SimpleMath::Vector2(40 * (float(m_screenWidth) / float(1058)), m_screenHeight - 100 * (float(m_screenWidth) / float(1440)));
 
 	CreateWICTextureFromFile(Device, L"Resources/Sprites/Bullet3.png", nullptr, m_bSprite3.ReleaseAndGetAddressOf());
 	m_shotBinding[SHOT3].m_color = Colors::Crimson;
 	m_shotBinding[SHOT3].m_origin = DirectX::SimpleMath::Vector2(283, 235);
-	m_shotBinding[SHOT3].m_position = DirectX::SimpleMath::Vector2(70, m_screenHeight - 100);
+	m_shotBinding[SHOT3].m_position = DirectX::SimpleMath::Vector2(70 * (float(m_screenWidth) / float(1058)), m_screenHeight - 100 * (float(m_screenWidth) / float(1440)));
 
 	CreateWICTextureFromFile(Device, L"Resources/Sprites/Bullet4.png", nullptr, m_bSprite4.ReleaseAndGetAddressOf());
 	m_shotBinding[SHOT4].m_color = Colors::Crimson;
-	m_shotBinding[SHOT4].m_origin = DirectX::SimpleMath::Vector2(96, 254);
+	m_shotBinding[SHOT4].m_origin = DirectX::SimpleMath::Vector2(96 * (float(m_screenWidth) / float(1058)), 254 * (float(m_screenWidth) / float(1440)));
 	m_shotBinding[SHOT4].m_position = DirectX::SimpleMath::Vector2(100, m_screenHeight - 100);
 }
 
@@ -74,13 +74,16 @@ void UI::Render(int offset)
 {
 	SimpleMath::Vector2 _scorePos, _livesPos, _comboPos, _offsetCountPos;
 	_scorePos.x = m_screenWidth /2;
-	_scorePos.y = 40;
-	_livesPos.x = 100;
-	_livesPos.y = m_screenHeight - 40;
-	_comboPos.x = m_screenWidth - 150, _comboPos.y = m_screenHeight - 40;
+	_scorePos.y = 40.f * (float(m_screenHeight) / float(1440));
+	_livesPos.x = 100 * (float(m_screenWidth) / float(1058));
+	_livesPos.y = m_screenHeight - 40 * (float(m_screenHeight) / float(1440));
+	_comboPos.x = m_screenWidth - 150 * (float(m_screenWidth) / float(1058)), _comboPos.y = m_screenHeight - 40 * (float(m_screenHeight) / float(1440));
 	_offsetCountPos.x = m_screenWidth / 2, _offsetCountPos.y = m_screenHeight / 2;
 
-	wstring _tempHighScore = L"High Score: " + m_score;
+	DirectX::SimpleMath::Vector3 _scale;
+	_scale.x = float(m_screenWidth) / float(1058), _scale.y = (float(m_screenHeight) / float(1440)), _scale.z = (float(m_screenHeight) / float(1440));
+
+	wstring _tempHighScore = L"Score: " + m_score;
 	wstring _tempLives = L"Lives: " + m_livesLeft;
 	wstring _tempCombo = L"Combo: " + m_combo;
 	wstring _tempOffset;
@@ -96,17 +99,14 @@ void UI::Render(int offset)
 	{
 		_tempOffset = L"Go Go Go";
 	}
-	wstring _tempBeat = L"Beat: " + to_wstring(m_stats->GetBeat());
 	m_spriteBatch->Begin();
 	if (offset - m_stats->GetBeat() >= -4)
 	{
-		m_font->DrawString(m_spriteBatch.get(), _tempOffset.c_str(), _offsetCountPos, Colors::Crimson, 0.f, m_font->MeasureString(_tempOffset.c_str()) / 2.f);
+		m_font->DrawString(m_spriteBatch.get(), _tempOffset.c_str(), _offsetCountPos, Colors::Crimson, 0.f, m_font->MeasureString(_tempOffset.c_str()) / 2.f, _scale);
 	}
 	m_font->DrawString(m_spriteBatch.get(), _tempHighScore.c_str(),_scorePos, Colors::Crimson, 0.f, m_font->MeasureString(_tempHighScore.c_str()) / 2.f);
 	m_font->DrawString(m_spriteBatch.get(), _tempLives.c_str(), _livesPos, Colors::Crimson, 0.f, m_font->MeasureString(_tempLives.c_str()) / 2.f);
 	m_font->DrawString(m_spriteBatch.get(), _tempCombo.c_str(), _comboPos, Colors::Crimson, 0.f, m_font->MeasureString(_tempCombo.c_str()) / 2.f);
-	m_font->DrawString(m_spriteBatch.get(), _tempBeat.c_str(), SimpleMath::Vector2(0.f), Colors::Crimson, 0.f, SimpleMath::Vector2(0.f));
-	m_font->DrawString(m_spriteBatch.get(), to_wstring(m_stats->GetShit()).c_str(), SimpleMath::Vector2(0, 200), Colors::Crimson, 0.f, SimpleMath::Vector2(0.f));
 	m_spriteBatch->Draw(m_bSprite1.Get(), m_shotBinding[SHOT1].m_position, nullptr, m_shotBinding[SHOT1].m_color, 0.f, m_shotBinding[SHOT1].m_origin, 0.1);
 	m_spriteBatch->Draw(m_bSprite2.Get(), m_shotBinding[SHOT2].m_position, nullptr, m_shotBinding[SHOT2].m_color, 0.f, m_shotBinding[SHOT2].m_origin, 0.2);
 	m_spriteBatch->Draw(m_bSprite3.Get(), m_shotBinding[SHOT3].m_position, nullptr, m_shotBinding[SHOT3].m_color, 0.f, m_shotBinding[SHOT3].m_origin, 0.05);

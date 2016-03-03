@@ -175,6 +175,7 @@ wstring Input::CheckInputWString()
 		if (m_keyBoardState[m_dikToString[i].first] & 0x80)
 			return m_dikToString[i].second;
 	}
+	return L"";
 }
 
 bool Input::CheckIfInput()
@@ -220,8 +221,12 @@ InputType Input::CheckKeyBoardInput()
 
 	else if (m_keyBoardState[m_keyBindings[MOVEDOWN]] & 0x80)
 		return INPUT_MOVE_DOWN;
+
 	else if (m_keyBoardState[DIK_RETURN] & 0x80)
 		return INPUT_ENTER;
+
+	else if (m_keyBoardState[DIK_ESCAPE] & 0x80)
+		return INPUT_ESC;
 
 	return INPUT_DEFAULT;
 }
@@ -254,6 +259,14 @@ void Input::CheckKeyBoardInput(InputType* returnput)
 bool Input::CheckEsc()
 {
 	if (m_keyBoardState[DIK_ESCAPE] & 0x80)
+		return true;
+
+	return false;
+}
+
+bool Input::CheckBackspace()
+{
+	if (m_keyBoardState[DIK_BACKSPACE] & 0x80)
 		return true;
 
 	return false;

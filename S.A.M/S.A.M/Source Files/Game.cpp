@@ -245,12 +245,18 @@ void Game::Update(double time, HINSTANCE hInstance, HINSTANCE hPrevInstance, LPS
 		}
 		m_entityManager->Update(time);
 	}
+
 	if (m_screenManager->GetCurrentScreen() == EXIT)
 	{
 		PostQuitMessage(0);
 	}
-	_prevScreen = m_screenManager->GetCurrentScreen();
 
+	if (m_screenManager->GetCurrentScreen() == HIGHSCORE && _prevScreen == ENDSCREEN)
+	{
+		m_entityManager->Reset();
+	}
+
+	_prevScreen = m_screenManager->GetCurrentScreen();
 	}
 
 	//Updates space

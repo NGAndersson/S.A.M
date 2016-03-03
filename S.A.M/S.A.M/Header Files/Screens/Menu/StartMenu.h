@@ -21,9 +21,6 @@ public:
 			return OPTION;
 			break;
 		case 2:
-			return HIGHSCORE;
-			break;
-		case 3:
 			return EXIT;
 			break;
 		}
@@ -32,10 +29,9 @@ public:
 private:
 	wstring m_start = L"StartGame";
 	wstring m_options = L"Options";
-	wstring m_highScore = L"HighScore";
 	wstring m_exit = L"Quit";
 	bool m_keyDown = false;
-	Font m_choices[4];
+	Font m_choices[3];
 
 	int m_currentFont;
 };

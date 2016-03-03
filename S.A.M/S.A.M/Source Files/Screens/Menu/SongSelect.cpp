@@ -161,10 +161,10 @@ void SongSelect::Render()
 	//Render song elements
 	for (int i = 0; i < 5; i++)
 	{
-		int _xpos = 400;
+		int _xpos = 700;
 		if (i == 2)
-			_xpos = 100;
-		m_visibleElements[i]->Render(_xpos, i * 100 + m_screenHeight/2 - 250);		//Get it centered, y-wise
+			_xpos = 450;
+		m_visibleElements[i]->Render(_xpos, (i * 100) + (m_screenHeight / 2 - 250 * float(m_screenHeight) / 1440.f), m_screenWidth, m_screenHeight);		//Get it centered, y-wise
 
 	}
 
@@ -173,17 +173,17 @@ void SongSelect::Render()
 	m_spriteBatch->Begin(DirectX::SpriteSortMode_Deferred, m_states->NonPremultiplied());
 	for (int i = 0; i < 4; i++)
 		m_spriteBatch->Draw(m_arrows[i].Get(), 
-						SimpleMath::Vector2(0, m_screenHeight-45 - 40*i),
+						SimpleMath::Vector2(0, m_screenHeight - 45 * (float(m_screenHeight) / float(1440)) - (40 * i) * (float(m_screenHeight) / float(1440))),
 						nullptr, 
 						DirectX::Colors::White, 
 						0.f,
 						SimpleMath::Vector2(0.f),
-						SimpleMath::Vector3(0.5f));
+						SimpleMath::Vector3(0.5f) * float(m_screenWidth) / float(1058));
 	
 	wstring _strings[4] = {L"Preview", L"Highscore", L"Down", L"Up" };
 
 	for (int i = 0; i < 4; i++)
-		m_font->DrawString(m_spriteBatch.get(), _strings[i].c_str(), SimpleMath::Vector2(40, m_screenHeight - 40 - i*40), DirectX::Colors::Red, 0.f, SimpleMath::Vector2(0.f), SimpleMath::Vector3(0.8f));
+		m_font->DrawString(m_spriteBatch.get(), _strings[i].c_str(), SimpleMath::Vector2(40 * (float(m_screenWidth) / float(1058)), m_screenHeight - 40 * (float(m_screenHeight) / float(1440)) - (i * 40) * (float(m_screenHeight) / float(1440))), DirectX::Colors::Red, 0.f, SimpleMath::Vector2(0.f), SimpleMath::Vector3(0.8f) * float(m_screenWidth) / float(1058));
 	
 	
 	m_spriteBatch->End();

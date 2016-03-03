@@ -83,14 +83,14 @@ SongElement::~SongElement()
 	free(m_scoreFile);
 }
 
-void SongElement::Render(int offsetX, int offsetZ)
+void SongElement::Render(int offsetX, int offsetZ, int screenWidth, int screenHeight)
 {
 	DirectX::SimpleMath::Vector2 _bgPos, _songNamePos, _artistPos, _arrangerPos, _lengthAndBPMPos;
-	_bgPos.x = offsetX, _bgPos.y = offsetZ;
-	_songNamePos.x = 0 + offsetX, _songNamePos.y = 20 + offsetZ;
-	_artistPos.x = 0 + offsetX, _artistPos.y = 70 + offsetZ;
-	_arrangerPos.x = 600 + offsetX, _arrangerPos.y = 20 + offsetZ;
-	_lengthAndBPMPos.x = 600 + offsetX, _lengthAndBPMPos.y = 70 + offsetZ;
+	_bgPos.x = offsetX * float(screenWidth) / float(1058), _bgPos.y = offsetZ * (float(screenHeight) / float(1440));
+	_songNamePos.x = (10 + offsetX) * float(screenWidth) / float(1058), _songNamePos.y = (20 + offsetZ) * (float(screenHeight) / float(1440));
+	_artistPos.x = (10 + offsetX) * float(screenWidth) / float(1058), _artistPos.y = (70 + offsetZ) * (float(screenHeight) / float(1440));
+	_arrangerPos.x = (600 + offsetX) * float(screenWidth) / float(1058), _arrangerPos.y = (20 + offsetZ) * (float(screenHeight) / float(1440));
+	_lengthAndBPMPos.x = (600 + offsetX) * float(screenWidth) / float(1058), _lengthAndBPMPos.y = (70 + offsetZ) * (float(screenHeight) / float(1440));
 	std::wstring _lengthAndBPM = m_length + L" " + m_bpm + L" BPM";
 	
 	DirectX::XMVECTOR _lengthAndBPMOrigin = m_font->MeasureString(_lengthAndBPM.c_str());
@@ -100,11 +100,13 @@ void SongElement::Render(int offsetX, int offsetZ)
 	_arrangerOrigin = DirectX::XMVectorSetIntY(_arrangerOrigin, 0);
 
 	DirectX::SimpleMath::Vector3 _scale;
-	_scale.x = 0.5f, _scale.y = 0.5f, _scale.z = 0.5f;
+	_scale.x = 0.5f * float(screenWidth) / float(1058), _scale.y = 0.5f * (float(screenHeight) / float(1440)), _scale.z = 0.5f * (float(screenHeight) / float(1440));
+	DirectX::SimpleMath::Vector3 _scale2;
+	_scale2.x = 1.0f * float(screenWidth) / float(1058), _scale2.y = 1.0f * (float(screenHeight) / float(1440)), _scale2.z = 1.0f * (float(screenHeight) / float(1440));
 
 	m_spriteBatch->Begin(DirectX::SpriteSortMode_Deferred, m_states->NonPremultiplied());
-	m_spriteBatch->Draw(m_backGround.Get(), _bgPos, nullptr, DirectX::Colors::White, 0.f);
-	m_font->DrawString(m_spriteBatch.get(), m_songName.c_str(), _songNamePos, DirectX::Colors::White, 0.f);
+	m_spriteBatch->Draw(m_backGround.Get(), _bgPos, nullptr, DirectX::Colors::White, 0.f, DirectX::g_XMZero, _scale2);
+	m_font->DrawString(m_spriteBatch.get(), m_songName.c_str(), _songNamePos, DirectX::Colors::White, 0.f, DirectX::g_XMZero, _scale);
 	m_font->DrawString(m_spriteBatch.get(), m_artist.c_str(), _artistPos, DirectX::Colors::White, 0.f, DirectX::g_XMZero, _scale);
 	m_font->DrawString(m_spriteBatch.get(), m_arranger.c_str(), _arrangerPos, DirectX::Colors::White, 0.f, _arrangerOrigin, _scale);
 	m_font->DrawString(m_spriteBatch.get(), _lengthAndBPM.c_str(), _lengthAndBPMPos, DirectX::Colors::White, 0.f, _lengthAndBPMOrigin, _scale);
