@@ -87,10 +87,10 @@ void SongElement::Render(int offsetX, int offsetZ, int screenWidth, int screenHe
 {
 	DirectX::SimpleMath::Vector2 _bgPos, _songNamePos, _artistPos, _arrangerPos, _lengthAndBPMPos;
 	_bgPos.x = offsetX * float(screenWidth) / float(1058), _bgPos.y = offsetZ * (float(screenHeight) / float(1440));
-	_songNamePos.x = 0 + offsetX * float(screenWidth) / float(1058), _songNamePos.y = 20 * (float(screenHeight) / float(1440)) + offsetZ * (float(screenHeight) / float(1440));
-	_artistPos.x = 0 + offsetX * float(screenWidth) / float(1058), _artistPos.y = 70 * (float(screenHeight) / float(1440)) + offsetZ * (float(screenHeight) / float(1440));
-	_arrangerPos.x = 600 * float(screenWidth) / float(1058) + offsetX * float(screenWidth) / float(1058), _arrangerPos.y = 20 * (float(screenHeight) / float(1440)) + offsetZ * (float(screenHeight) / float(1440));
-	_lengthAndBPMPos.x = 600 * float(screenWidth) / float(1058) + offsetX * float(screenWidth) / float(1058), _lengthAndBPMPos.y = 70 * (float(screenHeight) / float(1440)) + offsetZ * (float(screenHeight) / float(1440));
+	_songNamePos.x = (10 + offsetX) * float(screenWidth) / float(1058), _songNamePos.y = (20 + offsetZ) * (float(screenHeight) / float(1440));
+	_artistPos.x = (10 + offsetX) * float(screenWidth) / float(1058), _artistPos.y = (70 + offsetZ) * (float(screenHeight) / float(1440));
+	_arrangerPos.x = (600 + offsetX) * float(screenWidth) / float(1058), _arrangerPos.y = (20 + offsetZ) * (float(screenHeight) / float(1440));
+	_lengthAndBPMPos.x = (600 + offsetX) * float(screenWidth) / float(1058), _lengthAndBPMPos.y = (70 + offsetZ) * (float(screenHeight) / float(1440));
 	std::wstring _lengthAndBPM = m_length + L" " + m_bpm + L" BPM";
 	
 	DirectX::XMVECTOR _lengthAndBPMOrigin = m_font->MeasureString(_lengthAndBPM.c_str());
