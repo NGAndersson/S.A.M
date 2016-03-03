@@ -6,25 +6,25 @@ UI::UI(ID3D11Device* Device, ID3D11DeviceContext* DeviceContext, int ScreenHeigh
 	m_stats = stats;
 	m_input = input;
 
-	m_pressed1 = L"1";
+	CreateWICTextureFromFile(Device, L"Resources/Sprites/Bullet1.png", nullptr, m_bSprite1.ReleaseAndGetAddressOf());
 	m_shotBinding[SHOT1].m_color = Colors::Crimson;
 	m_shotBinding[SHOT1].m_origin = DirectX::SimpleMath::Vector2(97, 305);
-	m_shotBinding[SHOT1].m_position = DirectX::SimpleMath::Vector2(20 * (float(m_screenWidth) / float(1058)), m_screenHeight - 100 * (float(m_screenWidth) / float(1440)));
+	m_shotBinding[SHOT1].m_position = DirectX::SimpleMath::Vector2(20 * (float(m_screenWidth) / float(1058)), m_screenHeight - 150 * (float(m_screenWidth) / float(1440)));
 
 	CreateWICTextureFromFile(Device, L"Resources/Sprites/Bullet2.png", nullptr, m_bSprite2.ReleaseAndGetAddressOf());
 	m_shotBinding[SHOT2].m_color = Colors::Crimson;
 	m_shotBinding[SHOT2].m_origin = DirectX::SimpleMath::Vector2(67, 158);
-	m_shotBinding[SHOT2].m_position = DirectX::SimpleMath::Vector2(40 * (float(m_screenWidth) / float(1058)), m_screenHeight - 100 * (float(m_screenWidth) / float(1440)));
+	m_shotBinding[SHOT2].m_position = DirectX::SimpleMath::Vector2(40 * (float(m_screenWidth) / float(1058)), m_screenHeight - 150 * (float(m_screenWidth) / float(1440)));
 
 	CreateWICTextureFromFile(Device, L"Resources/Sprites/Bullet3.png", nullptr, m_bSprite3.ReleaseAndGetAddressOf());
 	m_shotBinding[SHOT3].m_color = Colors::Crimson;
 	m_shotBinding[SHOT3].m_origin = DirectX::SimpleMath::Vector2(283, 235);
-	m_shotBinding[SHOT3].m_position = DirectX::SimpleMath::Vector2(70 * (float(m_screenWidth) / float(1058)), m_screenHeight - 100 * (float(m_screenWidth) / float(1440)));
+	m_shotBinding[SHOT3].m_position = DirectX::SimpleMath::Vector2(80 * (float(m_screenWidth) / float(1058)), m_screenHeight - 150 * (float(m_screenWidth) / float(1440)));
 
 	CreateWICTextureFromFile(Device, L"Resources/Sprites/Bullet4.png", nullptr, m_bSprite4.ReleaseAndGetAddressOf());
 	m_shotBinding[SHOT4].m_color = Colors::Crimson;
-	m_shotBinding[SHOT4].m_origin = DirectX::SimpleMath::Vector2(96 * (float(m_screenWidth) / float(1058)), 254 * (float(m_screenWidth) / float(1440)));
-	m_shotBinding[SHOT4].m_position = DirectX::SimpleMath::Vector2(100, m_screenHeight - 100);
+	m_shotBinding[SHOT4].m_origin = DirectX::SimpleMath::Vector2(96, 254);
+	m_shotBinding[SHOT4].m_position = DirectX::SimpleMath::Vector2(115 * (float(m_screenWidth) / float(1058)), m_screenHeight - 150 * (float(m_screenWidth) / float(1440)));
 }
 
 UI::~UI() 
