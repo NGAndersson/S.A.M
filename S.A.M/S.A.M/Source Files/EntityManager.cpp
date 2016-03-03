@@ -352,8 +352,6 @@ void EntityManager::Update(double time)
 			m_statsManager->AddLives(-1);			//Reduce remaining lives
 		}
 	}
-
-	
 	//Enemies
 	for (auto i = 0; i < m_enemy1.size(); i++)
 		m_enemy1[i]->Update(time);

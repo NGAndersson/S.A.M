@@ -15,6 +15,7 @@ public:
 	}
 	~Enemy_3();
 	void Update(double time);
+	void Destroyed(double time);
 
 	//Attributes
 private:
