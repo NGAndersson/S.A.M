@@ -37,6 +37,7 @@ class EntityManager
 	//Functions
 private:
 	void SpawnEntity(HandlerIndex type);
+	void SpawnEnemy();
 	void BeatWasDetected();
 	vector<Entity*> CheckOutOfBounds(const std::vector<Entity*> &bullet);
 	vector<Entity*> CheckIfAlive(const std::vector<Entity*> &bullet);

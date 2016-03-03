@@ -244,8 +244,6 @@ void EntityManager::Update(double time)
 			if (m_beatNumber > m_offset)
 			{
 				BeatWasDetected();
-
-				EnemyFire();
 				m_light.beatBoost(true, time, -1, m_currentBPM);
 				m_modelHandlers[BULLET1]->beatBoost(true, time, -1, m_currentBPM);
 				m_modelHandlers[BULLET3]->beatBoost(true, time, -1, m_currentBPM);
@@ -284,13 +282,13 @@ void EntityManager::Update(double time)
 				m_timeSinceLastBeat = 0;
 				m_beatNumber += 1;
 				m_statsManager->AddBeat();
-				EnemyFire();
 			}
 			else {
 				m_timeSinceLastBeat = 0;
 				m_beatNumber++;
 				m_statsManager->AddBeat();
 			}
+			SpawnEnemy();
 		}
 		else {
 			m_timeSinceLastBeat += time * 1000;
@@ -740,8 +738,6 @@ void EntityManager::Reset()
 
 void EntityManager::BeatWasDetected()
 {
-	static int _enemySpawnBeat[4] = { 0 };
-
 	//Spawn correct bullet (which plays the sound as well) Only if player is alive
 	if (!m_player->GetDelete())
 	{
@@ -767,10 +763,15 @@ void EntityManager::BeatWasDetected()
 			break;
 	}
 	} 
+	EnemyFire();
+}
 
+void EntityManager::SpawnEnemy() 
+{
+	static int _enemySpawnBeat[4] = { 0 };
 	for (int j = 0; j < 4; j++)							//For each enemy's spawn rate vectors
-	{ 
-		for (int i = m_enemySpawnRate[j].size()-1; i >= 0; i--)	//For each spawn rate
+	{
+		for (int i = m_enemySpawnRate[j].size() - 1; i >= 0; i--)	//For each spawn rate
 		{
 			if (m_enemySpawnRate[j][i].first <= m_statsManager->GetBeat())	//Get correct frequency-span
 			{
@@ -791,6 +792,7 @@ void EntityManager::BeatWasDetected()
 			}
 		}
 	}
+
 }
 
 vector<Entity*> EntityManager::CheckOutOfBounds(const std::vector<Entity*> &entity)
