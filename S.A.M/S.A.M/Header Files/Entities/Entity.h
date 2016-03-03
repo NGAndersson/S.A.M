@@ -11,7 +11,7 @@ using namespace DirectX;
 #define MOVEMENTSPEEDX 0.3f / 9.80f // Divided by screen Width Hardcoded MOTHERFUCKER :)
 
 #define MOVEMENTSPEEDZ 0.3f / 7.20f // Divided by screen Height Hardcoded
-enum HandlerIndex { PLAYER, BULLET1, BULLET2, BULLET3, BULLET4, BULLET5, BULLET6, ENEMY1, ENEMY2, ENEMY3, ENEMY4 };
+enum HandlerIndex { PLAYER, BULLET1, BULLET2, BULLET3, BULLET4, BULLET5, BULLET6,BULLETEXP, ENEMY1, ENEMY2, ENEMY3, ENEMY4 };
 class Entity
 {
 	//----------------------------Functions----------------------------------------
@@ -62,6 +62,8 @@ public:
 
 	 virtual BoundingBox GetBoundingBox() { return m_entityBox; }
 
+	 virtual BoundingSphere GetBoundingSphere() { return m_sphere; }
+
 	 virtual bool GetDelete() { return m_delete; }
 
 	 virtual void SetDelete(bool b) { m_delete = b; }
@@ -99,6 +101,7 @@ protected:
 
 	 //BoundingBox
 	 BoundingBox m_entityBox;
+	 BoundingSphere m_sphere; //incase you wish for sphere instead! 
 	 int m_mapWidth, m_mapLength;
 	 float m_entityWidth;
 	 double m_fireTime;

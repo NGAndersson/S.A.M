@@ -18,6 +18,7 @@
 #include "Entities\Bullets\Bullet_p3.h"
 #include "Entities\Bullets\Bullet_p4.h"
 #include "Entities\Bullets\Bullet_p5.h"
+#include "Entities\Bullets\BulletExplosion.h"
 #include "Entities\Enemies\Enemy.h"
 #include "Entities\Enemies\Enemy_1.h"
 #include "Entities/Enemies/Enemy_2.h"
@@ -71,6 +72,7 @@ private:
 	std::vector<Entity*> m_bullet4;
 	std::vector<Entity*> m_bullet5;
 	std::vector<Entity*> m_bullet6;
+	std::vector<Entity*> m_bullExplosion;
 	std::vector<Entity*> m_enemy1;
 	std::vector<Entity*> m_enemy2;
 	std::vector<Entity*> m_enemy3;

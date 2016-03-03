@@ -19,6 +19,7 @@ void Enemy_3::Update(double time)
 		m_spline->SetCurrPathNode(m_spline->GetCurrPathNode() + 1);
 	}
 	m_position = m_spline->GetPathPosition(m_age);
+
 	m_entityBox.Center = m_position;
 	m_entityBox.Extents = XMFLOAT3(m_scale.x, 0, m_scale.z);
 }
