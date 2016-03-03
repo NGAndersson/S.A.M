@@ -98,42 +98,11 @@ void EntityManager::SpawnEntity(HandlerIndex type)
 		m_soundManager->PlayOneShotSound("Bullet_E", 0.5f);
 		break;
 	case(BULLET5) :
-		m_bullet5.push_back(new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(2.0, 2.0, 5.0), 0, XMFLOAT3(-0.55f, 0.0f, 5.0f)));
-		m_bullet5.push_back(new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(2.0, 2.0, 5.0), 1, XMFLOAT3(0.55f, 0.0f, 5.0f)));
-		m_bullet5.push_back(new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(2.0, 2.0, 5.0), 0, XMFLOAT3(-0.55f, 0.0f, 11.0f)));
-		m_bullet5.push_back(new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(2.0, 2.0, 5.0), 1, XMFLOAT3(0.55f, 0.0f, 11.0f)));
-		m_bullet5.push_back(new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(2.0, 2.0, 5.0), 0, XMFLOAT3(-0.55f, 0.0f, 17.0f)));
-		m_bullet5.push_back(new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(2.0, 2.0, 5.0), 1, XMFLOAT3(0.55f, 0.0f, 17.0f)));
-		m_bullet5.push_back(new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(2.0, 2.0, 5.0), 0, XMFLOAT3(-0.55f, 0.0f, 23.0f)));
-		m_bullet5.push_back(new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(2.0, 2.0, 5.0), 1, XMFLOAT3(0.55f, 0.0f, 23.0f)));
-		m_bullet5.push_back(new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(2.0, 2.0, 5.0), 0, XMFLOAT3(-0.55f, 0.0f, 29.0f)));
-		m_bullet5.push_back(new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(2.0, 2.0, 5.0), 1, XMFLOAT3(0.55f, 0.0f, 29.0f)));
-		m_bullet5.push_back(new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(2.0, 2.0, 5.0), 0, XMFLOAT3(-0.55f, 0.0f, 35.0f)));
-		m_bullet5.push_back(new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(2.0, 2.0, 5.0), 1, XMFLOAT3(0.55f, 0.0f, 35.0f)));
-		m_bullet5.push_back(new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(2.0, 2.0, 5.0), 0, XMFLOAT3(-0.55f, 0.0f, 41.0f)));
-		m_bullet5.push_back(new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(2.0, 2.0, 5.0), 1, XMFLOAT3(0.55f, 0.0f, 41.0f)));
-		m_bullet5.push_back(new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(2.0, 2.0, 5.0), 0, XMFLOAT3(-0.55f, 0.0f, 47.0f)));
-		m_bullet5.push_back(new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(2.0, 2.0, 5.0), 1, XMFLOAT3(0.55f, 0.0f, 47.0f)));
-		m_bullet5.push_back(new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(2.0, 2.0, 5.0), 0, XMFLOAT3(-0.55f, 0.0f, 53.0f)));
-		m_bullet5.push_back(new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(2.0, 2.0, 5.0), 1, XMFLOAT3(0.55f, 0.0f, 53.0f)));
-		m_bullet5.push_back(new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(2.0, 2.0, 5.0), 0, XMFLOAT3(-0.55f, 0.0f, 59.0f)));
-		m_bullet5.push_back(new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(2.0, 2.0, 5.0), 1, XMFLOAT3(0.55f, 0.0f, 59.0f)));
-		m_bullet5.push_back(new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(2.0, 2.0, 5.0), 0, XMFLOAT3(-0.55f, 0.0f, 65.0f)));
-		m_bullet5.push_back(new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(2.0, 2.0, 5.0), 1, XMFLOAT3(0.55f, 0.0f, 65.0f)));
-		m_bullet5.push_back(new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(2.0, 2.0, 5.0), 0, XMFLOAT3(-0.55f, 0.0f, 71.0f)));
-		m_bullet5.push_back(new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(2.0, 2.0, 5.0), 1, XMFLOAT3(0.55f, 0.0f, 71.0f)));
-		m_bullet5.push_back(new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(2.0, 2.0, 5.0), 0, XMFLOAT3(-0.55f, 0.0f, 77.0f)));
-		m_bullet5.push_back(new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(2.0, 2.0, 5.0), 1, XMFLOAT3(0.55f, 0.0f, 77.0f)));
-		m_bullet5.push_back(new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(2.0, 2.0, 5.0), 0, XMFLOAT3(-0.55f, 0.0f, 83.0f)));
-		m_bullet5.push_back(new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(2.0, 2.0, 5.0), 1, XMFLOAT3(0.55f, 0.0f, 83.0f)));
-		m_bullet5.push_back(new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(2.0, 2.0, 5.0), 0, XMFLOAT3(-0.55f, 0.0f, 89.0f)));
-		m_bullet5.push_back(new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(2.0, 2.0, 5.0), 1, XMFLOAT3(0.55f, 0.0f, 89.0f)));
-		m_bullet5.push_back(new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(2.0, 2.0, 5.0), 0, XMFLOAT3(-0.55f, 0.0f, 95.0f)));
-		m_bullet5.push_back(new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(2.0, 2.0, 5.0), 1, XMFLOAT3(0.55f, 0.0f, 95.0f)));
-		m_bullet5.push_back(new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(2.0, 2.0, 5.0), 0, XMFLOAT3(-0.55f, 0.0f, 101.0f)));
-		m_bullet5.push_back(new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(2.0, 2.0, 5.0), 1, XMFLOAT3(0.55f, 0.0f, 101.0f)));
-		m_bullet5.push_back(new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(2.0, 2.0, 5.0), 0, XMFLOAT3(-0.55f, 0.0f, 107.0f)));
-		m_bullet5.push_back(new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(2.0, 2.0, 5.0), 1, XMFLOAT3(0.55f, 0.0f, 107.0f)));
+		for (int i = 0; i < 18; i++)
+		{
+			m_bullet5.push_back(new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(2.0, 2.0, 5.0), 0, XMFLOAT3(-0.55f, 0.0f, 5.0f + i*6)));
+			m_bullet5.push_back(new Bullet_p5(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z), XMFLOAT3(2.0, 2.0, 5.0), 1, XMFLOAT3(0.55f, 0.0f, 5.0f + i * 6)));
+		}
 		m_soundManager->PlayOneShotSound("Laser_R", 0.5f);
 		break;
 	}
@@ -822,7 +791,7 @@ void EntityManager::SpawnEnemy()
 					case 2: SpawnEntity(ENEMY3); break;
 					case 3: SpawnEntity(ENEMY4); break;
 					}
-					_enemySpawnBeat[j] = 0;
+					_enemySpawnBeat[j] = 1;
 				}
 				else
 					_enemySpawnBeat[j]++;
