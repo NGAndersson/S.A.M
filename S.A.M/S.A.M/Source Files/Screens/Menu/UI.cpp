@@ -6,56 +6,60 @@ UI::UI(ID3D11Device* Device, ID3D11DeviceContext* DeviceContext, int ScreenHeigh
 	m_stats = stats;
 	m_input = input;
 
-	m_pressed1 = L"1";
+	CreateWICTextureFromFile(Device, L"Resources/Sprites/Bullet1.png", nullptr, m_bSprite1.ReleaseAndGetAddressOf());
 	m_shotBinding[SHOT1].m_color = Colors::Crimson;
-	m_shotBinding[SHOT1].m_origin = DirectX::SimpleMath::Vector2(0, 0);
-	m_shotBinding[SHOT1].m_position = DirectX::SimpleMath::Vector2(20, m_screenHeight - 190);
+	m_shotBinding[SHOT1].m_origin = DirectX::SimpleMath::Vector2(97, 305);
+	m_shotBinding[SHOT1].m_position = DirectX::SimpleMath::Vector2(20, m_screenHeight - 100);
 
-	m_pressed2 = L"2";
+	CreateWICTextureFromFile(Device, L"Resources/Sprites/Bullet2.png", nullptr, m_bSprite2.ReleaseAndGetAddressOf());
 	m_shotBinding[SHOT2].m_color = Colors::Crimson;
-	m_shotBinding[SHOT2].m_origin = DirectX::SimpleMath::Vector2(0, 0);
-	m_shotBinding[SHOT2].m_position = DirectX::SimpleMath::Vector2(20, m_screenHeight - 160);
+	m_shotBinding[SHOT2].m_origin = DirectX::SimpleMath::Vector2(67, 158);
+	m_shotBinding[SHOT2].m_position = DirectX::SimpleMath::Vector2(40, m_screenHeight - 100);
 
-	m_pressed3 = L"3";
+	CreateWICTextureFromFile(Device, L"Resources/Sprites/Bullet3.png", nullptr, m_bSprite3.ReleaseAndGetAddressOf());
 	m_shotBinding[SHOT3].m_color = Colors::Crimson;
-	m_shotBinding[SHOT3].m_origin = DirectX::SimpleMath::Vector2(0, 0);
-	m_shotBinding[SHOT3].m_position = DirectX::SimpleMath::Vector2(20, m_screenHeight - 130);
+	m_shotBinding[SHOT3].m_origin = DirectX::SimpleMath::Vector2(283, 235);
+	m_shotBinding[SHOT3].m_position = DirectX::SimpleMath::Vector2(70, m_screenHeight - 100);
 
-	m_pressed4 = L"4";
+	CreateWICTextureFromFile(Device, L"Resources/Sprites/Bullet4.png", nullptr, m_bSprite4.ReleaseAndGetAddressOf());
 	m_shotBinding[SHOT4].m_color = Colors::Crimson;
-	m_shotBinding[SHOT4].m_origin = DirectX::SimpleMath::Vector2(0, 0);
-	m_shotBinding[SHOT4].m_position = DirectX::SimpleMath::Vector2(20, m_screenHeight - 100);
+	m_shotBinding[SHOT4].m_origin = DirectX::SimpleMath::Vector2(96, 254);
+	m_shotBinding[SHOT4].m_position = DirectX::SimpleMath::Vector2(100, m_screenHeight - 100);
 }
 
 UI::~UI() 
 {
 	m_score.erase();
 	m_livesLeft.erase();
+	m_bSprite1.Reset();
+	m_bSprite2.Reset();
+	m_bSprite3.Reset();
 }
 
 void UI::Update(double time)
 {
 	BulletType _bullet = m_input->CheckBullet();
 
+	m_shotBinding[SHOT1].m_color = Colors::White;
+	m_shotBinding[SHOT2].m_color = Colors::White;
+	m_shotBinding[SHOT3].m_color = Colors::White;
+	m_shotBinding[SHOT4].m_color = Colors::White;
+
 	switch (_bullet)
 	{
 	case INPUT_DEFAULT_BULLET:
-		m_shotBinding[SHOT1].m_color = Colors::Crimson;
-		m_shotBinding[SHOT2].m_color = Colors::Crimson;
-		m_shotBinding[SHOT3].m_color = Colors::Crimson;
-		m_shotBinding[SHOT4].m_color = Colors::Crimson;
 		break;
 	case INPUT_BULLET2:
 		m_shotBinding[SHOT1].m_color = Colors::Green;
 		break;
 	case INPUT_BULLET3:
-		m_shotBinding[SHOT2].m_color = Colors::Green;
+		m_shotBinding[SHOT2].m_color = Colors::Blue;
 		break;
 	case INPUT_BULLET4:
-		m_shotBinding[SHOT3].m_color = Colors::Green;
+		m_shotBinding[SHOT3].m_color = Colors::Blue;
 		break;
 	case INPUT_BULLET5:
-		m_shotBinding[SHOT4].m_color = Colors::Green;
+		m_shotBinding[SHOT4].m_color = Colors::Crimson;
 		break;
 	default:
 		break;
@@ -101,12 +105,12 @@ void UI::Render(int offset)
 	m_font->DrawString(m_spriteBatch.get(), _tempHighScore.c_str(),_scorePos, Colors::Crimson, 0.f, m_font->MeasureString(_tempHighScore.c_str()) / 2.f);
 	m_font->DrawString(m_spriteBatch.get(), _tempLives.c_str(), _livesPos, Colors::Crimson, 0.f, m_font->MeasureString(_tempLives.c_str()) / 2.f);
 	m_font->DrawString(m_spriteBatch.get(), _tempCombo.c_str(), _comboPos, Colors::Crimson, 0.f, m_font->MeasureString(_tempCombo.c_str()) / 2.f);
-	m_font->DrawString(m_spriteBatch.get(), m_pressed1.c_str(), m_shotBinding[SHOT1].m_position, m_shotBinding[SHOT1].m_color, 0.f, m_font->MeasureString(m_pressed1.c_str()) / 2.f);
-	m_font->DrawString(m_spriteBatch.get(), m_pressed2.c_str(), m_shotBinding[SHOT2].m_position, m_shotBinding[SHOT2].m_color, 0.f, m_font->MeasureString(m_pressed2.c_str()) / 2.f);
-	m_font->DrawString(m_spriteBatch.get(), m_pressed3.c_str(), m_shotBinding[SHOT3].m_position, m_shotBinding[SHOT3].m_color, 0.f, m_font->MeasureString(m_pressed3.c_str()) / 2.f);
-	m_font->DrawString(m_spriteBatch.get(), m_pressed4.c_str(), m_shotBinding[SHOT4].m_position, m_shotBinding[SHOT4].m_color, 0.f, m_font->MeasureString(m_pressed4.c_str()) / 2.f);
 	m_font->DrawString(m_spriteBatch.get(), _tempBeat.c_str(), SimpleMath::Vector2(0.f), Colors::Crimson, 0.f, SimpleMath::Vector2(0.f));
 	m_font->DrawString(m_spriteBatch.get(), to_wstring(m_stats->GetShit()).c_str(), SimpleMath::Vector2(0, 200), Colors::Crimson, 0.f, SimpleMath::Vector2(0.f));
+	m_spriteBatch->Draw(m_bSprite1.Get(), m_shotBinding[SHOT1].m_position, nullptr, m_shotBinding[SHOT1].m_color, 0.f, m_shotBinding[SHOT1].m_origin, 0.1);
+	m_spriteBatch->Draw(m_bSprite2.Get(), m_shotBinding[SHOT2].m_position, nullptr, m_shotBinding[SHOT2].m_color, 0.f, m_shotBinding[SHOT2].m_origin, 0.2);
+	m_spriteBatch->Draw(m_bSprite3.Get(), m_shotBinding[SHOT3].m_position, nullptr, m_shotBinding[SHOT3].m_color, 0.f, m_shotBinding[SHOT3].m_origin, 0.05);
+	m_spriteBatch->Draw(m_bSprite4.Get(), m_shotBinding[SHOT4].m_position, nullptr, m_shotBinding[SHOT4].m_color, 0.f, m_shotBinding[SHOT4].m_origin, 0.1);
 	m_spriteBatch->End();
 
 }

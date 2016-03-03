@@ -27,6 +27,11 @@ private:
 	wstring m_pressed4;
 	Input* m_input;
 
+	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> m_bSprite1;
+	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> m_bSprite2;
+	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> m_bSprite3;
+	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> m_bSprite4;
+
 	Font m_shotBinding[4];
 };
 
