@@ -16,16 +16,7 @@ OptionsMenu::OptionsMenu(ID3D11Device* Device, ID3D11DeviceContext* DeviceContex
 		m_volym[i] = i;
 	}
 
-	for (int i = 0; i < 9; i++)
-	{
-		if (m_volym[i] == 10*m_soundManager->GetMusicVolume())
-
-			m_currentMVol = i;
-
-		if (m_volym[i] == 10*m_soundManager->GetEffectVolume())
-			m_currentSVol = i;
-	}
-
+	ReadSetttings();
 
 	m_volumeMusic = L"Music Volume: ";
 	m_choices[MUSICVOLUME].m_position.y = m_screenHeight*1/10;
