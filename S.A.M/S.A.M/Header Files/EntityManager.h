@@ -46,6 +46,7 @@ private:
 	void RenderEnemies();
 	void CheckCombo();
 	void ChangeSongData(int bpm);
+	void EnemyHealthColourBuffer();
 
 public:
 	EntityManager();
@@ -115,6 +116,8 @@ private:
 	Input* m_input;
 	ID3D11Device* m_device;
 	ID3D11DeviceContext* m_deviceContext;
+	ID3D11Buffer* m_enemyHealthColourBuffer = nullptr;
+
 
 	int m_currentBPM, m_beatNumber = 0;
 	double m_timeSinceLastBeat = 0.0f;

@@ -79,7 +79,7 @@ void UI::Render(int offset)
 	DirectX::SimpleMath::Vector3 _scale;
 	_scale.x = float(m_screenWidth) / float(1058), _scale.y = (float(m_screenHeight) / float(1440)), _scale.z = (float(m_screenHeight) / float(1440));
 
-	wstring _tempHighScore = L"High Score: " + m_score;
+	wstring _tempHighScore = L"Score: " + m_score;
 	wstring _tempLives = L"Lives: " + m_livesLeft;
 	wstring _tempCombo = L"Combo: " + m_combo;
 	wstring _tempOffset;
