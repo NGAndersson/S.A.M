@@ -344,7 +344,7 @@ void EntityManager::Update(double time)
 	if (!m_player->GetInvulnerable())			//Only check if the player is alive and well
 	{
 		std::vector<Entity*> _playerVec = { m_player };
-		m_collision.CheckCollisionEntity(&m_bullet6, &_playerVec, BULLET6, PLAYER, &m_explosion, m_device, m_deviceContext, time);
+		//m_collision.CheckCollisionEntity(&m_bullet6, &_playerVec, BULLET6, PLAYER, &m_explosion, m_device, m_deviceContext, time);
 		if (m_player->GetHealth() <= 0)
 		{
 			m_statsManager->ResetCombo();
@@ -499,28 +499,28 @@ void EntityManager::InitMusic(const std::string &filename)
 			else if (std::string(_key) == "BeatPerShot4")
 				m_beatPerShot4 = atoi(_value);
 
-			else if (std::string(_key).find("EnemySpawnRateDivider") != string::npos) //Mov compilations
+			else if (std::string(_key).find("EnemySpawnRate") != string::npos) //Mov compilations
 			{
-				pair<int, float> _spawnDiv;
+				pair<int, int> _spawnDiv;
 				_ss = istringstream(_value);
 
 				string _startBeat;
 				getline(_ss, _startBeat, '|');		// Get at what beat enemies will spawn with this compilation
 				_spawnDiv.first = stoi(_startBeat);
 
-				string _divider;
-				getline(_ss, _divider, ',');
-				_spawnDiv.second = stof(_divider);
+				string _rate;
+				getline(_ss, _rate, ',');
+				_spawnDiv.second = stoi(_rate);
 
 				//Add to the relevant final vector once done loading
-				if (std::string(_key) == "EnemySpawnRateDivider1")
-					m_enemySpawnRateDivider1.push_back(_spawnDiv);
-				if (std::string(_key) == "EnemySpawnRateDivider2")
-					m_enemySpawnRateDivider2.push_back(_spawnDiv);
-				if (std::string(_key) == "EnemySpawnRateDivider3")
-					m_enemySpawnRateDivider3.push_back(_spawnDiv);
-				if (std::string(_key) == "EnemySpawnRateDivider4")
-					m_enemySpawnRateDivider4.push_back(_spawnDiv);
+				if (std::string(_key) == "EnemySpawnRate1")
+					m_enemySpawnRate[0].push_back(_spawnDiv);
+				if (std::string(_key) == "EnemySpawnRate2")
+					m_enemySpawnRate[1].push_back(_spawnDiv);
+				if (std::string(_key) == "EnemySpawnRate3")
+					m_enemySpawnRate[2].push_back(_spawnDiv);
+				if (std::string(_key) == "EnemySpawnRate4")
+					m_enemySpawnRate[3].push_back(_spawnDiv);
 			}
 
 			else if (std::string(_key) == "EnemySize1")
@@ -724,10 +724,7 @@ void EntityManager::Reset()
 	m_enemy2MovPatterns.clear();
 	m_enemy3MovPatterns.clear();
 	m_enemy4MovPatterns.clear();
-	m_enemySpawnRateDivider1.clear();
-	m_enemySpawnRateDivider2.clear();
-	m_enemySpawnRateDivider3.clear();
-	m_enemySpawnRateDivider4.clear();
+	for (int i = 0; i < 4; i++) m_enemySpawnRate[i].clear();
 	m_explosion.clear();
 	m_statsManager->ResetCombo();
 	m_statsManager->ResetScore();
@@ -743,10 +740,8 @@ void EntityManager::Reset()
 
 void EntityManager::BeatWasDetected()
 {
-	static int _enemySpawnRate1;
-	static int _enemySpawnRate2;
-	static int _enemySpawnRate3;
-	static int _enemySpawnRate4;
+	static int _enemySpawnBeat[4] = { 0 };
+
 	//Spawn correct bullet (which plays the sound as well) Only if player is alive
 	if (!m_player->GetDelete())
 	{
@@ -771,82 +766,31 @@ void EntityManager::BeatWasDetected()
 		default:
 			break;
 	}
-	}
+	} 
 
-
-	//use time and check that after 30 sec or so increse the level count by some.. int
-	for (auto i = 0; i < m_enemySpawnRateDivider1.size(); i++)
-	{
-		if (m_enemySpawnRateDivider1[m_enemySpawnRateDivider1.size() - 1 - i].first < m_statsManager->GetBeat())
+	for (int j = 0; j < 4; j++)							//For each enemy's spawn rate vectors
+	{ 
+		for (int i = m_enemySpawnRate[j].size()-1; i >= 0; i--)	//For each spawn rate
 		{
-			if (_enemySpawnRate1 == int(m_beatDetector->GetTempo() * 1000) / int(m_enemySpawnRateDivider1[m_enemySpawnRateDivider1.size() - 1 - i].second * 1000))
+			if (m_enemySpawnRate[j][i].first <= m_statsManager->GetBeat())	//Get correct frequency-span
 			{
-				SpawnEntity(ENEMY1);
-				_enemySpawnRate1 = 0;
-				i = m_enemySpawnRateDivider1.size();
-			}
-			else
-			{
-				_enemySpawnRate1++;
-				i = m_enemySpawnRateDivider1.size();
+				if (_enemySpawnBeat[j] >= m_enemySpawnRate[j][i].second && m_enemySpawnRate[j][i].second != 0)
+				{
+					switch (j) {
+					case 0: SpawnEntity(ENEMY1); break;
+					case 1: SpawnEntity(ENEMY2); break;
+					case 2: SpawnEntity(ENEMY3); break;
+					case 3: SpawnEntity(ENEMY4); break;
+					}
+					_enemySpawnBeat[j] = 0;
+				}
+				else
+					_enemySpawnBeat[j]++;
+
+				i = 0;		//Breaks the for loop if spawn rate span was found
 			}
 		}
 	}
-
-	for (auto i = 0; i < m_enemySpawnRateDivider2.size(); i++)
-	{
-		if (m_enemySpawnRateDivider2[m_enemySpawnRateDivider2.size() - 1 - i].first < m_statsManager->GetBeat())
-		{
-			if (_enemySpawnRate2 == int(m_beatDetector->GetTempo() * 1000) / int(m_enemySpawnRateDivider2[m_enemySpawnRateDivider2.size() - 1 - i].second * 1000))
-			{
-				SpawnEntity(ENEMY2);
-				_enemySpawnRate2 = 0;
-				i = m_enemySpawnRateDivider2.size();
-			}
-			else
-			{
-				_enemySpawnRate2++;
-				i = m_enemySpawnRateDivider2.size();
-			}
-		}
-	}
-
-	for (auto i = 0; i < m_enemySpawnRateDivider3.size(); i++)
-	{
-		if (m_enemySpawnRateDivider3[m_enemySpawnRateDivider3.size() - 1 - i].first < m_statsManager->GetBeat())
-		{
-			if (_enemySpawnRate3 == int(m_beatDetector->GetTempo() * 1000) / int(m_enemySpawnRateDivider3[m_enemySpawnRateDivider3.size() - 1 - i].second * 1000))
-			{
-				SpawnEntity(ENEMY3);
-				_enemySpawnRate3 = 0;
-				i = m_enemySpawnRateDivider3.size();
-			}
-			else
-			{
-				_enemySpawnRate3++;
-				i = m_enemySpawnRateDivider3.size();
-			}
-		}
-	}
-
-	for (auto i = 0; i < m_enemySpawnRateDivider4.size(); i++)
-	{
-		if (m_enemySpawnRateDivider4[m_enemySpawnRateDivider4.size() - 1 - i].first < m_statsManager->GetBeat())
-		{
-			if (_enemySpawnRate4 == int(m_beatDetector->GetTempo() * 1000) / int(m_enemySpawnRateDivider4[m_enemySpawnRateDivider4.size() - 1 - i].second * 1000))
-			{
-				SpawnEntity(ENEMY4);
-				_enemySpawnRate4 = 0;
-				i = m_enemySpawnRateDivider4.size();
-			}
-			else
-			{
-				_enemySpawnRate4++;
-				i = m_enemySpawnRateDivider4.size();
-			}
-		}
-	}
-	
 }
 
 vector<Entity*> EntityManager::CheckOutOfBounds(const std::vector<Entity*> &entity)

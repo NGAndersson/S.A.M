@@ -20,14 +20,14 @@ bulletW=Resources/Sound/DefaultSoundBullet3.wav
 bulletE=Resources/Sound/DefaultSoundBullet4.wav
 bulletR=Resources/Sound/DefaultSoundBullet5.wav
 
-#### Spawn frequence divider, default is 0 if not defined here, divides the BPM
-EnemySpawnRateDivider1=0|16.00
-EnemySpawnRateDivider1=165|18.00
-EnemySpawnRateDivider2=0|10.00
-EnemySpawnRateDivider2=165|12.00
-EnemySpawnRateDivider3=0|1.00
-EnemySpawnRateDivider3=165|0.01
-EnemySpawnRateDivider4=0|0.40
+#### Spawn frequency. FromBeat|BeatsBetweenSpawns
+EnemySpawnRateDivider1=0|8
+EnemySpawnRateDivider1=165|6
+EnemySpawnRateDivider2=0|12
+EnemySpawnRateDivider2=165|12
+EnemySpawnRateDivider3=0|20
+EnemySpawnRateDivider3=165|18
+EnemySpawnRateDivider4=0|30
 
 
 
