@@ -13,18 +13,18 @@ UI::UI(ID3D11Device* Device, ID3D11DeviceContext* DeviceContext, int ScreenHeigh
 
 	CreateWICTextureFromFile(Device, L"Resources/Sprites/Bullet2.png", nullptr, m_bSprite2.ReleaseAndGetAddressOf());
 	m_shotBinding[SHOT2].m_color = Colors::Crimson;
-	m_shotBinding[SHOT2].m_origin = DirectX::SimpleMath::Vector2(67, 158);
-	m_shotBinding[SHOT2].m_position = DirectX::SimpleMath::Vector2(40 * (float(m_screenWidth) / float(1058)), m_screenHeight - 150 * (float(m_screenWidth) / float(1440)));
+	m_shotBinding[SHOT2].m_origin = DirectX::SimpleMath::Vector2(154, 147);
+	m_shotBinding[SHOT2].m_position = DirectX::SimpleMath::Vector2(80 * (float(m_screenWidth) / float(1058)), m_screenHeight - 150 * (float(m_screenWidth) / float(1440)));
 
 	CreateWICTextureFromFile(Device, L"Resources/Sprites/Bullet3.png", nullptr, m_bSprite3.ReleaseAndGetAddressOf());
 	m_shotBinding[SHOT3].m_color = Colors::Crimson;
 	m_shotBinding[SHOT3].m_origin = DirectX::SimpleMath::Vector2(283, 235);
-	m_shotBinding[SHOT3].m_position = DirectX::SimpleMath::Vector2(80 * (float(m_screenWidth) / float(1058)), m_screenHeight - 150 * (float(m_screenWidth) / float(1440)));
+	m_shotBinding[SHOT3].m_position = DirectX::SimpleMath::Vector2(150 * (float(m_screenWidth) / float(1058)), m_screenHeight - 150 * (float(m_screenWidth) / float(1440)));
 
 	CreateWICTextureFromFile(Device, L"Resources/Sprites/Bullet4.png", nullptr, m_bSprite4.ReleaseAndGetAddressOf());
 	m_shotBinding[SHOT4].m_color = Colors::Crimson;
 	m_shotBinding[SHOT4].m_origin = DirectX::SimpleMath::Vector2(96, 254);
-	m_shotBinding[SHOT4].m_position = DirectX::SimpleMath::Vector2(115 * (float(m_screenWidth) / float(1058)), m_screenHeight - 150 * (float(m_screenWidth) / float(1440)));
+	m_shotBinding[SHOT4].m_position = DirectX::SimpleMath::Vector2(185 * (float(m_screenWidth) / float(1058)), m_screenHeight - 150 * (float(m_screenWidth) / float(1440)));
 }
 
 UI::~UI() 
@@ -53,13 +53,13 @@ void UI::Update(double time)
 		m_shotBinding[SHOT1].m_color = Colors::Green;
 		break;
 	case INPUT_BULLET3:
-		m_shotBinding[SHOT2].m_color = Colors::Blue;
+		m_shotBinding[SHOT2].m_color = Colors::Cyan;
 		break;
 	case INPUT_BULLET4:
 		m_shotBinding[SHOT3].m_color = Colors::Blue;
 		break;
 	case INPUT_BULLET5:
-		m_shotBinding[SHOT4].m_color = Colors::Crimson;
+		m_shotBinding[SHOT4].m_color = Colors::HotPink;
 		break;
 	default:
 		break;
