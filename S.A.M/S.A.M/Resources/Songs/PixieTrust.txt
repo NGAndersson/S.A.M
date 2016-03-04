@@ -44,8 +44,8 @@ EnemySpawnRate4=437|0
 #### Size of the enemys, there scaling deafualt is (1, 1, 1)
 EnemySize1=2.00,2.00,2.00
 EnemySize2=1.00,1.00,1.00
-EnemySize3=3.00,3.00,3.00
-EnemySize4=4.00,4.00,4.00
+EnemySize3=0.75,0.75,0.75
+EnemySize4=10.00,10.00,10.00
 
 #### Healt of the enemys, deafault is 1000, bullets do 1000 dmg
 EnemyHealth1=2000

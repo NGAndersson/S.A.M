@@ -538,13 +538,13 @@ void EntityManager::InitMusic(const std::string &filename)
 					istringstream _ssfloatVec = istringstream(_floatVec);
 					string _coord;
 					getline(_ssfloatVec, _coord, ',');		//Get x coord
-					m_enemySize1.x = stoi(_coord);
+					m_enemySize1.x = stof(_coord);
 
 					getline(_ssfloatVec, _coord, ',');		//Get y coord
-					m_enemySize1.y = stoi(_coord);
+					m_enemySize1.y = stof(_coord);
 
 					getline(_ssfloatVec, _coord, ',');		//Get z coord
-					m_enemySize1.z = stoi(_coord);
+					m_enemySize1.z = stof(_coord);
 				}
 			}
 			else if (std::string(_key) == "EnemySize2")
@@ -556,13 +556,13 @@ void EntityManager::InitMusic(const std::string &filename)
 					istringstream _ssfloatVec = istringstream(_floatVec);
 					string _coord;
 					getline(_ssfloatVec, _coord, ',');		//Get x coord
-					m_enemySize2.x = stoi(_coord);
+					m_enemySize2.x = stof(_coord);
 
 					getline(_ssfloatVec, _coord, ',');		//Get y coord
-					m_enemySize2.y = stoi(_coord);
+					m_enemySize2.y = stof(_coord);
 
 					getline(_ssfloatVec, _coord, ',');		//Get z coord
-					m_enemySize2.z = stoi(_coord);
+					m_enemySize2.z = stof(_coord);
 				}
 			}
 			else if (std::string(_key) == "EnemySize3")
@@ -574,13 +574,13 @@ void EntityManager::InitMusic(const std::string &filename)
 					istringstream _ssfloatVec = istringstream(_floatVec);
 					string _coord;
 					getline(_ssfloatVec, _coord, ',');		//Get x coord
-					m_enemySize3.x = stoi(_coord);
+					m_enemySize3.x = stof(_coord);
 
 					getline(_ssfloatVec, _coord, ',');		//Get y coord
-					m_enemySize3.y = stoi(_coord);
+					m_enemySize3.y = stof(_coord);
 
 					getline(_ssfloatVec, _coord, ',');		//Get z coord
-					m_enemySize3.z = stoi(_coord);
+					m_enemySize3.z = stof(_coord);
 				}
 			}
 			else if (std::string(_key) == "EnemySize4")
