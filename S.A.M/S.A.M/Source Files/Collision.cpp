@@ -58,7 +58,7 @@ int Collision::CheckCollisionEntity(vector<Entity*>* Entity_1, vector<Entity*>* 
 			{
 				if (CheckCollision((*Entity_1)[i]->GetBoundingSphere(), (*Entity_2)[j]->GetBoundingBox()))
 				{
-					(*Entity_2)[j]->AddHealth(-5000);
+					(*Entity_2)[j]->AddHealth(-5000*time);
 
 					if ((*Entity_2)[j]->GetHealth() <= 0)
 					{
