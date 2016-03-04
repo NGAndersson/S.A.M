@@ -26,7 +26,7 @@ bool Collision::CheckCollision(BoundingBox Entitiy1, BoundingBox Entity2)
 	return false;
 }
 
-int Collision::CheckCollisionEntity(vector<Entity*>* Entity_1, vector<Entity*>* Entity_2, HandlerIndex EntityType1, HandlerIndex EntityType2, vector<ExplosionPart*>* Explosion, ID3D11Device* device, ID3D11DeviceContext* deviceContext, float time)
+int Collision::CheckCollisionEntity(vector<Entity*>* Entity_1, vector<Entity*>* Entity_2, HandlerIndex EntityType1, HandlerIndex EntityType2, vector<ExplosionPart*>* Explosion, ID3D11Device* device, ID3D11DeviceContext* deviceContext, float time, std::vector<BulletBoundingSphere*>* bulletSphere)
 {
 	int _returnScore = 0;
 	for (auto i = 0; i < Entity_1->size(); i++)
@@ -36,7 +36,12 @@ int Collision::CheckCollisionEntity(vector<Entity*>* Entity_1, vector<Entity*>* 
 
 				if (CheckCollision((*Entity_1)[i]->GetBoundingBox(), (*Entity_2)[j]->GetBoundingBox()))
 				{
-					if (EntityType1 != BULLET5)
+					if (EntityType1 == BULLET2)
+					{
+						(*Entity_1)[i]->AddHealth(-1);
+						bulletSphere->push_back(new BulletBoundingSphere((*Entity_1)[i]->GetPosition(), (*Entity_1)[i]->GetScale(), 5, (*Entity_1)[i]->GetSize()));
+					}
+					else if (EntityType1 != BULLET5)
 					{
 						(*Entity_1)[i]->AddHealth(-1);				
 						(*Entity_2)[j]->AddHealth(-1000);		//Normal bullets do 100 damage
