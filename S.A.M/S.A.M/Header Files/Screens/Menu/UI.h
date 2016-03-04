@@ -21,6 +21,7 @@ private:
 	wstring m_score;
 	wstring m_livesLeft;
 	wstring m_combo;
+	wstring m_beats;
 	Input* m_input;
 
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> m_bSprite1;
