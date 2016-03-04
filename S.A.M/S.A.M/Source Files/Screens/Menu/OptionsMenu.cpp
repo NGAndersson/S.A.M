@@ -18,6 +18,9 @@ OptionsMenu::OptionsMenu(ID3D11Device* Device, ID3D11DeviceContext* DeviceContex
 
 	ReadSetttings();
 
+	m_soundManager->SetEffectVolume(m_currentMVol);
+	m_soundManager->SetMusicVolume(m_currentSVol);
+
 	m_volumeMusic = L"Music Volume: ";
 	m_choices[MUSICVOLUME].m_position.y = m_screenHeight*1/10;
 	m_choices[MUSICVOLUME].m_origin = _originV;
