@@ -347,7 +347,7 @@ void EntityManager::Update(double time)
 	if (_tempExp>-1)
 	{
 		m_bullExplosion.push_back(new BulletExplosion(m_soundManager, MAPWIDTH, MAPLENGTH, m_bullet2[_tempExp]->GetPosition(), XMFLOAT3(0.5, 0.5, 20), 4, XMFLOAT3(0, 0, 0)));
-		m_explosion.push_back(new ExplosionPart(1.0f, 1.0f));
+		m_explosion.push_back(new ExplosionPart(1.0f, 1.0f,400));
 		m_explosion[m_explosion.size() - 1]->AddPartSys(m_bullExplosion , XMFLOAT4(m_bullet2[_tempExp]->GetPosition().x, m_bullet2[_tempExp]->GetPosition().y, m_bullet2[_tempExp]->GetPosition().z, 0));
 		m_explosion[m_explosion.size() - 1]->CreateBuffer(m_device, m_deviceContext, L"Resources\\Models\\star.jpg");
 		//m_soundManager->PlayOneShotSound("Laser_R", 0.5f); //Play explosion sound?
@@ -357,7 +357,7 @@ void EntityManager::Update(double time)
 	if (_tempExp>-1)
 	{
 		m_bullExplosion.push_back(new BulletExplosion(m_soundManager, MAPWIDTH, MAPLENGTH, m_bullet2[_tempExp]->GetPosition(), XMFLOAT3(0.5, 0.5, 20), 4, XMFLOAT3(0, 0, 0)));
-		m_explosion.push_back(new ExplosionPart(1.0f, 1.0f));
+		m_explosion.push_back(new ExplosionPart(1.0f, 1.0f,400));
 		m_explosion[m_explosion.size() - 1]->AddPartSys(m_bullExplosion, XMFLOAT4(m_bullet2[_tempExp]->GetPosition().x, m_bullet2[_tempExp]->GetPosition().y, m_bullet2[_tempExp]->GetPosition().z, 0));
 		m_explosion[m_explosion.size() - 1]->CreateBuffer(m_device, m_deviceContext, L"Resources\\Models\\star.jpg");
 		//m_soundManager->PlayOneShotSound("Laser_R", 0.5f); //Play explosion sound?
@@ -367,7 +367,7 @@ void EntityManager::Update(double time)
 	if (_tempExp>-1)
 	{
 		m_bullExplosion.push_back(new BulletExplosion(m_soundManager, MAPWIDTH, MAPLENGTH, m_bullet2[_tempExp]->GetPosition(), XMFLOAT3(0.5, 0.5, 20), 4, XMFLOAT3(0, 0, 0)));
-		m_explosion.push_back(new ExplosionPart(1.0f, 1.0f));
+		m_explosion.push_back(new ExplosionPart(1.0f, 1.0f,400));
 		m_explosion[m_explosion.size() - 1]->AddPartSys(m_bullExplosion, XMFLOAT4(m_bullet2[_tempExp]->GetPosition().x, m_bullet2[_tempExp]->GetPosition().y, m_bullet2[_tempExp]->GetPosition().z, 0));
 		m_explosion[m_explosion.size() - 1]->CreateBuffer(m_device, m_deviceContext, L"Resources\\Models\\star.jpg");
 		//m_soundManager->PlayOneShotSound("Laser_R", 0.5f); //Play explosion sound?
@@ -377,7 +377,7 @@ void EntityManager::Update(double time)
 	if (_tempExp>-1)
 	{
 		m_bullExplosion.push_back(new BulletExplosion(m_soundManager, MAPWIDTH, MAPLENGTH, m_bullet2[_tempExp]->GetPosition(), XMFLOAT3(0.5, 0.5, 20), 4, XMFLOAT3(0, 0, 0)));
-		m_explosion.push_back(new ExplosionPart(1.0f, 1.0f));
+		m_explosion.push_back(new ExplosionPart(1.0f, 1.0f,400));
 		m_explosion[m_explosion.size() - 1]->AddPartSys(m_bullExplosion, XMFLOAT4(m_bullet2[_tempExp]->GetPosition().x, m_bullet2[_tempExp]->GetPosition().y, m_bullet2[_tempExp]->GetPosition().z, 0));
 		m_explosion[m_explosion.size() - 1]->CreateBuffer(m_device, m_deviceContext, L"Resources\\Models\\star.jpg");
 		//m_soundManager->PlayOneShotSound("Laser_R", 0.5f); //Play explosion sound?
@@ -385,12 +385,6 @@ void EntityManager::Update(double time)
 
 	//Do collision checks
 	int _addScore = 0;
-
-	//Check explosion on enemies!
-	_addScore += m_collision.CheckCollisionEntity(&m_bullExplosion, &m_enemy1,BULLETEXP, ENEMY1, &m_explosion, m_device, m_deviceContext, time);
-	_addScore += m_collision.CheckCollisionEntity(&m_bullExplosion, &m_enemy2,BULLETEXP, ENEMY2, &m_explosion, m_device, m_deviceContext, time);
-	_addScore += m_collision.CheckCollisionEntity(&m_bullExplosion, &m_enemy3,BULLETEXP, ENEMY3, &m_explosion, m_device, m_deviceContext, time);
-	_addScore += m_collision.CheckCollisionEntity(&m_bullExplosion, &m_enemy4,BULLETEXP, ENEMY4, &m_explosion, m_device, m_deviceContext, time);
 
 	//Check Bullet1 agains Enemies
 	_addScore += m_collision.CheckCollisionEntity(&m_bullet1, &m_enemy1,BULLET1, ENEMY1, &m_explosion, m_device, m_deviceContext, time);
@@ -403,6 +397,12 @@ void EntityManager::Update(double time)
 	_addScore += m_collision.CheckCollisionEntity(&m_bullet2, &m_enemy2,BULLET2, ENEMY2, &m_explosion, m_device, m_deviceContext, time);
 	_addScore += m_collision.CheckCollisionEntity(&m_bullet2, &m_enemy3,BULLET2, ENEMY3, &m_explosion, m_device, m_deviceContext, time);
 	_addScore += m_collision.CheckCollisionEntity(&m_bullet2, &m_enemy4,BULLET2, ENEMY4, &m_explosion, m_device, m_deviceContext, time);
+
+	//Check explosion on enemies!
+	_addScore += m_collision.CheckCollisionEntity(&m_bullExplosion, &m_enemy1, BULLETEXP, ENEMY1, &m_explosion, m_device, m_deviceContext, time);
+	_addScore += m_collision.CheckCollisionEntity(&m_bullExplosion, &m_enemy2, BULLETEXP, ENEMY2, &m_explosion, m_device, m_deviceContext, time);
+	_addScore += m_collision.CheckCollisionEntity(&m_bullExplosion, &m_enemy3, BULLETEXP, ENEMY3, &m_explosion, m_device, m_deviceContext, time);
+	_addScore += m_collision.CheckCollisionEntity(&m_bullExplosion, &m_enemy4, BULLETEXP, ENEMY4, &m_explosion, m_device, m_deviceContext, time);
 
 	//Check Bullet3 agains Enemies
 	_addScore += m_collision.CheckCollisionEntity(&m_bullet3, &m_enemy1,BULLET3, ENEMY1, &m_explosion, m_device, m_deviceContext, time);
