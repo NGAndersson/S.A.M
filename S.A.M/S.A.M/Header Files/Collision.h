@@ -8,6 +8,7 @@
 #include "Entities\Entity.h"
 #include "Graphics\LightHandler.h"
 #include "Graphics\ExplosionPart.h"
+#include "Entities/Bullets/BulletBoundingSphere.h"
 
 using namespace DirectX;
 using namespace std;
@@ -15,11 +16,12 @@ class Collision
 {
 private:
 	bool CheckCollision(BoundingBox Object_1, BoundingBox Object_2);
+	bool CheckCollision2(BoundingSphere Object_1, BoundingBox Object_2);
 	vector<Entity*>* RemoveEntity(int RemoveId, vector<Entity*>* RemoveType);
 public:
 	Collision();
 	~Collision();
-	int CheckCollisionEntity(vector<Entity*>* Entity_1, vector<Entity*>* Entity_2, HandlerIndex EntityType1, HandlerIndex EntityType2, vector<ExplosionPart*>* Explosion, ID3D11Device* device, ID3D11DeviceContext* deviceContext, float time);
+	int CheckCollisionEntity(vector<Entity*>* Entity_1, vector<Entity*>* Entity_2, HandlerIndex EntityType1, HandlerIndex EntityType2, vector<ExplosionPart*>* Explosion, ID3D11Device* device, ID3D11DeviceContext* deviceContext, float time, std::vector<Entity*>* bulletSphere);
 private:
 public:
 

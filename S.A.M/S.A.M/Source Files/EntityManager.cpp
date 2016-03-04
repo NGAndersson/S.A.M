@@ -284,7 +284,7 @@ void EntityManager::Update(double time)
 	if (!m_player->GetInvulnerable())			//Only check if the player is alive and well
 	{
 		std::vector<Entity*> _playerVec = { m_player };
-		m_collision.CheckCollisionEntity(&m_bullet6, &_playerVec, BULLET6, PLAYER, &m_explosion, m_device, m_deviceContext, time);
+		m_collision.CheckCollisionEntity(&m_bullet6, &_playerVec, BULLET6, PLAYER, &m_explosion, m_device, m_deviceContext, time, &m_bulletSphere);
 		if (m_player->GetHealth() <= 0)
 		{
 			m_statsManager->ResetCombo();
@@ -342,6 +342,21 @@ void EntityManager::Update(double time)
 			delete _tempVec[i];
 			_tempVec.erase(_tempVec.begin() + i);
 			m_explosion = _tempVec;
+			i--;
+		}
+	}
+
+	for (int i = 0; i < m_bulletSphere.size(); i++)
+	{
+		m_bulletSphere[i]->Update(time);
+		if (m_bulletSphere[i]->GetDelete() == true)
+		{
+			vector<Entity*> _tempVec = m_bulletSphere;
+
+			delete _tempVec[i];
+			_tempVec.erase(_tempVec.begin() + i);
+			m_bulletSphere = _tempVec;
+			i--;
 		}
 	}
 
@@ -468,11 +483,11 @@ void EntityManager::InitMusic(const std::string &filename)
 				XMFLOAT3* _sizePTR;
 				if (std::string(_key) == "EnemySize1")
 					_sizePTR = &m_enemySize1;
-				else if (std::string(_key) == "EnemySize2")
+			else if (std::string(_key) == "EnemySize2")
 					_sizePTR = &m_enemySize2;
-				else if (std::string(_key) == "EnemySize3")
+			else if (std::string(_key) == "EnemySize3")
 					_sizePTR = &m_enemySize3;
-				else if (std::string(_key) == "EnemySize4")
+			else if (std::string(_key) == "EnemySize4")
 					_sizePTR = &m_enemySize4;
 
 				_ss = istringstream(_value);
@@ -743,27 +758,27 @@ void EntityManager::RenderEnemies()
 		if (_enemies[j].size() > 0)
 		{
 			for (auto i = 0; i < _enemies[j].size(); i++)
-			{
+		{
 				_instancePosition.push_back(_enemies[j][i]->GetPosition());
 				_instanceScale.push_back(_enemies[j][i]->GetScale());
 				_instanceRotation.push_back(_enemies[j][i]->GetRotation());
 				_healthColour[i] = XMFLOAT4(1.f - (float(_enemies[j][i]->GetHealth()) / float(_enemyHealth[j])), (float(_enemies[j][i]->GetHealth()) / float(_enemyHealth[j])), (float(_enemies[j][i]->GetHealth()) / float(_enemyHealth[j])), 1);
-			}
-			D3D11_MAPPED_SUBRESOURCE _mappedResource;
+		}
+		D3D11_MAPPED_SUBRESOURCE _mappedResource;
 
-			HRESULT hr = m_deviceContext->Map(m_enemyHealthColourBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &_mappedResource);
+		HRESULT hr = m_deviceContext->Map(m_enemyHealthColourBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &_mappedResource);
 
-			memcpy(_mappedResource.pData, &_healthColour, sizeof(XMFLOAT4) * 100);
+		memcpy(_mappedResource.pData, &_healthColour, sizeof(XMFLOAT4) * 100);
 
-			m_deviceContext->Unmap(m_enemyHealthColourBuffer, 0);
-			m_deviceContext->VSSetConstantBuffers(2, 1, &m_enemyHealthColourBuffer);
+		m_deviceContext->Unmap(m_enemyHealthColourBuffer, 0);
+		m_deviceContext->VSSetConstantBuffers(2, 1, &m_enemyHealthColourBuffer);
 			m_modelHandlers[7+j]->SetBuffers(m_deviceContext);	//+7 to get to enemies
 			m_renderer->RenderInstanced(m_modelHandlers[7+j], _instancePosition, _instanceRotation, _enemies[j].size(), _instanceScale);
-		}
+	}
 
-		_instancePosition.clear();
-		_instanceScale.clear();
-		_instanceRotation.clear();
+	_instancePosition.clear();
+	_instanceScale.clear();
+	_instanceRotation.clear();
 	}
 }
 	
@@ -782,19 +797,19 @@ void EntityManager::RenderBullets()
 	for (int j = 0; j < 6; j++)
 	{
 		if (_bullets[j].size() > 0)
-		{
+	{
 			if ((j == 4 && !m_player->GetDelete()) || j != 4) {	//On lasers, only render if player didn't just die
 			
 				for (int i = 0; i < _bullets[j].size(); i++) {
 					_instancePosition.push_back(_bullets[j][i]->GetPosition());
 					_instanceScale.push_back(_bullets[j][i]->GetScale());
 					_instanceRotation.push_back(_bullets[j][i]->GetRotation());
-				}
+		}
 				m_renderer->RenderInstanced(m_modelHandlers[j + 1], _instancePosition, _instanceRotation, _bullets[j].size(), _instanceScale);
-				_instancePosition.clear();
-				_instanceScale.clear();
-				_instanceRotation.clear();
-			}
+		_instancePosition.clear();
+		_instanceScale.clear();
+		_instanceRotation.clear();
+	}
 		}
 	}
 }
@@ -827,14 +842,14 @@ void EntityManager::EnemyFire()
 	int _beatPerShot[4] = { m_beatPerShot1, m_beatPerShot2, m_beatPerShot3, m_beatPerShot4 };
 
 	for (int j = 0; j < 4; j++)
-	{
-		for (auto i = 0; i < _enemyVec[j].size(); i++)
 		{
+		for (auto i = 0; i < _enemyVec[j].size(); i++)
+	{
 			if (_enemyVec[j][i]->GetFireTime() > _beatPerShot[j])
-			{
+		{
 				_enemyVec[j][i]->SetPatternNr(m_EnemyPatterns.AddShot(&m_bullet6, m_soundManager, MAPWIDTH, MAPLENGTH, _enemyVec[j][i]->GetPosition(), XMFLOAT3(0.4, 0.4, 0.4), 1, m_modelHandlers[BULLET6]->GetDeffuse(), j, _enemyVec[j][i]->GetPatternNr()));
 				_enemyVec[j][i]->SetFireTime(0);
-			}
+	}
 
 			_enemyVec[j][i]->SetFireTime(_enemyVec[j][i]->GetFireTime() + 1.0f);
 		}
