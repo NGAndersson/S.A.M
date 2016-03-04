@@ -274,7 +274,7 @@ void EntityManager::Update(double time)
 	{
 		for (int j = 0; j < 4; j++) //For each enemytype
 		{
-			_addScore += m_collision.CheckCollisionEntity(_bullets[i], _enemies[j], HandlerIndex(i+1), HandlerIndex(j+7), &m_explosion, m_device, m_deviceContext, time); //+1 to get to bullets, +7 to get to enemies
+			_addScore += m_collision.CheckCollisionEntity(_bullets[i], _enemies[j], HandlerIndex(i+1), HandlerIndex(j+7), &m_explosion, m_device, m_deviceContext, time, &m_bulletSphere); //+1 to get to bullets, +7 to get to enemies
 		}
 	}
 
