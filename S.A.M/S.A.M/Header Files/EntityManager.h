@@ -122,7 +122,6 @@ private:
 	double m_timeSinceLastBeat = 0.0f;
 	int m_offset = 0;				//Beats to skip in the beginning (for intros without music etc)
 									//ADD ENDING OFFSETS?
-	bool m_doBeatDet;
 	float* m_beat;
 	int m_level;
 

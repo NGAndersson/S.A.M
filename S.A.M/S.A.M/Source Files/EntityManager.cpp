@@ -236,78 +236,42 @@ void EntityManager::Update(double time)
 
 	CheckCombo();
 
-		//Regular BPM test
-	if (m_doBeatDet == false) 
+	//BeatDet test
+	float _currentPos = m_soundManager->GetCurrentMusicTimePCM() / 1024.f;
+	if (m_beat[(int)_currentPos] > 0.0f && m_timeSinceLastBeat > 100)		//Small time buffer to prevent it from going off 50 times per beat 
 	{
-		m_timeSinceLastBeat += time * 1000;
-		if (m_timeSinceLastBeat >= 60000 / m_currentBPM) 
-		{
-			m_timeSinceLastBeat -= 60000 / m_currentBPM;
-
-			//BEAT WAS DETECTED
-			if (m_beatNumber > m_offset)
-			{
-				BeatWasDetected();
-				m_light.beatBoost(true, time, -1, m_currentBPM);
-				m_modelHandlers[BULLET1]->beatBoost(true, time, -1, m_currentBPM);
-				m_modelHandlers[BULLET2]->beatBoost(true, time, -1, m_currentBPM);
-				m_modelHandlers[BULLET3]->beatBoost(true, time, -1, m_currentBPM);
-				m_modelHandlers[BULLET4]->beatBoost(true, time, -1, m_currentBPM);
-				m_modelHandlers[BULLET5]->beatBoost(true, time, -1, m_currentBPM);
-				m_modelHandlers[BULLET6]->beatBoost(true, time, -1, m_currentBPM);
-				m_beatNumber++;
-			}
-			else
-				m_beatNumber++;
-		}
-		else
-		{
-			m_light.beatBoost(false, time, -1, m_currentBPM);
-			m_modelHandlers[BULLET1]->beatBoost(false, time, -1, m_currentBPM);
-			m_modelHandlers[BULLET2]->beatBoost(false, time, -1, m_currentBPM);
-			m_modelHandlers[BULLET3]->beatBoost(false, time, -1, m_currentBPM);
-			m_modelHandlers[BULLET4]->beatBoost(false, time, -1, m_currentBPM);
-			m_modelHandlers[BULLET5]->beatBoost(false, time, -1, m_currentBPM);
-			m_modelHandlers[BULLET6]->beatBoost(false, time, -1, m_currentBPM);
-		}
-	}
-	else {
-		//BeatDet test
-		float _currentPos = m_soundManager->GetCurrentMusicTimePCM() / 1024.f;
-		if (m_beat[(int)_currentPos] > 0.0f && m_timeSinceLastBeat > 100)		//Small time buffer to prevent it from going off 50 times per beat 
-		{
-			//BEAT WAS DETECTED
-			if (m_beatNumber > m_offset) {
-				BeatWasDetected();
-				m_light.beatBoost(true, time, m_timeSinceLastBeat/1000, 0);
-				m_modelHandlers[BULLET1]->beatBoost(true, time, m_timeSinceLastBeat/1000, 0);
-				m_modelHandlers[BULLET2]->beatBoost(true, time, m_timeSinceLastBeat / 1000, 0);
-				m_modelHandlers[BULLET3]->beatBoost(true, time, m_timeSinceLastBeat/1000, 0);
-				m_modelHandlers[BULLET4]->beatBoost(true, time, m_timeSinceLastBeat/1000, 0);
-				m_modelHandlers[BULLET5]->beatBoost(true, time, m_timeSinceLastBeat/1000, 0);
-				m_modelHandlers[BULLET6]->beatBoost(true, time, m_timeSinceLastBeat/1000, 0);
-				m_timeSinceLastBeat = 0;
-				m_beatNumber += 1;
-				m_statsManager->AddBeat();
-			}
-			else {
-				m_timeSinceLastBeat = 0;
-				m_beatNumber++;
-				m_statsManager->AddBeat();
-			}
-			SpawnEnemy();
+		//BEAT WAS DETECTED
+		if (m_beatNumber > m_offset) {
+			BeatWasDetected();
+			m_light.beatBoost(true, time, m_timeSinceLastBeat/1000, 0);
+			m_modelHandlers[BULLET1]->beatBoost(true, time, m_timeSinceLastBeat/1000, 0);
+			m_modelHandlers[BULLET2]->beatBoost(true, time, m_timeSinceLastBeat / 1000, 0);
+			m_modelHandlers[BULLET3]->beatBoost(true, time, m_timeSinceLastBeat/1000, 0);
+			m_modelHandlers[BULLET4]->beatBoost(true, time, m_timeSinceLastBeat/1000, 0);
+			m_modelHandlers[BULLET5]->beatBoost(true, time, m_timeSinceLastBeat/1000, 0);
+			m_modelHandlers[BULLET6]->beatBoost(true, time, m_timeSinceLastBeat/1000, 0);
+			m_timeSinceLastBeat = 0;
+			m_beatNumber += 1;
+			m_statsManager->AddBeat();
 		}
 		else {
-			m_timeSinceLastBeat += time * 1000;
-			m_light.beatBoost(false, time, m_timeSinceLastBeat/1000, 0);
-			m_modelHandlers[BULLET1]->beatBoost(false, time, m_timeSinceLastBeat/1000, 0);
-			m_modelHandlers[BULLET2]->beatBoost(false, time, m_timeSinceLastBeat / 1000, 0);
-			m_modelHandlers[BULLET3]->beatBoost(false, time, m_timeSinceLastBeat/1000, 0);
-			m_modelHandlers[BULLET4]->beatBoost(false, time, m_timeSinceLastBeat/1000, 0);
-			m_modelHandlers[BULLET5]->beatBoost(false, time, m_timeSinceLastBeat/1000, 0);
-			m_modelHandlers[BULLET6]->beatBoost(false, time, m_timeSinceLastBeat/1000, 0);
+			m_timeSinceLastBeat = 0;
+			m_beatNumber++;
+			m_statsManager->AddBeat();
 		}
+		SpawnEnemy();
 	}
+	else {
+		m_timeSinceLastBeat += time * 1000;
+		m_light.beatBoost(false, time, m_timeSinceLastBeat/1000, 0);
+		m_modelHandlers[BULLET1]->beatBoost(false, time, m_timeSinceLastBeat/1000, 0);
+		m_modelHandlers[BULLET2]->beatBoost(false, time, m_timeSinceLastBeat / 1000, 0);
+		m_modelHandlers[BULLET3]->beatBoost(false, time, m_timeSinceLastBeat/1000, 0);
+		m_modelHandlers[BULLET4]->beatBoost(false, time, m_timeSinceLastBeat/1000, 0);
+		m_modelHandlers[BULLET5]->beatBoost(false, time, m_timeSinceLastBeat/1000, 0);
+		m_modelHandlers[BULLET6]->beatBoost(false, time, m_timeSinceLastBeat/1000, 0);
+	}
+
 
 	//Do collision checks
 	int _addScore = 0;
@@ -697,7 +661,6 @@ void EntityManager::InitMusic(const std::string &filename)
 	//Start playing music
 	m_soundManager->PlayMusic(0.5f);
 	ChangeSongData(m_beatDetector->GetTempo());
-	m_doBeatDet = true;				//Make this changable at song select
 	m_beat = m_beatDetector->GetBeat();
 	m_EnemyPatterns.LoadPatterns(filename);
 
@@ -760,7 +723,6 @@ void EntityManager::Reset()
 	m_timeSinceLastBeat = 0.0f;
 	m_offset = 0;				
 	m_player->SetDelete(true);
-	m_doBeatDet = true;
 	m_renderFire = false;
 	m_renderPlayer = false;
 }
