@@ -1,0 +1,149 @@
+# <-- Comment
+#### Meta
+songname=Death By Glamour
+artist=Undertale
+arr=Jens Lomander
+
+#### Soundfile
+music=Resources/Sound/Death By Glamour.mp3
+
+#### Scorefile
+score=score/Glamour.txt
+
+#### Beginning offset
+offset=32
+
+#### Bullet Sounds
+bulletD=Resources/Sound/DefaultSoundBullet1.wav
+bulletQ=Resources/Sound/DefaultSoundBullet2.wav
+bulletW=Resources/Sound/DefaultSoundBullet3.wav
+bulletE=Resources/Sound/DefaultSoundBullet4.wav
+bulletR=Resources/Sound/DefaultSoundBullet5.wav
+
+#### Bullet frequencies, default is 3 if not defined here
+BeatPerShot1=2
+BeatPerShot2=2
+BeatPerShot3=2
+BeatPerShot4=2
+
+#### Spawn frequence divider, default is 1 if not defined here, divides the BPM
+EnemySpawnRateDivider1=0|15.00
+EnemySpawnRateDivider2=0|10.00
+EnemySpawnRateDivider3=0|4.00
+EnemySpawnRateDivider4=0|1.00
+EnemySpawnRateDivider1=300|18.00
+EnemySpawnRateDivider2=300|12.00
+EnemySpawnRateDivider3=300|6.00
+EnemySpawnRateDivider4=300|1.00
+
+#### Size of the enemies, their scaling deafualt is (1, 1, 1)
+EnemySize1=2.00,2.00,2.00
+EnemySize2=1.00,1.00,1.00
+EnemySize3=3.00,3.00,3.00
+EnemySize4=4.00,4.00,4.00
+
+#### Healt of the enemys, deafault is 1000, bullets do 1000 dmg
+EnemyHealth1=2000
+EnemyHealth2=1000
+EnemyHealth3=8000
+EnemyHealth4=14000
+
+#### Shooting Patterns   	
+#Pa= New pattern for enemytype X
+#Vp= X and Z vector direction for a bullet in the pattern (Y is always 0)
+Pa 1
+Vp -1.00 -1.00
+Vp 0.00 -1.00
+Vp 1.00 -1.00
+
+Pa 1
+Vp 0.00 -1.00
+
+Pa 2
+Vp 0.00 -1.00
+
+Pa 2
+Vp -0.50 -0.50
+Vp 0.50 -0.50
+
+Pa 3
+Vp 0.00 -1.00
+
+Pa 3
+Vp 0.00 -1.00
+Vp 0.00 1.00
+Vp -1.00 0.00
+Vp 1.00 0.00
+
+Pa 3
+Vp 1.00 -1.00
+Vp -1.00 -1.00
+Vp -1.00 1.00
+Vp 1.00 1.00
+
+Pa 4
+Vp 0.00 -1.00
+Vp 1.00 -1.00
+Vp -1.00 -1.00
+Vp 0.00 1.00
+Vp 1.00 1.00
+Vp -1.00 1.00
+Vp 1.00 0.00
+Vp -1.00 0.00
+
+Pa 4
+Vp 0.00 -1.00
+Vp 1.00 -1.00
+Vp -1.00 -1.00
+Vp 0.75 -1.00
+Vp -0.75 -1.00
+Vp 0.50 -1.00
+Vp -0.50 -1.00
+
+#### Movement Patterns.		Map Width = 0 to 77, Map Length = 0 to 103
+### |Xcoord,Zcoord|
+#0 Enter-direction, needs to be attached to something
+mov=38,133|38,103
+
+#1 Doing the shit
+mov=64,73|46,69|38,29
+
+#2 Exit-direction, needs to be attached to something
+mov=15,11|38,-20
+
+#3 Enter-direction, needs to be attached to something
+mov=-10,70|0,70
+
+#4 Doing the shit
+mov=17,90|35,70|52,50|70,70|52,90|35,70|17,50
+
+#5 Exit-direction, needs to be attached to something
+mov=0,70|-30,70
+
+#6 Enter-direction, needs to be attached to something
+mov=-10,90|0,90
+
+#7 Doing the shit
+mov=19,100|39,85|58,70
+
+#8 Exit-direction, needs to be attached to something
+mov=77,80|103,80
+
+#9 Enter-direction, needs to be attached to something
+mov=-10,80|0,80
+
+#10 Doing the shit
+mov=19,70|39,85|58,100
+
+#11 Exit-direction, needs to be attached to something
+mov=77,90|103,90
+
+#### Movement Compilations
+### movcomp1 is for enemytype 1, movcomp2 for enemytype2 and so on
+### Each compilation needs at least 4 total points from combined movement patterns
+### First number is "from this beat, do this compilation"	PUT MOVCOMPS IN THIS ORDER
+### Each pipe is |NrOfRepeats,MovPatternNr|
+movcomp1=0|1,0|1,1|1,2
+movcomp2=0|1,3|1,4|1,5
+movcomp3=0|1,6|2,7|1,8
+movcomp4=0|1,9|1,10|1,11
