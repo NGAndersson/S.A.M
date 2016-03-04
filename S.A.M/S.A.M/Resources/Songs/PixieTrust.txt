@@ -28,10 +28,10 @@ BeatPerShot3=2
 BeatPerShot4=1
 
 #### Spawn frequency. FromBeat|BeatsBetweenSpawns
-EnemySpawnRate1=0|8
-EnemySpawnRate2=0|12
-EnemySpawnRate3=0|20
-EnemySpawnRate4=0|0
+EnemySpawnRate1=44|8
+EnemySpawnRate2=44|12
+EnemySpawnRate3=44|20
+EnemySpawnRate4=44|0
 EnemySpawnRate1=300|6
 EnemySpawnRate2=300|12
 EnemySpawnRate3=300|18
