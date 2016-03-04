@@ -783,7 +783,7 @@ void EntityManager::RenderBullets()
 	{
 		if (_bullets[j].size() > 0)
 		{
-			if ((j == 5 && !m_player->GetDelete()) || j != 5) {	//On lasers, only render if player didn't just die
+			if ((j == 4 && !m_player->GetDelete()) || j != 4) {	//On lasers, only render if player didn't just die
 			
 				for (int i = 0; i < _bullets[j].size(); i++) {
 					_instancePosition.push_back(_bullets[j][i]->GetPosition());
