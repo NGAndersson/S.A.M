@@ -28,18 +28,17 @@ BeatPerShot3=2
 BeatPerShot4=1
 
 #### Spawn frequency. FromBeat|BeatsBetweenSpawns
-EnemySpawnRate1=44|8
-EnemySpawnRate2=44|12
-EnemySpawnRate3=44|20
-EnemySpawnRate4=44|0
+EnemySpawnRate1=44|0
+EnemySpawnRate2=44|0
+EnemySpawnRate3=44|0
 EnemySpawnRate1=300|6
 EnemySpawnRate2=300|12
 EnemySpawnRate3=300|18
 EnemySpawnRate1=436|0
 EnemySpawnRate2=436|0
 EnemySpawnRate3=436|0
-EnemySpawnRate4=436|1
-EnemySpawnRate4=437|0
+EnemySpawnRate4=45|1
+EnemySpawnRate4=47|0
 
 #### Size of the enemys, there scaling deafualt is (1, 1, 1)
 EnemySize1=2.00,2.00,2.00
