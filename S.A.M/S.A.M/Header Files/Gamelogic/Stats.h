@@ -13,7 +13,7 @@ public:
 	bool SaveScore(std::wstring playername);
 	bool LoadScore();
 	void AddLives(int change) { m_lives += change; }
-	void SetLives(int change = 3) { m_lives = change; }
+	void SetLives(int change = 5) { m_lives = change; }
 	int GetLives() { return m_lives; }
 	int GetCombo() { return m_combo; }
 	void ResetCombo() { m_combo = 0; }

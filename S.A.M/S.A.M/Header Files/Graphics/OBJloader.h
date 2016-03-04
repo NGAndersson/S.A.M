@@ -35,7 +35,7 @@ public:
 	~OBJLoader();
 	VertexInputType* LoadObj(int& vertexCount, int& textureCount, int& normalCount, int& faceCount, string fileName);
 	bool ReadColourCounts(int& vertexCount, int& textureCount, int& normalCount, int& faceCount, string fileName);
-	ID3D11ShaderResourceView* LoadColour(ID3D11Device* device, ID3D11DeviceContext* deviceContext, string fileName, XMFLOAT3 *RGBDeffuse, XMFLOAT3 *RGBAL, XMFLOAT3 *Tf, XMFLOAT3 *Ni, ID3D11ShaderResourceView** m_ObjTex, ID3D11ShaderResourceView** GlowTex);
+	ID3D11ShaderResourceView* LoadColour(ID3D11Device* device, ID3D11DeviceContext* deviceContext, string fileName, XMFLOAT3 *RGBDeffuse, XMFLOAT3 *RGBAL, XMFLOAT3 *Tf, XMFLOAT3 *Ni, ID3D11ShaderResourceView** m_ObjTex, ID3D11ShaderResourceView** GlowTex, ID3D11ShaderResourceView** SpecTex);
 };
 
 #endif

@@ -66,7 +66,7 @@ void Renderer::RenderInstanced(ModelHandler * model, vector<XMFLOAT3> position, 
 	{
 		Translation = XMMatrixTranslation(position[i].x, position[i].y, position[i].z);
 		Scale = XMMatrixScaling(scale[i].x, scale[i].y, scale[i].z);
-		XMStoreFloat4x4(&_worldInstance, XMMatrixTranspose(Scale * rotation[i] * Translation));
+		XMStoreFloat4x4(&_worldInstance, XMMatrixTranspose(rotation[i] * Scale * Translation));
 		XMStoreFloat4x4(&_worldRotation, XMMatrixTranspose(rotation[i]));
 		m_worldStructInstanced.worldMatrix[i] = _worldInstance;
 		m_worldStructInstanced.worldRotation[i] = _worldRotation;

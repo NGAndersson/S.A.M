@@ -1,5 +1,6 @@
 Texture2D ObjTex : register(t0);
 Texture2D GlowTex : register(t5);
+Texture2D SpecTex : register(t6);
 
 SamplerState sampAni : register(s0);
 
@@ -42,7 +43,7 @@ PS_OUT PS_main(PS_IN input)
 
 	output.Normal = input.NormalInW;
 	output.DiffAlbedo = ((float4(Diffuse, 1) * _depth) + (ObjTex.Sample(sampAni, input.Tex) * _depth));
-	output.SpecAlbedo = float4(0.16f, 0.16f, 0.16f, 1000.0f);
+	output.SpecAlbedo = SpecTex.Sample(sampAni, input.Tex);
 	output.Pos = input.PosInW;
 	output.Glow = ((float4(Diffuse, 1) * _depth) + (ObjTex.Sample(sampAni, input.Tex) * _depth))  * float4(GlowTex.Sample(sampAni, input.Tex).xyz, 1);
 

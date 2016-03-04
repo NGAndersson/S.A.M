@@ -30,7 +30,7 @@ private:
 	FaceType* m_faces;
 	OBJLoader m_OBJLoad;
 	ID3D11Buffer* m_vertexBuffer = nullptr, *m_OBJColourBuffer = nullptr;
-	ID3D11ShaderResourceView* m_ObjTex = nullptr, *m_GlowTex = nullptr;
+	ID3D11ShaderResourceView* m_ObjTex = nullptr, *m_GlowTex = nullptr, *m_SpecTex = nullptr;
 	VertexInputType* m_vertexInput;
 	float m_beatBoost = 1;
 	float m_beatTime = 0;
