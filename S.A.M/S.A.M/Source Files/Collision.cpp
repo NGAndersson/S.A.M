@@ -47,7 +47,7 @@ int Collision::CheckCollisionEntity(vector<Entity*>* Entity_1, vector<Entity*>* 
 					if ((*Entity_2)[j]->GetHealth() <= 0 && EntityType2 != PLAYER)
 					{
 						_returnScore += (*Entity_2)[j]->GetScore();
-						Explosion->push_back(new ExplosionPart((((*Entity_2)[j]->GetScale().x + (*Entity_2)[j]->GetScale().z) / 2), 1.0f));
+						Explosion->push_back(new ExplosionPart((((*Entity_2)[j]->GetSize().x + (*Entity_2)[j]->GetSize().z) / 2), 1.0f));
 						if (EntityType1 != BULLET5)
 						{
 							XMFLOAT3 _directVec = CNormalizeFloat3(XMFLOAT3((*Entity_1)[i]->GetPosition().x - (*Entity_2)[j]->GetPosition().x, (*Entity_1)[i]->GetPosition().y - (*Entity_2)[j]->GetPosition().y, (*Entity_1)[i]->GetPosition().z - (*Entity_2)[j]->GetPosition().z));
