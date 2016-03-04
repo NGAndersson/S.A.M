@@ -10,7 +10,7 @@ private:
 protected:
 public:
 	BulletBoundingSphere();
-	BulletBoundingSphere(XMFLOAT3 Position, XMFLOAT3 Scale, int Health, XMFLOAT3 size);
+	BulletBoundingSphere(XMFLOAT3 Position, XMFLOAT3 Scale, int Health, float size);
 	~BulletBoundingSphere();
 	void Update(double time);
 	void Destroyed(double time);
@@ -18,7 +18,6 @@ public:
 	//Variables
 private:
 	float m_timeToLive = 1;
-	BoundingSphere m_sphere;
 protected:
 public:
 

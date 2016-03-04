@@ -115,7 +115,7 @@ private:
 	ID3D11Device* m_device;
 	ID3D11DeviceContext* m_deviceContext;
 	ID3D11Buffer* m_enemyHealthColourBuffer = nullptr;
-	std::vector<BulletBoundingSphere*> m_bulletSphere;
+	std::vector<Entity*> m_bulletSphere;
 
 
 	int m_currentBPM, m_beatNumber = 0;

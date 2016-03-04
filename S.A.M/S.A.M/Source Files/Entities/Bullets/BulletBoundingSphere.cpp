@@ -6,13 +6,13 @@ BulletBoundingSphere::BulletBoundingSphere()
 
 }
 
-BulletBoundingSphere::BulletBoundingSphere(XMFLOAT3 Position, XMFLOAT3 Scale, int Health, XMFLOAT3 size)
+BulletBoundingSphere::BulletBoundingSphere(XMFLOAT3 Position, XMFLOAT3 Scale, int Health, float size)
 {
 	m_scale = Scale;
 	m_position = XMFLOAT3(Position.x, Position.y, Position.z);
 	m_health = 1;
 	m_sphere.Center = m_position;
-	m_sphere.Radius = ((size.x + size.z) / 4);
+	m_sphere.Radius = size / 2;
 	m_speed = Health;
 }
 

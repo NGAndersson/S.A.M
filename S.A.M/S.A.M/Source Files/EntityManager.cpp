@@ -344,6 +344,12 @@ void EntityManager::Update(double time)
 	_addScore += m_collision.CheckCollisionEntity(&m_bullet5, &m_enemy3,BULLET5, ENEMY3, &m_explosion, m_device, m_deviceContext, time, &m_bulletSphere);
 	_addScore += m_collision.CheckCollisionEntity(&m_bullet5, &m_enemy4,BULLET5, ENEMY4, &m_explosion, m_device, m_deviceContext, time, &m_bulletSphere);
 
+	//Check Bullet5 agains Enemies
+	_addScore += m_collision.CheckCollisionEntity(&m_bulletSphere, &m_enemy1, SPHERE, ENEMY1, &m_explosion, m_device, m_deviceContext, time, &m_bulletSphere);
+	_addScore += m_collision.CheckCollisionEntity(&m_bulletSphere, &m_enemy2, SPHERE, ENEMY2, &m_explosion, m_device, m_deviceContext, time, &m_bulletSphere);
+	_addScore += m_collision.CheckCollisionEntity(&m_bulletSphere, &m_enemy3, SPHERE, ENEMY3, &m_explosion, m_device, m_deviceContext, time, &m_bulletSphere);
+	_addScore += m_collision.CheckCollisionEntity(&m_bulletSphere, &m_enemy4, SPHERE, ENEMY4, &m_explosion, m_device, m_deviceContext, time, &m_bulletSphere);
+
 	m_statsManager->AddScore(_addScore*(m_statsManager->GetCombo()+1));
 
 	//Check Player against Enemy Bullet
@@ -417,7 +423,7 @@ void EntityManager::Update(double time)
 		m_bulletSphere[i]->Update(time);
 		if (m_bulletSphere[i]->GetDelete() == true)
 		{
-			vector<BulletBoundingSphere*> _tempVec = m_bulletSphere;
+			vector<Entity*> _tempVec = m_bulletSphere;
 
 			delete _tempVec[i];
 			_tempVec.erase(_tempVec.begin() + i);
