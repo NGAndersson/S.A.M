@@ -35,7 +35,7 @@ ExplosionPart::~ExplosionPart()
 
 ExplosionPart::ExplosionPart(float offset, float lifeLenght)
 {
-	m_amountOfPart = 200;
+	m_amountOfPart = 20000;
 	m_partPos = new XMFLOAT4[m_amountOfPart];
 	m_partLifeLenght = lifeLenght;
 	m_sourcePos = new XMFLOAT4[m_amountOfPart];
@@ -46,7 +46,7 @@ ExplosionPart::ExplosionPart(float offset, float lifeLenght)
 	for (int i = 0; i < m_amountOfPart; i++)
 	{
 		m_partPos[i] = XMFLOAT4((((float(rand() % int(m_partOffset * 10000)) / 10000) - ((m_partOffset / 2)))), ((float(rand() % int(m_partOffset * 10000)) / 10000)), (((float(rand() % int(m_partOffset * 10000)) / 10000) - ((m_partOffset / 2)))), 1.0f);
-		if (((m_partPos[i].x * m_partPos[i].x) + (m_partPos[i].z * m_partPos[i].z)) < (m_partOffset))
+		if (((m_partPos[i].x * m_partPos[i].x) + (m_partPos[i].z * m_partPos[i].z)) < (m_partOffset * m_partOffset))
 		{
 			m_movementVec[i] = NormalizeFloat3(XMFLOAT3(m_partPos[i].x, m_partPos[i].y, m_partPos[i].z));
 			m_sourcePos[i] = m_partPos[i];
@@ -127,7 +127,7 @@ void ExplosionPart::Update(ID3D11DeviceContext* deviceContext, float time, float
 	for (int i = 0; i < m_amountOfPart; i++)
 	{
 		
-		m_partPos[i] = XMFLOAT4(m_partPos[i].x + (m_movementVec[i].x * partSpeed * time), m_partPos[i].y + (m_movementVec[i].y * partSpeed * time), m_partPos[i].z + (m_movementVec[i].z * partSpeed * time) - ((partSpeed * 5) * time), 1.0f);
+		m_partPos[i] = XMFLOAT4(m_partPos[i].x + (m_movementVec[i].x * partSpeed * time * m_partOffset), m_partPos[i].y + (m_movementVec[i].y * partSpeed * time * m_partOffset), m_partPos[i].z + (m_movementVec[i].z * partSpeed * time * m_partOffset) - ((partSpeed * 5) * time), 1.0f);
 		m_timeToLive[i] = m_timeToLive[i] - (time);
 
 	}

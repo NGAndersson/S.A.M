@@ -86,6 +86,8 @@ public:
 
 	 virtual void SetPatternNr(int NrOfPatterns) { m_patternNr = NrOfPatterns; }
 
+	 virtual XMFLOAT3 GetSize() { return m_size; }
+
 	//----------------------------Attributes----------------------------------------
 protected:
 	//Modelhandler
@@ -111,5 +113,6 @@ protected:
 	 int m_health;
 	 int m_score;
 	 float m_speed;
+	 XMFLOAT3 m_size = { 1, 1, 1 };
 };
 #endif // ! ENTITY

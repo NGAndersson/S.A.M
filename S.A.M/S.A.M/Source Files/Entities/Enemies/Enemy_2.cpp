@@ -20,6 +20,7 @@ void Enemy_2::Update(double time)
 	}
 	m_position = m_spline->GetPathPosition(m_age);
 	m_entityBox.Center = m_position;
+	m_size = XMFLOAT3(m_scale.x * 2, m_scale.y * 2, m_scale.z * 2);	//used to set size of explosion
 	m_entityBox.Extents = XMFLOAT3(m_scale.x * 4, 0.0f, m_scale.z * 4);
 }
 
