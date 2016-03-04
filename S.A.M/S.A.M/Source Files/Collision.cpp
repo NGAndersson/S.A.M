@@ -45,9 +45,10 @@ int Collision::CheckCollisionEntity(vector<Entity*>* Entity_1, vector<Entity*>* 
 					if (EntityType1 == BULLET2)
 					{
 						(*Entity_1)[i]->AddHealth(-1);
+						(*Entity_2)[j]->AddHealth(-200);	// rocket initial damage
 						bulletSphere->push_back(new BulletBoundingSphere((*Entity_1)[i]->GetPosition(), (*Entity_1)[i]->GetScale(), 5, 2));
-						Explosion->push_back(new ExplosionPart(2, 1.0f));
-						(*Explosion)[Explosion->size() - 1]->AddPartSys(Entity_1[i], XMFLOAT4((*Entity_1)[i]->GetPosition().x, (*Entity_1)[i]->GetPosition().y, (*Entity_1)[i]->GetPosition().z - (1 * (*Entity_1)[i]->GetScale().z), 0));
+						Explosion->push_back(new ExplosionPart(2, 0.5f));
+						(*Explosion)[Explosion->size() - 1]->AddPartSys(Entity_1[i], XMFLOAT4((*Entity_1)[i]->GetPosition().x, (*Entity_1)[i]->GetPosition().y, (*Entity_1)[i]->GetPosition().z + (1 * (*Entity_1)[i]->GetScale().z), 0));
 						wstring _texName = L"Resources\\Models\\star.jpg";
 						(*Explosion)[Explosion->size() - 1]->CreateBuffer(device, deviceContext, _texName);
 					}
@@ -92,7 +93,7 @@ int Collision::CheckCollisionEntity(vector<Entity*>* Entity_1, vector<Entity*>* 
 				}
 			else if (EntityType1 == SPHERE && CheckCollision2((*Entity_1)[i]->GetBoundingSphere(), (*Entity_2)[j]->GetBoundingBox()))
 			{
-				(*Entity_2)[j]->AddHealth(-1000 * time);
+				(*Entity_2)[j]->AddHealth(-800 * time);	// rocketsplash damage
 				if ((*Entity_2)[j]->GetHealth() <= 0 && EntityType2 != PLAYER)
 				{
 					_returnScore += (*Entity_2)[j]->GetScore();

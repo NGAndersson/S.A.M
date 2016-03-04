@@ -17,7 +17,7 @@ public:
 
 	//Variables
 private:
-	float m_timeToLive = 1;
+	float m_timeToLive = 0.5f;
 protected:
 public:
 
