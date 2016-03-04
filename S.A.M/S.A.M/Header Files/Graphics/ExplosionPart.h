@@ -14,7 +14,6 @@ private:
 public:
 	ExplosionPart();
 	ExplosionPart(float offset, float lifeLenght);
-	ExplosionPart(float offset, float lifeLenght,int particleammount);
 	~ExplosionPart();
 	bool CreateBuffer(ID3D11Device* device, ID3D11DeviceContext* deviceContext, wstring texName);
 	bool Render(ID3D11DeviceContext* deviceContext);
@@ -23,7 +22,6 @@ public:
 	void SetBuffer(ID3D11DeviceContext* deviceContext);
 	void AddPartSys(std::vector<Entity*> entity, XMFLOAT4 addPos);
 private:
-	bool m_ifmove;
 	XMFLOAT4 m_ExplosionPos;
 	XMFLOAT3 *m_movementVec;
 	ID3D11Buffer* m_lightShiftPartBuffer;

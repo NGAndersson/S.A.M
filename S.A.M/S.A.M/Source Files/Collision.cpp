@@ -92,21 +92,13 @@ int Collision::CheckCollisionEntity(vector<Entity*>* Entity_1, vector<Entity*>* 
 			{
 				if (CheckCollision((*Entity_1)[i]->GetBoundingBox(), (*Entity_2)[j]->GetBoundingBox()))
 				{
-					
-					if (EntityType1 == BULLET5)
+					if (EntityType1 != BULLET5)
 					{
-						(*Entity_2)[j]->AddHealth(-500 * time);
-					//Normal bullets do 100 damage
-					}
-					else if (EntityType1==BULLET2)
-					{
-						(*Entity_1)[i]->AddHealth(-1);
+						(*Entity_1)[i]->AddHealth(-1);				
+						(*Entity_2)[j]->AddHealth(-1000);		//Normal bullets do 100 damage
 					}
 					else
-					{
-						(*Entity_1)[i]->AddHealth(-1);
-						(*Entity_2)[j]->AddHealth(-1000);			//Laser does 100 damage (per-bullet if full hit)
-					}
+						(*Entity_2)[j]->AddHealth(-500 * time);			//Laser does 100 damage (per-bullet if full hit)
 
 					if ((*Entity_2)[j]->GetHealth() <= 0 && EntityType2 != PLAYER)
 					{
