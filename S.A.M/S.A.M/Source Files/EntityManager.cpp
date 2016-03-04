@@ -342,61 +342,14 @@ void EntityManager::Update(double time)
 		}
 	}
 
-	//Check bullet2 explosions
-	int _tempExp = m_collision.CheckIfExplosion(&m_bullet2, &m_enemy1);
-	if (_tempExp>-1)
-	{
-		m_bullExplosion.push_back(new BulletExplosion(m_soundManager, MAPWIDTH, MAPLENGTH, m_bullet2[_tempExp]->GetPosition(), XMFLOAT3(0.5, 0.5, 20), 4, XMFLOAT3(0, 0, 0)));
-		m_explosion.push_back(new ExplosionPart(1.0f, 1.0f));
-		m_explosion[m_explosion.size() - 1]->AddPartSys(m_bullExplosion , XMFLOAT4(m_bullet2[_tempExp]->GetPosition().x, m_bullet2[_tempExp]->GetPosition().y, m_bullet2[_tempExp]->GetPosition().z, 0));
-		m_explosion[m_explosion.size() - 1]->CreateBuffer(m_device, m_deviceContext, L"Resources\\Models\\star.jpg");
-		//m_soundManager->PlayOneShotSound("Laser_R", 0.5f); //Play explosion sound?
-	}
-	_tempExp = m_collision.CheckIfExplosion(&m_bullet2, &m_enemy2);
-
-	if (_tempExp>-1)
-	{
-		m_bullExplosion.push_back(new BulletExplosion(m_soundManager, MAPWIDTH, MAPLENGTH, m_bullet2[_tempExp]->GetPosition(), XMFLOAT3(0.5, 0.5, 20), 4, XMFLOAT3(0, 0, 0)));
-		m_explosion.push_back(new ExplosionPart(1.0f, 1.0f));
-		m_explosion[m_explosion.size() - 1]->AddPartSys(m_bullExplosion, XMFLOAT4(m_bullet2[_tempExp]->GetPosition().x, m_bullet2[_tempExp]->GetPosition().y, m_bullet2[_tempExp]->GetPosition().z, 0));
-		m_explosion[m_explosion.size() - 1]->CreateBuffer(m_device, m_deviceContext, L"Resources\\Models\\star.jpg");
-		//m_soundManager->PlayOneShotSound("Laser_R", 0.5f); //Play explosion sound?
-	}
-	_tempExp = m_collision.CheckIfExplosion(&m_bullet2, &m_enemy3);
-
-	if (_tempExp>-1)
-	{
-		m_bullExplosion.push_back(new BulletExplosion(m_soundManager, MAPWIDTH, MAPLENGTH, m_bullet2[_tempExp]->GetPosition(), XMFLOAT3(0.5, 0.5, 20), 4, XMFLOAT3(0, 0, 0)));
-		m_explosion.push_back(new ExplosionPart(1.0f, 1.0f));
-		m_explosion[m_explosion.size() - 1]->AddPartSys(m_bullExplosion, XMFLOAT4(m_bullet2[_tempExp]->GetPosition().x, m_bullet2[_tempExp]->GetPosition().y, m_bullet2[_tempExp]->GetPosition().z, 0));
-		m_explosion[m_explosion.size() - 1]->CreateBuffer(m_device, m_deviceContext, L"Resources\\Models\\star.jpg");
-		//m_soundManager->PlayOneShotSound("Laser_R", 0.5f); //Play explosion sound?
-	}
-	_tempExp = m_collision.CheckIfExplosion(&m_bullet2, &m_enemy4);
-
-	if (_tempExp>-1)
-	{
-		m_bullExplosion.push_back(new BulletExplosion(m_soundManager, MAPWIDTH, MAPLENGTH, m_bullet2[_tempExp]->GetPosition(), XMFLOAT3(0.5, 0.5, 20), 4, XMFLOAT3(0, 0, 0)));
-		m_explosion.push_back(new ExplosionPart(1.0f, 1.0f));
-		m_explosion[m_explosion.size() - 1]->AddPartSys(m_bullExplosion, XMFLOAT4(m_bullet2[_tempExp]->GetPosition().x, m_bullet2[_tempExp]->GetPosition().y, m_bullet2[_tempExp]->GetPosition().z, 0));
-		m_explosion[m_explosion.size() - 1]->CreateBuffer(m_device, m_deviceContext, L"Resources\\Models\\star.jpg");
-		//m_soundManager->PlayOneShotSound("Laser_R", 0.5f); //Play explosion sound?
-	}
-
 	//Do collision checks
 	int _addScore = 0;
-
-	//Check explosion on enemies!
-	_addScore += m_collision.CheckCollisionEntity(&m_bullExplosion, &m_enemy1,BULLETEXP, ENEMY1, &m_explosion, m_device, m_deviceContext, time);
-	_addScore += m_collision.CheckCollisionEntity(&m_bullExplosion, &m_enemy2,BULLETEXP, ENEMY2, &m_explosion, m_device, m_deviceContext, time);
-	_addScore += m_collision.CheckCollisionEntity(&m_bullExplosion, &m_enemy3,BULLETEXP, ENEMY3, &m_explosion, m_device, m_deviceContext, time);
-	_addScore += m_collision.CheckCollisionEntity(&m_bullExplosion, &m_enemy4,BULLETEXP, ENEMY4, &m_explosion, m_device, m_deviceContext, time);
-
 	//Check Bullet1 agains Enemies
 	_addScore += m_collision.CheckCollisionEntity(&m_bullet1, &m_enemy1,BULLET1, ENEMY1, &m_explosion, m_device, m_deviceContext, time);
 	_addScore += m_collision.CheckCollisionEntity(&m_bullet1, &m_enemy2,BULLET1, ENEMY2, &m_explosion, m_device, m_deviceContext, time);
 	_addScore += m_collision.CheckCollisionEntity(&m_bullet1, &m_enemy3,BULLET1, ENEMY3, &m_explosion, m_device, m_deviceContext, time);
 	_addScore += m_collision.CheckCollisionEntity(&m_bullet1, &m_enemy4,BULLET1, ENEMY4, &m_explosion, m_device, m_deviceContext, time);
+
 
 	//Check Bullet2 agains Enemies
 	_addScore += m_collision.CheckCollisionEntity(&m_bullet2, &m_enemy1,BULLET2, ENEMY1, &m_explosion, m_device, m_deviceContext, time);
@@ -404,11 +357,13 @@ void EntityManager::Update(double time)
 	_addScore += m_collision.CheckCollisionEntity(&m_bullet2, &m_enemy3,BULLET2, ENEMY3, &m_explosion, m_device, m_deviceContext, time);
 	_addScore += m_collision.CheckCollisionEntity(&m_bullet2, &m_enemy4,BULLET2, ENEMY4, &m_explosion, m_device, m_deviceContext, time);
 
+
 	//Check Bullet3 agains Enemies
 	_addScore += m_collision.CheckCollisionEntity(&m_bullet3, &m_enemy1,BULLET3, ENEMY1, &m_explosion, m_device, m_deviceContext, time);
 	_addScore += m_collision.CheckCollisionEntity(&m_bullet3, &m_enemy2,BULLET3, ENEMY2, &m_explosion, m_device, m_deviceContext, time);
 	_addScore += m_collision.CheckCollisionEntity(&m_bullet3, &m_enemy3,BULLET3, ENEMY3, &m_explosion, m_device, m_deviceContext, time);
 	_addScore += m_collision.CheckCollisionEntity(&m_bullet3, &m_enemy4,BULLET3, ENEMY4, &m_explosion, m_device, m_deviceContext, time);
+	
 
 	//Check Bullet4 agains Enemies
 	_addScore += m_collision.CheckCollisionEntity(&m_bullet4, &m_enemy1,BULLET4, ENEMY1, &m_explosion, m_device, m_deviceContext, time);
@@ -469,9 +424,6 @@ void EntityManager::Update(double time)
 	//Update every entity of Bullet6
 	for (int i = 0; i < m_bullet6.size(); i++)
 		m_bullet6[i]->Update(time);
-	//Update every explosion 
-	for (int i = 0; i < m_bullExplosion.size(); i++)
-		m_bullExplosion[i]->Update(time);
 
 	if (!m_player->GetDelete())
 		m_player->Update(time);
@@ -785,9 +737,6 @@ void EntityManager::Reset()
 	for (int i = 0; i < m_bullet6.size(); i++)
 		delete m_bullet6[i];
 
-	for (int i = 0; i < m_bullExplosion.size(); i++)
-		delete m_bullExplosion[i];
-
 	for (int i = 0; i < m_enemy1.size(); i++)
 		delete m_enemy1[i];
 
@@ -806,7 +755,6 @@ void EntityManager::Reset()
 	m_bullet4.clear();
 	m_bullet5.clear();
 	m_bullet6.clear();
-	m_bullExplosion.clear();
 	m_enemy1.clear();
 	m_enemy2.clear();
 	m_enemy3.clear();

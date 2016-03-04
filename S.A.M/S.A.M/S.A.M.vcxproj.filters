@@ -159,9 +159,6 @@
     <ClCompile Include="Source Files\Gamelogic\ShootingPatterns.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source Files\Entities\Bullets\BulletExplosion.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header Files\SoundManager.h">
@@ -321,9 +318,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Header Files\Gamelogic\ShootingPatterns.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Header Files\Entities\Bullets\BulletExplosion.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
