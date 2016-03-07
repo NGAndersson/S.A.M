@@ -71,7 +71,10 @@ newOptions ScreenManager::Update(double time)
 		break;
 	case OPTION:
 		//Options
-		m_screenOptions->UpdateOP(time);
+		if (m_gameOngoing == true)
+			m_screenOptions->UpdateOP(time);
+		else
+			m_screenOptions->Update(time);
 		m_current = m_screenOptions->GetTargetMenu();
 		if (m_current == MENU || m_current == PAUSE)
 			m_screenOptions->Reset();

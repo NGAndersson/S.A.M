@@ -6,7 +6,7 @@ SpacePart::SpacePart()
 	m_partPos = new XMFLOAT4[m_amountOfPart];
 	for (int i = 0; i < m_amountOfPart; i++)
 	{
-		m_partPos[i] = XMFLOAT4(((float(rand() % 600) - 250)), float(rand() % 200) - 400, float(rand() % 900) - float(500), 1.0f);
+		m_partPos[i] = XMFLOAT4(((float(rand() % 600) - 250)), float(rand() % 200) - 400, float(rand() % 900) - float(0), 1.0f);
 	}
 }
 
