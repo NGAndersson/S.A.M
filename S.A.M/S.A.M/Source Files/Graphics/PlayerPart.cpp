@@ -188,8 +188,8 @@ void PlayerPart::SetBuffer(ID3D11DeviceContext* deviceContext)
 {
 	D3D11_MAPPED_SUBRESOURCE _mappedResource, _lightShiftMapRes;
 
-	m_rocketPos[0] = XMFLOAT4(-1.7, 0, -1, 0);
-	m_rocketPos[1] = XMFLOAT4(1.7, 0, -1, 0);
+	m_rocketPos[0] = XMFLOAT4(-1.4, 0, -0.8, 0);
+	m_rocketPos[1] = XMFLOAT4(1.4, 0, -0.8, 0);
 
 	HRESULT hr = deviceContext->Map(m_instancePartBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &_mappedResource);
 

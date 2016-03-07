@@ -69,7 +69,7 @@ int Collision::CheckCollisionEntity(vector<Entity*>* Entity_1, vector<Entity*>* 
 							XMFLOAT3 _directVec = CNormalizeFloat3(XMFLOAT3((*Entity_1)[i]->GetPosition().x - (*Entity_2)[j]->GetPosition().x, (*Entity_1)[i]->GetPosition().y - (*Entity_2)[j]->GetPosition().y, (*Entity_1)[i]->GetPosition().z - (*Entity_2)[j]->GetPosition().z));
 							if ((*Entity_1)[i]->GetHealth() <= 0)
 								Entity_1 = RemoveEntity(i, Entity_1);
-							(*Explosion)[Explosion->size() - 1]->AddPartSys(Entity_2[j], XMFLOAT4((*Entity_2)[j]->GetPosition().x + _directVec.x, (*Entity_2)[j]->GetPosition().y + _directVec.y, (*Entity_2)[j]->GetPosition().z + _directVec.z, 0));
+							(*Explosion)[Explosion->size() - 1]->AddPartSys(Entity_2[j], XMFLOAT4((*Entity_2)[j]->GetPosition().x + _directVec.x, (*Entity_2)[j]->GetPosition().y + _directVec.y, (*Entity_2)[j]->GetPosition().z + _directVec.z, 0));	// Crashes ?????????????????????????
 						}
 						else
 						{
