@@ -267,7 +267,7 @@ void EntityManager::Update(double time)
 
 	//Do collision checks
 	int _addScore = 0;
-	vector<Entity*>* _bullets[5] = { &m_bullet1, &m_bullet2, &m_bullet3, &m_bullet4, &m_bullet5 };
+	vector<Entity*>* _bullets[6] = { &m_bullet1, &m_bullet2, &m_bullet3, &m_bullet4, &m_bullet5 };
 	vector<Entity*>* _enemies[4] = { &m_enemy1, &m_enemy2, &m_enemy3, &m_enemy4 };
 
 	for (int i = 0; i < 5; i++)		//For each bullettype
@@ -276,6 +276,11 @@ void EntityManager::Update(double time)
 		{
 			_addScore += m_collision.CheckCollisionEntity(_bullets[i], _enemies[j], HandlerIndex(i+1), HandlerIndex(j+7), &m_explosion, m_device, m_deviceContext, time, &m_bulletSphere); //+1 to get to bullets, +7 to get to enemies
 		}
+	}
+
+	for (int j = 0; j < 4; j++) //Explosin radius For each enemytype
+	{
+		_addScore += m_collision.CheckCollisionEntity(&m_bulletSphere, _enemies[j], HandlerIndex(SPHERE), HandlerIndex(j + 7), &m_explosion, m_device, m_deviceContext, time, &m_bulletSphere); //+7 to get to enemies
 	}
 
 	m_statsManager->AddScore(_addScore*(m_statsManager->GetCombo()+1));

@@ -25,6 +25,7 @@ bool Collision::CheckCollision(BoundingBox Entitiy1, BoundingBox Entity2)
 	
 	return false;
 }
+
 bool Collision::CheckCollision2(BoundingSphere Entitiy1, BoundingBox Entity2)
 {
 	if (Entitiy1.Intersects(Entity2))
@@ -93,7 +94,7 @@ int Collision::CheckCollisionEntity(vector<Entity*>* Entity_1, vector<Entity*>* 
 				}
 			else if (EntityType1 == SPHERE && CheckCollision2((*Entity_1)[i]->GetBoundingSphere(), (*Entity_2)[j]->GetBoundingBox()))
 			{
-				(*Entity_2)[j]->AddHealth(-1600 * time);	// rocketsplash damage
+				(*Entity_2)[j]->AddHealth(-4000 * time);	// rocketsplash damage
 				if ((*Entity_2)[j]->GetHealth() <= 0 && EntityType2 != PLAYER)
 				{
 					_returnScore += (*Entity_2)[j]->GetScore();
