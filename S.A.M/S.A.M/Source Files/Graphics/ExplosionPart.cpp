@@ -35,7 +35,7 @@ ExplosionPart::~ExplosionPart()
 
 ExplosionPart::ExplosionPart(float offset, float lifeLenght)
 {
-	m_amountOfPart = 20000;
+	m_amountOfPart = 2000;
 	m_partPos = new XMFLOAT4[m_amountOfPart];
 	m_partLifeLenght = lifeLenght;
 	m_sourcePos = new XMFLOAT4[m_amountOfPart];
