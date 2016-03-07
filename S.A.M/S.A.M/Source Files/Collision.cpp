@@ -56,7 +56,12 @@ int Collision::CheckCollisionEntity(vector<Entity*>* Entity_1, vector<Entity*>* 
 					else if (EntityType1 != BULLET5)
 					{
 						(*Entity_1)[i]->AddHealth(-1);
-						(*Entity_2)[j]->AddHealth(-1000);		//Normal bullets do 100 damage
+						if (EntityType1 == BULLET1 || EntityType1 == BULLET6)
+						(*Entity_2)[j]->AddHealth(-1000);		//Normal bullets do 1000 damage
+						else if (EntityType1 == BULLET3)
+							(*Entity_2)[j]->AddHealth(-800);	//Big bullets do 800 damage
+						else if (EntityType1 == BULLET4)
+							(*Entity_2)[j]->AddHealth(-600);	//triple bullets do 600 damage
 					}
 					else
 						(*Entity_2)[j]->AddHealth(-500 * time);			//Laser does 100 damage (per-bullet if full hit)
