@@ -16,7 +16,7 @@ Bullet_e::Bullet_e(SoundManager * SoundManager, int MapWidth, int MapLength, XMF
 	m_health = Health;
 	m_speed = 28;
 	m_travelVec = TravelVec;
-	m_light = new Light(XMFLOAT4(Position.x, Position.y, Position.z, 1.0f), XMFLOAT4(Color.x, Color.y, Color.z, 1.0f), XMFLOAT4(10, 1, 0, 0));
+	m_light = new Light(XMFLOAT4(Position.x, Position.y, Position.z, 1.0f), XMFLOAT4(Color.x, Color.y, Color.z, 1.0f), XMFLOAT4(2, 1, 0, 0));
 }
 
 Bullet_e::~Bullet_e()

@@ -61,9 +61,9 @@ newOptions ScreenManager::Update(double time)
 		break;
 	case OPTION:
 		//Options
-		m_screenOptions->Update(time);
+		m_screenOptions->UpdateOP(time);
 		m_current = m_screenOptions->GetTargetMenu();
-		if (m_current == MENU)
+		if (m_current == MENU || m_current == PAUSE)
 			m_screenOptions->Reset();
 		break;
 	case PAUSE:

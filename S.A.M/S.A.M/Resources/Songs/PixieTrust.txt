@@ -28,10 +28,10 @@ BeatPerShot3=2
 BeatPerShot4=1
 
 #### Spawn frequency. FromBeat|BeatsBetweenSpawns
-EnemySpawnRate1=0|8
-EnemySpawnRate2=0|12
-EnemySpawnRate3=0|20
-EnemySpawnRate4=0|0
+EnemySpawnRate1=44|8
+EnemySpawnRate2=44|12
+EnemySpawnRate3=44|20
+EnemySpawnRate4=44|0
 EnemySpawnRate1=300|6
 EnemySpawnRate2=300|12
 EnemySpawnRate3=300|18
@@ -44,7 +44,7 @@ EnemySpawnRate4=437|0
 #### Size of the enemys, there scaling deafualt is (1, 1, 1)
 EnemySize1=2.00,2.00,2.00
 EnemySize2=1.00,1.00,1.00
-EnemySize3=3.00,3.00,3.00
+EnemySize3=0.75,0.75,0.75
 EnemySize4=10.00,10.00,10.00
 
 #### Healt of the enemys, deafault is 1000, bullets do 1000 dmg

@@ -21,13 +21,13 @@ bulletE=Resources/Sound/DefaultSoundBullet4.wav
 bulletR=Resources/Sound/DefaultSoundBullet5.wav
 
 #### Spawn frequency. FromBeat|BeatsBetweenSpawns
-EnemySpawnRateDivider1=0|8
-EnemySpawnRateDivider1=165|6
-EnemySpawnRateDivider2=0|12
-EnemySpawnRateDivider2=165|12
-EnemySpawnRateDivider3=0|20
-EnemySpawnRateDivider3=165|18
-EnemySpawnRateDivider4=0|30
+EnemySpawnRate1=0|8
+EnemySpawnRate1=165|6
+EnemySpawnRate2=0|12
+EnemySpawnRate2=165|12
+EnemySpawnRate3=0|20
+EnemySpawnRate3=165|18
+EnemySpawnRate4=15|50
 
 
 
@@ -55,7 +55,7 @@ Vp 1.00 -1.00
 Pa 1
 Vp 0.00 -1.00
 
-Pa 0
+Pa 1
 Vp 0.00 -1.00
 
 Pa 2

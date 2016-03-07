@@ -21,6 +21,7 @@ public:
 	~OptionsMenu() {}
 	OptionsMenu(ID3D11Device* Device, ID3D11DeviceContext* DeviceContext, int ScreenHeight, int ScreenWidth, Input* input, SoundManager* SoundManager);
 	void Update(double time);
+	void UpdateOP(double time);
 	void Render();
 	virtual MenuScreens GetTargetMenu() {
 		return m_currentTargetMenu;
@@ -43,6 +44,7 @@ private:
 	void ReadSetttings();
 	void saveSettings();
 	wstring m_menu;
+	wstring m_pause;
 	wstring m_resolution;
 	wstring m_volumeMusic;
 	wstring m_volumeEffect;
@@ -73,6 +75,7 @@ private:
 	Font m_keyChoice[9];
 	int m_keyBindings[9];
 	InKey m_ifKey;
+	bool m_state = false;	//kepps the staet of game false == not in game
 
 
 };

@@ -11,7 +11,7 @@ using namespace DirectX;
 #define MOVEMENTSPEEDX 0.3f / 9.80f // Divided by screen Width Hardcoded MOTHERFUCKER :)
 
 #define MOVEMENTSPEEDZ 0.3f / 7.20f // Divided by screen Height Hardcoded
-enum HandlerIndex { PLAYER, BULLET1, BULLET2, BULLET3, BULLET4, BULLET5, BULLET6, ENEMY1, ENEMY2, ENEMY3, ENEMY4 };
+enum HandlerIndex { PLAYER, BULLET1, BULLET2, BULLET3, BULLET4, BULLET5, BULLET6, ENEMY1, ENEMY2, ENEMY3, ENEMY4, SPHERE };
 class Entity
 {
 	//----------------------------Functions----------------------------------------
@@ -86,6 +86,10 @@ public:
 
 	 virtual void SetPatternNr(int NrOfPatterns) { m_patternNr = NrOfPatterns; }
 
+	 virtual XMFLOAT3 GetSize() { return m_size; }
+
+	 virtual BoundingSphere GetBoundingSphere() { return m_sphere; }
+
 	//----------------------------Attributes----------------------------------------
 protected:
 	//Modelhandler
@@ -99,6 +103,7 @@ protected:
 
 	 //BoundingBox
 	 BoundingBox m_entityBox;
+	 BoundingSphere m_sphere;
 	 int m_mapWidth, m_mapLength;
 	 float m_entityWidth;
 	 double m_fireTime;
@@ -111,5 +116,6 @@ protected:
 	 int m_health;
 	 int m_score;
 	 float m_speed;
+	 XMFLOAT3 m_size = { 1, 1, 1 };
 };
 #endif // ! ENTITY

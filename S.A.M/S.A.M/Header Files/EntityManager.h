@@ -37,6 +37,7 @@ class EntityManager
 	//Functions
 private:
 	void SpawnEntity(HandlerIndex type);
+	void SpawnEnemy();
 	void BeatWasDetected();
 	vector<Entity*> CheckOutOfBounds(const std::vector<Entity*> &bullet);
 	vector<Entity*> CheckIfAlive(const std::vector<Entity*> &bullet);
@@ -114,13 +115,13 @@ private:
 	ID3D11Device* m_device;
 	ID3D11DeviceContext* m_deviceContext;
 	ID3D11Buffer* m_enemyHealthColourBuffer = nullptr;
+	std::vector<Entity*> m_bulletSphere;
 
 
 	int m_currentBPM, m_beatNumber = 0;
 	double m_timeSinceLastBeat = 0.0f;
 	int m_offset = 0;				//Beats to skip in the beginning (for intros without music etc)
 									//ADD ENDING OFFSETS?
-	bool m_doBeatDet;
 	float* m_beat;
 	int m_level;
 

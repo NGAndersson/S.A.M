@@ -18,6 +18,11 @@ void Screen::Update(double time)
 
 }
 
+void Screen::UpdateOP(double time)
+{
+
+}
+
 void Screen::Render()
 {
 
