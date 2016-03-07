@@ -1,5 +1,9 @@
 #include "Entities/Enemies/Enemy_1.h"
 
+Enemy_1::Enemy_1()
+{
+	m_score = m_health;
+}
 
 Enemy_1::~Enemy_1()
 {

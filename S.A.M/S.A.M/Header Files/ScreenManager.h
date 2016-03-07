@@ -56,6 +56,7 @@ private:
 	ID3D11Device* m_device;
 	ID3D11DeviceContext* m_deviceContext;
 	int m_screenHeight, m_screenWidth;
+	float m_totTime = 0;
 };
 
 #endif
