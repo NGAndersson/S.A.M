@@ -229,7 +229,7 @@ OptionsMenu::OptionsMenu(ID3D11Device* Device, ID3D11DeviceContext* DeviceContex
 
 }
 
-void OptionsMenu::Update(double time)
+void OptionsMenu::Update(double time, bool ongoingGame)
 {
 	switch (m_currentRes)
 	{

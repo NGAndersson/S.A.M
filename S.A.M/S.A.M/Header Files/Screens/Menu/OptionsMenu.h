@@ -20,7 +20,7 @@ public:
 
 	~OptionsMenu() {}
 	OptionsMenu(ID3D11Device* Device, ID3D11DeviceContext* DeviceContext, int ScreenHeight, int ScreenWidth, Input* input, SoundManager* SoundManager);
-	void Update(double time);
+	void Update(double time, bool ongoingGame);
 	void Render();
 	virtual MenuScreens GetTargetMenu() {
 		return m_currentTargetMenu;
