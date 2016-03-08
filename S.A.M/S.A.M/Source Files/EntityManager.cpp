@@ -662,18 +662,30 @@ void EntityManager::BeatWasDetected()
 	{
 		case INPUT_DEFAULT_BULLET:
 			SpawnEntity(BULLET1); //Default bullet
+			m_laserOffset = 0;
 			break;
 		case INPUT_BULLET2:
 			SpawnEntity(BULLET2);
+			m_laserOffset = 0;
 			break;
 		case INPUT_BULLET3:
 			SpawnEntity(BULLET3);
+			m_laserOffset = 0;
 			break;
 		case INPUT_BULLET4:
 			SpawnEntity(BULLET4);
+			m_laserOffset = 0;
 			break;
 		case INPUT_BULLET5:
-			SpawnEntity(BULLET5);
+			if (m_laserOffset == 0)
+			{
+				SpawnEntity(BULLET5);
+				m_laserOffset = 1;
+			}
+			else
+			{
+				m_laserOffset = 0;
+			}
 			break;
 		default:
 			break;
