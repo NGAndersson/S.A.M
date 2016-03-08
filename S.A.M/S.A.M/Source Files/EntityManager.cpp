@@ -234,12 +234,20 @@ void EntityManager::Render()
 void EntityManager::Update(double time)
 {
 
+	static float _PbeatsTime=0;
 	CheckCombo();
+	static int _nrBeforeBeat=0;
+	static float _time;
+	_time += time;
 
+	if (_time > 1.0f)
+		_time = 0;
 		//BeatDet test
 		float _currentPos = m_soundManager->GetCurrentMusicTimePCM() / 1024.f;
 		if (m_beat[(int)_currentPos] > 0.0f && m_timeSinceLastBeat > 100)		//Small time buffer to prevent it from going off 50 times per beat 
 		{
+			_PbeatsTime = m_timeSinceLastBeat;
+			
 			//BEAT WAS DETECTED
 			if (m_beatNumber > m_offset) {
 				BeatWasDetected();
@@ -255,6 +263,7 @@ void EntityManager::Update(double time)
 				m_beatNumber++;
 				m_statsManager->AddBeat();
 			}
+			_nrBeforeBeat = 0;
 		SpawnEnemy();
 		}
 		else {
@@ -263,9 +272,13 @@ void EntityManager::Update(double time)
 		for (int i = 1; i < 7; i++)				//bullets start at modelhandlers[1]
 			m_modelHandlers[i]->beatBoost(false, time, m_timeSinceLastBeat/1000, 0);
 		}
-
+		
+		_nrBeforeBeat++;
+		time;
+		
 
 	//Do collision checks
+
 	int _addScore = 0;
 	vector<Entity*>* _bullets[5] = { &m_bullet1, &m_bullet2, &m_bullet3, &m_bullet4, &m_bullet5 };
 	vector<Entity*>* _enemies[4] = { &m_enemy1, &m_enemy2, &m_enemy3, &m_enemy4 };
@@ -294,16 +307,16 @@ void EntityManager::Update(double time)
 	}
 	//Enemies
 	for (auto i = 0; i < m_enemy1.size(); i++)
-		m_enemy1[i]->Update(time);
+		m_enemy1[i]->Update(time / _PbeatsTime);
 
 	for (auto i = 0; i < m_enemy2.size(); i++)
-		m_enemy2[i]->Update(time);
+		m_enemy2[i]->Update(time / _PbeatsTime);
 
 	for (auto i = 0; i < m_enemy3.size(); i++)
-		m_enemy3[i]->Update(time);
+		m_enemy3[i]->Update(time / _PbeatsTime);
 
 	for (auto i = 0; i < m_enemy4.size(); i++)
-		m_enemy4[i]->Update(time);
+		m_enemy4[i]->Update(time / _PbeatsTime);
 
 
 	//Update every entity of Bullet1
@@ -365,6 +378,7 @@ void EntityManager::Update(double time)
 	m_enemy2 = CheckOutOfBounds(m_enemy2);
 	m_enemy3 = CheckOutOfBounds(m_enemy3);
 	m_enemy4 = CheckOutOfBounds(m_enemy4);
+
 	//Out of bounds check, remove immediately
 	
 	m_bullet1 = CheckOutOfBounds(m_bullet1);

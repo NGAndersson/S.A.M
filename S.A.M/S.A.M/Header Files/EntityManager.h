@@ -29,6 +29,7 @@
 #include "Gamelogic\Stats.h"
 #include "Gamelogic/ShootingPatterns.h"
 
+
 #include <memory>
 enum ShaderIndexName { SHADER_PLAYER, SHADER_BULLET, SHADER_ENEMY, SHADER_MENU, SHADER_PLAYERPART, SHADER_ROCKETPART };
 

@@ -8,7 +8,7 @@ Enemy_1::~Enemy_1()
 
 void Enemy_1::Update(double time)
 {
-	m_age += time/2;
+	m_age += time;
 	if (m_age > 1.0f)
 	{
 		m_age = 0;
