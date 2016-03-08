@@ -641,7 +641,8 @@ void EntityManager::Reset()
 	m_statsManager->SetLives();
 	m_currentBPM, m_beatNumber = 0;
 	m_timeSinceLastBeat = 0.0f;
-	m_offset = 0;				
+	m_offset = 0;
+	m_beatNumber = 0;
 	m_player->SetDelete(true);
 	m_renderFire = false;
 	m_renderPlayer = false;
@@ -858,6 +859,26 @@ void EntityManager::EnemyFire()
 
 void EntityManager::CheckCombo()
 {
+	float _currentPos = m_soundManager->GetCurrentMusicTimePCM() / 1024.f;
+	int _upperPos = (int)_currentPos - 1;
+	int _lowerPos = (int)_currentPos + 1;
+	
+	bool found = false;
+	while (found == false)
+	{
+		_lowerPos--;
+		if (m_beat[_lowerPos] > 0) 
+			found = true;
+	}
+	found = false;
+	while (found == false)
+	{
+		_upperPos++;
+		if (m_beat[_upperPos] > 0) 
+			found = true;
+	}
+
+
 	// Check key presses near the beat, for combo
 	static bool _registeredCombo = true;
 	static BulletType _currentBulletType;
