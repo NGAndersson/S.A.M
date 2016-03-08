@@ -68,16 +68,44 @@ void EntityManager::SpawnEntity(HandlerIndex type)
 		m_player = new Player(m_soundManager, MAPWIDTH,MAPLENGTH,XMFLOAT3(MAPWIDTH / 2, 0.0f, MAPLENGTH / 4), XMFLOAT3(0.8f, 0.8f, 0.8f), 1, m_input);
 		break;
 	case(ENEMY1) :
-		m_enemy1.push_back(new Enemy_1(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(_tempX, 0.0f, 110), m_enemySize1, m_enemyHealth1,m_enemy1MovPatterns[0].second));
+		for (int i = m_enemy1MovPatterns.size() - 1; i >= 0; i--)
+		{
+			if (m_enemy1MovPatterns[i].first <= m_statsManager->GetBeat())
+			{
+				m_enemy1.push_back(new Enemy_1(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(_tempX, 0.0f, 110), m_enemySize1, m_enemyHealth1, m_enemy1MovPatterns[i].second));
+				i = -1;
+			}
+		}
 		break;
 	case(ENEMY2) :
-		m_enemy2.push_back(new Enemy_2(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(_tempX, 0.0f, 110), m_enemySize2, m_enemyHealth2, m_enemy2MovPatterns[0].second));
+		for (int i = m_enemy2MovPatterns.size() - 1; i >= 0; i--)
+		{
+			if (m_enemy2MovPatterns[i].first <= m_statsManager->GetBeat())
+			{
+				m_enemy2.push_back(new Enemy_2(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(_tempX, 0.0f, 110), m_enemySize2, m_enemyHealth2, m_enemy2MovPatterns[i].second));
+				i = -1;
+			}
+		}
 		break;
 	case(ENEMY3) :
-		m_enemy3.push_back(new Enemy_3(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(_tempX, 0.0f, 110), m_enemySize3, m_enemyHealth3, m_enemy3MovPatterns[0].second));
+		for (int i = m_enemy3MovPatterns.size() - 1; i >= 0; i--)
+		{
+			if (m_enemy3MovPatterns[i].first <= m_statsManager->GetBeat())
+			{
+				m_enemy3.push_back(new Enemy_3(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(_tempX, 0.0f, 110), m_enemySize3, m_enemyHealth3, m_enemy3MovPatterns[i].second));
+				i = -1;
+			}
+		}
 		break;
 	case(ENEMY4) :
-		m_enemy4.push_back(new Enemy_4(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(_tempX, 0.0f, 110), m_enemySize4, m_enemyHealth4, m_enemy4MovPatterns[0].second));
+		for (int i = m_enemy4MovPatterns.size() - 1; i >= 0; i--)
+		{
+			if (m_enemy4MovPatterns[i].first <= m_statsManager->GetBeat())
+			{
+				m_enemy4.push_back(new Enemy_4(m_soundManager, MAPWIDTH, MAPLENGTH, XMFLOAT3(_tempX, 0.0f, 110), m_enemySize4, m_enemyHealth4, m_enemy4MovPatterns[i].second));
+				i = -1;
+			}
+		}
 		break;
 	case(BULLET1) :
 		m_bullet1.push_back(new Bullet_p1(m_soundManager, MAPWIDTH, MAPLENGTH, m_player->GetPosition(), XMFLOAT3(0.5, 0.5, 0.5), 1, m_modelHandlers[BULLET1]->GetDeffuse()));
