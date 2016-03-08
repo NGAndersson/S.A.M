@@ -669,6 +669,7 @@ void EntityManager::Reset()
 	m_enemy4MovPatterns.clear();
 	for (int i = 0; i < 4; i++) m_enemySpawnRate[i].clear();
 	m_explosion.clear();
+	m_beatNumber = 0;
 	m_statsManager->ResetCombo();
 	m_statsManager->ResetScore();
 	m_statsManager->SetLives();
