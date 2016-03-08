@@ -1,6 +1,5 @@
 #ifndef _UI_H
 #define _UI_H
-
 #include "../Screen.h"
 #include "../../Gamelogic/Stats.h"
 
@@ -28,6 +27,10 @@ private:
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> m_bSprite2;
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> m_bSprite3;
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> m_bSprite4;
+	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> m_comboMeter;
+
+	std::unique_ptr<DirectX::CommonStates> m_states;
+	Font m_spriteCombo;
 
 	Font m_shotBinding[4];
 };
