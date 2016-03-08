@@ -116,7 +116,7 @@ private:
 	ID3D11DeviceContext* m_deviceContext;
 	ID3D11Buffer* m_enemyHealthColourBuffer = nullptr;
 	std::vector<Entity*> m_bulletSphere;
-	int m_laserOffset = 0;
+	int m_laserOffset = 0, m_rocketOffset = 0;
 
 
 	int m_currentBPM, m_beatNumber = 0;

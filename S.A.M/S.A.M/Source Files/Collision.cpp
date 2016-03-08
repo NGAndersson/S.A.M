@@ -46,7 +46,7 @@ int Collision::CheckCollisionEntity(vector<Entity*>* Entity_1, vector<Entity*>* 
 					if (EntityType1 == BULLET2)
 					{
 						(*Entity_1)[i]->AddHealth(-1);
-						(*Entity_2)[j]->AddHealth(-200);	// rocket initial damage
+						(*Entity_2)[j]->AddHealth(-rocketInitialDamage);	// rocket initial damage
 						bulletSphere->push_back(new BulletBoundingSphere((*Entity_1)[i]->GetPosition(), (*Entity_1)[i]->GetScale(), 5, 2));
 						Explosion->push_back(new ExplosionPart(2, 0.5f));
 						(*Explosion)[Explosion->size() - 1]->AddPartSys(Entity_1[i], XMFLOAT4((*Entity_1)[i]->GetPosition().x, (*Entity_1)[i]->GetPosition().y, (*Entity_1)[i]->GetPosition().z + (1 * (*Entity_1)[i]->GetScale().z), 0));
@@ -57,14 +57,14 @@ int Collision::CheckCollisionEntity(vector<Entity*>* Entity_1, vector<Entity*>* 
 					{
 						(*Entity_1)[i]->AddHealth(-1);
 						if (EntityType1 == BULLET1 || EntityType1 == BULLET6)
-						(*Entity_2)[j]->AddHealth(-1000);		//Normal bullets do 1000 damage
+						(*Entity_2)[j]->AddHealth(-defaultDamage);		//Normal and enemy bullets do 1000 damage
 						else if (EntityType1 == BULLET3)
-							(*Entity_2)[j]->AddHealth(-800);	//Big bullets do 800 damage
+							(*Entity_2)[j]->AddHealth(-donutDamage);	//Big bullets do 800 damage
 						else if (EntityType1 == BULLET4)
-							(*Entity_2)[j]->AddHealth(-600);	//triple bullets do 600 damage
+							(*Entity_2)[j]->AddHealth(-tripleDamage);	//triple bullets do 600 damage
 					}
 					else
-						(*Entity_2)[j]->AddHealth(-500 * time);			//Laser does 100 damage (per-bullet if full hit)
+						(*Entity_2)[j]->AddHealth(-laserDamage * time);			//Laser does 100 damage (per-bullet if full hit)
 
 					if ((*Entity_2)[j]->GetHealth() <= 0 && EntityType2 != PLAYER)
 					{
@@ -99,7 +99,7 @@ int Collision::CheckCollisionEntity(vector<Entity*>* Entity_1, vector<Entity*>* 
 				}
 			else if (EntityType1 == SPHERE && CheckCollision2((*Entity_1)[i]->GetBoundingSphere(), (*Entity_2)[j]->GetBoundingBox()))
 			{
-				(*Entity_2)[j]->AddHealth(-4000 * time);	// rocketsplash damage
+				(*Entity_2)[j]->AddHealth(-rocketAOEDamage * time);	// rocketsplash damage
 				if ((*Entity_2)[j]->GetHealth() <= 0 && EntityType2 != PLAYER)
 				{
 					_returnScore += (*Entity_2)[j]->GetScore();

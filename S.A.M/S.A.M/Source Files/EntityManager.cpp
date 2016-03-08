@@ -84,7 +84,7 @@ void EntityManager::SpawnEntity(HandlerIndex type)
 		m_soundManager->PlayOneShotSound("DefaultBullet", 0.5f);
 		break;
 	case(BULLET2) :
-		m_bullet2.push_back(new Bullet_p2(m_soundManager, MAPWIDTH, MAPLENGTH, m_player->GetPosition(), XMFLOAT3(0.3, 0.3, 0.3), 1, m_beatNumber));
+		m_bullet2.push_back(new Bullet_p2(m_soundManager, MAPWIDTH, MAPLENGTH, m_player->GetPosition(), XMFLOAT3(0.3, 0.3, 0.3), 1, m_rocketOffset));
 		m_soundManager->PlayOneShotSound("Bullet_Q", 0.5f);
 		break;
 	case(BULLET3) :
@@ -663,18 +663,27 @@ void EntityManager::BeatWasDetected()
 		case INPUT_DEFAULT_BULLET:
 			SpawnEntity(BULLET1); //Default bullet
 			m_laserOffset = 0;
+			m_rocketOffset = 0;
 			break;
 		case INPUT_BULLET2:
-			SpawnEntity(BULLET2);
+			if (m_rocketOffset != 2)
+			{
+				SpawnEntity(BULLET2);
+				m_rocketOffset++;
+			}
+			else
+				m_rocketOffset = 0;
 			m_laserOffset = 0;
 			break;
 		case INPUT_BULLET3:
 			SpawnEntity(BULLET3);
 			m_laserOffset = 0;
+			m_rocketOffset = 0;
 			break;
 		case INPUT_BULLET4:
 			SpawnEntity(BULLET4);
 			m_laserOffset = 0;
+			m_rocketOffset = 0;
 			break;
 		case INPUT_BULLET5:
 			if (m_laserOffset == 0)
@@ -683,9 +692,8 @@ void EntityManager::BeatWasDetected()
 				m_laserOffset = 1;
 			}
 			else
-			{
 				m_laserOffset = 0;
-			}
+			m_rocketOffset = 0;
 			break;
 		default:
 			break;
