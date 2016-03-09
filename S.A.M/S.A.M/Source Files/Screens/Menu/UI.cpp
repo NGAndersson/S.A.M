@@ -3,6 +3,7 @@
 UI::UI(ID3D11Device* Device, ID3D11DeviceContext* DeviceContext, int ScreenHeight, int ScreenWidth, Input* input, Stats* stats) : Screen(Device, DeviceContext, ScreenHeight, ScreenWidth, input)
 {
 	m_font = make_unique<SpriteFont>(Device, L"Resources/moonhouse.spritefont");
+	m_states = make_unique<CommonStates>(Device);
 	m_stats = stats;
 	m_input = input;
 
@@ -25,6 +26,17 @@ UI::UI(ID3D11Device* Device, ID3D11DeviceContext* DeviceContext, int ScreenHeigh
 	m_shotBinding[SHOT4].m_color = Colors::Crimson;
 	m_shotBinding[SHOT4].m_origin = DirectX::SimpleMath::Vector2(96, 254);
 	m_shotBinding[SHOT4].m_position = DirectX::SimpleMath::Vector2(185 * (float(m_screenWidth) / float(1058)), m_screenHeight - 150 * (float(m_screenWidth) / float(1440)));
+
+
+	HRESULT HR = CreateWICTextureFromFile(Device, L"Resources/Sprites/ComboMeter.png", nullptr, m_comboMeter.ReleaseAndGetAddressOf());
+	m_spriteCombo.m_origin = DirectX::SimpleMath::Vector2(25, 150); //50 width and 300 height from png!
+	m_spriteCombo.m_position = DirectX::SimpleMath::Vector2(m_screenWidth * 17 / 18, m_screenHeight / 2);
+
+	HR = CreateWICTextureFromFile(Device, L"Resources/Sprites/ComboBar.png", nullptr, m_comboBar.ReleaseAndGetAddressOf());
+	m_spriteBar.m_origin = DirectX::SimpleMath::Vector2(25,30);// from png file! pixel size is double
+	m_spriteBar.m_position = DirectX::SimpleMath::Vector2(m_screenWidth * 17 / 18, m_screenHeight / 2);
+
+	
 }
 
 UI::~UI() 
@@ -65,6 +77,7 @@ void UI::Update(double time)
 		break;
 	}
 
+	//m_spriteBar.m_position.y = LILLOSCARSSKIT MED COMBO MÄTAREN!!! 
 	m_score = to_wstring(m_stats->GetScore());
 	m_livesLeft = to_wstring(m_stats->GetLives());
 	m_combo = to_wstring(m_stats->GetCombo());
@@ -99,7 +112,7 @@ void UI::Render(int offset)
 	{
 		_tempOffset = L"Go Go Go";
 	}
-	m_spriteBatch->Begin();
+	m_spriteBatch->Begin(SpriteSortMode_Deferred,m_states->NonPremultiplied());
 	if (offset - m_stats->GetBeat() >= -4)
 	{
 		m_font->DrawString(m_spriteBatch.get(), _tempOffset.c_str(), _offsetCountPos, Colors::Crimson, 0.f, m_font->MeasureString(_tempOffset.c_str()) / 2.f, _scale);
@@ -116,7 +129,11 @@ void UI::Render(int offset)
 	m_spriteBatch->Draw(m_bSprite2.Get(), m_shotBinding[SHOT2].m_position, nullptr, m_shotBinding[SHOT2].m_color, 0.f, m_shotBinding[SHOT2].m_origin, 0.2f);
 	m_spriteBatch->Draw(m_bSprite3.Get(), m_shotBinding[SHOT3].m_position, nullptr, m_shotBinding[SHOT3].m_color, 0.f, m_shotBinding[SHOT3].m_origin, 0.05f);
 	m_spriteBatch->Draw(m_bSprite4.Get(), m_shotBinding[SHOT4].m_position, nullptr, m_shotBinding[SHOT4].m_color, 0.f, m_shotBinding[SHOT4].m_origin, 0.1f);
+	m_spriteBatch->Draw(m_comboMeter.Get(), m_spriteCombo.m_position, nullptr, Colors::White, 0.0f, m_spriteCombo.m_origin);
+	m_spriteBatch->Draw(m_comboBar.Get(), m_spriteBar.m_position, nullptr, Colors::White, 0.0f, m_spriteBar.m_origin);
 	m_spriteBatch->End();
+	
+
 
 }
 

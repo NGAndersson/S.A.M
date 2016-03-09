@@ -1,7 +1,7 @@
 #ifndef _SCREEN_H
 #define _SCREEN_H
 #include <iostream>
-
+#include <CommonStates.h>
 #include "WICTextureLoader.h"
 #include "SpriteBatch.h"
 #include "SpriteFont.h"
