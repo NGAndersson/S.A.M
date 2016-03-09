@@ -264,33 +264,33 @@ void EntityManager::Update(double time)
 
 	CheckCombo();
 
-	//BeatDet test
-	float _currentPos = m_soundManager->GetCurrentMusicTimePCM() / 1024.f;
-	if (m_beat[(int)_currentPos] > 0.0f && m_timeSinceLastBeat > 100)		//Small time buffer to prevent it from going off 50 times per beat 
-	{
-		//BEAT WAS DETECTED
-		if (m_beatNumber > m_offset) {
-			BeatWasDetected();
-			m_light.beatBoost(true, time, m_timeSinceLastBeat/1000, 0);
+		//BeatDet test
+		float _currentPos = m_soundManager->GetCurrentMusicTimePCM() / 1024.f;
+		if (m_beat[(int)_currentPos] > 0.0f && m_timeSinceLastBeat > 100)		//Small time buffer to prevent it from going off 50 times per beat 
+		{
+			//BEAT WAS DETECTED
+			if (m_beatNumber > m_offset) {
+				BeatWasDetected();
+				m_light.beatBoost(true, time, m_timeSinceLastBeat/1000, 0);
 			for (int i = 1; i < 7; i++)			//bullets start at modelhandlers[1]
 				m_modelHandlers[i]->beatBoost(true, time, m_timeSinceLastBeat/1000, 0);
-			m_timeSinceLastBeat = 0;
-			m_beatNumber += 1;
-			m_statsManager->AddBeat();
+				m_timeSinceLastBeat = 0;
+				m_beatNumber += 1;
+				m_statsManager->AddBeat();
+			}
+			else {
+				m_timeSinceLastBeat = 0;
+				m_beatNumber++;
+				m_statsManager->AddBeat();
+			}
+		SpawnEnemy();
 		}
 		else {
-			m_timeSinceLastBeat = 0;
-			m_beatNumber++;
-			m_statsManager->AddBeat();
-		}
-		SpawnEnemy();
-	}
-	else {
-		m_timeSinceLastBeat += time * 1000;
-		m_light.beatBoost(false, time, m_timeSinceLastBeat/1000, 0);
+			m_timeSinceLastBeat += time * 1000;
+			m_light.beatBoost(false, time, m_timeSinceLastBeat/1000, 0);
 		for (int i = 1; i < 7; i++)				//bullets start at modelhandlers[1]
 			m_modelHandlers[i]->beatBoost(false, time, m_timeSinceLastBeat/1000, 0);
-	}
+		}
 
 
 	//Do collision checks
@@ -729,13 +729,13 @@ void EntityManager::BeatWasDetected()
 	}
 	} 
 	EnemyFire();
-}
+	} 
 
 void EntityManager::SpawnEnemy() 
 {
 	static int _enemySpawnBeat[4] = { 0 };
 	for (int j = 0; j < 4; j++)							//For each enemy's spawn rate vectors
-	{
+	{ 
 		for (int i = m_enemySpawnRate[j].size() - 1; i >= 0; i--)	//For each spawn rate
 		{
 			if (m_enemySpawnRate[j][i].first <= m_statsManager->GetBeat())	//Get correct frequency-span
@@ -808,9 +808,9 @@ void EntityManager::RenderEnemies()
 	int _enemyHealth[4] = { m_enemyHealth1, m_enemyHealth2, m_enemyHealth3, m_enemyHealth4 };
 
 	for (int j = 0; j < 4; j++)
-	{
-		if (_enemies[j].size() > 0)
 		{
+		if (_enemies[j].size() > 0)
+	{
 			for (auto i = 0; i < _enemies[j].size(); i++)
 		{
 				_instancePosition.push_back(_enemies[j][i]->GetPosition());
