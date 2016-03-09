@@ -77,7 +77,12 @@ void UI::Update(double time)
 		break;
 	}
 
-	//m_spriteBar.m_position.y = LILLOSCARSSKIT MED COMBO MÄTAREN!!! 
+
+	// top pos är y = m_spriteCombo.m_position.y+135.f;
+	//Sen är det bara att få den till att variera mellan dessa värden!
+	// min Pos är y = m_spriteCombo.m_position.y - 135.f;
+	//Typ
+	//m_spriteBar.m_position.y = (m_screenHeight / 2) + cos(värdet från beats)*135;  bara att få värdet att alltid
 	m_score = to_wstring(m_stats->GetScore());
 	m_livesLeft = to_wstring(m_stats->GetLives());
 	m_combo = to_wstring(m_stats->GetCombo());
