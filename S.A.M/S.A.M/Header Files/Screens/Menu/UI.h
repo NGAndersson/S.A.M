@@ -28,9 +28,11 @@ private:
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> m_bSprite3;
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> m_bSprite4;
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> m_comboMeter;
+	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> m_comboBar;
 
 	std::unique_ptr<DirectX::CommonStates> m_states;
 	Font m_spriteCombo;
+	Font m_spriteBar;
 
 	Font m_shotBinding[4];
 };
