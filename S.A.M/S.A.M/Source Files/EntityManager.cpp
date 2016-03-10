@@ -274,11 +274,13 @@ void EntityManager::Update(double time)
 				m_light.beatBoost(true, time, m_timeSinceLastBeat/1000, 0);
 			for (int i = 1; i < 7; i++)			//bullets start at modelhandlers[1]
 				m_modelHandlers[i]->beatBoost(true, time, m_timeSinceLastBeat/1000, 0);
+				m_prevBeatTime = m_timeSinceLastBeat;
 				m_timeSinceLastBeat = 0;
 				m_beatNumber += 1;
 				m_statsManager->AddBeat();
 			}
 			else {
+				m_prevBeatTime = m_timeSinceLastBeat;
 				m_timeSinceLastBeat = 0;
 				m_beatNumber++;
 				m_statsManager->AddBeat();
@@ -678,7 +680,8 @@ void EntityManager::Reset()
 	m_statsManager->SetLives();
 	m_currentBPM, m_beatNumber = 0;
 	m_timeSinceLastBeat = 0.0f;
-	m_offset = 0;				
+	m_offset = 0;
+	m_beatNumber = 0;
 	m_player->SetDelete(true);
 	m_renderFire = false;
 	m_renderPlayer = false;
@@ -914,6 +917,11 @@ void EntityManager::EnemyFire()
 
 void EntityManager::CheckCombo()
 {
+	if (m_beatNumber % 2 == 0)
+		m_statsManager->SetPercentage(XM_PI * (m_timeSinceLastBeat / m_prevBeatTime));		//Sets a value that the UI combometer uses to determine position
+	else 
+		m_statsManager->SetPercentage(XM_PI * (m_timeSinceLastBeat / m_prevBeatTime) + XM_PI);		//Sets a value that the UI combometer uses to determine position
+
 	// Check key presses near the beat, for combo
 	static bool _registeredCombo = true;
 	static BulletType _currentBulletType;
