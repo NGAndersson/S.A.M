@@ -121,6 +121,7 @@ private:
 
 	int m_currentBPM, m_beatNumber = 0;
 	double m_timeSinceLastBeat = 0.0f;
+	double m_prevBeatTime = 0.0f;
 	int m_offset = 0;				//Beats to skip in the beginning (for intros without music etc)
 									//ADD ENDING OFFSETS?
 	float* m_beat;
