@@ -871,7 +871,7 @@ void EntityManager::CheckCombo()
 			found = true;
 	}
 	found = false;
-	while (found == false)			// Find next beat
+	while (found == false)							// Find next beat
 	{
 		_upperPos++;
 		if (m_beat[_upperPos] > 0) 
