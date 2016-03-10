@@ -125,6 +125,7 @@ private:
 									//ADD ENDING OFFSETS?
 	float* m_beat;
 	int m_level;
+	int _enemySpawnBeat[4] = { 0 };
 
 public:
 
