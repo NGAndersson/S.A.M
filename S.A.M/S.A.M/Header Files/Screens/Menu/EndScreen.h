@@ -15,6 +15,7 @@ public:
 
 	EndScreen(ID3D11Device* Device, ID3D11DeviceContext* DeviceContext, int ScreenHeight, int ScreenWidth, Input* input, Stats* stats);
 	void Update(double time);
+	void UpdateOP(double time);
 	void Render();
 	wstring GetPlayerName() { return m_playerName; }
 
@@ -22,6 +23,7 @@ public:
 private:
 	Stats* m_stats;
 	wstring m_playerName;
+	bool m_state = false;
 protected:
 public:
 

@@ -16,7 +16,7 @@ ScreenManager::~ScreenManager()
 
 newOptions ScreenManager::Update(double time)
 {
-
+	int _lengthMS = m_soundManager->GetLengthMS();
 	//Checks input depending on what screen the user is in.
 	switch (m_current)
 	{
@@ -37,6 +37,7 @@ newOptions ScreenManager::Update(double time)
 		break;
 	case GAME:
 		//Game
+		_lengthMS = _lengthMS / 1000;
 		m_screenGame->Update(time);
 		if (m_stats->GetLives() == 0)
 		{
@@ -45,6 +46,15 @@ newOptions ScreenManager::Update(double time)
 			//m_stats->SavePoints()
 			//m_stats->ResetPointsAndLives()
 			//ResetGame()
+		}
+		else if (_lengthMS <= m_totTime)
+		{
+			m_current = ENDSCREEN;
+			m_soundManager->PauseMusic();
+		}
+		else
+		{
+			m_totTime += time;
 		}
 		break;
 	case 3:
@@ -61,9 +71,12 @@ newOptions ScreenManager::Update(double time)
 		break;
 	case OPTION:
 		//Options
-		m_screenOptions->Update(time);
+		if (m_gameOngoing == true)
+			m_screenOptions->UpdateOP(time);
+		else
+			m_screenOptions->Update(time);
 		m_current = m_screenOptions->GetTargetMenu();
-		if (m_current == MENU)
+		if (m_current == MENU || m_current == PAUSE)
 			m_screenOptions->Reset();
 		break;
 	case PAUSE:
@@ -85,7 +98,11 @@ newOptions ScreenManager::Update(double time)
 		break;
 	case ENDSCREEN:
 		//Endscreen
-		m_endScreen->Update(time);
+		_lengthMS = _lengthMS / 1000;
+		if (_lengthMS > m_totTime)
+			m_endScreen->Update(time);
+		else if (_lengthMS <= m_totTime)
+			m_endScreen->UpdateOP(time);
 		if (m_input->CheckReturn() && !m_keyDown)
 		{
 			m_stats->SaveScore(m_endScreen->GetPlayerName());
@@ -114,6 +131,7 @@ newOptions ScreenManager::Update(double time)
 			m_gameOngoing = true;
 			m_soundManager->StopMusic();
 			m_current = GAME;
+			m_totTime = 0;
 		}
 		else if (m_input->CheckEsc() && !m_keyDown)		//Go back to main menu on ESC
 		{

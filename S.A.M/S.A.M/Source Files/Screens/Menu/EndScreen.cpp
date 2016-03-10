@@ -59,6 +59,41 @@ EndScreen::EndScreen(ID3D11Device* Device, ID3D11DeviceContext* DeviceContext, i
 
 void EndScreen::Update(double time)
 {
+	m_state = false;
+	InputType _input;
+	static bool _keyDown;
+
+	if (m_input->CheckBackspace())						//Backspace
+	{
+		if (!_keyDown)
+		{
+			if (m_playerName != L"")
+				m_playerName.pop_back();
+			_keyDown = true;
+		}
+	}
+	else if (m_playerName.length() < (int)NAMEMAXLENGTH) //Backspace wasn't pressed, check other buttons
+	{
+		int _key = m_input->CheckInputInt();
+		wchar_t _wkey = KeyToWChar(_key);
+
+		if (_wkey != L'\0')
+		{
+			if (!_keyDown)
+			{
+				m_playerName += _wkey;
+				_keyDown = true;
+			}
+		}
+		else
+			_keyDown = false;
+	}
+	else _keyDown = false;
+}
+
+void EndScreen::UpdateOP(double time)
+{
+	m_state = true;
 	InputType _input;
 	static bool _keyDown;
 
@@ -95,16 +130,33 @@ void EndScreen::Render()
 	wstring _scoreMessage = L"Score: " + to_wstring(m_stats->GetScore());
 
 	m_spriteBatch->Begin();
+	XMVECTOR _origin;
 
-	XMVECTOR _origin = m_font->MeasureString(L"Game Over");			//Game Over
+	if (m_state == false)
+		_origin = m_font->MeasureString(L"Game Over");			//Game Over
+	else
+		_origin = m_font->MeasureString(L"You win");			//victory
 	_origin = XMVectorSetY(_origin, 0);
-	m_font->DrawString(m_spriteBatch.get(), 
-		L"Game Over", 
-		SimpleMath::Vector2(m_screenWidth/2, m_screenHeight/3), 
-		DirectX::Colors::Crimson, 
-		0.f, 
-		_origin/2, 
-		SimpleMath::Vector3(1.5f) * float(m_screenWidth) / float(1058));
+	if (m_state == false)
+	{
+		m_font->DrawString(m_spriteBatch.get(),
+			L"Game Over",
+			SimpleMath::Vector2(m_screenWidth / 2, m_screenHeight / 3),
+			DirectX::Colors::Crimson,
+			0.f,
+			_origin / 2,
+			SimpleMath::Vector3(1.5f) * float(m_screenWidth) / float(1058));
+	}
+	else 
+	{
+		m_font->DrawString(m_spriteBatch.get(),
+			L"You win",
+			SimpleMath::Vector2(m_screenWidth / 2, m_screenHeight / 3),
+			DirectX::Colors::Crimson,
+			0.f,
+			_origin / 2,
+			SimpleMath::Vector3(1.5f) * float(m_screenWidth) / float(1058));
+	}
 
 	_origin = m_font->MeasureString(_scoreMessage.c_str());			//Score amount
 	_origin = XMVectorSetY(_origin, 0);

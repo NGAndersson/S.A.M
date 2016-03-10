@@ -10,6 +10,14 @@
 #include "Graphics\ExplosionPart.h"
 #include "Entities/Bullets/BulletBoundingSphere.h"
 
+#define rocketInitialDamage 200
+#define rocketAOEDamage 4000
+#define laserDamage 500
+#define defaultDamage 1000
+#define donutDamage 800
+#define tripleDamage 600
+
+
 using namespace DirectX;
 using namespace std;
 class Collision
