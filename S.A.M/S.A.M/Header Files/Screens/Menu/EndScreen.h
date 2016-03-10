@@ -21,7 +21,6 @@ public:
 	//Attributes
 private:
 	Stats* m_stats;
-	int m_screenWidth, m_screenHeight;
 	wstring m_playerName;
 protected:
 public:

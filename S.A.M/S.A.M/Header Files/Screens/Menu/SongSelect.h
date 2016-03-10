@@ -24,10 +24,7 @@ private:
 	int m_selection;
 
 	SoundManager* m_soundManager;
-	Input* m_input;
 	Stats* m_stats;
-
-	int m_screenHeight, m_screenWidth;
 	
 	std::unique_ptr<DirectX::CommonStates> m_states;
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> m_arrows[4];

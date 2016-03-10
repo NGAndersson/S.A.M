@@ -54,7 +54,6 @@ protected:
 	int m_screenHeight;
 	int m_screenWidth;
 	unique_ptr<SpriteBatch> m_spriteBatch;
-	ComPtr<ID3D11ShaderResourceView> m_backRound;
 	unique_ptr<SpriteFont> m_font;
 	SimpleMath::Vector2 m_fontPosition;
 
