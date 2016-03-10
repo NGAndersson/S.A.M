@@ -653,6 +653,9 @@ void EntityManager::Reset()
 	for (int i = 0; i < m_enemy4.size(); i++)
 		delete m_enemy4[i];
 
+	for (int i = 0; i < 4; i++)
+		_enemySpawnBeat[i] = 0;
+
 	m_bullet1.clear();
 	m_bullet2.clear();
 	m_bullet3.clear();
@@ -669,6 +672,7 @@ void EntityManager::Reset()
 	m_enemy4MovPatterns.clear();
 	for (int i = 0; i < 4; i++) m_enemySpawnRate[i].clear();
 	m_explosion.clear();
+	m_beatNumber = 0;
 	m_statsManager->ResetCombo();
 	m_statsManager->ResetScore();
 	m_statsManager->SetLives();
@@ -732,7 +736,6 @@ void EntityManager::BeatWasDetected()
 
 void EntityManager::SpawnEnemy() 
 {
-	static int _enemySpawnBeat[4] = { 0 };
 	for (int j = 0; j < 4; j++)							//For each enemy's spawn rate vectors
 	{ 
 		for (int i = m_enemySpawnRate[j].size() - 1; i >= 0; i--)	//For each spawn rate

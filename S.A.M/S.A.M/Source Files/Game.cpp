@@ -260,6 +260,11 @@ void Game::Update(double time, HINSTANCE hInstance, HINSTANCE hPrevInstance, LPS
 		m_entityManager->Reset();
 	}
 
+	if (m_screenManager->GetCurrentScreen() == MENU && _prevScreen == PAUSE)
+	{
+		m_entityManager->Reset();
+	}
+
 	_prevScreen = m_screenManager->GetCurrentScreen();
 	}
 
