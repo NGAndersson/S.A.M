@@ -33,7 +33,7 @@ UI::UI(ID3D11Device* Device, ID3D11DeviceContext* DeviceContext, int ScreenHeigh
 	m_spriteCombo.m_position = DirectX::SimpleMath::Vector2(m_screenWidth * 17 / 18, m_screenHeight / 2);
 
 	HR = CreateWICTextureFromFile(Device, L"Resources/Sprites/ComboBar.png", nullptr, m_comboBar.ReleaseAndGetAddressOf());
-	m_spriteBar.m_origin = DirectX::SimpleMath::Vector2(20,30);// from png file! pixel size is double
+	m_spriteBar.m_origin = DirectX::SimpleMath::Vector2(20,15);// from png file! pixel size is double
 	m_spriteBar.m_position = DirectX::SimpleMath::Vector2(m_screenWidth * 17 / 18, m_screenHeight / 2);
 
 	
