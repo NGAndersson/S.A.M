@@ -864,14 +864,14 @@ void EntityManager::CheckCombo()
 	int _lowerPos = (int)_currentPos + 1;
 	
 	bool found = false;
-	while (found == false)
+	while (found == false && _lowerPos > 0)			// Find previous beat
 	{
 		_lowerPos--;
 		if (m_beat[_lowerPos] > 0) 
 			found = true;
 	}
 	found = false;
-	while (found == false)
+	while (found == false)			// Find next beat
 	{
 		_upperPos++;
 		if (m_beat[_upperPos] > 0) 
