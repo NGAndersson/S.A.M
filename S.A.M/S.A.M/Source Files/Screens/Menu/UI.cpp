@@ -33,7 +33,7 @@ UI::UI(ID3D11Device* Device, ID3D11DeviceContext* DeviceContext, int ScreenHeigh
 	m_spriteCombo.m_position = DirectX::SimpleMath::Vector2(m_screenWidth * 17 / 18, m_screenHeight / 2);
 
 	HR = CreateWICTextureFromFile(Device, L"Resources/Sprites/ComboBar.png", nullptr, m_comboBar.ReleaseAndGetAddressOf());
-	m_spriteBar.m_origin = DirectX::SimpleMath::Vector2(20,15);// from png file! pixel size is double
+	m_spriteBar.m_origin = DirectX::SimpleMath::Vector2(20,2.5f);// from png file! pixel size is double
 	m_spriteBar.m_position = DirectX::SimpleMath::Vector2(m_screenWidth * 17 / 18, m_screenHeight / 2);
 
 	
@@ -82,7 +82,7 @@ void UI::Update(double time)
 	//Sen är det bara att få den till att variera mellan dessa värden!
 	// min Pos är y = m_spriteCombo.m_position.y - 135.f;
 	//Typ
-	m_spriteBar.m_position.y = (m_screenHeight / 2) + cos(m_stats->GetPrecentage())*135; 
+	m_spriteBar.m_position.y = (m_screenHeight / 2) + cos(m_stats->GetPrecentage())*147.5f; 
 	m_score = to_wstring(m_stats->GetScore());
 	m_livesLeft = to_wstring(m_stats->GetLives());
 	m_combo = to_wstring(m_stats->GetCombo());
