@@ -28,9 +28,7 @@ void BulletBoundingSphere::Destroyed(double time)
 
 void BulletBoundingSphere::Update(double time)
 {
-	m_position.z += (m_speed * 5) * time;
-	m_sphere.Center = m_position;
-	m_sphere.Radius = m_sphere.Radius + (m_speed * 5) * time;
+	m_sphere.Radius = m_sphere.Radius + (0.4 * (m_speed * 5) * time);
 	if (m_timeToLive < 0)
 	{
 		m_delete = true;
