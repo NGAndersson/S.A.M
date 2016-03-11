@@ -1,6 +1,6 @@
 1|QQ|40000
 2|QQ|22000
-3|SomeNoob|0
+3|HRE|18000
 4|SomeNoob|0
 5|SomeNoob|0
 6|SomeNoob|0
@@ -8,4 +8,3 @@
 8|SomeNoob|0
 9|SomeNoob|0
 10|SomeNoob|0
-

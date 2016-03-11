@@ -9,7 +9,7 @@ arr=AP
 music=Resources/Sound/Papa Roach - Scars.mp3
 
 #### Scorefile
-score=score/Scars1.txt
+score=score/Scars.txt
 
 #### Beginning offset
 offset=33

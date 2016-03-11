@@ -57,6 +57,15 @@ EntityManager::~EntityManager()
 	for (int i = 0; i < m_enemy4.size(); i++)
 		delete m_enemy4[i];
 
+	for (int i = 0; i < m_bulletSphere.size(); i++)
+		delete m_bulletSphere[i];
+
+	for (int i = 0; i < m_explosion.size(); i++)
+		delete m_explosion[i];
+
+	m_enemyHealthColourBuffer->Release();
+	
+
 }
 
 void EntityManager::SpawnEntity(HandlerIndex type)
