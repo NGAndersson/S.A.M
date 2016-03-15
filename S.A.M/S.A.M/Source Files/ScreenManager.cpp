@@ -174,13 +174,18 @@ void ScreenManager::InitializeScreen(ID3D11Device* Device, ID3D11DeviceContext* 
 	//Create Modelhandlers...
 	m_input = input;
 
+	m_screenLoad = new LoadingScreen(Device, DeviceContext, ScreenHeight, ScreenWidth, input);
+	m_screenLoad->Render();
 	m_screenOptions = new OptionsMenu(Device, DeviceContext, ScreenHeight, ScreenWidth, input, soundManager);
 	m_screenMenu = new StartMenu(Device, DeviceContext, ScreenHeight, ScreenWidth, input);
 	m_screenGame = new UI(Device, DeviceContext, ScreenHeight, ScreenWidth, input, stats);
 	m_screenPause = new PauseMenu(Device, DeviceContext, ScreenHeight, ScreenWidth, input);
 	m_endScreen = new EndScreen(Device, DeviceContext, ScreenHeight, ScreenWidth, input, stats);
+}
+
+void ScreenManager::InitializeSongSelect(ID3D11Device* Device, ID3D11DeviceContext* DeviceContext, int ScreenHeight, int ScreenWidth, Input* input, Stats* stats, SoundManager* soundManager)
+{
 	m_songSelect = new SongSelect(Device, DeviceContext, ScreenHeight, ScreenWidth, input, stats, soundManager);
-	m_screenLoad = new LoadingScreen(Device, DeviceContext, ScreenHeight, ScreenWidth, input);
 }
 
 void ScreenManager::Render(int offset)
@@ -192,7 +197,6 @@ void ScreenManager::Render(int offset)
 		break;
 	case MENU:
 		//StartMenu
-		m_screenLoad->Render();
 		m_screenMenu->Render();
 		break;
 	case GAME:
@@ -201,7 +205,6 @@ void ScreenManager::Render(int offset)
 		break;
 	case 3:
 		//HighScore
-		m_screenLoad->Render();
 		m_screenHighScore->Render();
 		break;
 	case 4:
@@ -214,11 +217,9 @@ void ScreenManager::Render(int offset)
 		break;
 	case ENDSCREEN:
 		//Endscreen
-		m_screenLoad->Render();
 		m_endScreen->Render();
 		break;
 	case SONGSELECT:
-		m_screenLoad->Render();
 		m_songSelect->Render();
 	default:
 		break;

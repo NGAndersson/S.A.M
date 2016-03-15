@@ -3,6 +3,7 @@
 OptionsMenu::OptionsMenu(ID3D11Device* Device, ID3D11DeviceContext* DeviceContext, int ScreenHeight, int ScreenWidth, Input* input, SoundManager* SoundManager) : Screen(Device, DeviceContext, ScreenHeight, ScreenWidth, input)
 {
 	m_font = make_unique<SpriteFont>(Device, L"Resources/moonhouse.spritefont");
+	CreateWICTextureFromFile(Device, L"Resources/Sprites/Background.png", nullptr, m_background.ReleaseAndGetAddressOf());
 	ReadSetttings();
 
 	SimpleMath::Vector2 _offsetV,_originV;
@@ -854,6 +855,7 @@ void OptionsMenu::Render()
 
 //Get Volume and Resolution and add..
 	m_spriteBatch->Begin();
+	m_spriteBatch->Draw(m_background.Get(), DirectX::SimpleMath::Vector2(m_screenWidth / 2, m_screenHeight / 2), nullptr, DirectX::Colors::White, 0.f, DirectX::SimpleMath::Vector2(m_screenWidth / 2, m_screenHeight / 2), 1.f);
 	m_font->DrawString(m_spriteBatch.get(), m_volumeMusic.c_str(), m_choices[MUSICVOLUME].m_position, m_choices[MUSICVOLUME].m_color,0.f, m_choices[MUSICVOLUME].m_origin,m_scaleMenu);
 	m_font->DrawString(m_spriteBatch.get(), m_volumeEffect.c_str(), m_choices[SHOTSVOLUME].m_position, m_choices[SHOTSVOLUME].m_color, 0.f, m_choices[SHOTSVOLUME].m_origin,m_scaleMenu);
 	if (m_state == false)	//only shows the resolution if not in game

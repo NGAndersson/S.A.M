@@ -108,16 +108,15 @@ void Game::InitGame(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 	 //Initialize Stats manager
 	m_statsManager = new Stats;
 
-	//Create and initialize ScreenManager
-	m_screenManager = new ScreenManager();
-	m_screenManager->InitializeScreen(m_device, m_deviceContext,m_height,m_width, m_input, m_statsManager, m_soundManager);
-
 	//Sets the viewport
 	SetViewport();
 
-	//Loads the Background image (DOESN'T WORK)
-	//m_screenManager->m_screenLoad->Render();
-
+	//Create and initialize ScreenManager
+	m_screenManager = new ScreenManager();
+	m_screenManager->InitializeScreen(m_device, m_deviceContext,m_height,m_width, m_input, m_statsManager, m_soundManager);
+	//swapchain present
+	m_swapChain->Present(0, 0);
+	m_screenManager->InitializeSongSelect(m_device, m_deviceContext, m_height, m_width, m_input, m_statsManager, m_soundManager);
 
 	//Create and initialize EntityManager
 	m_entityManager = new EntityManager;

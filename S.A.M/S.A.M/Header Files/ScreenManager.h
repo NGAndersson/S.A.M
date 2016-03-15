@@ -29,6 +29,7 @@ public:
 	newOptions Update(double time);
 	//Initializing the screen manager
 	void InitializeScreen(ID3D11Device* Device, ID3D11DeviceContext* DeviceContext, int ScreenHeight, int ScreenWidth, Input* input,Stats* stats, SoundManager* soundManager);
+	void InitializeSongSelect(ID3D11Device* Device, ID3D11DeviceContext* DeviceContext, int ScreenHeight, int ScreenWidth, Input* input, Stats* stats, SoundManager* soundManager);
 	//Rendercall
 	void Render(int offset);
 	//Returns the current screen

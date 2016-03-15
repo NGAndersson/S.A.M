@@ -19,6 +19,7 @@ public:
 	string GetSelectedSongFile() { return string(m_songElements[m_selection]->GetDataFile()); }
 	string GetScoreFile() { return m_songElements[m_selection]->GetScoreFile(); }
 private:
+	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> m_background;
 	vector<SongElement*> m_songElements;
 	SongElement* m_visibleElements[5];
 	int m_selection;

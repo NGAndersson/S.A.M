@@ -21,6 +21,7 @@ public:
 
 	//Attributes
 private:
+	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> m_background;
 	Stats* m_stats;
 	wstring m_playerName;
 	bool m_state = false;

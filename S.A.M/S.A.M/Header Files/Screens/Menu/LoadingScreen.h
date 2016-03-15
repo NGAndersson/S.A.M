@@ -18,9 +18,8 @@ public:
 private:
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> m_background;
 
-	Font m_Hints[3];
-	//wstring m_dyk = L"Did you know?";
-	//wstring m_hint1 = L"The name of the game was taken from a french poster in the original developer room.";
+	Font m_Hints[2];
+	wstring m_dyk;
 protected:
 public:
 };

@@ -27,6 +27,7 @@ public:
 	}
 
 private:
+	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> m_background;
 	wstring m_start = L"StartGame";
 	wstring m_options = L"Options";
 	wstring m_exit = L"Quit";

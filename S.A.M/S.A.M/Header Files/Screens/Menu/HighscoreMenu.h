@@ -17,6 +17,7 @@ public:
 	void Render();
 
 private:
+	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> m_background;
 	Stats* m_stats;
 	string m_scorePath;
 	std::pair<std::wstring, int>* m_highscore;
