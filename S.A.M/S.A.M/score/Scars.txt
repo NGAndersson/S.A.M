@@ -1,9 +1,9 @@
-1|QQ|40000
-2|QQ|22000
-3|HRE|18000
-4|SomeNoob|0
-5|SomeNoob|0
-6|SomeNoob|0
+1|D|100000
+2|HEJ|70000
+3|QQ|40000
+4|QQ|22000
+5|JOD|20000
+6|HRE|18000
 7|SomeNoob|0
 8|SomeNoob|0
 9|SomeNoob|0

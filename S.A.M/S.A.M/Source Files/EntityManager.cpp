@@ -209,7 +209,7 @@ void EntityManager::Initialize(SoundManager* soundManager, Input* input, ID3D11D
 	m_modelHandlers[ENEMY3]->LoadOBJData("Resources/Models/Ship_03.obj", "Resources/Models/Ship_03.mtl", m_device, m_deviceContext);
 	m_modelHandlers[ENEMY3]->CreateBuffers(m_device);
 	m_modelHandlers[ENEMY4] = new ModelHandler;
-	m_modelHandlers[ENEMY4]->LoadOBJData("Resources/Models/Ship_01.obj", "Resources/Models/Ship_01.mtl", m_device, m_deviceContext);
+	m_modelHandlers[ENEMY4]->LoadOBJData("Resources/Models/Boss_Ship.obj", "Resources/Models/Boss_Ship.mtl", m_device, m_deviceContext);
 	m_modelHandlers[ENEMY4]->CreateBuffers(m_device);
 	//Temp, create player
 	SpawnEntity(PLAYER);

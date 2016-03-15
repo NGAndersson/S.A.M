@@ -130,10 +130,10 @@ void UI::Render(int offset)
 
 	//Used for counting beats when adding new song
 	//m_font->DrawString(m_spriteBatch.get(), m_beats.c_str(), SimpleMath::Vector2(m_screenWidth/2, m_screenHeight / 2), Colors::Aquamarine, 0.f, m_font->MeasureString(m_beats.c_str()) / 2.f, _scale);
-	m_spriteBatch->Draw(m_bSprite1.Get(), m_shotBinding[SHOT1].m_position, nullptr, m_shotBinding[SHOT1].m_color, 0.f, m_shotBinding[SHOT1].m_origin, 0.1f);
-	m_spriteBatch->Draw(m_bSprite2.Get(), m_shotBinding[SHOT2].m_position, nullptr, m_shotBinding[SHOT2].m_color, 0.f, m_shotBinding[SHOT2].m_origin, 0.2f);
-	m_spriteBatch->Draw(m_bSprite3.Get(), m_shotBinding[SHOT3].m_position, nullptr, m_shotBinding[SHOT3].m_color, 0.f, m_shotBinding[SHOT3].m_origin, 0.05f);
-	m_spriteBatch->Draw(m_bSprite4.Get(), m_shotBinding[SHOT4].m_position, nullptr, m_shotBinding[SHOT4].m_color, 0.f, m_shotBinding[SHOT4].m_origin, 0.1f);
+	m_spriteBatch->Draw(m_bSprite1.Get(), m_shotBinding[SHOT1].m_position, nullptr, m_shotBinding[SHOT1].m_color, 0.f, m_shotBinding[SHOT1].m_origin, 0.1f * (float(m_screenHeight) / float(980)));
+	m_spriteBatch->Draw(m_bSprite2.Get(), m_shotBinding[SHOT2].m_position, nullptr, m_shotBinding[SHOT2].m_color, 0.f, m_shotBinding[SHOT2].m_origin, 0.2f * (float(m_screenHeight) / float(980)));
+	m_spriteBatch->Draw(m_bSprite3.Get(), m_shotBinding[SHOT3].m_position, nullptr, m_shotBinding[SHOT3].m_color, 0.f, m_shotBinding[SHOT3].m_origin, 0.05f * (float(m_screenHeight) / float(980)));
+	m_spriteBatch->Draw(m_bSprite4.Get(), m_shotBinding[SHOT4].m_position, nullptr, m_shotBinding[SHOT4].m_color, 0.f, m_shotBinding[SHOT4].m_origin, 0.1f * (float(m_screenHeight) / float(980)));
 	m_spriteBatch->Draw(m_comboMeter.Get(), m_spriteCombo.m_position, nullptr, Colors::White, 0.0f, m_spriteCombo.m_origin);
 	m_spriteBatch->Draw(m_comboBar.Get(), m_spriteBar.m_position, nullptr, Colors::White, 0.0f, m_spriteBar.m_origin);
 	m_spriteBatch->End();

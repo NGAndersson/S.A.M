@@ -4,5 +4,6 @@ Kd 0.50 0.50 0.50
 Ka 0.00 0.00 0.00
 Tf 1.00 1.00 1.00
 Ni 1.00
+map_Gl Resources\Models\Ship_03_Glow.png
 map_Kd Resources\Models\Ship_03_Dif.png
 map_Sp Resources\Models\Ship_03_Spec.png
