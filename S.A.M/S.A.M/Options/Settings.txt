@@ -2,7 +2,7 @@
 
 ScreenHeight|980
 ScreenWidth|720
-MusicVolume|7
+MusicVolume|6
 EffectVolume|8
 
 

@@ -57,6 +57,15 @@ EntityManager::~EntityManager()
 	for (int i = 0; i < m_enemy4.size(); i++)
 		delete m_enemy4[i];
 
+	for (int i = 0; i < m_bulletSphere.size(); i++)
+		delete m_bulletSphere[i];
+
+	for (int i = 0; i < m_explosion.size(); i++)
+		delete m_explosion[i];
+
+	m_enemyHealthColourBuffer->Release();
+	
+
 }
 
 void EntityManager::SpawnEntity(HandlerIndex type)
@@ -170,7 +179,7 @@ void EntityManager::Initialize(SoundManager* soundManager, Input* input, ID3D11D
 
 	//Create model handlers for each entity type
 	m_modelHandlers[PLAYER] = new ModelHandler();
-	m_modelHandlers[PLAYER]->LoadOBJData("Resources/Models/Player.obj", "Resources/Models/Player.mtl", m_device, m_deviceContext);
+	m_modelHandlers[PLAYER]->LoadOBJData("Resources/Models/Player_Ship.obj", "Resources/Models/Player_Ship.mtl", m_device, m_deviceContext);
 	m_modelHandlers[PLAYER]->CreateBuffers(m_device);
 	m_modelHandlers[BULLET1] = new ModelHandler();
 	m_modelHandlers[BULLET1]->LoadOBJData("Resources/Models/Bullet1.obj", "Resources/Models/Bullet1.mtl", m_device, m_deviceContext);
@@ -200,7 +209,7 @@ void EntityManager::Initialize(SoundManager* soundManager, Input* input, ID3D11D
 	m_modelHandlers[ENEMY3]->LoadOBJData("Resources/Models/Ship_03.obj", "Resources/Models/Ship_03.mtl", m_device, m_deviceContext);
 	m_modelHandlers[ENEMY3]->CreateBuffers(m_device);
 	m_modelHandlers[ENEMY4] = new ModelHandler;
-	m_modelHandlers[ENEMY4]->LoadOBJData("Resources/Models/Ship_01.obj", "Resources/Models/Ship_01.mtl", m_device, m_deviceContext);
+	m_modelHandlers[ENEMY4]->LoadOBJData("Resources/Models/Boss_Ship.obj", "Resources/Models/Boss_Ship.mtl", m_device, m_deviceContext);
 	m_modelHandlers[ENEMY4]->CreateBuffers(m_device);
 	//Temp, create player
 	SpawnEntity(PLAYER);
@@ -274,11 +283,13 @@ void EntityManager::Update(double time)
 				m_light.beatBoost(true, time, m_timeSinceLastBeat/1000, 0);
 			for (int i = 1; i < 7; i++)			//bullets start at modelhandlers[1]
 				m_modelHandlers[i]->beatBoost(true, time, m_timeSinceLastBeat/1000, 0);
+				m_prevBeatTime = m_timeSinceLastBeat;
 				m_timeSinceLastBeat = 0;
 				m_beatNumber += 1;
 				m_statsManager->AddBeat();
 			}
 			else {
+				m_prevBeatTime = m_timeSinceLastBeat;
 				m_timeSinceLastBeat = 0;
 				m_beatNumber++;
 				m_statsManager->AddBeat();
@@ -653,6 +664,9 @@ void EntityManager::Reset()
 	for (int i = 0; i < m_enemy4.size(); i++)
 		delete m_enemy4[i];
 
+	for (int i = 0; i < 4; i++)
+		_enemySpawnBeat[i] = 0;
+
 	m_bullet1.clear();
 	m_bullet2.clear();
 	m_bullet3.clear();
@@ -675,7 +689,8 @@ void EntityManager::Reset()
 	m_statsManager->SetLives();
 	m_currentBPM, m_beatNumber = 0;
 	m_timeSinceLastBeat = 0.0f;
-	m_offset = 0;				
+	m_offset = 0;
+	m_beatNumber = 0;
 	m_player->SetDelete(true);
 	m_renderFire = false;
 	m_renderPlayer = false;
@@ -733,7 +748,6 @@ void EntityManager::BeatWasDetected()
 
 void EntityManager::SpawnEnemy() 
 {
-	static int _enemySpawnBeat[4] = { 0 };
 	for (int j = 0; j < 4; j++)							//For each enemy's spawn rate vectors
 	{ 
 		for (int i = m_enemySpawnRate[j].size() - 1; i >= 0; i--)	//For each spawn rate
@@ -912,6 +926,11 @@ void EntityManager::EnemyFire()
 
 void EntityManager::CheckCombo()
 {
+	if (m_beatNumber % 2 == 0)
+		m_statsManager->SetPercentage(XM_PI * (m_timeSinceLastBeat / m_prevBeatTime));		//Sets a value that the UI combometer uses to determine position
+	else 
+		m_statsManager->SetPercentage(XM_PI * (m_timeSinceLastBeat / m_prevBeatTime) + XM_PI);		//Sets a value that the UI combometer uses to determine position
+
 	// Check key presses near the beat, for combo
 	static bool _registeredCombo = true;
 	static BulletType _currentBulletType;

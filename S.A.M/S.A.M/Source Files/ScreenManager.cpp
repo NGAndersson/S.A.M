@@ -106,6 +106,7 @@ newOptions ScreenManager::Update(double time)
 			m_endScreen->UpdateOP(time);
 		if (m_input->CheckReturn() && !m_keyDown)
 		{
+			m_stats->ResetBeat();
 			m_stats->SaveScore(m_endScreen->GetPlayerName());
 			m_keyDown = true;
 			m_current = HIGHSCORE;
