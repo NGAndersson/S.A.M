@@ -57,6 +57,15 @@ EntityManager::~EntityManager()
 	for (int i = 0; i < m_enemy4.size(); i++)
 		delete m_enemy4[i];
 
+	for (int i = 0; i < m_bulletSphere.size(); i++)
+		delete m_bulletSphere[i];
+
+	for (int i = 0; i < m_explosion.size(); i++)
+		delete m_explosion[i];
+
+	m_enemyHealthColourBuffer->Release();
+	
+
 }
 
 void EntityManager::SpawnEntity(HandlerIndex type)
@@ -170,7 +179,7 @@ void EntityManager::Initialize(SoundManager* soundManager, Input* input, ID3D11D
 
 	//Create model handlers for each entity type
 	m_modelHandlers[PLAYER] = new ModelHandler();
-	m_modelHandlers[PLAYER]->LoadOBJData("Resources/Models/Player.obj", "Resources/Models/Player.mtl", m_device, m_deviceContext);
+	m_modelHandlers[PLAYER]->LoadOBJData("Resources/Models/Player_Ship.obj", "Resources/Models/Player_Ship.mtl", m_device, m_deviceContext);
 	m_modelHandlers[PLAYER]->CreateBuffers(m_device);
 	m_modelHandlers[BULLET1] = new ModelHandler();
 	m_modelHandlers[BULLET1]->LoadOBJData("Resources/Models/Bullet1.obj", "Resources/Models/Bullet1.mtl", m_device, m_deviceContext);
@@ -200,7 +209,7 @@ void EntityManager::Initialize(SoundManager* soundManager, Input* input, ID3D11D
 	m_modelHandlers[ENEMY3]->LoadOBJData("Resources/Models/Ship_03.obj", "Resources/Models/Ship_03.mtl", m_device, m_deviceContext);
 	m_modelHandlers[ENEMY3]->CreateBuffers(m_device);
 	m_modelHandlers[ENEMY4] = new ModelHandler;
-	m_modelHandlers[ENEMY4]->LoadOBJData("Resources/Models/Ship_01.obj", "Resources/Models/Ship_01.mtl", m_device, m_deviceContext);
+	m_modelHandlers[ENEMY4]->LoadOBJData("Resources/Models/Boss_Ship.obj", "Resources/Models/Boss_Ship.mtl", m_device, m_deviceContext);
 	m_modelHandlers[ENEMY4]->CreateBuffers(m_device);
 	//Temp, create player
 	SpawnEntity(PLAYER);
