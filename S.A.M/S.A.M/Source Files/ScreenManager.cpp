@@ -12,6 +12,7 @@ ScreenManager::~ScreenManager()
 	delete m_screenPause;
 	delete m_endScreen;
 	delete m_songSelect;
+	delete m_screenLoad;
 }
 
 newOptions ScreenManager::Update(double time)
@@ -178,7 +179,7 @@ void ScreenManager::InitializeScreen(ID3D11Device* Device, ID3D11DeviceContext* 
 	m_screenPause = new PauseMenu(Device, DeviceContext, ScreenHeight, ScreenWidth, input);
 	m_endScreen = new EndScreen(Device, DeviceContext, ScreenHeight, ScreenWidth, input, stats);
 	m_songSelect = new SongSelect(Device, DeviceContext, ScreenHeight, ScreenWidth, input, stats, soundManager);
-
+	m_screenLoad = new LoadingScreen(Device, DeviceContext, ScreenHeight, ScreenWidth, input);
 }
 
 void ScreenManager::Render(int offset)
@@ -190,6 +191,7 @@ void ScreenManager::Render(int offset)
 		break;
 	case MENU:
 		//StartMenu
+		m_screenLoad->Render();
 		m_screenMenu->Render();
 		break;
 	case GAME:
@@ -198,6 +200,7 @@ void ScreenManager::Render(int offset)
 		break;
 	case 3:
 		//HighScore
+		m_screenLoad->Render();
 		m_screenHighScore->Render();
 		break;
 	case 4:
@@ -210,9 +213,11 @@ void ScreenManager::Render(int offset)
 		break;
 	case ENDSCREEN:
 		//Endscreen
+		m_screenLoad->Render();
 		m_endScreen->Render();
 		break;
 	case SONGSELECT:
+		m_screenLoad->Render();
 		m_songSelect->Render();
 	default:
 		break;

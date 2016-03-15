@@ -14,6 +14,7 @@
 #include "Screens\Menu\EndScreen.h"
 #include "Screens\Menu\OptionsMenu.h"
 #include "Screens\Menu\SongSelect.h"
+#include "Screens\Menu\LoadingScreen.h"
 
 enum newOptions { NO_NEW, NEW_RES };
 
@@ -57,6 +58,9 @@ private:
 	ID3D11DeviceContext* m_deviceContext;
 	int m_screenHeight, m_screenWidth;
 	float m_totTime = 0;
+
+public:
+	Screen* m_screenLoad;
 };
 
 #endif

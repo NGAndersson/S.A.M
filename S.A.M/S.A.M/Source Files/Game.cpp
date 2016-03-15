@@ -90,11 +90,9 @@ void Game::ReadOptions()
 
 void Game::InitGame(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
-
 	ReadOptions();
 	//Create inputclass
 	m_display = new Display(hInstance, hPrevInstance, lpCmdLine, nCmdShow, m_width, m_height);
-
 
 	HWND _hwnd = m_display->GethWnd();
 
@@ -116,6 +114,9 @@ void Game::InitGame(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 
 	//Sets the viewport
 	SetViewport();
+
+	//Loads the Background image (DOESN'T WORK)
+	//m_screenManager->m_screenLoad->Render();
 
 
 	//Create and initialize EntityManager
