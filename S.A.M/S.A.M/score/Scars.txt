@@ -4,7 +4,7 @@
 4|QQ|22000
 5|JOD|20000
 6|HRE|18000
-7|SomeNoob|0
+7|YYYY|14000
 8|SomeNoob|0
 9|SomeNoob|0
 10|SomeNoob|0
