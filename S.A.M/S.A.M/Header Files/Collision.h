@@ -12,7 +12,7 @@
 
 #define rocketInitialDamage 200
 #define rocketAOEDamage 4000
-#define laserDamage 500
+#define laserDamage 2000
 #define defaultDamage 1000
 #define donutDamage 800
 #define tripleDamage 600

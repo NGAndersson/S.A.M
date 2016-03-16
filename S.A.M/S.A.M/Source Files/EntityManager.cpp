@@ -694,6 +694,7 @@ void EntityManager::Reset()
 	m_player->SetDelete(true);
 	m_renderFire = false;
 	m_renderPlayer = false;
+	m_soundManager->Reset();
 }
 
 void EntityManager::BeatWasDetected()
