@@ -172,7 +172,7 @@ void ExplosionPart::SetBuffer(ID3D11DeviceContext* deviceContext)
 	deviceContext->VSSetConstantBuffers(1, 1, &m_instancePartBuffer);
 
 	hr = deviceContext->Map(m_lightShiftPartBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &_lightShiftMapRes);
-	m_lightShift = XMFLOAT4(m_timeToLive[0] * 2, m_timeToLive[0] * 2, m_timeToLive[0] * 2, 1);
+	m_lightShift = XMFLOAT4(m_timeToLive[0] * 3, m_timeToLive[0] * 3, m_timeToLive[0] * 3, 1);
 	memcpy(_lightShiftMapRes.pData, &m_lightShift, sizeof(XMFLOAT4));
 
 	deviceContext->Unmap(m_lightShiftPartBuffer, 0);
