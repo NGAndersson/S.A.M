@@ -28,48 +28,45 @@ BeatPerShot3=2
 BeatPerShot4=1
 
 #### Spawn frequency. FromBeat|BeatsBetweenSpawns
-EnemySpawnRate1=40|8
-EnemySpawnRate2=40|12
-EnemySpawnRate3=40|20
+EnemySpawnRate1=38|10
+EnemySpawnRate2=55|18
+EnemySpawnRate3=50|25
 EnemySpawnRate4=40|0
-EnemySpawnRate1=300|6
-EnemySpawnRate2=300|12
-EnemySpawnRate3=300|18
-EnemySpawnRate1=436|0
-EnemySpawnRate2=436|0
-EnemySpawnRate3=436|0
-EnemySpawnRate4=436|1
+EnemySpawnRate1=150|8
+EnemySpawnRate2=150|16
+EnemySpawnRate3=150|20
+EnemySpawnRate1=320|0
+EnemySpawnRate2=320|0
+EnemySpawnRate3=310|0
+EnemySpawnRate4=320|300
 EnemySpawnRate4=437|0
 
 #### Size of the enemys, there scaling deafualt is (1, 1, 1)
 EnemySize1=2.00,2.00,2.00
 EnemySize2=1.00,1.00,1.00
 EnemySize3=1.00,1.00,1.00
-EnemySize4=4.00,4.00,4.00
+EnemySize4=1.00,1.00,1.00
 
 #### Healt of the enemys, deafault is 1000, bullets do 1000 dmg
 EnemyHealth1=2000
 EnemyHealth2=1000
 EnemyHealth3=8000
-EnemyHealth4=14000
+EnemyHealth4=30000
 
 #### Shooting Patterns   	
 #Pa= New pattern for enemytype X
 #Vp= X and Z vector direction for a bullet in the pattern (Y is always 0)
 Pa 1
+Vp 0.00 -1.00
+
+Pa 2
 Vp -1.00 -1.00
 Vp 0.00 -1.00
 Vp 1.00 -1.00
 
-Pa 1
-Vp 0.00 -1.00
-
 Pa 2
-Vp 0.00 -1.00
-
-Pa 2
-Vp -0.50 -0.50
-Vp 0.50 -0.50
+Vp  1.0 -1.0
+Vp -1.0 -1.0
 
 Pa 3
 Vp 0.00 -1.00
@@ -108,22 +105,22 @@ Vp -0.50 -1.00
 #### Movement Patterns.		Map Width = 0 to 77, Map Length = 0 to 103
 ### |Xcoord,Zcoord|
 #0 Enter-direction, needs to be attached to something
-mov=38,133|38,103
+mov=30,130|30,103
 
 #1 Doing the shit
-mov=64,73|46,69|38,29
+mov=64,73|52,69|38,50
 
 #2 Exit-direction, needs to be attached to something
-mov=15,11|38,-20
+mov=65,50|90,50
 
 #3
-mov=15,90|25,76|17,48|13,35
+mov=15,90|25,80|17,67|13,55
 
 #4
-mov=46,90|25,23|23,23|15,45
+mov=46,90|25,60|23,50|15,55
 
 #5
-mov=12,90|24,45|53,45|12,23
+mov=12,90|24,75|53,65|12,50
 
 #6 Figure Eight
 mov=17,90|35,70|52,50|70,70|52,90|35,70|17,50
@@ -133,7 +130,7 @@ mov=17,90|35,70|52,50|70,70|52,90|35,70|17,50
 ### Each compilation needs at least 4 total points from combined movement patterns
 ### First number is "from this beat, do this compilation"	PUT MOVCOMPS IN THIS ORDER
 ### Each pipe is |NrOfRepeats,MovPatternNr|
-movcomp1=0|1,0|1,1|1,2
+movcomp1=0|1,0|1,1|1,1
 movcomp2=0|1,0|1,3|1,1
 movcomp3=0|1,0|2,4|1,1
-movcomp4=0|1,0|3,6|1,2
+movcomp4=0|1,0|3,6|1,1
