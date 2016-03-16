@@ -40,6 +40,7 @@ public:
 	}
 
 private:
+	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> m_background;
 	void setUpdateKeys();
 	void ReadSetttings();
 	void saveSettings();

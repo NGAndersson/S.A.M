@@ -51,6 +51,7 @@ wchar_t EndScreen::KeyToWChar(int key)
 EndScreen::EndScreen(ID3D11Device* Device, ID3D11DeviceContext* DeviceContext, int ScreenHeight, int ScreenWidth, Input* input, Stats* stats) : Screen(Device, DeviceContext, ScreenHeight, ScreenWidth, input)
 {
 	m_font = make_unique<SpriteFont>(Device, L"Resources/moonhouse.spritefont");
+	CreateWICTextureFromFile(Device, L"Resources/Sprites/Background.png", nullptr, m_background.ReleaseAndGetAddressOf());
 	m_stats = stats;
 	m_screenHeight = ScreenHeight;
 	m_screenWidth = ScreenWidth;
@@ -130,6 +131,7 @@ void EndScreen::Render()
 	wstring _scoreMessage = L"Score: " + to_wstring(m_stats->GetScore());
 
 	m_spriteBatch->Begin();
+	m_spriteBatch->Draw(m_background.Get(), DirectX::SimpleMath::Vector2(m_screenWidth / 2, m_screenHeight / 2), nullptr, DirectX::Colors::White, 0.f, DirectX::SimpleMath::Vector2(m_screenWidth / 2, m_screenHeight / 2), 1.f);
 	XMVECTOR _origin;
 
 	if (m_state == false)

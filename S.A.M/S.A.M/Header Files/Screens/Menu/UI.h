@@ -21,7 +21,6 @@ private:
 	wstring m_livesLeft;
 	wstring m_combo;
 	wstring m_beats;
-	Input* m_input;
 
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> m_bSprite1;
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> m_bSprite2;
@@ -36,7 +35,5 @@ private:
 
 	Font m_shotBinding[4];
 };
-
-
 #endif
 

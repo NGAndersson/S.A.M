@@ -21,8 +21,8 @@ public:
 
 	//Attributes
 private:
+	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> m_background;
 	Stats* m_stats;
-	int m_screenWidth, m_screenHeight;
 	wstring m_playerName;
 	bool m_state = false;
 protected:

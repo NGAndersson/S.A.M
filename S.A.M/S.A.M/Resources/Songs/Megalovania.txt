@@ -12,7 +12,7 @@ music=Resources/Sound/Megalovania.mp3
 score=score/Megalovania.txt
 
 #### Beginning offset
-offset=44
+offset=55
 
 #### Bullet Sounds
 bulletD=Resources/Sound/DefaultSoundBullet1.wav

@@ -24,6 +24,7 @@ vector<string> GetAllFilesNamesWithinFolder(string folder)
 SongSelect::SongSelect(ID3D11Device* Device, ID3D11DeviceContext* DeviceContext, int ScreenHeight, int ScreenWidth, Input* input, Stats* stats, SoundManager* soundManager) : Screen(Device, DeviceContext, ScreenHeight, ScreenWidth, input)
 {
 	m_font = make_unique<SpriteFont>(Device, L"Resources/moonhouse.spritefont");
+	CreateWICTextureFromFile(Device, L"Resources/Sprites/Background.png", nullptr, m_background.ReleaseAndGetAddressOf());
 	
 	m_soundManager = soundManager;
 	m_stats = stats;
@@ -158,6 +159,10 @@ void SongSelect::Update(double time)
 
 void SongSelect::Render()
 {
+	m_spriteBatch->Begin();
+	m_spriteBatch->Draw(m_background.Get(), DirectX::SimpleMath::Vector2(m_screenWidth / 2, m_screenHeight / 2), nullptr, DirectX::Colors::White, 0.f, DirectX::SimpleMath::Vector2(m_screenWidth / 2, m_screenHeight / 2), 1.f);
+	m_spriteBatch->End();
+
 	//Render song elements
 	for (int i = 0; i < 5; i++)
 	{

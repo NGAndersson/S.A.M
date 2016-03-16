@@ -12,6 +12,7 @@ ScreenManager::~ScreenManager()
 	delete m_screenPause;
 	delete m_endScreen;
 	delete m_songSelect;
+	delete m_screenLoad;
 }
 
 newOptions ScreenManager::Update(double time)
@@ -173,13 +174,18 @@ void ScreenManager::InitializeScreen(ID3D11Device* Device, ID3D11DeviceContext* 
 	//Create Modelhandlers...
 	m_input = input;
 
+	m_screenLoad = new LoadingScreen(Device, DeviceContext, ScreenHeight, ScreenWidth, input);
+	m_screenLoad->Render();
 	m_screenOptions = new OptionsMenu(Device, DeviceContext, ScreenHeight, ScreenWidth, input, soundManager);
 	m_screenMenu = new StartMenu(Device, DeviceContext, ScreenHeight, ScreenWidth, input);
 	m_screenGame = new UI(Device, DeviceContext, ScreenHeight, ScreenWidth, input, stats);
 	m_screenPause = new PauseMenu(Device, DeviceContext, ScreenHeight, ScreenWidth, input);
 	m_endScreen = new EndScreen(Device, DeviceContext, ScreenHeight, ScreenWidth, input, stats);
-	m_songSelect = new SongSelect(Device, DeviceContext, ScreenHeight, ScreenWidth, input, stats, soundManager);
+}
 
+void ScreenManager::InitializeSongSelect(ID3D11Device* Device, ID3D11DeviceContext* DeviceContext, int ScreenHeight, int ScreenWidth, Input* input, Stats* stats, SoundManager* soundManager)
+{
+	m_songSelect = new SongSelect(Device, DeviceContext, ScreenHeight, ScreenWidth, input, stats, soundManager);
 }
 
 void ScreenManager::Render(int offset)
