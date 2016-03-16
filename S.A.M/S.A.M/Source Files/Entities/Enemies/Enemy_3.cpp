@@ -2,7 +2,7 @@
 
 Enemy_3::Enemy_3()
 {
-	
+	m_score = m_health;
 }
 
 Enemy_3::~Enemy_3()
@@ -20,7 +20,6 @@ void Enemy_3::Update(double time)
 	}
 	m_position = m_spline->GetPathPosition(m_age);
 	m_entityBox.Center = m_position;
-	m_score = m_health;
 	m_size = XMFLOAT3(m_scale.x * 1.5, m_scale.y * 2.5, m_scale.z * 1.5);	//used to set size of explosion		y is not used
 	m_entityBox.Extents = XMFLOAT3(m_scale.x * 7, 0, m_scale.z * 14);
 }
