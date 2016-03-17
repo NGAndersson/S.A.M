@@ -28,7 +28,7 @@ ExplosionPart::~ExplosionPart()
 	if (m_instancePartBuffer != nullptr)
 		m_instancePartBuffer->Release();
 
-	delete m_movementVec;
+	delete[] m_movementVec;
 	if (m_lightShiftPartBuffer != nullptr)
 		m_lightShiftPartBuffer->Release();
 }
@@ -127,7 +127,10 @@ void ExplosionPart::Update(ID3D11DeviceContext* deviceContext, float time, float
 	for (int i = 0; i < m_amountOfPart; i++)
 	{
 		
-		m_partPos[i] = XMFLOAT4(m_partPos[i].x + (m_movementVec[i].x * partSpeed * time * m_partOffset), m_partPos[i].y + (m_movementVec[i].y * partSpeed * time * m_partOffset), m_partPos[i].z + (m_movementVec[i].z * partSpeed * time * m_partOffset) - ((partSpeed * 5) * time), 1.0f);
+		if (m_partLifeLenght == 1)
+			m_partPos[i] = XMFLOAT4(m_partPos[i].x + (m_movementVec[i].x * partSpeed * time * m_partOffset), m_partPos[i].y + (m_movementVec[i].y * partSpeed * time * m_partOffset), m_partPos[i].z + (m_movementVec[i].z * partSpeed * time * m_partOffset) - ((partSpeed * 5) * time), 1.0f);
+		else
+			m_partPos[i] = XMFLOAT4(m_partPos[i].x + (m_movementVec[i].x * partSpeed * time * m_partOffset), m_partPos[i].y + (m_movementVec[i].y * partSpeed * time * m_partOffset), m_partPos[i].z + (m_movementVec[i].z * partSpeed * time * m_partOffset), 1.0f);
 		m_timeToLive[i] = m_timeToLive[i] - (time);
 
 	}
@@ -169,7 +172,7 @@ void ExplosionPart::SetBuffer(ID3D11DeviceContext* deviceContext)
 	deviceContext->VSSetConstantBuffers(1, 1, &m_instancePartBuffer);
 
 	hr = deviceContext->Map(m_lightShiftPartBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &_lightShiftMapRes);
-	m_lightShift = XMFLOAT4(m_timeToLive[0] * 2, m_timeToLive[0] * 2, m_timeToLive[0] * 2, 1);
+	m_lightShift = XMFLOAT4(m_timeToLive[0] * 3, m_timeToLive[0] * 3, m_timeToLive[0] * 3, 1);
 	memcpy(_lightShiftMapRes.pData, &m_lightShift, sizeof(XMFLOAT4));
 
 	deviceContext->Unmap(m_lightShiftPartBuffer, 0);

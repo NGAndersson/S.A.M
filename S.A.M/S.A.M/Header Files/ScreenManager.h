@@ -14,6 +14,7 @@
 #include "Screens\Menu\EndScreen.h"
 #include "Screens\Menu\OptionsMenu.h"
 #include "Screens\Menu\SongSelect.h"
+#include "Screens\Menu\LoadingScreen.h"
 
 enum newOptions { NO_NEW, NEW_RES };
 
@@ -28,6 +29,7 @@ public:
 	newOptions Update(double time);
 	//Initializing the screen manager
 	void InitializeScreen(ID3D11Device* Device, ID3D11DeviceContext* DeviceContext, int ScreenHeight, int ScreenWidth, Input* input,Stats* stats, SoundManager* soundManager);
+	void InitializeSongSelect(ID3D11Device* Device, ID3D11DeviceContext* DeviceContext, int ScreenHeight, int ScreenWidth, Input* input, Stats* stats, SoundManager* soundManager);
 	//Rendercall
 	void Render(int offset);
 	//Returns the current screen
@@ -56,6 +58,10 @@ private:
 	ID3D11Device* m_device;
 	ID3D11DeviceContext* m_deviceContext;
 	int m_screenHeight, m_screenWidth;
+	float m_totTime = 0;
+
+public:
+	Screen* m_screenLoad;
 };
 
 #endif

@@ -2,7 +2,7 @@
 
 Enemy_3::Enemy_3()
 {
-	
+	m_score = m_health;
 }
 
 Enemy_3::~Enemy_3()

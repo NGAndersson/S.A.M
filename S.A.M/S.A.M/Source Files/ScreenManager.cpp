@@ -12,11 +12,12 @@ ScreenManager::~ScreenManager()
 	delete m_screenPause;
 	delete m_endScreen;
 	delete m_songSelect;
+	delete m_screenLoad;
 }
 
 newOptions ScreenManager::Update(double time)
 {
-
+	int _lengthMS = m_soundManager->GetLengthMS();
 	//Checks input depending on what screen the user is in.
 	switch (m_current)
 	{
@@ -37,6 +38,7 @@ newOptions ScreenManager::Update(double time)
 		break;
 	case GAME:
 		//Game
+		_lengthMS = _lengthMS / 1000;
 		m_screenGame->Update(time);
 		if (m_stats->GetLives() == 0)
 		{
@@ -45,6 +47,15 @@ newOptions ScreenManager::Update(double time)
 			//m_stats->SavePoints()
 			//m_stats->ResetPointsAndLives()
 			//ResetGame()
+		}
+		else if (_lengthMS <= m_totTime)
+		{
+			m_current = ENDSCREEN;
+			m_soundManager->PauseMusic();
+		}
+		else
+		{
+			m_totTime += time;
 		}
 		break;
 	case 3:
@@ -61,7 +72,10 @@ newOptions ScreenManager::Update(double time)
 		break;
 	case OPTION:
 		//Options
-		m_screenOptions->UpdateOP(time);
+		if (m_gameOngoing == true)
+			m_screenOptions->UpdateOP(time);
+		else
+			m_screenOptions->Update(time);
 		m_current = m_screenOptions->GetTargetMenu();
 		if (m_current == MENU || m_current == PAUSE)
 			m_screenOptions->Reset();
@@ -85,9 +99,14 @@ newOptions ScreenManager::Update(double time)
 		break;
 	case ENDSCREEN:
 		//Endscreen
-		m_endScreen->Update(time);
+		_lengthMS = _lengthMS / 1000;
+		if (_lengthMS > m_totTime)
+			m_endScreen->Update(time);
+		else if (_lengthMS <= m_totTime)
+			m_endScreen->UpdateOP(time);
 		if (m_input->CheckReturn() && !m_keyDown)
 		{
+			m_stats->ResetBeat();
 			m_stats->SaveScore(m_endScreen->GetPlayerName());
 			m_keyDown = true;
 			m_current = HIGHSCORE;
@@ -114,6 +133,7 @@ newOptions ScreenManager::Update(double time)
 			m_gameOngoing = true;
 			m_soundManager->StopMusic();
 			m_current = GAME;
+			m_totTime = 0;
 		}
 		else if (m_input->CheckEsc() && !m_keyDown)		//Go back to main menu on ESC
 		{
@@ -154,13 +174,18 @@ void ScreenManager::InitializeScreen(ID3D11Device* Device, ID3D11DeviceContext* 
 	//Create Modelhandlers...
 	m_input = input;
 
+	m_screenLoad = new LoadingScreen(Device, DeviceContext, ScreenHeight, ScreenWidth, input);
+	m_screenLoad->Render();
 	m_screenOptions = new OptionsMenu(Device, DeviceContext, ScreenHeight, ScreenWidth, input, soundManager);
 	m_screenMenu = new StartMenu(Device, DeviceContext, ScreenHeight, ScreenWidth, input);
 	m_screenGame = new UI(Device, DeviceContext, ScreenHeight, ScreenWidth, input, stats);
 	m_screenPause = new PauseMenu(Device, DeviceContext, ScreenHeight, ScreenWidth, input);
 	m_endScreen = new EndScreen(Device, DeviceContext, ScreenHeight, ScreenWidth, input, stats);
-	m_songSelect = new SongSelect(Device, DeviceContext, ScreenHeight, ScreenWidth, input, stats, soundManager);
+}
 
+void ScreenManager::InitializeSongSelect(ID3D11Device* Device, ID3D11DeviceContext* DeviceContext, int ScreenHeight, int ScreenWidth, Input* input, Stats* stats, SoundManager* soundManager)
+{
+	m_songSelect = new SongSelect(Device, DeviceContext, ScreenHeight, ScreenWidth, input, stats, soundManager);
 }
 
 void ScreenManager::Render(int offset)

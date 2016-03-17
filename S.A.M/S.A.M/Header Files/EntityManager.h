@@ -116,14 +116,17 @@ private:
 	ID3D11DeviceContext* m_deviceContext;
 	ID3D11Buffer* m_enemyHealthColourBuffer = nullptr;
 	std::vector<Entity*> m_bulletSphere;
+	int m_laserOffset = 0, m_rocketOffset = 0;
 
 
 	int m_currentBPM, m_beatNumber = 0;
 	double m_timeSinceLastBeat = 0.0f;
+	double m_prevBeatTime = 0.0f;
 	int m_offset = 0;				//Beats to skip in the beginning (for intros without music etc)
 									//ADD ENDING OFFSETS?
 	float* m_beat;
 	int m_level;
+	int _enemySpawnBeat[4] = { 0 };
 
 public:
 

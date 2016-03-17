@@ -75,18 +75,20 @@ bool Stats::LoadScore()
 	int i = 0;
 	while (getline(_file, _tempLine))				//Format:		1|Name|1000			Position|Name|Score
 	{
-		
-		std::wistringstream _ss(_tempLine);
-		_ss.get(_tempChars, 100, '|');			//Throw away position and delim
-		_ss.ignore();
+		if (_tempLine != L"")
+		{
+			std::wistringstream _ss(_tempLine);
+			_ss.get(_tempChars, 100, '|');			//Throw away position and delim
+			_ss.ignore();
 
-		_ss.get(_tempChars, 100, '|');		//Read name
-		_inData[i].first = _tempChars;
-		_ss.ignore();
+			_ss.get(_tempChars, 100, '|');		//Read name
+			_inData[i].first = _tempChars;
+			_ss.ignore();
 
-		_ss.get(_tempChars, 100, '|');		//Get Score
-		_inData[i].second = _wtoi(_tempChars);
-		i++;
+			_ss.get(_tempChars, 100, '|');		//Get Score
+			_inData[i].second = _wtoi(_tempChars);
+			i++;
+		}
 	}
 
 	for (i = 0; i < 10; i++)

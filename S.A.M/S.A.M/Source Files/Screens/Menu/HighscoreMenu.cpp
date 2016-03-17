@@ -8,6 +8,7 @@ HighScoreMenu::HighScoreMenu(ID3D11Device* Device, ID3D11DeviceContext* DeviceCo
 	m_highscore = m_stats->GetHighScores();	//receives 10
 
 	m_font = make_unique<SpriteFont>(Device, L"Resources/moonhouse.spritefont");
+	CreateWICTextureFromFile(Device, L"Resources/Sprites/Background.png", nullptr, m_background.ReleaseAndGetAddressOf());
 
 }
 
@@ -20,6 +21,7 @@ void HighScoreMenu::Render()
 {	
 	
 	m_spriteBatch->Begin();
+	m_spriteBatch->Draw(m_background.Get(), DirectX::SimpleMath::Vector2(m_screenWidth / 2, m_screenHeight / 2), nullptr, DirectX::Colors::White, 0.f, DirectX::SimpleMath::Vector2(m_screenWidth / 2, m_screenHeight / 2), 1.f);
 	//Highscore list
 	DirectX::SimpleMath::Vector3 _scale;
 	_scale.x = float(m_screenWidth) / float(1058), _scale.y = (float(m_screenHeight) / float(1440)), _scale.z = (float(m_screenHeight) / float(1440));

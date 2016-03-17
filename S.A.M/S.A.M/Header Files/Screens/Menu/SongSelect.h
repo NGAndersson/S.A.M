@@ -19,15 +19,13 @@ public:
 	string GetSelectedSongFile() { return string(m_songElements[m_selection]->GetDataFile()); }
 	string GetScoreFile() { return m_songElements[m_selection]->GetScoreFile(); }
 private:
+	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> m_background;
 	vector<SongElement*> m_songElements;
 	SongElement* m_visibleElements[5];
 	int m_selection;
 
 	SoundManager* m_soundManager;
-	Input* m_input;
 	Stats* m_stats;
-
-	int m_screenHeight, m_screenWidth;
 	
 	std::unique_ptr<DirectX::CommonStates> m_states;
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> m_arrows[4];

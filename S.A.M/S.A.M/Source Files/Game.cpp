@@ -90,11 +90,9 @@ void Game::ReadOptions()
 
 void Game::InitGame(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
-
 	ReadOptions();
 	//Create inputclass
 	m_display = new Display(hInstance, hPrevInstance, lpCmdLine, nCmdShow, m_width, m_height);
-
 
 	HWND _hwnd = m_display->GethWnd();
 
@@ -110,13 +108,15 @@ void Game::InitGame(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 	 //Initialize Stats manager
 	m_statsManager = new Stats;
 
-	//Create and initialize ScreenManager
-	m_screenManager = new ScreenManager();
-	m_screenManager->InitializeScreen(m_device, m_deviceContext,m_height,m_width, m_input, m_statsManager, m_soundManager);
-
 	//Sets the viewport
 	SetViewport();
 
+	//Create and initialize ScreenManager
+	m_screenManager = new ScreenManager();
+	m_screenManager->InitializeScreen(m_device, m_deviceContext,m_height,m_width, m_input, m_statsManager, m_soundManager);
+	//swapchain present
+	m_swapChain->Present(0, 0);
+	m_screenManager->InitializeSongSelect(m_device, m_deviceContext, m_height, m_width, m_input, m_statsManager, m_soundManager);
 
 	//Create and initialize EntityManager
 	m_entityManager = new EntityManager;
@@ -256,6 +256,11 @@ void Game::Update(double time, HINSTANCE hInstance, HINSTANCE hPrevInstance, LPS
 	}
 
 	if (m_screenManager->GetCurrentScreen() == HIGHSCORE && _prevScreen == ENDSCREEN)
+	{
+		m_entityManager->Reset();
+	}
+
+	if (m_screenManager->GetCurrentScreen() == MENU && _prevScreen == PAUSE)
 	{
 		m_entityManager->Reset();
 	}

@@ -47,6 +47,7 @@ class SoundManager
 		void SetEffectVolume(float in) { m_effectVolume = in; }
 		float GetMusicVolume() { return m_musicVolume; }
 		float GetEffectVolume() {return m_effectVolume; }
+		void Reset() { m_sounds.clear(); m_soundIndexes.clear(); m_soundChannels.clear(); m_soundGroupIndexes.clear(); }
 
 	//Variables
 	private:

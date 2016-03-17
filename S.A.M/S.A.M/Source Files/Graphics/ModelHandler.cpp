@@ -32,6 +32,10 @@ ModelHandler::~ModelHandler()
 	{
 		m_GlowTex->Release();
 	}
+	if (m_SpecTex != nullptr)
+	{
+		m_SpecTex->Release();
+	}
 }
 
 bool ModelHandler::LoadOBJData(string OBJFileName, string colourFileName, ID3D11Device* device, ID3D11DeviceContext* deviceContext)
